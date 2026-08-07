@@ -1,7 +1,7 @@
 // Detects which "app persona" the current subdomain represents.
 // Used to render the right PWA manifest, title and route guards.
 
-export type AppPersona = "passageiro" | "mototaxista" | "admin" | "food" | "parceiros" | "root";
+export type AppPersona = "passageiro" | "mototaxista" | "admin" | "root";
 
 export function detectPersona(hostname?: string): AppPersona {
   if (typeof window === "undefined" && !hostname) return "root";
@@ -9,8 +9,6 @@ export function detectPersona(hostname?: string): AppPersona {
   if (host.startsWith("passageiro.")) return "passageiro";
   if (host.startsWith("mototaxista.") || host.startsWith("moto.")) return "mototaxista";
   if (host.startsWith("admin.")) return "admin";
-  if (host.startsWith("parceiros.")) return "parceiros";
-  if (host.startsWith("food.")) return "food";
   return "root";
 }
 
@@ -38,20 +36,6 @@ export const personaConfig: Record<
     themeColor: "#000000",
     startPath: "/adm",
     allowedPrefixes: ["/adm", "/admin", "/auth"],
-  },
-  food: {
-    manifest: "/manifest-food.webmanifest",
-    title: "Bora Zé Food",
-    themeColor: "#00FF1A",
-    startPath: "/food",
-    allowedPrefixes: ["/food", "/empresa"],
-  },
-  parceiros: {
-    manifest: "/manifest-parceiros.webmanifest",
-    title: "Bora Zé! Parceiros",
-    themeColor: "#00FF1A",
-    startPath: "/parceiros",
-    allowedPrefixes: ["/parceiros"],
   },
   root: {
     manifest: "/manifest.webmanifest",
