@@ -67,17 +67,6 @@ type CorridaBroadcast = {
 };
 
 type Passageiro = { nome: string; telefone: string; foto_url: string | null };
-type Entrega = {
-  id: string;
-  empresa_id: string;
-  mototaxista_id: string | null;
-  endereco_coleta: string;
-  endereco_entrega: string;
-  descricao_item: string | null;
-  valor_combinado: number;
-  status: "aguardando" | "aceita" | "coletado" | "entregue" | "cancelada";
-};
-type EmpresaMin = { id: string; nome: string; telefone: string };
 type MotoData = {
   nome: string;
   telefone: string;
@@ -88,7 +77,7 @@ type MotoData = {
   created_at?: string | null;
 };
 
-type Aba = "corridas" | "entregas" | "financeiro" | "perfil";
+type Aba = "corridas" | "financeiro" | "perfil";
 
 const COLORS = {
   bg: "#000000",
@@ -119,7 +108,6 @@ function MototaxistaHome() {
   const db = supabase as any;
 
   const [online, setOnline] = useState(false);
-  const [aceitaDelivery, setAceitaDelivery] = useState(false);
   const [aceitaPegueAli, setAceitaPegueAli] = useState(true);
   const [prefDistanciaKm, setPrefDistanciaKm] = useState(5);
   const [prefValorMinimo, setPrefValorMinimo] = useState(5);
@@ -141,13 +129,8 @@ function MototaxistaHome() {
   const [passageiro, setPassageiro] = useState<Passageiro | null>(null);
   const [busy, setBusy] = useState(false);
   const [aba, setAba] = useState<Aba>("corridas");
-  const [entregasAbertas, setEntregasAbertas] = useState<Entrega[]>([]);
-  const [entregaAtual, setEntregaAtual] = useState<Entrega | null>(null);
-  const [empresasMap, setEmpresasMap] = useState<Record<string, EmpresaMin>>({});
   const [ganhosCorridas, setGanhosCorridas] = useState(0);
-  const [ganhosEntregas, setGanhosEntregas] = useState(0);
   const [countCorridas, setCountCorridas] = useState(0);
-  const [countEntregas, setCountEntregas] = useState(0);
   const [chegou, setChegou] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
   const [confirmConcluir, setConfirmConcluir] = useState(false);
@@ -267,7 +250,6 @@ function MototaxistaHome() {
         }
         setOnline(m.status === "disponivel");
         setMensalidadeAtiva(m.mensalidade_ativa);
-        setAceitaDelivery(!!m.aceita_delivery);
         setAceitaPegueAli((m as any).aceita_pegue_ali ?? true);
         const prefs = ((m as any).preferencias ?? {}) as Record<string, unknown>;
         if (typeof prefs.distancia_max_km === "number") setPrefDistanciaKm(prefs.distancia_max_km);
@@ -298,14 +280,6 @@ function MototaxistaHome() {
         .in("status", ["aceita", "em_andamento"])
         .maybeSingle();
       if (c) setAtual(c as Corrida);
-
-      const { data: ea } = await db
-        .from("entregas")
-        .select("*")
-        .eq("mototaxista_id", user.id)
-        .in("status", ["aceita", "coletado"])
-        .maybeSingle();
-      if (ea) setEntregaAtual(ea as Entrega);
     })();
   }, [user]);
 
@@ -328,49 +302,9 @@ function MototaxistaHome() {
     return () => { supabase.removeChannel(ch); };
   }, [user]);
 
-  useEffect(() => {
-    if (!user || !aceitaDelivery || !mensalidadeAtiva || entregaAtual) {
-      setEntregasAbertas([]);
-      return;
-    }
-    let cancel = false;
-    const load = async () => {
-      const { data } = await db
-        .from("entregas")
-        .select("*")
-        .eq("status", "aguardando")
-        .order("criado_em", { ascending: true })
-        .limit(20);
-      if (!cancel) setEntregasAbertas((data ?? []) as Entrega[]);
-    };
-    load();
-    const ch = supabase
-      .channel("entregas-aguardando")
-      .on("postgres_changes", { event: "*", schema: "public", table: "entregas" }, () => load())
-      .subscribe();
-    return () => { cancel = true; supabase.removeChannel(ch); };
-  }, [user, aceitaDelivery, mensalidadeAtiva, entregaAtual]);
-
-  useEffect(() => {
-    const ids = Array.from(new Set([
-      ...entregasAbertas.map((e) => e.empresa_id),
-      entregaAtual?.empresa_id,
-    ].filter(Boolean))) as string[];
-    const missing = ids.filter((id) => !empresasMap[id]);
-    if (missing.length === 0) return;
-    (async () => {
-      const { data } = await db.from("empresas").select("id,nome,telefone").in("id", missing);
-      if (data) {
-        const next = { ...empresasMap };
-        for (const e of data) next[e.id] = e;
-        setEmpresasMap(next);
-      }
-    })();
-  }, [entregasAbertas, entregaAtual]);
-
   type ItemFinanceiro = {
     id: string;
-    tipo: "corrida" | "pegue_ali" | "delivery";
+    tipo: "corrida" | "pegue_ali";
     data: string;
     nome: string;
     valor: number;
@@ -403,26 +337,6 @@ function MototaxistaHome() {
         (profs ?? []).forEach((p: any) => { nomesMap[p.id] = p.nome ?? "Passageiro"; });
       }
 
-      const { data: ent } = await db
-        .from("entregas")
-        .select("id,valor_combinado,criado_em,empresa_id")
-        .eq("mototaxista_id", user.id)
-        .eq("status", "entregue")
-        .gte("criado_em", inicioIso)
-        .lte("criado_em", fimIso)
-        .order("criado_em", { ascending: false });
-      const eRows = (ent ?? []) as any[];
-      const eTot = eRows.reduce((s, r) => s + Number(r.valor_combinado ?? 0), 0);
-      setGanhosEntregas(eTot);
-      setCountEntregas(eRows.length);
-
-      const empIds = Array.from(new Set(eRows.map((r) => r.empresa_id).filter(Boolean)));
-      const empMap: Record<string, string> = {};
-      if (empIds.length > 0) {
-        const { data: emps } = await db.from("empresas").select("id,nome").in("id", empIds);
-        (emps ?? []).forEach((e: any) => { empMap[e.id] = e.nome ?? "Empresa"; });
-      }
-
       const itens: ItemFinanceiro[] = [
         ...cRows.map((r) => ({
           id: r.id as string,
@@ -431,17 +345,10 @@ function MototaxistaHome() {
           nome: nomesMap[r.passageiro_id] ?? "Passageiro",
           valor: Number(r.valor_final ?? r.valor_estimado ?? 0),
         })),
-        ...eRows.map((r) => ({
-          id: r.id as string,
-          tipo: "delivery" as const,
-          data: r.criado_em as string,
-          nome: empMap[r.empresa_id] ?? "Empresa",
-          valor: Number(r.valor_combinado ?? 0),
-        })),
       ].sort((a, b) => (a.data < b.data ? 1 : -1));
       setItensPeriodo(itens);
     })();
-  }, [user, atual, entregaAtual, periodoRange, db]);
+  }, [user, atual, periodoRange, db]);
 
 
   // Carrega saldos, chave Pix e histórico de saques
