@@ -868,8 +868,8 @@ function CidadesTab() {
   const suspenderCidadeFn = useServerFn(cidadeSuspender);
   const definirServicosFn = useServerFn(cidadeDefinirServicos);
 
-  async function toggleServico(c: Cidade, key: "mototaxi_ativo") {
-    const novo = { mototaxi_ativo: c.mototaxi_ativo, [key]: !c[key] };
+  async function toggleServico(c: Cidade, _key: "mototaxi_ativo") {
+    const novo = { mototaxi_ativo: !c.mototaxi_ativo };
     setRows((prev) => prev?.map((x) => x.id === c.id ? { ...x, ...novo } : x) ?? prev);
     try {
       await definirServicosFn({ data: { id: c.id, ...novo } });
