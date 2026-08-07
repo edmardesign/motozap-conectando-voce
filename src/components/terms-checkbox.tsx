@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 export function TermsCheckbox({
   checked,
   onChange,
-  accent = "#00FF1A",
+  accent = "#3DB54A",
 }: {
   checked: boolean;
   onChange: (v: boolean) => void;

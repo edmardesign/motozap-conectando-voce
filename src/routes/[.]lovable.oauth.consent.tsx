@@ -56,7 +56,7 @@ export const Route = createFileRoute("/.lovable/oauth/consent")({
   },
   component: Consent,
   errorComponent: ({ error }) => (
-    <main className="min-h-screen flex items-center justify-center bg-[#000000] text-[#F5F5F5] p-6">
+    <main className="min-h-screen flex items-center justify-center bg-[#0F0F10] text-[#F5F5F5] p-6">
       <div className="max-w-md text-center">
         <h1 className="text-lg font-semibold mb-2">Não foi possível carregar a autorização</h1>
         <p className="text-sm text-[#8696A0]">
@@ -96,7 +96,7 @@ function Consent() {
   }
 
   return (
-    <main className="min-h-screen bg-[#000000] text-[#F5F5F5] flex items-center justify-center p-6">
+    <main className="min-h-screen bg-[#0F0F10] text-[#F5F5F5] flex items-center justify-center p-6">
       <div
         className="w-full max-w-md rounded-2xl p-6 border"
         style={{
@@ -136,7 +136,7 @@ function Consent() {
             disabled={busy}
             onClick={() => decide(true)}
             className="flex-1 py-3 rounded-xl text-sm font-semibold disabled:opacity-50"
-            style={{ background: "#00FF1A", color: "#000000" }}
+            style={{ background: "#3DB54A", color: "#0F0F10" }}
           >
             {busy ? "Conectando..." : "Aprovar"}
           </button>

@@ -33,7 +33,7 @@ export function PassageiroTabBar() {
             type="button"
             onClick={() => navigate({ to: t.to })}
             className="flex-1 relative flex flex-col items-center justify-center gap-1 py-2.5 transition-colors"
-            style={{ color: isActive ? "#00FF1A" : "#8696A0" }}
+            style={{ color: isActive ? "#3DB54A" : "#8696A0" }}
           >
             <Icon size={20} aria-hidden />
             <span className="text-[11px] font-medium tracking-wide truncate max-w-full px-1">
@@ -42,7 +42,7 @@ export function PassageiroTabBar() {
             {isActive && (
               <span
                 className="absolute top-0 left-1/2 -translate-x-1/2 h-[3px] w-10 rounded-b-full"
-                style={{ background: "#00FF1A" }}
+                style={{ background: "#3DB54A" }}
               />
             )}
           </button>

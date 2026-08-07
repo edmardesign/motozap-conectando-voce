@@ -97,7 +97,7 @@ function PrivacidadePage() {
             Para dúvidas, solicitações ou exercício de direitos previstos na LGPD:
           </p>
           <p>
-            <a href="mailto:privacidade@borazeapp.com.br" className="underline" style={{ color: "#00FF1A" }}>
+            <a href="mailto:privacidade@borazeapp.com.br" className="underline" style={{ color: "#3DB54A" }}>
               privacidade@borazeapp.com.br
             </a>
           </p>

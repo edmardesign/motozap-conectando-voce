@@ -3,7 +3,7 @@
 
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
-import logoAsset from "@/assets/motozap-logo.png.asset.json";
+import logoAsset from "@/assets/intergo-logo-green.png.asset.json";
 
 export type CorridaRel = {
   data: string; // ISO
@@ -19,8 +19,8 @@ export type PeriodoRel = {
   rotulo: string;
 };
 
-const NEON = "#00FF1A";
-const BG = "#000000";
+const NEON = "#3DB54A";
+const BG = "#0F0F10";
 
 function fmtBRL(v: number): string {
   return v.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });

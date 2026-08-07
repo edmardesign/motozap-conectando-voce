@@ -95,9 +95,9 @@ type Palette = {
 };
 const PALETTES: Record<Theme, Palette> = {
   dark: {
-    bg: "#000000", panel: "#000000", headerBg: "#0a0a0a", cardBg: "#0a0a0a", inputBg: "#2A3942",
+    bg: "#0F0F10", panel: "#0F0F10", headerBg: "#0a0a0a", cardBg: "#0a0a0a", inputBg: "#2A3942",
     text: "#F5F5F5", textMuted: "#8696A0", sysBubble: "#0a0a0a", userBubble: "#005C4B",
-    btn: "#00FF1A", btnText: "#FFFFFF", divider: "rgba(134,150,160,0.18)",
+    btn: "#3DB54A", btnText: "#FFFFFF", divider: "rgba(134,150,160,0.18)",
   },
   light: {
     bg: "#F0F2F5", panel: "#F0F2F5", headerBg: "#008069", cardBg: "#FFFFFF", inputBg: "#FFFFFF",
@@ -1034,7 +1034,7 @@ function PassageiroHomePage() {
             {destinoCoords && step !== "assigned" && step !== "arrived" && (
               <Marker
                 position={[destinoCoords.lat, destinoCoords.lng]}
-                icon={emojiIcon("", 38, "#00FF1A")}
+                icon={emojiIcon("", 38, "#3DB54A")}
               />
             )}
 
@@ -1042,7 +1042,7 @@ function PassageiroHomePage() {
             {routeCoords.length > 1 && step !== "assigned" && step !== "arrived" && (
               <Polyline
                 positions={routeCoords}
-                pathOptions={{ color: "#00FF1A", weight: 4, opacity: 0.9 }}
+                pathOptions={{ color: "#3DB54A", weight: 4, opacity: 0.9 }}
               />
             )}
 
@@ -1054,7 +1054,7 @@ function PassageiroHomePage() {
                     [origemCoords.lat, origemCoords.lng],
                     [destinoCoords.lat, destinoCoords.lng],
                   ]}
-                  pathOptions={{ color: "#00FF1A", weight: 4 }}
+                  pathOptions={{ color: "#3DB54A", weight: 4 }}
                 />
               )}
 
@@ -1064,7 +1064,7 @@ function PassageiroHomePage() {
                 <Marker
                   key={m.id}
                   position={[m.latitude, m.longitude]}
-                  icon={emojiIcon("", 32, "#00FF1A")}
+                  icon={emojiIcon("", 32, "#3DB54A")}
                 >
                   <Popup>
                     <div style={{ minWidth: 160, fontFamily: "Inter, sans-serif" }}>
@@ -1075,7 +1075,7 @@ function PassageiroHomePage() {
                             alt={m.nome ?? ""}
                             style={{
                               width: 44, height: 44, borderRadius: "50%",
-                              objectFit: "cover", border: "2px solid #00FF1A",
+                              objectFit: "cover", border: "2px solid #3DB54A",
                             }}
                           />
                         ) : (
@@ -2276,7 +2276,7 @@ function NoDriversModal({
           onClick={onRetry}
           className="w-full rounded-2xl py-3.5 font-bold shadow-lg active:scale-[0.98] transition mb-2"
           style={{
-            background: "#00FF1A",
+            background: "#3DB54A",
             color: "#FFFFFF",
             fontFamily: "'Bebas Neue', sans-serif",
             letterSpacing: 1,

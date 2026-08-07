@@ -146,7 +146,7 @@ export function CidadeModal({
           <button
             type="submit"
             disabled={busy}
-            className="rounded-lg bg-[#00FF1A] px-3 py-2 text-sm font-semibold text-black hover:opacity-90 disabled:opacity-60"
+            className="rounded-lg bg-[#3DB54A] px-3 py-2 text-sm font-semibold text-black hover:opacity-90 disabled:opacity-60"
           >
             {busy ? "Salvando…" : "Confirmar"}
           </button>

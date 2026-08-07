@@ -86,12 +86,12 @@ function AdminEntry() {
               className="w-full rounded-2xl px-6 py-4 font-bold text-center transition-all active:scale-[0.98] flex items-center justify-center gap-2"
               style={{
                 background: "linear-gradient(135deg, #ffffff, #cccccc)",
-                color: "#000",
+                color: "#0F0F10",
                 boxShadow: "0 0 32px rgba(255,255,255,0.35)",
                 letterSpacing: "0.02em",
               }}
             >
-              <EmojiIcon e="📲" color="#000000" /> INSTALAR NO CELULAR
+              <EmojiIcon e="📲" color="#0F0F10" /> INSTALAR NO CELULAR
             </button>
           )}
 
@@ -100,7 +100,7 @@ function AdminEntry() {
             className="w-full rounded-2xl px-6 py-4 font-bold text-center transition-all active:scale-[0.98]"
             style={{
               background: "#ffffff",
-              color: "#000",
+              color: "#0F0F10",
               boxShadow: "0 0 24px rgba(255,255,255,0.2)",
             }}
           >

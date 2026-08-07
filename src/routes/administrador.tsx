@@ -24,7 +24,7 @@ export const Route = createFileRoute("/administrador")({
       iconUrl={iconAdmin.url}
       accent="#FFFFFF"
       manifestHref="/manifest-administrador.webmanifest"
-      themeColor="#000000"
+      themeColor="#0F0F10"
     />
   ),
 });

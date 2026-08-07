@@ -23,9 +23,9 @@ export const Route = createFileRoute("/mototaxi")({
       title="MOTOTÁXI"
       subtitle="Ganhe rodando na sua cidade"
       iconUrl={iconMoto.url}
-      accent="#00FF1A"
+      accent="#3DB54A"
       manifestHref="/manifest-mototaxi.webmanifest"
-      themeColor="#00FF1A"
+      themeColor="#3DB54A"
     />
   ),
 });

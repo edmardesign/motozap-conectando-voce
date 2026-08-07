@@ -126,24 +126,24 @@ function PlanosPage() {
         className="pointer-events-none absolute inset-0 -z-10"
         style={{
           background:
-            "radial-gradient(60% 50% at 50% 0%, rgba(0,255,26,0.18), transparent 70%), radial-gradient(40% 40% at 90% 30%, rgba(0,255,26,0.08), transparent 70%), radial-gradient(35% 35% at 10% 80%, rgba(0,255,26,0.07), transparent 70%)",
+            "radial-gradient(60% 50% at 50% 0%, rgba(61, 181, 74,0.18), transparent 70%), radial-gradient(40% 40% at 90% 30%, rgba(61, 181, 74,0.08), transparent 70%), radial-gradient(35% 35% at 10% 80%, rgba(61, 181, 74,0.07), transparent 70%)",
         }}
       />
       <div
         aria-hidden
         className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-px"
-        style={{ background: "linear-gradient(90deg, transparent, rgba(0,255,26,0.6), transparent)" }}
+        style={{ background: "linear-gradient(90deg, transparent, rgba(61, 181, 74,0.6), transparent)" }}
       />
 
       {/* Floating banner */}
       <div className="sticky top-0 z-20 w-full">
         <div
           className="mx-auto max-w-xl px-4 pt-3"
-          style={{ color: "#000000" }}
+          style={{ color: "#0F0F10" }}
         >
           <div
             className="flex items-center justify-center gap-2 rounded-b-xl px-4 py-2.5 text-xs sm:text-sm font-button tracking-wide text-center"
-            style={{ background: "#00FF1A" }}
+            style={{ background: "#3DB54A" }}
           >
             <span><EmojiIcon e="🎁" /> Mais passageiros. Mais encomendas. Para você! — 1º mês grátis</span>
           </div>
@@ -153,10 +153,10 @@ function PlanosPage() {
       {/* Hero */}
       <section className="mx-auto max-w-6xl px-5 pt-10 pb-4 text-center">
         <h1 className="font-display text-5xl sm:text-6xl md:text-7xl leading-[0.95] uppercase">
-          Comece <span style={{ color: "#00FF1A" }}>GRÁTIS</span> hoje.
+          Comece <span style={{ color: "#3DB54A" }}>GRÁTIS</span> hoje.
         </h1>
 
-        <p className="mt-4 text-lg sm:text-xl font-sans" style={{ color: "#00FF1A" }}>
+        <p className="mt-4 text-lg sm:text-xl font-sans" style={{ color: "#3DB54A" }}>
           Seu primeiro mês é por nossa conta.
         </p>
 
@@ -167,7 +167,7 @@ function PlanosPage() {
         <button
           onClick={scrollToCards}
           className="mt-6 inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-button tracking-wider uppercase transition-transform hover:scale-105"
-          style={{ background: "#00FF1A", color: "#000000" }}
+          style={{ background: "#3DB54A", color: "#0F0F10" }}
         >
           VER PLANOS
           <ArrowDown className="w-4 h-4" />
@@ -207,12 +207,12 @@ function PlanCard({ plano, onChoose }: { plano: Plano; onChoose: () => void }) {
         isHero ? "md:scale-[1.04] md:-my-2" : "",
       ].join(" ")}
       style={{
-        borderColor: featured ? "rgba(0,255,26,0.55)" : "rgba(255,255,255,0.08)",
+        borderColor: featured ? "rgba(61, 181, 74,0.55)" : "rgba(255,255,255,0.08)",
         background: featured
-          ? "linear-gradient(160deg, rgba(0,255,26,0.10), rgba(0,0,0,0.4) 60%)"
+          ? "linear-gradient(160deg, rgba(61, 181, 74,0.10), rgba(0,0,0,0.4) 60%)"
           : "linear-gradient(160deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01))",
         boxShadow: featured
-          ? "0 0 0 1px rgba(0,255,26,0.15) inset, 0 20px 60px -20px rgba(0,255,26,0.45), 0 0 80px -30px rgba(0,255,26,0.6)"
+          ? "0 0 0 1px rgba(61, 181, 74,0.15) inset, 0 20px 60px -20px rgba(61, 181, 74,0.45), 0 0 80px -30px rgba(61, 181, 74,0.6)"
           : "0 12px 32px -16px rgba(0,0,0,0.8)",
       }}
     >
@@ -220,9 +220,9 @@ function PlanCard({ plano, onChoose }: { plano: Plano; onChoose: () => void }) {
         <span
           className="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full px-3 py-1 text-[10px] font-button tracking-[0.18em] uppercase"
           style={{
-            background: isHero ? "var(--color-neon)" : "rgba(0,255,26,0.15)",
+            background: isHero ? "var(--color-neon)" : "rgba(61, 181, 74,0.15)",
             color: isHero ? "var(--color-neon-foreground)" : "var(--color-neon)",
-            border: isHero ? "none" : "1px solid rgba(0,255,26,0.4)",
+            border: isHero ? "none" : "1px solid rgba(61, 181, 74,0.4)",
             boxShadow: isHero ? "0 0 24px var(--neon-glow)" : "none",
           }}
         >
@@ -235,10 +235,10 @@ function PlanCard({ plano, onChoose }: { plano: Plano; onChoose: () => void }) {
         <span
           className="flex h-11 w-11 items-center justify-center rounded-xl border transition-transform duration-300 group-hover:scale-110"
           style={{
-            borderColor: "rgba(0,255,26,0.3)",
-            background: "rgba(0,255,26,0.08)",
+            borderColor: "rgba(61, 181, 74,0.3)",
+            background: "rgba(61, 181, 74,0.08)",
             color: "var(--color-neon)",
-            boxShadow: featured ? "0 0 18px rgba(0,255,26,0.35)" : "none",
+            boxShadow: featured ? "0 0 18px rgba(61, 181, 74,0.35)" : "none",
           }}
         >
           <Icon className="w-5 h-5" />
@@ -272,7 +272,7 @@ function PlanCard({ plano, onChoose }: { plano: Plano; onChoose: () => void }) {
           <li key={b} className="flex items-start gap-3 text-sm text-white/85 font-sans">
             <span
               className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full"
-              style={{ background: "rgba(0,255,26,0.15)", color: "var(--color-neon)" }}
+              style={{ background: "rgba(61, 181, 74,0.15)", color: "var(--color-neon)" }}
             >
               <Check className="w-3 h-3" strokeWidth={3} />
             </span>

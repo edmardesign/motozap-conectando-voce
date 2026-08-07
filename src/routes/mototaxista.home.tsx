@@ -80,13 +80,13 @@ type MotoData = {
 type Aba = "corridas" | "financeiro" | "perfil";
 
 const COLORS = {
-  bg: "#000000",
+  bg: "#0F0F10",
   bg2: "#131F24",
   card: "#1A2C33",
   border: "rgba(134,150,160,0.15)",
   text: "#F5F5F5",
   textDim: "#8696A0",
-  accent: "#00FF1A",
+  accent: "#3DB54A",
   danger: "#E04848",
 };
 
@@ -96,7 +96,7 @@ function planoLabel(p: string | null): { label: string; color: string } {
   switch (p) {
     case "ouro": return { label: "OURO", color: "#FFD700" };
     case "prata": return { label: "PRATA", color: "#C0C0C0" };
-    case "mensal": return { label: "MENSAL", color: "#00FF1A" };
+    case "mensal": return { label: "MENSAL", color: "#3DB54A" };
     default: return { label: "—", color: "#8696A0" };
   }
 }
@@ -795,15 +795,15 @@ function MototaxistaHome() {
       {/* HEADER */}
       <header
         className="px-6 pt-6 pb-5"
-        style={{ background: "linear-gradient(180deg, #000000 0%, #131F24 100%)" }}
+        style={{ background: "linear-gradient(180deg, #0F0F10 0%, #131F24 100%)" }}
       >
         {trialDiasRestantes !== null && trialDiasRestantes <= 15 && (
           <Link
             to="/mototaxista/planos"
             className="mb-3 rounded-lg px-3 py-2 text-[12.5px] flex items-center gap-2"
             style={{
-              background: trialDiasRestantes <= 3 ? "rgba(224,72,72,0.12)" : "rgba(0,255,26,0.10)",
-              border: `1px solid ${trialDiasRestantes <= 3 ? "rgba(224,72,72,0.3)" : "rgba(0,255,26,0.3)"}`,
+              background: trialDiasRestantes <= 3 ? "rgba(224,72,72,0.12)" : "rgba(61, 181, 74,0.10)",
+              border: `1px solid ${trialDiasRestantes <= 3 ? "rgba(224,72,72,0.3)" : "rgba(61, 181, 74,0.3)"}`,
               color: trialDiasRestantes <= 3 ? "#FFB4B4" : COLORS.accent,
             }}
           >
@@ -929,9 +929,9 @@ function MototaxistaHome() {
                         <span
                           className="px-2 py-0.5 rounded-full text-[11px] font-bold"
                           style={{
-                            background: isPegue ? "rgba(255,200,0,0.15)" : "rgba(0,255,26,0.12)",
+                            background: isPegue ? "rgba(255,200,0,0.15)" : "rgba(61, 181, 74,0.12)",
                             color: isPegue ? "#FFC800" : COLORS.accent,
-                            border: `1px solid ${isPegue ? "rgba(255,200,0,0.4)" : "rgba(0,255,26,0.4)"}`,
+                            border: `1px solid ${isPegue ? "rgba(255,200,0,0.4)" : "rgba(61, 181, 74,0.4)"}`,
                           }}
                         >
                           {isPegue ? "PEGUE ALI" : "CORRIDA"}
@@ -955,7 +955,7 @@ function MototaxistaHome() {
                           onClick={() => aceitar(c)}
                           disabled={busy}
                           className="px-5 py-3 rounded-xl font-bold text-[15px] disabled:opacity-60"
-                          style={{ background: COLORS.accent, color: "#000", boxShadow: "0 4px 12px rgba(0,168,132,0.35)" }}
+                          style={{ background: COLORS.accent, color: "#0F0F10", boxShadow: "0 4px 12px rgba(0,168,132,0.35)" }}
                         >
                           ACEITAR
                         </button>
@@ -989,7 +989,7 @@ function MototaxistaHome() {
                   onClick={() => setFiltroPeriodo(f.id)}
                   className="px-3 py-1.5 rounded-lg text-[12px] font-semibold"
                   style={filtroPeriodo === f.id
-                    ? { background: COLORS.accent, color: "#000" }
+                    ? { background: COLORS.accent, color: "#0F0F10" }
                     : { background: "rgba(255,255,255,0.08)", color: COLORS.textDim }}
                 >
                   {f.label}
@@ -1067,7 +1067,7 @@ function MototaxistaHome() {
                       key={p} onClick={() => setExportPeriodo(p)}
                       className="px-3 py-1.5 rounded-lg text-[12px] font-semibold"
                       style={exportPeriodo === p
-                        ? { background: COLORS.accent, color: "#000" }
+                        ? { background: COLORS.accent, color: "#0F0F10" }
                         : { background: "rgba(255,255,255,0.08)", color: COLORS.textDim }}
                     >
                       {p === "semana" ? "Semana" : p === "mes" ? "Mês" : "Personalizado"}
@@ -1187,7 +1187,7 @@ function MototaxistaHome() {
                   onMouseUp={() => salvarPreferencias({ distancia_max_km: prefDistanciaKm })}
                   onTouchEnd={() => salvarPreferencias({ distancia_max_km: prefDistanciaKm })}
                   disabled={savingPrefs}
-                  className="w-full accent-[color:var(--tw-neon,#00FF1A)]"
+                  className="w-full accent-[color:var(--tw-neon,#3DB54A)]"
                 />
                 <div className="flex justify-between text-[11px]" style={{ color: COLORS.textDim }}>
                   <span>1 km</span><span>15 km</span>
@@ -1386,7 +1386,7 @@ function MototaxistaHome() {
                   setNovaChavePix("");
                 }}
                 className="flex-1 py-2 rounded-lg font-bold"
-                style={{ background: COLORS.accent, color: "#000" }}
+                style={{ background: COLORS.accent, color: "#0F0F10" }}
               >
                 Salvar
               </button>
@@ -1461,7 +1461,7 @@ function MototaxistaHome() {
                   carregarFinanceiro();
                 }}
                 className="flex-1 py-2 rounded-lg font-bold"
-                style={{ background: COLORS.accent, color: "#000" }}
+                style={{ background: COLORS.accent, color: "#0F0F10" }}
               >
                 {saqueBusy ? "Enviando..." : "CONFIRMAR SAQUE"}
               </button>
@@ -1503,7 +1503,7 @@ function EmptyState({
         <button
           onClick={action.onClick}
           className="mt-6 px-5 py-2.5 rounded-xl font-semibold text-[14px]"
-          style={{ background: COLORS.accent, color: "#000", boxShadow: "0 4px 12px rgba(0,168,132,0.35)" }}
+          style={{ background: COLORS.accent, color: "#0F0F10", boxShadow: "0 4px 12px rgba(0,168,132,0.35)" }}
         >
           {action.label}
         </button>
