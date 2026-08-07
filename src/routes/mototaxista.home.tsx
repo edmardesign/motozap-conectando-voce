@@ -677,15 +677,6 @@ function MototaxistaHome() {
   }
 
 
-  async function toggleDelivery() {
-    if (!user) return;
-    const novo = !aceitaDelivery;
-    const { error } = await db.from("mototaxistas").update({ aceita_delivery: novo }).eq("id", user.id);
-    if (error) return toast.error(error.message);
-    setAceitaDelivery(novo);
-    toast.success(novo ? "Aceitando Delivery" : "Delivery desativado");
-  }
-
   async function togglePegueAli() {
     if (!user) return;
     const novo = !aceitaPegueAli;
@@ -709,35 +700,6 @@ function MototaxistaHome() {
     toast.success("Preferências salvas");
   }
 
-
-  async function aceitarEntrega(e: Entrega) {
-    if (!user) return;
-    setBusy(true);
-    const { error, data } = await db
-      .from("entregas")
-      .update({ mototaxista_id: user.id, status: "aceita" })
-      .eq("id", e.id).eq("status", "aguardando")
-      .select().single();
-    setBusy(false);
-    if (error || !data) return toast.error("Não foi possível aceitar");
-    setEntregaAtual(data as Entrega);
-    toast.success("Entrega aceita!");
-  }
-
-  async function atualizarEntrega(status: "coletado" | "entregue") {
-    if (!entregaAtual) return;
-    setBusy(true);
-    const { error } = await db.from("entregas").update({ status }).eq("id", entregaAtual.id);
-    setBusy(false);
-    if (error) return toast.error(error.message);
-    if (status === "entregue") {
-      toast.success("Entrega concluída");
-      setEntregaAtual(null);
-    } else {
-      toast.info("Item coletado");
-      setEntregaAtual({ ...entregaAtual, status });
-    }
-  }
 
   // Raio expansivo: começa em 2km, +1km a cada 15s, máx 15km.
   // Corridas sem coords ou com passageiro na mesma cidade sempre aparecem após 45s.
@@ -828,8 +790,6 @@ function MototaxistaHome() {
     );
   }
 
-  const empAtiva = entregaAtual ? empresasMap[entregaAtual.empresa_id] : null;
-
   return (
     <main className="min-h-screen pb-24" style={{ background: COLORS.bg, color: COLORS.text }}>
       {/* HEADER */}
@@ -897,21 +857,6 @@ function MototaxistaHome() {
           <div className="flex flex-col items-end gap-1">
             <IOSSwitch checked={online} onChange={toggleOnline} disabled={busy} ariaLabel="Online" />
           </div>
-        </div>
-
-        {/* Card aceitar Delivery */}
-        <div
-          className="mt-4 rounded-xl p-4 flex items-center gap-3"
-          style={{ background: COLORS.card, boxShadow: CARD_SHADOW }}
-        >
-          <div className="text-2xl" aria-hidden><EmojiIcon e="🍕" /></div>
-          <div className="flex-1 min-w-0">
-            <div className="font-semibold text-[15px]">Aceitar Delivery</div>
-            <div className="text-[12px]" style={{ color: COLORS.textDim }}>
-              Chamados de empresas cadastradas
-            </div>
-          </div>
-          <IOSSwitch checked={aceitaDelivery} onChange={toggleDelivery} ariaLabel="Aceitar Delivery" />
         </div>
 
         {/* Card aceitar PEGUE ALI */}
@@ -1029,103 +974,6 @@ function MototaxistaHome() {
           )
         )}
 
-        {aba === "entregas" && (<>
-          <section className="px-5 mt-5 space-y-3">
-            <Link
-              to="/mototaxista/food"
-              className="flex items-center justify-between rounded-xl p-4"
-              style={{ background: COLORS.card, boxShadow: CARD_SHADOW, borderLeft: `4px solid ${COLORS.accent}` }}
-            >
-              <div>
-                <div className="font-bold text-[15px]" style={{ color: COLORS.text }}>Entregas de Comida 🍔</div>
-                <div className="text-[12px]" style={{ color: COLORS.textDim }}>Ver pedidos prontos para retirar</div>
-              </div>
-              <span className="text-lg" style={{ color: COLORS.accent }}>→</span>
-            </Link>
-            <Link
-              to="/mototaxista/mercado"
-              className="flex items-center justify-between rounded-xl p-4"
-              style={{ background: COLORS.card, boxShadow: CARD_SHADOW, borderLeft: `4px solid ${COLORS.accent}` }}
-            >
-              <div>
-                <div className="font-bold text-[15px]" style={{ color: COLORS.text }}>Entregas Mercado 🛒</div>
-                <div className="text-[12px]" style={{ color: COLORS.textDim }}>Ver pedidos de mercado prontos</div>
-              </div>
-              <span className="text-lg" style={{ color: COLORS.accent }}>→</span>
-            </Link>
-          </section>
-        </>)}
-
-        {aba === "entregas" && (
-          !aceitaDelivery ? (
-            <EmptyState
-              icon=""
-              title="Entregas desativadas"
-              subtitle="Ative 'Aceitar Delivery' para começar a receber chamados."
-              action={{ label: "ATIVAR AGORA", onClick: toggleDelivery }}
-            />
-          ) : entregaAtual ? (
-            <section className="px-5 mt-5">
-              <div className="rounded-xl p-5 space-y-3" style={{ background: COLORS.card, boxShadow: CARD_SHADOW }}>
-                <div className="text-[13px] font-semibold" style={{ color: COLORS.textDim }}><EmojiIcon e="🏢" /> {empAtiva?.nome ?? "Empresa"}</div>
-                <div className="space-y-1.5 text-[14px]">
-                  <div><EmojiIcon e="📍" /> Coleta: {entregaAtual.endereco_coleta}
-                    <a className="ml-1 underline text-[12px]" style={{ color: COLORS.accent }} href={`https://maps.google.com/?q=${encodeURIComponent(entregaAtual.endereco_coleta)}`} target="_blank" rel="noreferrer">Maps</a>
-                  </div>
-                  <div><EmojiIcon e="🏁" /> Entrega: {entregaAtual.endereco_entrega}
-                    <a className="ml-1 underline text-[12px]" style={{ color: COLORS.accent }} href={`https://maps.google.com/?q=${encodeURIComponent(entregaAtual.endereco_entrega)}`} target="_blank" rel="noreferrer">Maps</a>
-                  </div>
-                  {entregaAtual.descricao_item && <div style={{ color: COLORS.textDim }}><EmojiIcon e="📦" /> {entregaAtual.descricao_item}</div>}
-                  <div className="font-bold text-xl pt-1" style={{ color: COLORS.accent }}>{formatBRL(Number(entregaAtual.valor_combinado))}</div>
-                </div>
-                {empAtiva?.telefone && (
-                  <a href={whatsappLink(empAtiva.telefone, "Olá, sou seu mototaxista do Bora Zé! Delivery") ?? "#"} target="_blank" rel="noreferrer" className="btn-cta w-full text-center block">
-                    <EmojiIcon e="💬" /> WhatsApp empresa
-                  </a>
-                )}
-                {entregaAtual.status === "aceita" && <button onClick={() => atualizarEntrega("coletado")} disabled={busy} className="btn-cta w-full"><EmojiIcon e="📦" /> Coletado</button>}
-                {entregaAtual.status === "coletado" && <button onClick={() => atualizarEntrega("entregue")} disabled={busy} className="btn-cta w-full"><EmojiIcon e="✅" /> Entregue</button>}
-              </div>
-            </section>
-          ) : entregasAbertas.length === 0 ? (
-            <EmptyState
-              icon=""
-              pulse
-              title="Procurando entregas disponíveis..."
-              subtitle="Você será notificado assim que houver uma entrega na sua área."
-            />
-          ) : (
-            <section className="px-5 mt-5 space-y-3">
-              <h2 className="font-semibold text-[15px]" style={{ color: COLORS.textDim }}>
-                {entregasAbertas.length} {entregasAbertas.length === 1 ? "entrega disponível" : "entregas disponíveis"}
-              </h2>
-              {entregasAbertas.map((e) => {
-                const emp = empresasMap[e.empresa_id];
-                return (
-                  <div key={e.id} className="rounded-xl p-4 space-y-2" style={{ background: COLORS.card, boxShadow: CARD_SHADOW }}>
-                    <div className="text-[12px]" style={{ color: COLORS.textDim }}><EmojiIcon e="🏢" /> {emp?.nome ?? "—"}</div>
-                    <div className="text-[14px] space-y-1">
-                      <div><EmojiIcon e="📍" /> {e.endereco_coleta}</div>
-                      <div><EmojiIcon e="🏁" /> {e.endereco_entrega}</div>
-                      {e.descricao_item && <div style={{ color: COLORS.textDim }}><EmojiIcon e="📦" /> {e.descricao_item}</div>}
-                    </div>
-                    <div className="flex items-center justify-between pt-1">
-                      <div className="font-bold text-lg" style={{ color: COLORS.accent }}>{formatBRL(Number(e.valor_combinado))}</div>
-                      <button
-                        onClick={() => aceitarEntrega(e)} disabled={busy}
-                        className="px-4 py-2.5 rounded-xl font-bold text-[14px] disabled:opacity-60"
-                        style={{ background: COLORS.accent, color: "#000", boxShadow: "0 4px 12px rgba(0,168,132,0.35)" }}
-                      >
-                        ACEITAR
-                      </button>
-                    </div>
-                  </div>
-                );
-              })}
-            </section>
-          )
-        )}
-
         {aba === "financeiro" && (
           <section className="px-5 mt-5 space-y-3">
             {/* Filtros de período */}
@@ -1159,7 +1007,7 @@ function MototaxistaHome() {
             <div className="rounded-xl p-5" style={{ background: COLORS.card, boxShadow: CARD_SHADOW, border: `1px solid ${COLORS.accent}` }}>
               <div className="text-[11px] uppercase tracking-wide" style={{ color: COLORS.textDim }}>Total recebido no período</div>
               <div className="mt-1 font-bold text-3xl" style={{ color: COLORS.accent }}>
-                {formatBRL(ganhosCorridas + ganhosEntregas)}
+                {formatBRL(ganhosCorridas)}
               </div>
               <div className="mt-2 text-[11px]" style={{ color: COLORS.textDim }}>
                 {itensPeriodo.length} corrida(s) · pagamento direto com o passageiro (dinheiro/Pix pessoal)
@@ -1177,7 +1025,6 @@ function MototaxistaHome() {
                 {itensPeriodo.map((it) => {
                   const badge =
                     it.tipo === "pegue_ali" ? { label: "PEGUE ALI", emoji: "", cor: "#FFC107" }
-                    : it.tipo === "delivery" ? { label: "Delivery", emoji: "", cor: "#FF6EC7" }
                     : { label: "Corrida", emoji: "", cor: COLORS.accent };
                   const d = new Date(it.data);
                   return (
