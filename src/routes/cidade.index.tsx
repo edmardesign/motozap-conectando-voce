@@ -22,7 +22,7 @@ export const Route = createFileRoute("/cidade/")({
       {
         name: "description",
         content:
-          "Selecione sua cidade na Bahia para começar a usar o InterGO — mototáxi e delivery na palma da mão.",
+          "Selecione sua cidade na Bahia para começar a usar o InterGO — mototáxi na palma da mão.",
       },
       { property: "og:title", content: "Escolha sua cidade — InterGO" },
       {

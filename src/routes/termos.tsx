@@ -21,8 +21,8 @@ function TermosPage() {
         <section className="flex flex-col gap-3 text-white/85 text-[15px]">
           <h2 className="text-xl mt-4">1. Sobre o InterGO</h2>
           <p>
-            O <strong>InterGO</strong> é uma plataforma tecnológica que conecta passageiros, mototaxistas
-            autônomos e estabelecimentos de delivery em cidades do interior. O InterGO não é uma empresa de
+            O <strong>InterGO</strong> é uma plataforma tecnológica que conecta passageiros e mototaxistas
+            autônomos em cidades do interior. O InterGO não é uma empresa de
             transporte: atuamos exclusivamente como intermediário digital.
           </p>
 
@@ -51,8 +51,8 @@ function TermosPage() {
 
           <h2 className="text-xl mt-4">5. Pagamentos e Mensalidades</h2>
           <p>
-            Mototaxistas pagam mensalidade conforme o plano contratado (Mensal, Semestral ou Anual). Empresas de
-            delivery pagam mensalidade fixa. As corridas em si são pagas diretamente pelo passageiro ao
+            Mototaxistas pagam mensalidade conforme o plano contratado (Mensal, Semestral ou Anual).
+            As corridas em si são pagas diretamente pelo passageiro ao
             mototaxista, fora do aplicativo. O InterGO não retém valores de corrida.
           </p>
 

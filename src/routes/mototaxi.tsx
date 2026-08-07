@@ -13,7 +13,7 @@ export const Route = createFileRoute("/mototaxi")({
       { title: "InterGO Mototáxi — Cadastre-se e receba corridas" },
       { name: "description", content: "Instale o InterGO Mototáxi e comece a receber corridas na sua cidade." },
       { property: "og:title", content: "InterGO Mototáxi" },
-      { property: "og:description", content: "Receba corridas e entregas na sua cidade." },
+      { property: "og:description", content: "Receba corridas na sua cidade." },
     ],
     links: [{ rel: "manifest", href: "/manifest-mototaxi.webmanifest" }],
   }),

@@ -29,7 +29,6 @@ function PrivacidadePage() {
           <ul className="list-disc pl-6 flex flex-col gap-1">
             <li><strong>Cadastrais:</strong> nome, telefone, cidade e estado, data de aniversário.</li>
             <li><strong>Mototaxistas:</strong> adicionalmente CPF, endereço, CNH, dados da moto (modelo, placa, CRLV) e foto.</li>
-            <li><strong>Empresas:</strong> nome do estabelecimento, telefone, CPF ou CNPJ e cidade.</li>
             <li><strong>Localização:</strong> latitude e longitude coletadas apenas durante uma corrida ativa, para conectar passageiro e mototaxista.</li>
             <li><strong>Uso do app:</strong> histórico de corridas, avaliações, mensagens do chat (armazenadas por até 12 horas após o fim da corrida).</li>
           </ul>
@@ -37,7 +36,6 @@ function PrivacidadePage() {
           <h2 className="text-xl mt-4">2. Finalidade do tratamento</h2>
           <ul className="list-disc pl-6 flex flex-col gap-1">
             <li>Conectar passageiros a mototaxistas próximos.</li>
-            <li>Viabilizar entregas entre empresas cadastradas e mototaxistas.</li>
             <li>Calcular tarifas, distâncias e rotas.</li>
             <li>Prevenir fraudes e garantir a segurança da comunidade.</li>
             <li>Cumprir obrigações legais e regulatórias.</li>
