@@ -982,14 +982,6 @@ function PassageiroHomePage() {
         className="flex items-center justify-between px-4 py-3 z-30 shadow-md shrink-0 gap-2"
         style={{ background: c.headerBg, color: "#FFFFFF" }}
       >
-        <button
-          onClick={() => navigate({ to: "/passageiro/home" })}
-          aria-label="Trocar serviço"
-          className="p-2 rounded-full hover:bg-white/10 transition shrink-0"
-          title="Trocar serviço"
-        >
-          <ArrowLeft size={18} />
-        </button>
         <div className="min-w-0 flex-1">
           <div className="font-semibold truncate text-sm sm:text-base">
             Olá, {headerName}! <EmojiIcon e="👋" />
