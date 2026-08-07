@@ -1257,7 +1257,6 @@ function MototaxistaHome() {
         onChange={setAba}
         tabs={[
           { id: "corridas", label: "Corridas", icon: "" },
-          { id: "entregas", label: "Entregas", icon: "" },
           { id: "financeiro", label: "Financeiro", icon: "" },
           { id: "perfil", label: "Perfil", icon: "" },
         ]}
