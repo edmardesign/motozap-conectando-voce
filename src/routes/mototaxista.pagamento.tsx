@@ -102,7 +102,7 @@ function PagamentoPage() {
         className="pointer-events-none absolute inset-0 -z-10"
         style={{
           background:
-            "radial-gradient(60% 50% at 50% 0%, rgba(0,255,26,0.15), transparent 70%), radial-gradient(35% 35% at 10% 80%, rgba(0,255,26,0.07), transparent 70%)",
+            "radial-gradient(60% 50% at 50% 0%, rgba(61, 181, 74,0.15), transparent 70%), radial-gradient(35% 35% at 10% 80%, rgba(61, 181, 74,0.07), transparent 70%)",
         }}
       />
 
@@ -110,7 +110,7 @@ function PagamentoPage() {
         <header className="text-center">
           <span
             className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-button tracking-widest uppercase"
-            style={{ borderColor: "rgba(0,255,26,0.3)", background: "rgba(0,255,26,0.06)", color: "var(--color-neon)" }}
+            style={{ borderColor: "rgba(61, 181, 74,0.3)", background: "rgba(61, 181, 74,0.06)", color: "var(--color-neon)" }}
           >
             <QrCode className="w-3.5 h-3.5" />
             Pagamento via Pix
@@ -126,9 +126,9 @@ function PagamentoPage() {
         <div
           className="rounded-2xl border p-5 backdrop-blur-xl flex items-center justify-between"
           style={{
-            borderColor: "rgba(0,255,26,0.35)",
-            background: "linear-gradient(160deg, rgba(0,255,26,0.10), rgba(0,0,0,0.4) 60%)",
-            boxShadow: "0 20px 60px -20px rgba(0,255,26,0.4)",
+            borderColor: "rgba(61, 181, 74,0.35)",
+            background: "linear-gradient(160deg, rgba(61, 181, 74,0.10), rgba(0,0,0,0.4) 60%)",
+            boxShadow: "0 20px 60px -20px rgba(61, 181, 74,0.4)",
           }}
         >
           <div>
@@ -184,7 +184,7 @@ function PagamentoPage() {
         {/* Instrução */}
         <div
           className="rounded-2xl border p-4 backdrop-blur-md flex items-start gap-3"
-          style={{ borderColor: "rgba(0,255,26,0.2)", background: "rgba(0,255,26,0.05)" }}
+          style={{ borderColor: "rgba(61, 181, 74,0.2)", background: "rgba(61, 181, 74,0.05)" }}
         >
           <Clock className="w-5 h-5 mt-0.5 shrink-0" style={{ color: "var(--color-neon)" }} />
           <p className="text-sm text-white/80 font-sans leading-relaxed">

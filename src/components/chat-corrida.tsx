@@ -245,7 +245,7 @@ export function ChatCorrida({
           style={{ background: "#00A884" }}
           aria-label="Enviar"
         >
-          <span style={{ color: "#000", fontSize: 20 }}><EmojiIcon e="➤" /></span>
+          <span style={{ color: "#0F0F10", fontSize: 20 }}><EmojiIcon e="➤" /></span>
         </button>
       </div>
     </div>

@@ -31,14 +31,14 @@ export function TabBar<T extends string>({ tabs, active, onChange }: TabBarProps
             type="button"
             onClick={() => onChange(t.id)}
             className="flex-1 relative flex flex-col items-center justify-center gap-1 py-2.5 transition-colors"
-            style={{ color: isActive ? "#00FF1A" : "#8696A0" }}
+            style={{ color: isActive ? "#3DB54A" : "#8696A0" }}
           >
             <span className="text-xl leading-none" aria-hidden>{t.icon}</span>
             <span className="text-[11px] font-medium tracking-wide">{t.label}</span>
             {isActive && (
               <span
                 className="absolute top-0 left-1/2 -translate-x-1/2 h-[3px] w-10 rounded-b-full"
-                style={{ background: "#00FF1A" }}
+                style={{ background: "#3DB54A" }}
               />
             )}
           </button>

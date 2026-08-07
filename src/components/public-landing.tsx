@@ -106,7 +106,7 @@ export function PublicLanding({ persona, title, subtitle, iconUrl, accent, manif
         alignItems: "center",
         justifyContent: "space-between",
         padding: "calc(env(safe-area-inset-top,0px) + 24px) 24px calc(env(safe-area-inset-bottom,0px) + 24px)",
-        background: "#000000",
+        background: "#0F0F10",
         color: "#F5F5F5",
         overflowX: "hidden",
       }}
@@ -149,7 +149,7 @@ export function PublicLanding({ persona, title, subtitle, iconUrl, accent, manif
               fontSize: 18,
               letterSpacing: "0.06em",
               background: installed ? "#111" : accent,
-              color: installed ? accent : "#000",
+              color: installed ? accent : "#0F0F10",
               border: installed ? `2px solid ${accent}` : "none",
               boxShadow: installed ? "none" : `0 0 32px ${accent}66`,
               display: "flex",
@@ -244,7 +244,7 @@ function IosInstallModal({ title, iconUrl, accent, mode, inAppName, onClose }: M
           <img
             src={iconUrl}
             alt={title}
-            style={{ width: 48, height: 48, borderRadius: 12, background: "#000", flexShrink: 0 }}
+            style={{ width: 48, height: 48, borderRadius: 12, background: "#0F0F10", flexShrink: 0 }}
           />
           <div style={{ flex: 1 }}>
             <p style={{ fontSize: 11, letterSpacing: "0.24em", color: "rgba(255,255,255,0.55)" }}>INSTALAR</p>
@@ -310,7 +310,7 @@ function IosInstallModal({ title, iconUrl, accent, mode, inAppName, onClose }: M
                   height: 28,
                   borderRadius: 999,
                   background: accent,
-                  color: "#000",
+                  color: "#0F0F10",
                   fontWeight: 900,
                   display: "flex",
                   alignItems: "center",
@@ -348,7 +348,7 @@ function IosInstallModal({ title, iconUrl, accent, mode, inAppName, onClose }: M
               fontSize: 15,
               letterSpacing: "0.06em",
               background: accent,
-              color: "#000",
+              color: "#0F0F10",
               border: "none",
               cursor: "pointer",
             }}

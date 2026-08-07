@@ -34,9 +34,9 @@ export const Route = createFileRoute("/cadastro/passageiro")({
 });
 
 const TOTAL_STEPS = 5;
-const BG = "#000000";
+const BG = "#0F0F10";
 const FG = "#F5F5F5";
-const ACCENT = "#00FF1A";
+const ACCENT = "#3DB54A";
 const CARD = "#0a0a0a";
 
 // Steps:
@@ -438,7 +438,7 @@ function StepAniversario({
         onClick={() => { if (valid) onAdvance(); }}
         disabled={!valid}
         className="w-full py-4 rounded-xl text-base font-semibold mb-3 disabled:opacity-40"
-        style={{ background: ACCENT, color: "#000" }}
+        style={{ background: ACCENT, color: "#0F0F10" }}
       >
         Confirmar
       </button>
@@ -555,7 +555,7 @@ function StepDone({
       <button
         onClick={onStart}
         className="w-full py-4 rounded-2xl font-bold"
-        style={{ background: ACCENT, color: "#000", fontSize: 15 }}
+        style={{ background: ACCENT, color: "#0F0F10", fontSize: 15 }}
       >
         {ctaLabel}
       </button>

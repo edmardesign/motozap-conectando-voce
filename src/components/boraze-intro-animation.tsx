@@ -65,7 +65,7 @@ export function BoraZeIntroAnimation({
           style={{
             width: "min(85vw, 320px)",
             height: "auto",
-            filter: "drop-shadow(0 0 24px rgba(0,255,26,0.35))",
+            filter: "drop-shadow(0 0 24px rgba(61, 181, 74,0.35))",
           }}
         />
       </div>
@@ -94,7 +94,7 @@ export function BoraZeIntroAnimation({
           height: "auto",
           opacity: phase === "icon" ? 1 : 0,
           transition: "opacity 500ms ease-in-out",
-          filter: "drop-shadow(0 0 32px rgba(0,255,26,0.5))",
+          filter: "drop-shadow(0 0 32px rgba(61, 181, 74,0.5))",
         }}
       />
       <img
@@ -107,7 +107,7 @@ export function BoraZeIntroAnimation({
           opacity: phase === "text" ? 1 : 0,
           transform: phase === "text" ? "scale(1)" : "scale(0.92)",
           transition: "opacity 500ms ease-out, transform 500ms ease-out",
-          filter: "drop-shadow(0 0 24px rgba(0,255,26,0.4))",
+          filter: "drop-shadow(0 0 24px rgba(61, 181, 74,0.4))",
         }}
       />
     </div>

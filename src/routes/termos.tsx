@@ -79,7 +79,7 @@ function TermosPage() {
           <h2 className="text-xl mt-4">9. Contato</h2>
           <p>
             Dúvidas ou solicitações:{" "}
-            <a href="mailto:suporte@borazeapp.com.br" className="underline" style={{ color: "#00FF1A" }}>
+            <a href="mailto:suporte@borazeapp.com.br" className="underline" style={{ color: "#3DB54A" }}>
               suporte@borazeapp.com.br
             </a>
           </p>

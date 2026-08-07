@@ -95,11 +95,11 @@ function EscolherCidade() {
           <img
             src={logoMz.url}
             alt="InterGO"
-            className="w-40 h-auto drop-shadow-[0_0_20px_rgba(0,255,26,0.35)]"
+            className="w-40 h-auto drop-shadow-[0_0_20px_rgba(61, 181, 74,0.35)]"
           />
           <h1
             className="text-2xl font-black tracking-tight"
-            style={{ color: "#00FF1A", letterSpacing: "0.02em" }}
+            style={{ color: "#3DB54A", letterSpacing: "0.02em" }}
           >
             Escolha sua cidade na BAHIA
           </h1>
@@ -126,7 +126,7 @@ function EscolherCidade() {
 
         <div
           className="flex-1 rounded-2xl border border-white/10 bg-black/40 overflow-hidden"
-          style={{ boxShadow: "0 0 24px rgba(0,255,26,0.08)" }}
+          style={{ boxShadow: "0 0 24px rgba(61, 181, 74,0.08)" }}
         >
           {loading ? (
             <div className="p-6 text-center text-sm text-white/60">Carregando cidades...</div>
@@ -150,7 +150,7 @@ function EscolherCidade() {
                       {ativa && (
                         <span
                           className="text-xs font-bold"
-                          style={{ color: "#00FF1A" }}
+                          style={{ color: "#3DB54A" }}
                         >
                           ✓ atual
                         </span>

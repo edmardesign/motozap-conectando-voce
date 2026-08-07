@@ -172,7 +172,7 @@ function PainelMunicipal() {
             {ctx.nivel !== "embaixador" && ctx.is_principal && (
               <button
                 onClick={() => navigate({ to: "/adm/gestao" })}
-                className="text-xs text-[#00FF1A] hover:underline"
+                className="text-xs text-[#3DB54A] hover:underline"
               >
                 → Gestão
               </button>
@@ -216,7 +216,7 @@ function PainelMunicipal() {
                 onClick={() => setTab(a.id)}
                 aria-current={tab === a.id ? "page" : undefined}
                 className={`whitespace-nowrap rounded-lg px-3 py-1.5 text-sm ${
-                  tab === a.id ? "bg-[#00FF1A] text-black font-semibold" : "text-white/80 hover:bg-white/5"
+                  tab === a.id ? "bg-[#3DB54A] text-black font-semibold" : "text-white/80 hover:bg-white/5"
                 }`}
               >
                 {a.label}
@@ -495,7 +495,7 @@ function TabMototaxistas({
               {podeAprovar && r.moto && !r.moto.mensalidade_ativa && (
                 <button
                   onClick={() => acaoAprovar(r.id)}
-                  className="rounded-lg bg-[#00FF1A] px-2 py-1 text-xs font-semibold text-black hover:opacity-90"
+                  className="rounded-lg bg-[#3DB54A] px-2 py-1 text-xs font-semibold text-black hover:opacity-90"
                 >
                   Aprovar (30d)
                 </button>
@@ -608,7 +608,7 @@ function TabSaques({ cidadeId, podeAdmin }: { cidadeId: string | null; podeAdmin
             </div>
             {podeAdmin && r.status === "pendente" && (
               <button onClick={() => aprovarSaque(r.id)}
-                className="rounded-lg bg-[#00FF1A] px-3 py-1 text-xs font-semibold text-black hover:opacity-90">
+                className="rounded-lg bg-[#3DB54A] px-3 py-1 text-xs font-semibold text-black hover:opacity-90">
                 Aprovar
               </button>
             )}

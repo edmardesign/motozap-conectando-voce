@@ -29,10 +29,10 @@ export const Route = createFileRoute("/mototaxista/cadastro")({
 });
 
 const COLORS = {
-  bg: "#000000",
+  bg: "#0F0F10",
   panel: "#1A2C33",
-  neon: "#00FF1A",
-  neonText: "#000000",
+  neon: "#3DB54A",
+  neonText: "#0F0F10",
   text: "#F5F5F5",
 };
 
@@ -251,14 +251,14 @@ function MototaxistaCadastroWizard() {
       <div className="px-4">
         <div
           className="h-2.5 w-full rounded-full overflow-hidden"
-          style={{ background: "rgba(255,255,255,0.18)", border: "1px solid rgba(0,255,26,0.25)" }}
+          style={{ background: "rgba(255,255,255,0.18)", border: "1px solid rgba(61, 181, 74,0.25)" }}
         >
           <div
             className="h-full transition-all duration-300"
             style={{
               width: `${(step / TOTAL_STEPS) * 100}%`,
               background: COLORS.neon,
-              boxShadow: "0 0 12px rgba(0,255,26,0.7)",
+              boxShadow: "0 0 12px rgba(61, 181, 74,0.7)",
             }}
           />
         </div>
@@ -440,9 +440,9 @@ function StepMoto({
           className="w-full bg-transparent border-2 border-white/20 rounded-xl px-4 py-3.5 text-base outline-none focus:border-[#00FF00]"
           style={{ color: COLORS.text }}
         >
-          <option value="" style={{ color: "#000" }}>Ano da moto</option>
+          <option value="" style={{ color: "#0F0F10" }}>Ano da moto</option>
           {anos.map((a) => (
-            <option key={a} value={String(a)} style={{ color: "#000" }}>{a}</option>
+            <option key={a} value={String(a)} style={{ color: "#0F0F10" }}>{a}</option>
           ))}
         </select>
         <NeonInput
@@ -469,7 +469,7 @@ function StepMoto({
                   onClick={() => update({ cor: c })}
                   className={`py-2.5 rounded-lg border font-semibold text-sm transition ${
                     active
-                      ? "bg-[#00FF1A] text-black border-[#00FF1A]"
+                      ? "bg-[#3DB54A] text-black border-[#3DB54A]"
                       : "bg-white/5 text-white border-white/10 hover:border-white/30"
                   }`}
                 >

@@ -7,7 +7,7 @@
 /* Hard baseline — evita flash branco no Android antes/durante hidratação
    e em cenários de PWA standalone onde utilitários podem não estar aplicados ainda. */
 html, body {
-  background: #000000;
+  background: #0F0F10;
   color: #F5F5F5;
   min-height: 100dvh;
   min-height: 100vh; /* fallback */
@@ -53,30 +53,30 @@ body { overflow-x: hidden; }
 :root {
   --radius: 0.875rem;
   /* Neon green / black palette */
-  --background: #000000;
+  --background: #0F0F10;
   --foreground: #F5F5F5;
-  --card: #000000;
+  --card: #0F0F10;
   --card-foreground: #F5F5F5;
-  --popover: #000000;
+  --popover: #0F0F10;
   --popover-foreground: #F5F5F5;
-  --primary: #00FF1A;
-  --primary-foreground: #000000;
+  --primary: #3DB54A;
+  --primary-foreground: #0F0F10;
   --secondary: #4A4A4A;
   --secondary-foreground: #F5F5F5;
   --muted: #4A4A4A;
   --muted-foreground: #D9D9D9;
-  --accent: #00FF1A;
-  --accent-foreground: #000000;
-  --neon: #00FF1A;
-  --neon-foreground: #000000;
-  --hero: #00FF1A;
-  --hero-foreground: #000000;
+  --accent: #3DB54A;
+  --accent-foreground: #0F0F10;
+  --neon: #3DB54A;
+  --neon-foreground: #0F0F10;
+  --hero: #3DB54A;
+  --hero-foreground: #0F0F10;
   --destructive: oklch(0.62 0.24 27);
   --destructive-foreground: #F5F5F5;
-  --border: rgba(0, 255, 26, 0.25);
-  --input: rgba(0, 255, 26, 0.20);
-  --ring: #00FF1A;
-  --neon-glow: rgba(0, 255, 0, 0.6);
+  --border: rgba(61, 181, 74, 0.25);
+  --input: rgba(61, 181, 74, 0.20);
+  --ring: #3DB54A;
+  --neon-glow: rgba(61, 181, 74, 0.6);
 }
 
 @layer base {
@@ -127,10 +127,10 @@ body { overflow-x: hidden; }
   justify-content: center;
   gap: 0.5rem;
   transition: transform 0.15s ease, filter 0.15s ease, box-shadow 0.15s ease;
-  box-shadow: 0 0 24px var(--neon-glow), 0 8px 24px -8px rgba(0, 255, 0, 0.45);
+  box-shadow: 0 0 24px var(--neon-glow), 0 8px 24px -8px rgba(61, 181, 74, 0.45);
   &:hover:not(:disabled) {
     filter: brightness(1.1);
-    box-shadow: 0 0 32px var(--neon-glow), 0 8px 28px -6px rgba(0, 255, 0, 0.6);
+    box-shadow: 0 0 32px var(--neon-glow), 0 8px 28px -6px rgba(61, 181, 74, 0.6);
   }
   &:active:not(:disabled) { transform: scale(0.98); }
   &:disabled { opacity: 0.6; cursor: not-allowed; }
@@ -151,7 +151,7 @@ body { overflow-x: hidden; }
   justify-content: center;
   gap: 0.5rem;
   transition: transform 0.15s ease, filter 0.15s ease;
-  box-shadow: 0 0 28px var(--neon-glow), 0 12px 30px -10px rgba(0, 255, 0, 0.5);
+  box-shadow: 0 0 28px var(--neon-glow), 0 12px 30px -10px rgba(61, 181, 74, 0.5);
   &:hover:not(:disabled) { filter: brightness(1.08); }
   &:active:not(:disabled) { transform: scale(0.98); }
   &:disabled { opacity: 0.6; cursor: not-allowed; }
@@ -172,9 +172,9 @@ body { overflow-x: hidden; }
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  box-shadow: 0 0 12px rgba(0, 255, 0, 0.25);
+  box-shadow: 0 0 12px rgba(61, 181, 74, 0.25);
   &:hover:not(:disabled) {
-    background-color: rgba(0, 255, 26, 0.1);
+    background-color: rgba(61, 181, 74, 0.1);
     box-shadow: 0 0 20px var(--neon-glow);
   }
   &:disabled { opacity: 0.6; cursor: not-allowed; }
@@ -185,7 +185,7 @@ body { overflow-x: hidden; }
   color: var(--color-foreground);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-xl);
-  box-shadow: 0 12px 32px -12px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(0, 255, 26, 0.05);
+  box-shadow: 0 12px 32px -12px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(61, 181, 74, 0.05);
 }
 
 @utility input-mz {
@@ -200,7 +200,7 @@ body { overflow-x: hidden; }
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
   &:focus {
     border-color: var(--color-neon);
-    box-shadow: 0 0 0 3px rgba(0, 255, 26, 0.2);
+    box-shadow: 0 0 0 3px rgba(61, 181, 74, 0.2);
   }
 }
 
@@ -208,7 +208,7 @@ body { overflow-x: hidden; }
   width: 3rem;
   height: 3rem;
   border-radius: 9999px;
-  border: 4px solid rgba(0, 255, 26, 0.2);
+  border: 4px solid rgba(61, 181, 74, 0.2);
   border-top-color: var(--color-neon);
   animation: spin 1s linear infinite;
 }

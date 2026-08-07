@@ -23,9 +23,9 @@ export const Route = createFileRoute("/passageiro/")({
       title="USUÁRIO"
       subtitle="Peça seu mototáxi em minutos"
       iconUrl={iconPax.url}
-      accent="#00FF1A"
+      accent="#3DB54A"
       manifestHref="/manifest-passageiro.webmanifest"
-      themeColor="#00FF1A"
+      themeColor="#3DB54A"
       loginHref="/auth/passageiro"
     />
   ),
