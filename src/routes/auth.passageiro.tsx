@@ -12,7 +12,7 @@ export const Route = createFileRoute("/auth/passageiro")({
     <AuthForm
       role="passageiro"
       title="Sou Passageiro"
-      redirectTo="/escolher"
+      redirectTo="/passageiro/home"
       formMode="login"
       signupRedirectTo="/cadastro/passageiro"
     />

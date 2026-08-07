@@ -16,7 +16,6 @@ import { TermsCheckbox } from "@/components/terms-checkbox";
 import { EmojiIcon } from "@/components/emoji-icon";
 
 
-import { clearServiceIntent } from "@/lib/service-intent";
 
 type Search = { next?: string };
 
@@ -258,7 +257,6 @@ function CadastroPassageiro() {
             ctaLabel="ESCOLHER MINHA CIDADE"
             onStart={async () => {
               // Novo fluxo: cadastro → escolha de cidade → serviços da cidade.
-              clearServiceIntent();
               const { data } = await supabase.auth.getSession();
               if (data.session) navigate({ to: "/cidade" });
               else navigate({ to: "/auth/passageiro" });

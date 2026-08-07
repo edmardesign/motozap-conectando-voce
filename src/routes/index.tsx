@@ -7,7 +7,7 @@ import { getCidadeLocal } from "@/lib/cidade-local";
 // Rota raiz — novo fluxo:
 // 1) Sem sessão  → landing pública /passageiro (leva ao cadastro).
 // 2) Com sessão e SEM cidade escolhida → /cidade (escolha após o cadastro).
-// 3) Com sessão e COM cidade → /escolher (hub do cliente).
+// 3) Com sessão e COM cidade → /passageiro/home.
 export const Route = createFileRoute("/")({
   ssr: false,
   component: IndexGate,
@@ -28,7 +28,7 @@ function IndexGate() {
         navigate({ to: "/cidade", replace: true });
         return;
       }
-      navigate({ to: "/escolher", replace: true });
+      navigate({ to: "/passageiro/home", replace: true });
     })();
   }, [navigate]);
 

@@ -983,7 +983,7 @@ function PassageiroHomePage() {
         style={{ background: c.headerBg, color: "#FFFFFF" }}
       >
         <button
-          onClick={() => navigate({ to: "/escolher" })}
+          onClick={() => navigate({ to: "/passageiro/home" })}
           aria-label="Trocar serviço"
           className="p-2 rounded-full hover:bg-white/10 transition shrink-0"
           title="Trocar serviço"

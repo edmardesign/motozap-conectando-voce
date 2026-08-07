@@ -84,7 +84,7 @@ function EscolherCidade() {
     // Persiste também no perfil (best-effort, não bloqueia a navegação).
     await salvarCidadeNoPerfil("BA", cidade);
     const next =
-      search?.next && search.next.startsWith("/") ? search.next : "/cidade/servicos";
+      search?.next && search.next.startsWith("/") ? search.next : "/passageiro/home";
     navigate({ to: next, replace: true });
   }
 

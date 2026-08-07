@@ -15,7 +15,7 @@ export const Route = createFileRoute("/passageiro/")({
   }),
   beforeLoad: async () => {
     const { data } = await supabase.auth.getSession();
-    if (data.session) throw redirect({ to: "/escolher" });
+    if (data.session) throw redirect({ to: "/passageiro/home" });
   },
   component: () => (
     <PublicLanding
