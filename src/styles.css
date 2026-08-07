@@ -63,7 +63,7 @@ body { overflow-x: hidden; }
   --popover: #17171A;
   --popover-foreground: #FFFFFF;
   --primary: #3DB54A;
-  --primary-foreground: #FFFFFF;
+  --primary-foreground: #0F0F10;
   --secondary: #4A4A4A;
   --secondary-foreground: #FFFFFF;
   --muted: #4A4A4A;
@@ -71,9 +71,9 @@ body { overflow-x: hidden; }
   --accent: #4CC65A;
   --accent-foreground: #0F0F10;
   --neon: #3DB54A;
-  --neon-foreground: #FFFFFF;
+  --neon-foreground: #0F0F10;
   --hero: #3DB54A;
-  --hero-foreground: #FFFFFF;
+  --hero-foreground: #0F0F10;
   --destructive: oklch(0.62 0.24 27);
   --destructive-foreground: #FFFFFF;
   --border: rgba(217, 217, 217, 0.16);
