@@ -18,28 +18,28 @@ export const personaConfig: Record<
 > = {
   passageiro: {
     manifest: "/manifest-passageiro.webmanifest",
-    title: "Bora Zé! Passageiro",
+    title: "InterGO Passageiro",
     themeColor: "#00FF1A",
     startPath: "/passageiro",
     allowedPrefixes: ["/passageiro", "/auth/passageiro", "/cadastro/passageiro", "/splash"],
   },
   mototaxista: {
     manifest: "/manifest-mototaxista.webmanifest",
-    title: "Bora Zé! Mototaxista",
+    title: "InterGO Mototaxista",
     themeColor: "#00FF1A",
     startPath: "/mototaxista",
     allowedPrefixes: ["/mototaxista", "/splash"],
   },
   admin: {
     manifest: "/manifest-admin.webmanifest",
-    title: "Bora Zé! Admin",
+    title: "InterGO Admin",
     themeColor: "#000000",
     startPath: "/adm",
     allowedPrefixes: ["/adm", "/admin", "/auth"],
   },
   root: {
     manifest: "/manifest.webmanifest",
-    title: "Bora Zé! — Mototáxi rápido na sua cidade",
+    title: "InterGO — Mototáxi rápido na sua cidade",
     themeColor: "#000000",
     startPath: "/splash",
     allowedPrefixes: [], // no restriction

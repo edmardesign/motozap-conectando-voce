@@ -10,7 +10,7 @@ import { EmojiIcon } from "@/components/emoji-icon";
 export const Route = createFileRoute("/passageiro/corridas")({
   component: PassageiroCorridas,
   head: () => ({
-    meta: [{ title: "Minhas corridas — Bora Zé!" }],
+    meta: [{ title: "Minhas corridas — InterGO" }],
   }),
 });
 

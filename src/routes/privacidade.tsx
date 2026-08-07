@@ -3,8 +3,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 export const Route = createFileRoute("/privacidade")({
   head: () => ({
     meta: [
-      { title: "Política de Privacidade — Bora Zé!" },
-      { name: "description", content: "Política de Privacidade do aplicativo Bora Zé! em conformidade com a LGPD." },
+      { title: "Política de Privacidade — InterGO" },
+      { name: "description", content: "Política de Privacidade do aplicativo InterGO em conformidade com a LGPD." },
     ],
   }),
   component: PrivacidadePage,
@@ -20,7 +20,7 @@ function PrivacidadePage() {
 
         <section className="flex flex-col gap-3 text-white/85 text-[15px]">
           <p className="mt-2">
-            Esta Política descreve como o <strong>Bora Zé!</strong> coleta, usa, armazena e compartilha dados
+            Esta Política descreve como o <strong>InterGO</strong> coleta, usa, armazena e compartilha dados
             pessoais de seus usuários, em conformidade com a{" "}
             <strong>Lei Geral de Proteção de Dados (Lei nº 13.709/2018 — LGPD)</strong>.
           </p>
@@ -106,7 +106,7 @@ function PrivacidadePage() {
         </section>
 
         <p className="text-white/50 text-xs mt-6">
-          Ao usar o Bora Zé!, você declara ter lido e concordado com esta Política de Privacidade.
+          Ao usar o InterGO, você declara ter lido e concordado com esta Política de Privacidade.
         </p>
       </div>
     </main>

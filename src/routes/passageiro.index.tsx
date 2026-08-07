@@ -6,10 +6,10 @@ import iconPax from "@/assets/btn-passageiro.png.asset.json";
 export const Route = createFileRoute("/passageiro/")({
   head: () => ({
     meta: [
-      { title: "Bora Zé! — Delivery e Mototaxi na sua cidade" },
-      { name: "description", content: "Peça comida ou mototaxi em minutos com o Bora Zé!" },
-      { property: "og:title", content: "Bora Zé! — Delivery e Mototaxi na sua cidade" },
-      { property: "og:description", content: "Peça comida ou mototaxi em minutos com o Bora Zé!" },
+      { title: "InterGO — Delivery e Mototaxi na sua cidade" },
+      { name: "description", content: "Peça comida ou mototaxi em minutos com o InterGO" },
+      { property: "og:title", content: "InterGO — Delivery e Mototaxi na sua cidade" },
+      { property: "og:description", content: "Peça comida ou mototaxi em minutos com o InterGO" },
     ],
     links: [{ rel: "manifest", href: "/manifest-passageiro.webmanifest" }],
   }),

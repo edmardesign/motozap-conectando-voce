@@ -6,11 +6,11 @@ import { EmojiIcon } from "@/components/emoji-icon";
 export const Route = createFileRoute("/mototaxista/planos")({
   head: () => ({
     meta: [
-      { title: "Comece a receber mais corridas — Bora Zé!" },
+      { title: "Comece a receber mais corridas — InterGO" },
       {
         name: "description",
         content:
-          "Entre para a plataforma Bora Zé! e conecte-se a passageiros, empresas e entregas na sua cidade.",
+          "Entre para a plataforma InterGO e conecte-se a passageiros, empresas e entregas na sua cidade.",
       },
     ],
   }),

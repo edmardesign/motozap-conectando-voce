@@ -26,8 +26,8 @@ export const Route = createFileRoute("/cadastro/passageiro")({
   }),
   head: () => ({
     meta: [
-      { title: "Cadastro — Bora Zé!" },
-      { name: "description", content: "Crie sua conta única para usar Delivery, Mercado ou Moto Táxi do Bora Zé!" },
+      { title: "Cadastro — InterGO" },
+      { name: "description", content: "Crie sua conta única para usar Delivery, Mercado ou Moto Táxi do InterGO" },
     ],
   }),
   component: CadastroPassageiro,

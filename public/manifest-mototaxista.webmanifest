@@ -1,6 +1,6 @@
 {
-  "name": "Bora Zé! Mototaxista",
-  "short_name": "Bora Zé! Moto",
+  "name": "InterGO Mototaxista",
+  "short_name": "InterGO Moto",
   "description": "Receba corridas e entregas na sua cidade",
   "start_url": "/mototaxista",
   "scope": "/",

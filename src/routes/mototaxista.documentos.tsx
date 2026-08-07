@@ -261,7 +261,7 @@ function MeusDocumentos() {
         </div>
 
         <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 12, marginTop: 24, textAlign: "center" }}>
-          Seus documentos são privados. Apenas você e a equipe autorizada do Bora Zé!
+          Seus documentos são privados. Apenas você e a equipe autorizada do InterGO
           podem visualizá-los.
         </p>
       </div>

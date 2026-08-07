@@ -8,7 +8,7 @@ import { useAuth } from "@/hooks/use-auth";
 export const Route = createFileRoute("/mototaxista/foto")({
   head: () => ({
     meta: [
-      { title: "Foto de perfil — Bora Zé!" },
+      { title: "Foto de perfil — InterGO" },
       { name: "description", content: "Envie sua foto para finalizar o cadastro de mototaxista." },
     ],
   }),

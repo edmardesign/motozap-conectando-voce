@@ -1,4 +1,4 @@
-// Server functions — Gestão de Tarifas Bora Zé!
+// Server functions — Gestão de Tarifas InterGO
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 

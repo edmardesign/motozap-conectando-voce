@@ -4,8 +4,8 @@ import { AuthForm } from "@/components/auth-form";
 export const Route = createFileRoute("/auth/mototaxista")({
   head: () => ({
     meta: [
-      { title: "Entrar como Mototaxista — Bora Zé!" },
-      { name: "description", content: "Acesse sua conta de mototaxista do Bora Zé! para receber corridas." },
+      { title: "Entrar como Mototaxista — InterGO" },
+      { name: "description", content: "Acesse sua conta de mototaxista do InterGO para receber corridas." },
     ],
   }),
   component: () => (

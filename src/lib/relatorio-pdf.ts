@@ -200,7 +200,7 @@ export async function gerarRelatorioPdf(opts: {
     doc.setFontSize(8);
     doc.setTextColor(130);
     const ts = new Date().toLocaleString("pt-BR");
-    doc.text(`Gerado pelo Bora Zé! em ${ts}`, 10, pageH - 6);
+    doc.text(`Gerado pelo InterGO em ${ts}`, 10, pageH - 6);
     doc.text(`${i}/${total_pages}`, pageW - 10, pageH - 6, { align: "right" });
   }
 

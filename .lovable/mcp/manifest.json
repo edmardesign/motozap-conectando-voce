@@ -13,13 +13,13 @@
     "server": {
       "name": "motozap-mcp",
       "version": "0.1.0",
-      "title": "Bora Zé!"
+      "title": "InterGO"
     },
     "tools": [
       {
         "name": "get_my_profile",
         "title": "Get my profile",
-        "description": "Return the signed-in Bora Zé! user's profile (name, phone, city, user type: passageiro or mototaxista).",
+        "description": "Return the signed-in InterGO user's profile (name, phone, city, user type: passageiro or mototaxista).",
         "annotations": {
           "readOnlyHint": true,
           "idempotentHint": true,
@@ -35,7 +35,7 @@
       {
         "name": "list_my_rides",
         "title": "List my rides",
-        "description": "List the signed-in user's most recent Bora Zé! rides (as passenger or mototaxista). Ordered newest first.",
+        "description": "List the signed-in user's most recent InterGO rides (as passenger or mototaxista). Ordered newest first.",
         "annotations": {
           "readOnlyHint": true,
           "idempotentHint": true,

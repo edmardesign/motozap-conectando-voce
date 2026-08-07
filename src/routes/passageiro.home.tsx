@@ -490,7 +490,7 @@ function PassageiroHomePage() {
   }, [origem, origemFocused, profile?.cidade, profile?.estado]);
 
   // ----- Calcular tarifa quando origem+destino prontos -----
-  // Usa RPC calcular_preco_corrida (novo modelo: valor-base municipal + Taxa Bora Zé!,
+  // Usa RPC calcular_preco_corrida (novo modelo: valor-base municipal + Taxa InterGO,
   // com regras por bairro sobrescrevendo o valor-base). O snapshot é gravado
   // automaticamente pelo trigger `trg_snapshot_preco_corrida` no INSERT.
   const computeTarifa = useCallback(
@@ -1860,7 +1860,7 @@ function SetupPanel(props: {
               </div>
               {props.tarifaInfo.adicional > 0 && (
                 <div className="flex items-center justify-between">
-                  <span><EmojiIcon e="⚡" /> Taxa Bora Zé!</span>
+                  <span><EmojiIcon e="⚡" /> Taxa InterGO</span>
                   <span>+{formatBRL(props.tarifaInfo.adicional)}</span>
                 </div>
               )}
@@ -2031,7 +2031,7 @@ function DriverPanel({
 
       <div className="flex gap-2">
         <a
-          href={whatsappLink(moto.telefone, "Oi, sou seu passageiro do Bora Zé!!") || "#"}
+          href={whatsappLink(moto.telefone, "Oi, sou seu passageiro do InterGO!") || "#"}
           target="_blank"
           rel="noreferrer"
           className="flex-1 rounded-xl py-2.5 text-center text-sm font-medium flex items-center justify-center gap-1.5"

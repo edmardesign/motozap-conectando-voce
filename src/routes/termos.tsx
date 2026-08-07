@@ -3,8 +3,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 export const Route = createFileRoute("/termos")({
   head: () => ({
     meta: [
-      { title: "Termos de Uso — Bora Zé!" },
-      { name: "description", content: "Termos de Uso do aplicativo Bora Zé!." },
+      { title: "Termos de Uso — InterGO" },
+      { name: "description", content: "Termos de Uso do aplicativo InterGO." },
     ],
   }),
   component: TermosPage,
@@ -19,10 +19,10 @@ function TermosPage() {
         <p className="text-white/60 text-sm">Versão 1.0 — Última atualização: 19/07/2026</p>
 
         <section className="flex flex-col gap-3 text-white/85 text-[15px]">
-          <h2 className="text-xl mt-4">1. Sobre o Bora Zé!</h2>
+          <h2 className="text-xl mt-4">1. Sobre o InterGO</h2>
           <p>
-            O <strong>Bora Zé!</strong> é uma plataforma tecnológica que conecta passageiros, mototaxistas
-            autônomos e estabelecimentos de delivery em cidades do interior. O Bora Zé! não é uma empresa de
+            O <strong>InterGO</strong> é uma plataforma tecnológica que conecta passageiros, mototaxistas
+            autônomos e estabelecimentos de delivery em cidades do interior. O InterGO não é uma empresa de
             transporte: atuamos exclusivamente como intermediário digital.
           </p>
 
@@ -53,19 +53,19 @@ function TermosPage() {
           <p>
             Mototaxistas pagam mensalidade conforme o plano contratado (Mensal, Semestral ou Anual). Empresas de
             delivery pagam mensalidade fixa. As corridas em si são pagas diretamente pelo passageiro ao
-            mototaxista, fora do aplicativo. O Bora Zé! não retém valores de corrida.
+            mototaxista, fora do aplicativo. O InterGO não retém valores de corrida.
           </p>
 
           <h2 className="text-xl mt-4">6. Cancelamento e Suspensão</h2>
           <p>
-            O Bora Zé! pode suspender ou encerrar contas que violem estes Termos, incluindo mas não se limitando
+            O InterGO pode suspender ou encerrar contas que violem estes Termos, incluindo mas não se limitando
             a: fraudes, uso de dados falsos, comportamento abusivo, descumprimento de leis de trânsito, ou
             avaliações persistentemente negativas.
           </p>
 
           <h2 className="text-xl mt-4">7. Limitação de Responsabilidade</h2>
           <p>
-            O Bora Zé! não se responsabiliza por danos, acidentes, furtos, atrasos ou qualquer prejuízo ocorrido
+            O InterGO não se responsabiliza por danos, acidentes, furtos, atrasos ou qualquer prejuízo ocorrido
             durante a corrida ou entrega. A responsabilidade civil recai sobre o mototaxista e as partes
             envolvidas, conforme legislação vigente.
           </p>
@@ -86,7 +86,7 @@ function TermosPage() {
         </section>
 
         <p className="text-white/50 text-xs mt-6">
-          Ao usar o Bora Zé!, você declara ter lido e concordado com estes Termos de Uso.
+          Ao usar o InterGO, você declara ter lido e concordado com estes Termos de Uso.
         </p>
       </div>
     </main>

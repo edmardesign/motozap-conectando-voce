@@ -434,7 +434,7 @@ function AdminShell({ onLogout }: { onLogout: () => void }) {
   return (
     <main className="min-h-screen bg-background text-white">
       <header className="sticky top-0 z-10 bg-background/95 backdrop-blur border-b border-white/10 px-4 py-3 flex items-center justify-between">
-        <h1 className="text-lg font-bold">Bora Zé! • Admin</h1>
+        <h1 className="text-lg font-bold">InterGO • Admin</h1>
         <button
           className="text-xs text-white/70 hover:text-white"
           onClick={async () => {
@@ -869,7 +869,7 @@ function SorteiosTab() {
     if (error) { toast.error(error.message); return; }
     const sorteio = lista.find(s => s.id === id);
     const p: any = winner.profiles;
-    const link = whatsappLink(p.telefone, `Parabéns ${p.nome}! Você ganhou ${sorteio?.descricao} no sorteio Bora Zé! de ${sorteio?.mes?.slice(0,7)}! Entre em contato para retirar seu prêmio.`);
+    const link = whatsappLink(p.telefone, `Parabéns ${p.nome}! Você ganhou ${sorteio?.descricao} no sorteio InterGO de ${sorteio?.mes?.slice(0,7)}! Entre em contato para retirar seu prêmio.`);
     if (link) window.open(link, "_blank");
     carregar();
   }

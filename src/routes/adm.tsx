@@ -10,9 +10,9 @@ import iconAdmin from "@/assets/btn-administrador.png.asset.json";
 export const Route = createFileRoute("/adm")({
   head: () => ({
     meta: [
-      { title: "Bora Zé! Admin" },
+      { title: "InterGO Admin" },
       { name: "robots", content: "noindex, nofollow" },
-      { name: "description", content: "Painel administrativo Bora Zé!" },
+      { name: "description", content: "Painel administrativo InterGO" },
     ],
   }),
   component: AdminEntry,
@@ -55,7 +55,7 @@ function AdminEntry() {
       <main className="min-h-screen flex items-center justify-center bg-background">
         <img
           src={iconAdmin.url}
-          alt="Bora Zé! Admin"
+          alt="InterGO Admin"
           className="w-40 max-w-[50vw] h-auto animate-scale-in"
           style={{ filter: "drop-shadow(0 0 32px rgba(255,255,255,0.25))" }}
         />
@@ -69,12 +69,12 @@ function AdminEntry() {
         <div className="flex-1 flex flex-col items-center justify-center text-center gap-5 w-full">
           <img
             src={iconAdmin.url}
-            alt="Bora Zé! Admin"
+            alt="InterGO Admin"
             className="w-36 h-36 rounded-3xl"
             style={{ filter: "drop-shadow(0 0 24px rgba(255,255,255,0.2))" }}
           />
           <div>
-            <h1 className="text-3xl font-black tracking-tight text-white">BORA ZÉ!</h1>
+            <h1 className="text-3xl font-black tracking-tight text-white">INTERGO</h1>
             <p className="text-white/70 text-sm mt-1 tracking-widest">ADMIN</p>
           </div>
         </div>

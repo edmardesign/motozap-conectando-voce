@@ -27,7 +27,7 @@ import { maskPhone } from "@/lib/phone";
 export const Route = createFileRoute("/_admGate/adm/painel")({
   head: () => ({
     meta: [
-      { title: "Bora Zé! • Painel municipal" },
+      { title: "InterGO • Painel municipal" },
       { name: "robots", content: "noindex, nofollow" },
     ],
   }),
@@ -167,7 +167,7 @@ function PainelMunicipal() {
       <header className="sticky top-0 z-10 border-b border-white/10 bg-black/95 backdrop-blur">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-3">
           <div className="flex items-center gap-3">
-            <span className="font-bold">Bora Zé!</span>
+            <span className="font-bold">InterGO</span>
             <span className="rounded-full bg-white/10 px-2 py-0.5 text-xs">{nivelLabel}</span>
             {ctx.nivel !== "embaixador" && ctx.is_principal && (
               <button

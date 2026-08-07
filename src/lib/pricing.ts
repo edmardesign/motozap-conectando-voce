@@ -1,4 +1,4 @@
-// Bora Zé! pricing helpers — agora baseado em tarifa fixa por horário + adicional de bairro.
+// InterGO pricing helpers — agora baseado em tarifa fixa por horário + adicional de bairro.
 // As funções de cálculo por km foram removidas; o backend calcula via RPC calcular_valor_corrida.
 
 export function formatBRL(value: number): string {

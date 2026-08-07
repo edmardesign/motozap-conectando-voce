@@ -10,7 +10,7 @@ import { maskPhone } from "@/lib/phone";
 export const Route = createFileRoute("/passageiro/perfil")({
   component: PassageiroPerfil,
   head: () => ({
-    meta: [{ title: "Meu perfil — Bora Zé!" }],
+    meta: [{ title: "Meu perfil — InterGO" }],
   }),
 });
 

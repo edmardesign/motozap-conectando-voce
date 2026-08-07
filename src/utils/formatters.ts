@@ -1,4 +1,4 @@
-// Formatadores de exibição — Bora Zé!
+// Formatadores de exibição — InterGO
 // Uso exclusivo de apresentação. Não altera lógica de negócio.
 
 function digits(v: string | null | undefined): string {

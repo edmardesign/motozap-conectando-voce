@@ -12,7 +12,7 @@ export default defineTool({
   name: "get_my_profile",
   title: "Get my profile",
   description:
-    "Return the signed-in Bora Zé! user's profile (name, phone, city, user type: passageiro or mototaxista).",
+    "Return the signed-in InterGO user's profile (name, phone, city, user type: passageiro or mototaxista).",
   inputSchema: {},
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
   handler: async (_input, ctx) => {

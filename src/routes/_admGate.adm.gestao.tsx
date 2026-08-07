@@ -31,7 +31,7 @@ import { maskPhone, onlyDigits } from "@/lib/phone";
 export const Route = createFileRoute("/_admGate/adm/gestao")({
   head: () => ({
     meta: [
-      { title: "Bora Zé! • Gestão hierárquica" },
+      { title: "InterGO • Gestão hierárquica" },
       { name: "robots", content: "noindex, nofollow" },
     ],
   }),
@@ -159,7 +159,7 @@ function GestaoPage() {
     <main className="min-h-screen bg-background text-white">
       <header className="sticky top-0 z-10 bg-background/95 backdrop-blur border-b border-white/10 px-4 py-3 flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-3">
-          <h1 className="text-lg font-bold">Bora Zé! • Gestão</h1>
+          <h1 className="text-lg font-bold">InterGO • Gestão</h1>
           <span className="text-xs px-2 py-0.5 rounded-full bg-white/10 uppercase tracking-wider">
             {ctx.nivel?.replace("_", " ")}
           </span>

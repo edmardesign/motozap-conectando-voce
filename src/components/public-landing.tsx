@@ -126,7 +126,7 @@ export function PublicLanding({ persona, title, subtitle, iconUrl, accent, manif
       >
         <header style={{ width: "100%", textAlign: "center", paddingTop: 8 }}>
           <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 12, letterSpacing: "0.3em", fontWeight: 500 }}>
-            BORA ZÉ!
+            INTERGO
           </p>
           <h1 style={{ fontSize: 28, fontWeight: 900, letterSpacing: "-0.5px", marginTop: 4, color: accent }}>
             {title}

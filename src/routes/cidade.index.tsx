@@ -18,16 +18,16 @@ export const Route = createFileRoute("/cidade/")({
   },
   head: () => ({
     meta: [
-      { title: "Escolha sua cidade — Bora Zé!" },
+      { title: "Escolha sua cidade — InterGO" },
       {
         name: "description",
         content:
-          "Selecione sua cidade na Bahia para começar a usar o Bora Zé! — mototáxi e delivery na palma da mão.",
+          "Selecione sua cidade na Bahia para começar a usar o InterGO — mototáxi e delivery na palma da mão.",
       },
-      { property: "og:title", content: "Escolha sua cidade — Bora Zé!" },
+      { property: "og:title", content: "Escolha sua cidade — InterGO" },
       {
         property: "og:description",
-        content: "Selecione sua cidade na Bahia para começar a usar o Bora Zé!",
+        content: "Selecione sua cidade na Bahia para começar a usar o InterGO",
       },
     ],
   }),
@@ -94,7 +94,7 @@ function EscolherCidade() {
         <div className="flex flex-col items-center gap-3 text-center">
           <img
             src={logoMz.url}
-            alt="Bora Zé!"
+            alt="InterGO"
             className="w-40 h-auto drop-shadow-[0_0_20px_rgba(0,255,26,0.35)]"
           />
           <h1

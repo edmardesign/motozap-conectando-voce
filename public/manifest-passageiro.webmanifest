@@ -1,6 +1,6 @@
 {
-  "name": "Bora Zé!",
-  "short_name": "Bora Zé!",
+  "name": "InterGO",
+  "short_name": "InterGO",
   "id": "/app/passageiro",
   "start_url": "/app/passageiro",
   "scope": "/",

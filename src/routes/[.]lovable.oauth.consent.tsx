@@ -106,10 +106,10 @@ function Consent() {
         }}
       >
         <h1 className="text-xl font-semibold mb-2">
-          Conectar {clientName} à sua conta Bora Zé!
+          Conectar {clientName} à sua conta InterGO
         </h1>
         <p className="text-sm text-[#8696A0] mb-6">
-          {clientName} poderá acessar seus dados no Bora Zé! como se fosse você:
+          {clientName} poderá acessar seus dados no InterGO como se fosse você:
           seu perfil, suas corridas e (se aplicável) seu status de mototaxista.
         </p>
 

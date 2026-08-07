@@ -754,7 +754,7 @@ function MototaxistaHome() {
         <div className="text-5xl">⏰</div>
         <h1 className="text-2xl font-bold text-center">Seu período grátis acabou</h1>
         <p className="text-center text-base max-w-sm" style={{ color: COLORS.textDim }}>
-          Escolha um plano para continuar recebendo corridas no Bora Zé!
+          Escolha um plano para continuar recebendo corridas no InterGO
         </p>
         <Link to="/mototaxista/planos" className="btn-cta">VER PLANOS</Link>
         <button onClick={async () => { await supabase.auth.signOut(); navigate({ to: "/auth/mototaxista" }); }} className="text-[13px]" style={{ color: COLORS.textDim }}>
@@ -765,7 +765,7 @@ function MototaxistaHome() {
   }
 
   if (contaBloqueada) {
-    const wa = `https://wa.me/5575988558754?text=${encodeURIComponent(`Olá! Acabei de pagar minha comissão Bora Zé! (${valorCicloFmt} - 20 corridas). Segue comprovante:`)}`;
+    const wa = `https://wa.me/5575988558754?text=${encodeURIComponent(`Olá! Acabei de pagar minha comissão InterGO (${valorCicloFmt} - 20 corridas). Segue comprovante:`)}`;
     return (
       <main className="min-h-screen px-6 py-10 flex flex-col gap-5 items-center justify-center" style={{ background: COLORS.bg, color: COLORS.text }}>
         <div className="text-6xl"><EmojiIcon e="🏍️" /></div>
@@ -1237,7 +1237,7 @@ function MototaxistaHome() {
 
               <SettingsRow icon="" label="Meus dados bancários / Pix" onClick={() => toast.info("Em breve")} />
               <SettingsRow icon="" label="Ajuda e suporte" onClick={() => toast.info("Em breve")} />
-              <SettingsRow icon="ℹ️" label="Sobre o Bora Zé!" onClick={() => toast.info("Bora Zé! v1.0")} last />
+              <SettingsRow icon="ℹ️" label="Sobre o InterGO" onClick={() => toast.info("InterGO v1.0")} last />
             </div>
 
             <button
@@ -1578,13 +1578,13 @@ function CorridaAtual({
           {!atual.eh_gratuita && atual.valor_base_aplicado != null && atual.taxa_bora_ze_aplicada != null && (
             <div className="text-[11px] leading-tight" style={{ color: COLORS.textDim }}>
               Seu ganho: <strong style={{ color: COLORS.text }}>{formatBRL(atual.valor_base_aplicado)}</strong>
-              {" · "}Taxa Bora Zé!: {formatBRL(atual.taxa_bora_ze_aplicada)}
+              {" · "}Taxa InterGO: {formatBRL(atual.taxa_bora_ze_aplicada)}
             </div>
           )}
           <div className="text-[12px]" style={{ color: COLORS.textDim }}>{atual.distancia_km} km</div>
         </div>
         {passageiro?.telefone && (
-          <a href={whatsappLink(passageiro.telefone, "Olá, sou seu mototaxista do Bora Zé!!") ?? "#"} target="_blank" rel="noreferrer" className="btn-cta w-full text-center block">
+          <a href={whatsappLink(passageiro.telefone, "Olá, sou seu mototaxista do InterGO!") ?? "#"} target="_blank" rel="noreferrer" className="btn-cta w-full text-center block">
             <EmojiIcon e="💬" /> WhatsApp passageiro
           </a>
         )}
@@ -1686,7 +1686,7 @@ function PegueAliAtual({
         </div>
 
         {passageiro?.telefone && (
-          <a href={whatsappLink(passageiro.telefone, "Olá! Sou o entregador do seu pedido no Bora Zé.") ?? "#"} target="_blank" rel="noreferrer" className="btn-cta w-full text-center block">
+          <a href={whatsappLink(passageiro.telefone, "Olá! Sou o entregador do seu pedido no InterGO.") ?? "#"} target="_blank" rel="noreferrer" className="btn-cta w-full text-center block">
             <EmojiIcon e="💬" /> Falar com passageiro
           </a>
         )}

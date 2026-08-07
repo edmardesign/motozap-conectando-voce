@@ -1,7 +1,7 @@
 {
-  "name": "Bora Zé! Admin",
+  "name": "InterGO Admin",
   "short_name": "BZ Admin",
-  "description": "Painel administrativo Bora Zé!",
+  "description": "Painel administrativo InterGO",
   "start_url": "/adm",
   "scope": "/",
   "display": "standalone",
