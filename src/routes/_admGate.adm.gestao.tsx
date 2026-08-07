@@ -31,7 +31,7 @@ import { maskPhone, onlyDigits } from "@/lib/phone";
 export const Route = createFileRoute("/_admGate/adm/gestao")({
   head: () => ({
     meta: [
-      { title: "Bora Zé! • Gestão hierárquica" },
+      { title: "InterGO • Gestão hierárquica" },
       { name: "robots", content: "noindex, nofollow" },
     ],
   }),
@@ -49,8 +49,6 @@ const GRUPOS: { titulo: string; perms: Perm[] }[] = [
       { codigo: "visualizar_mototaxistas", label: "Visualizar mototaxistas", desc: "Ver lista e dados de mototaxistas." },
       { codigo: "administrar_mototaxistas", label: "Administrar mototaxistas", desc: "Editar dados e bloquear mototaxistas." },
       { codigo: "aprovar_mototaxistas", label: "Aprovar mototaxistas", desc: "Aprovar cadastros pendentes e pagamentos." },
-      { codigo: "visualizar_empresas", label: "Visualizar empresas", desc: "Ver cadastros de empresas parceiras." },
-      { codigo: "administrar_empresas", label: "Administrar empresas", desc: "Editar e bloquear empresas." },
     ],
   },
   {
@@ -58,8 +56,6 @@ const GRUPOS: { titulo: string; perms: Perm[] }[] = [
     perms: [
       { codigo: "visualizar_corridas", label: "Visualizar corridas", desc: "Ver corridas em tempo real e histórico." },
       { codigo: "administrar_corridas", label: "Administrar corridas", desc: "Intervir, cancelar e ajustar corridas." },
-      { codigo: "visualizar_entregas", label: "Visualizar entregas", desc: "Ver entregas em tempo real e histórico." },
-      { codigo: "administrar_entregas", label: "Administrar entregas", desc: "Intervir e ajustar entregas." },
       { codigo: "administrar_suporte", label: "Administrar suporte", desc: "Atender chamados e reclamações." },
     ],
   },
@@ -79,14 +75,6 @@ const GRUPOS: { titulo: string; perms: Perm[] }[] = [
       { codigo: "visualizar_relatorios", label: "Visualizar relatórios", desc: "Acessar relatórios consolidados." },
     ],
   },
-  {
-    titulo: "Delivery",
-    perms: [
-      { codigo: "administrar_food", label: "Administrar delivery de comida", desc: "Ver pedidos, KPIs e ajustar comissão dos restaurantes/lojas." },
-      { codigo: "administrar_mercado", label: "Administrar Mercado", desc: "Ver pedidos, KPIs e ajustar comissão dos mercados (hortifruti, mercearia etc.)." },
-    ],
-  },
-
 ];
 const PERMS_FLAT: Record<string, Perm> = Object.fromEntries(
   GRUPOS.flatMap((g) => g.perms.map((p) => [p.codigo, p])),
@@ -94,9 +82,7 @@ const PERMS_FLAT: Record<string, Perm> = Object.fromEntries(
 const PARES_VIS_ADM: Record<string, string> = {
   administrar_passageiros: "visualizar_passageiros",
   administrar_mototaxistas: "visualizar_mototaxistas",
-  administrar_empresas: "visualizar_empresas",
   administrar_corridas: "visualizar_corridas",
-  administrar_entregas: "visualizar_entregas",
   administrar_pagamentos: "visualizar_pagamentos",
 };
 
@@ -107,7 +93,7 @@ type Ctx = {
   nivel: "admin_principal" | "subadmin" | "embaixador" | null;
   cidades: { id: string; cidade: string; estado: string; ativa: boolean }[];
 };
-type Cidade = { id: string; cidade: string; estado: string; ativa: boolean; criado_em: string; delivery_ativo: boolean; mercado_ativo: boolean; mototaxi_ativo: boolean };
+type Cidade = { id: string; cidade: string; estado: string; ativa: boolean; criado_em: string; mototaxi_ativo: boolean };
 type PerfilRow = {
   id: string;
   user_id: string;
@@ -173,7 +159,7 @@ function GestaoPage() {
     <main className="min-h-screen bg-background text-white">
       <header className="sticky top-0 z-10 bg-background/95 backdrop-blur border-b border-white/10 px-4 py-3 flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-3">
-          <h1 className="text-lg font-bold">Bora Zé! • Gestão</h1>
+          <h1 className="text-lg font-bold">InterGO • Gestão</h1>
           <span className="text-xs px-2 py-0.5 rounded-full bg-white/10 uppercase tracking-wider">
             {ctx.nivel?.replace("_", " ")}
           </span>
@@ -260,7 +246,7 @@ function TabBtn({ active, onClick, children }: { active: boolean; onClick: () =>
 /* ================= Indicadores por cidade ================= */
 function IndicadoresCidade({ cidadeId }: { cidadeId: string | null }) {
   const fetchContagens = useServerFn(contagensCidade);
-  const [c, setC] = useState<{ passageiros: number; mototaxistas: number; empresas: number; corridas: number; entregas: number } | null>(null);
+  const [c, setC] = useState<{ passageiros: number; mototaxistas: number; corridas: number } | null>(null);
   useEffect(() => {
     fetchContagens({ data: { cidade_id: cidadeId } })
       .then(setC)
@@ -270,12 +256,10 @@ function IndicadoresCidade({ cidadeId }: { cidadeId: string | null }) {
   const cards = [
     { label: "Passageiros", value: c.passageiros },
     { label: "Mototaxistas", value: c.mototaxistas },
-    { label: "Empresas", value: c.empresas },
     { label: "Corridas", value: c.corridas },
-    { label: "Entregas", value: c.entregas },
   ];
   return (
-    <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
       {cards.map((k) => (
         <div key={k.label} className="rounded-xl bg-card p-3 border border-white/10">
           <div className="text-[11px] text-white/60 uppercase tracking-wider">{k.label}</div>
@@ -884,8 +868,8 @@ function CidadesTab() {
   const suspenderCidadeFn = useServerFn(cidadeSuspender);
   const definirServicosFn = useServerFn(cidadeDefinirServicos);
 
-  async function toggleServico(c: Cidade, key: "delivery_ativo" | "mercado_ativo" | "mototaxi_ativo") {
-    const novo = { delivery_ativo: c.delivery_ativo, mercado_ativo: c.mercado_ativo, mototaxi_ativo: c.mototaxi_ativo, [key]: !c[key] };
+  async function toggleServico(c: Cidade, _key: "mototaxi_ativo") {
+    const novo = { mototaxi_ativo: !c.mototaxi_ativo };
     setRows((prev) => prev?.map((x) => x.id === c.id ? { ...x, ...novo } : x) ?? prev);
     try {
       await definirServicosFn({ data: { id: c.id, ...novo } });
@@ -968,8 +952,6 @@ function CidadesTab() {
             <div className="flex flex-wrap gap-2 pt-2 border-t border-white/10">
               {([
                 ["mototaxi_ativo", "Moto Táxi"],
-                ["delivery_ativo", "Delivery"],
-                ["mercado_ativo", "Mercado"],
               ] as const).map(([key, label]) => (
                 <label key={key} className={`flex items-center gap-2 text-xs px-3 py-1.5 rounded-full border cursor-pointer ${c[key] ? "border-primary bg-primary/20 text-primary" : "border-white/20 text-white/60"}`}>
                   <input type="checkbox" checked={c[key]} onChange={() => toggleServico(c, key)} className="accent-primary" disabled={!c.ativa} />

@@ -21,7 +21,7 @@ export const Route = createFileRoute("/mototaxista/cadastro")({
       { title: "Cadastro de Mototaxista" },
       {
         name: "description",
-        content: "Crie sua conta de mototaxista no Bora Zé! em poucos passos.",
+        content: "Crie sua conta de mototaxista no InterGO em poucos passos.",
       },
     ],
   }),

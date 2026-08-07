@@ -86,7 +86,7 @@ function PrecosPage() {
         <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
           <div>
             <h1 className="text-lg font-bold">Preços e tarifas</h1>
-            <p className="text-xs text-white/60">Taxa Bora Zé!, valor-base por cidade e regras por bairro.</p>
+            <p className="text-xs text-white/60">Taxa InterGO, valor-base por cidade e regras por bairro.</p>
           </div>
           <Link to="/adm/gestao" className="text-sm text-white/70 underline">Voltar</Link>
         </div>
@@ -205,7 +205,7 @@ function TaxaGlobalCard({ cfg, onSaved }: { cfg: Config | null; onSaved: () => v
   return (
     <div className="rounded-2xl bg-card p-5 border border-neon/30">
       <div className="flex items-baseline justify-between">
-        <h2 className="font-bold">Taxa global Bora Zé!</h2>
+        <h2 className="font-bold">Taxa global InterGO</h2>
         <div className="text-3xl font-extrabold text-neon">{brl(cfg?.taxa_bora_ze ?? 0.5)}</div>
       </div>
       <p className="text-xs text-white/60 mt-1">Padrão aplicado quando a cidade não tem taxa própria configurada.</p>
@@ -303,7 +303,7 @@ function TarifaCidadeForm({ cidade, cfg, onSaved }: { cidade: Cidade; cfg: Confi
           <input className="input-mz" inputMode="decimal" value={base} onChange={(e) => setBase(e.target.value)} />
         </div>
         <div>
-          <label className="text-xs text-white/60">Taxa Bora Zé! (R$)</label>
+          <label className="text-xs text-white/60">Taxa InterGO (R$)</label>
           <input className="input-mz" inputMode="decimal" value={taxa} onChange={(e) => setTaxa(e.target.value)} />
         </div>
       </div>
@@ -569,7 +569,7 @@ function SimuladorPanel({ cidade }: { cidade: Cidade }) {
       {resultado && resultado.valor_total != null && (
         <div className="rounded-xl border border-neon/30 bg-black/50 p-4 space-y-1">
           <div className="text-sm">Base aplicável: <b>{brl(resultado.valor_base)}</b></div>
-          <div className="text-sm">Taxa Bora Zé!: <b>{brl(resultado.taxa_bora_ze)}</b></div>
+          <div className="text-sm">Taxa InterGO: <b>{brl(resultado.taxa_bora_ze)}</b></div>
           <div className="text-lg font-extrabold text-neon">Passageiro paga {brl(resultado.valor_total)}</div>
           <div className="text-xs text-white/60">Mototaxista recebe {brl(resultado.valor_base)}</div>
         </div>

@@ -10,10 +10,10 @@ export const Route = createFileRoute("/mototaxi")({
   },
   head: () => ({
     meta: [
-      { title: "Bora Zé! Mototáxi — Cadastre-se e receba corridas" },
-      { name: "description", content: "Instale o Bora Zé! Mototáxi e comece a receber corridas na sua cidade." },
-      { property: "og:title", content: "Bora Zé! Mototáxi" },
-      { property: "og:description", content: "Receba corridas e entregas na sua cidade." },
+      { title: "InterGO Mototáxi — Cadastre-se e receba corridas" },
+      { name: "description", content: "Instale o InterGO Mototáxi e comece a receber corridas na sua cidade." },
+      { property: "og:title", content: "InterGO Mototáxi" },
+      { property: "og:description", content: "Receba corridas na sua cidade." },
     ],
     links: [{ rel: "manifest", href: "/manifest-mototaxi.webmanifest" }],
   }),

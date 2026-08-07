@@ -131,11 +131,11 @@ export function LocationPicker({
       {requireConfigured && value.cidade && configurada === false && (
         <div className="rounded-lg p-3 bg-yellow-500/10 border border-yellow-500/30 text-sm space-y-2">
           <div>
-            <EmojiIcon e="⚠️" /> Sua cidade ainda não está disponível no Bora Zé!. Entre em contato pelo WhatsApp para solicitar.
+            <EmojiIcon e="⚠️" /> Sua cidade ainda não está disponível no InterGO. Entre em contato pelo WhatsApp para solicitar.
           </div>
           <a
             href={`https://wa.me/${SUPORTE_WHATSAPP}?text=${encodeURIComponent(
-              `Olá, quero solicitar o Bora Zé! para ${value.cidade}/${value.estado}.`,
+              `Olá, quero solicitar o InterGO para ${value.cidade}/${value.estado}.`,
             )}`}
             target="_blank"
             rel="noreferrer"

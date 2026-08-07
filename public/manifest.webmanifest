@@ -1,6 +1,6 @@
 {
-  "name": "Bora Zé!",
-  "short_name": "Bora Zé!",
+  "name": "InterGO",
+  "short_name": "InterGO",
   "description": "Mototáxi rápido para a sua cidade",
   "start_url": "/splash",
   "scope": "/",

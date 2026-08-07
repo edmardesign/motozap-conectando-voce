@@ -1,5 +1,5 @@
 {
-  "name": "Bora Zé! Administrador",
+  "name": "InterGO Administrador",
   "short_name": "Admin",
   "id": "/app/administrador",
   "start_url": "/app/administrador",
@@ -8,7 +8,7 @@
   "orientation": "portrait",
   "background_color": "#000000",
   "theme_color": "#000000",
-  "description": "Painel administrativo Bora Zé!",
+  "description": "Painel administrativo InterGO",
   "icons": [
     { "src": "/app-icon-admin.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
     { "src": "/app-icon-admin.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },

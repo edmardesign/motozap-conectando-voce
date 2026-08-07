@@ -12,84 +12,39 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as TermosRouteImport } from './routes/termos'
 import { Route as SplashRouteImport } from './routes/splash'
 import { Route as PrivacidadeRouteImport } from './routes/privacidade'
-import { Route as PedirRouteImport } from './routes/pedir'
-import { Route as ParceirosRouteImport } from './routes/parceiros'
 import { Route as MototaxiRouteImport } from './routes/mototaxi'
-import { Route as MercadoRouteImport } from './routes/mercado'
 import { Route as McpRouteImport } from './routes/mcp'
-import { Route as EscolherRouteImport } from './routes/escolher'
-import { Route as EntregasRouteImport } from './routes/entregas'
 import { Route as CidadeRouteImport } from './routes/cidade'
 import { Route as AdministradorRouteImport } from './routes/administrador'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AdmRouteImport } from './routes/adm'
 import { Route as AdmGateRouteImport } from './routes/_admGate'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as PedirIndexRouteImport } from './routes/pedir.index'
 import { Route as PassageiroIndexRouteImport } from './routes/passageiro.index'
 import { Route as MototaxistaIndexRouteImport } from './routes/mototaxista.index'
-import { Route as MercadoIndexRouteImport } from './routes/mercado.index'
-import { Route as FoodIndexRouteImport } from './routes/food.index'
 import { Route as CidadeIndexRouteImport } from './routes/cidade.index'
-import { Route as PedirPerfilRouteImport } from './routes/pedir.perfil'
-import { Route as PedirPedidosRouteImport } from './routes/pedir.pedidos'
-import { Route as PedirCheckoutRouteImport } from './routes/pedir.checkout'
-import { Route as PedirCategoriasRouteImport } from './routes/pedir.categorias'
-import { Route as PedirCarrinhoRouteImport } from './routes/pedir.carrinho'
-import { Route as PedirBuscarRouteImport } from './routes/pedir.buscar'
 import { Route as PassageiroPerfilRouteImport } from './routes/passageiro.perfil'
 import { Route as PassageiroHomeRouteImport } from './routes/passageiro.home'
 import { Route as PassageiroCorridasRouteImport } from './routes/passageiro.corridas'
 import { Route as PassageiroCarteiraRouteImport } from './routes/passageiro.carteira'
-import { Route as ParceirosPainelRouteImport } from './routes/parceiros.painel'
-import { Route as ParceirosMercadoRouteImport } from './routes/parceiros.mercado'
-import { Route as ParceirosCadastroRouteImport } from './routes/parceiros.cadastro'
-import { Route as ParceirosAuthRouteImport } from './routes/parceiros.auth'
 import { Route as MototaxistaPlanosRouteImport } from './routes/mototaxista.planos'
 import { Route as MototaxistaPagamentoRouteImport } from './routes/mototaxista.pagamento'
-import { Route as MototaxistaMercadoRouteImport } from './routes/mototaxista.mercado'
 import { Route as MototaxistaHomeRouteImport } from './routes/mototaxista.home'
 import { Route as MototaxistaFotoRouteImport } from './routes/mototaxista.foto'
-import { Route as MototaxistaFoodRouteImport } from './routes/mototaxista.food'
 import { Route as MototaxistaDocumentosRouteImport } from './routes/mototaxista.documentos'
 import { Route as MototaxistaCadastroRouteImport } from './routes/mototaxista.cadastro'
 import { Route as MototaxistaAuthRouteImport } from './routes/mototaxista.auth'
 import { Route as MototaxistaAguardandoRouteImport } from './routes/mototaxista.aguardando'
-import { Route as MercadoPerfilRouteImport } from './routes/mercado.perfil'
-import { Route as MercadoPedidosRouteImport } from './routes/mercado.pedidos'
-import { Route as MercadoCheckoutRouteImport } from './routes/mercado.checkout'
-import { Route as MercadoCarrinhoRouteImport } from './routes/mercado.carrinho'
-import { Route as MercadoBuscarRouteImport } from './routes/mercado.buscar'
-import { Route as FoodHomeRouteImport } from './routes/food.home'
-import { Route as FoodEsqueciPinRouteImport } from './routes/food.esqueci-pin'
-import { Route as FoodCadastroRouteImport } from './routes/food.cadastro'
-import { Route as FoodAuthRouteImport } from './routes/food.auth'
-import { Route as EstabelecimentoPainelRouteImport } from './routes/estabelecimento.painel'
-import { Route as EstabelecimentoMercadoRouteImport } from './routes/estabelecimento.mercado'
-import { Route as EmpresaHomeRouteImport } from './routes/empresa.home'
-import { Route as EmpresaCadastroRouteImport } from './routes/empresa.cadastro'
-import { Route as EmpresaAuthRouteImport } from './routes/empresa.auth'
-import { Route as CidadeServicosRouteImport } from './routes/cidade.servicos'
 import { Route as CadastroPassageiroRouteImport } from './routes/cadastro.passageiro'
 import { Route as AuthPassageiroRouteImport } from './routes/auth.passageiro'
 import { Route as AuthMototaxistaRouteImport } from './routes/auth.mototaxista'
 import { Route as AppPassageiroRouteImport } from './routes/app.passageiro'
-import { Route as AppParceirosRouteImport } from './routes/app.parceiros'
 import { Route as AppMototaxiRouteImport } from './routes/app.mototaxi'
-import { Route as AppEntregasRouteImport } from './routes/app.entregas'
 import { Route as AppAdministradorRouteImport } from './routes/app.administrador'
 import { Route as AdmSuspensoRouteImport } from './routes/adm.suspenso'
 import { Route as AdmNegadoRouteImport } from './routes/adm.negado'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
-import { Route as PedirProdutoIdRouteImport } from './routes/pedir.produto.$id'
-import { Route as PedirLojaIdRouteImport } from './routes/pedir.loja.$id'
-import { Route as PedirConfirmadoIdRouteImport } from './routes/pedir.confirmado.$id'
-import { Route as PedirAcompanharIdRouteImport } from './routes/pedir.acompanhar.$id'
-import { Route as MercadoProdutoIdRouteImport } from './routes/mercado.produto.$id'
-import { Route as MercadoLojaIdRouteImport } from './routes/mercado.loja.$id'
-import { Route as MercadoConfirmadoIdRouteImport } from './routes/mercado.confirmado.$id'
-import { Route as MercadoAcompanharIdRouteImport } from './routes/mercado.acompanhar.$id'
 import { Route as AdmGateAdmPrecosRouteImport } from './routes/_admGate.adm.precos'
 import { Route as AdmGateAdmPainelRouteImport } from './routes/_admGate.adm.painel'
 import { Route as AdmGateAdmGestaoRouteImport } from './routes/_admGate.adm.gestao'
@@ -111,39 +66,14 @@ const PrivacidadeRoute = PrivacidadeRouteImport.update({
   path: '/privacidade',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PedirRoute = PedirRouteImport.update({
-  id: '/pedir',
-  path: '/pedir',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ParceirosRoute = ParceirosRouteImport.update({
-  id: '/parceiros',
-  path: '/parceiros',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const MototaxiRoute = MototaxiRouteImport.update({
   id: '/mototaxi',
   path: '/mototaxi',
   getParentRoute: () => rootRouteImport,
 } as any)
-const MercadoRoute = MercadoRouteImport.update({
-  id: '/mercado',
-  path: '/mercado',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const McpRoute = McpRouteImport.update({
   id: '/mcp',
   path: '/mcp',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const EscolherRoute = EscolherRouteImport.update({
-  id: '/escolher',
-  path: '/escolher',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const EntregasRoute = EntregasRouteImport.update({
-  id: '/entregas',
-  path: '/entregas',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CidadeRoute = CidadeRouteImport.update({
@@ -175,11 +105,6 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PedirIndexRoute = PedirIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => PedirRoute,
-} as any)
 const PassageiroIndexRoute = PassageiroIndexRouteImport.update({
   id: '/passageiro/',
   path: '/passageiro/',
@@ -190,50 +115,10 @@ const MototaxistaIndexRoute = MototaxistaIndexRouteImport.update({
   path: '/mototaxista/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const MercadoIndexRoute = MercadoIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => MercadoRoute,
-} as any)
-const FoodIndexRoute = FoodIndexRouteImport.update({
-  id: '/food/',
-  path: '/food/',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const CidadeIndexRoute = CidadeIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => CidadeRoute,
-} as any)
-const PedirPerfilRoute = PedirPerfilRouteImport.update({
-  id: '/perfil',
-  path: '/perfil',
-  getParentRoute: () => PedirRoute,
-} as any)
-const PedirPedidosRoute = PedirPedidosRouteImport.update({
-  id: '/pedidos',
-  path: '/pedidos',
-  getParentRoute: () => PedirRoute,
-} as any)
-const PedirCheckoutRoute = PedirCheckoutRouteImport.update({
-  id: '/checkout',
-  path: '/checkout',
-  getParentRoute: () => PedirRoute,
-} as any)
-const PedirCategoriasRoute = PedirCategoriasRouteImport.update({
-  id: '/categorias',
-  path: '/categorias',
-  getParentRoute: () => PedirRoute,
-} as any)
-const PedirCarrinhoRoute = PedirCarrinhoRouteImport.update({
-  id: '/carrinho',
-  path: '/carrinho',
-  getParentRoute: () => PedirRoute,
-} as any)
-const PedirBuscarRoute = PedirBuscarRouteImport.update({
-  id: '/buscar',
-  path: '/buscar',
-  getParentRoute: () => PedirRoute,
 } as any)
 const PassageiroPerfilRoute = PassageiroPerfilRouteImport.update({
   id: '/passageiro/perfil',
@@ -255,26 +140,6 @@ const PassageiroCarteiraRoute = PassageiroCarteiraRouteImport.update({
   path: '/passageiro/carteira',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ParceirosPainelRoute = ParceirosPainelRouteImport.update({
-  id: '/painel',
-  path: '/painel',
-  getParentRoute: () => ParceirosRoute,
-} as any)
-const ParceirosMercadoRoute = ParceirosMercadoRouteImport.update({
-  id: '/mercado',
-  path: '/mercado',
-  getParentRoute: () => ParceirosRoute,
-} as any)
-const ParceirosCadastroRoute = ParceirosCadastroRouteImport.update({
-  id: '/cadastro',
-  path: '/cadastro',
-  getParentRoute: () => ParceirosRoute,
-} as any)
-const ParceirosAuthRoute = ParceirosAuthRouteImport.update({
-  id: '/auth',
-  path: '/auth',
-  getParentRoute: () => ParceirosRoute,
-} as any)
 const MototaxistaPlanosRoute = MototaxistaPlanosRouteImport.update({
   id: '/mototaxista/planos',
   path: '/mototaxista/planos',
@@ -285,11 +150,6 @@ const MototaxistaPagamentoRoute = MototaxistaPagamentoRouteImport.update({
   path: '/mototaxista/pagamento',
   getParentRoute: () => rootRouteImport,
 } as any)
-const MototaxistaMercadoRoute = MototaxistaMercadoRouteImport.update({
-  id: '/mototaxista/mercado',
-  path: '/mototaxista/mercado',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const MototaxistaHomeRoute = MototaxistaHomeRouteImport.update({
   id: '/mototaxista/home',
   path: '/mototaxista/home',
@@ -298,11 +158,6 @@ const MototaxistaHomeRoute = MototaxistaHomeRouteImport.update({
 const MototaxistaFotoRoute = MototaxistaFotoRouteImport.update({
   id: '/mototaxista/foto',
   path: '/mototaxista/foto',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MototaxistaFoodRoute = MototaxistaFoodRouteImport.update({
-  id: '/mototaxista/food',
-  path: '/mototaxista/food',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MototaxistaDocumentosRoute = MototaxistaDocumentosRouteImport.update({
@@ -325,81 +180,6 @@ const MototaxistaAguardandoRoute = MototaxistaAguardandoRouteImport.update({
   path: '/mototaxista/aguardando',
   getParentRoute: () => rootRouteImport,
 } as any)
-const MercadoPerfilRoute = MercadoPerfilRouteImport.update({
-  id: '/perfil',
-  path: '/perfil',
-  getParentRoute: () => MercadoRoute,
-} as any)
-const MercadoPedidosRoute = MercadoPedidosRouteImport.update({
-  id: '/pedidos',
-  path: '/pedidos',
-  getParentRoute: () => MercadoRoute,
-} as any)
-const MercadoCheckoutRoute = MercadoCheckoutRouteImport.update({
-  id: '/checkout',
-  path: '/checkout',
-  getParentRoute: () => MercadoRoute,
-} as any)
-const MercadoCarrinhoRoute = MercadoCarrinhoRouteImport.update({
-  id: '/carrinho',
-  path: '/carrinho',
-  getParentRoute: () => MercadoRoute,
-} as any)
-const MercadoBuscarRoute = MercadoBuscarRouteImport.update({
-  id: '/buscar',
-  path: '/buscar',
-  getParentRoute: () => MercadoRoute,
-} as any)
-const FoodHomeRoute = FoodHomeRouteImport.update({
-  id: '/food/home',
-  path: '/food/home',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FoodEsqueciPinRoute = FoodEsqueciPinRouteImport.update({
-  id: '/food/esqueci-pin',
-  path: '/food/esqueci-pin',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FoodCadastroRoute = FoodCadastroRouteImport.update({
-  id: '/food/cadastro',
-  path: '/food/cadastro',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FoodAuthRoute = FoodAuthRouteImport.update({
-  id: '/food/auth',
-  path: '/food/auth',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const EstabelecimentoPainelRoute = EstabelecimentoPainelRouteImport.update({
-  id: '/estabelecimento/painel',
-  path: '/estabelecimento/painel',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const EstabelecimentoMercadoRoute = EstabelecimentoMercadoRouteImport.update({
-  id: '/estabelecimento/mercado',
-  path: '/estabelecimento/mercado',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const EmpresaHomeRoute = EmpresaHomeRouteImport.update({
-  id: '/empresa/home',
-  path: '/empresa/home',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const EmpresaCadastroRoute = EmpresaCadastroRouteImport.update({
-  id: '/empresa/cadastro',
-  path: '/empresa/cadastro',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const EmpresaAuthRoute = EmpresaAuthRouteImport.update({
-  id: '/empresa/auth',
-  path: '/empresa/auth',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CidadeServicosRoute = CidadeServicosRouteImport.update({
-  id: '/servicos',
-  path: '/servicos',
-  getParentRoute: () => CidadeRoute,
-} as any)
 const CadastroPassageiroRoute = CadastroPassageiroRouteImport.update({
   id: '/cadastro/passageiro',
   path: '/cadastro/passageiro',
@@ -420,19 +200,9 @@ const AppPassageiroRoute = AppPassageiroRouteImport.update({
   path: '/app/passageiro',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppParceirosRoute = AppParceirosRouteImport.update({
-  id: '/app/parceiros',
-  path: '/app/parceiros',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AppMototaxiRoute = AppMototaxiRouteImport.update({
   id: '/app/mototaxi',
   path: '/app/mototaxi',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AppEntregasRoute = AppEntregasRouteImport.update({
-  id: '/app/entregas',
-  path: '/app/entregas',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppAdministradorRoute = AppAdministradorRouteImport.update({
@@ -462,46 +232,6 @@ const Char91DotmcpChar93ListToolsRoute =
     path: '/.mcp/list-tools',
     getParentRoute: () => rootRouteImport,
   } as any)
-const PedirProdutoIdRoute = PedirProdutoIdRouteImport.update({
-  id: '/produto/$id',
-  path: '/produto/$id',
-  getParentRoute: () => PedirRoute,
-} as any)
-const PedirLojaIdRoute = PedirLojaIdRouteImport.update({
-  id: '/loja/$id',
-  path: '/loja/$id',
-  getParentRoute: () => PedirRoute,
-} as any)
-const PedirConfirmadoIdRoute = PedirConfirmadoIdRouteImport.update({
-  id: '/confirmado/$id',
-  path: '/confirmado/$id',
-  getParentRoute: () => PedirRoute,
-} as any)
-const PedirAcompanharIdRoute = PedirAcompanharIdRouteImport.update({
-  id: '/acompanhar/$id',
-  path: '/acompanhar/$id',
-  getParentRoute: () => PedirRoute,
-} as any)
-const MercadoProdutoIdRoute = MercadoProdutoIdRouteImport.update({
-  id: '/produto/$id',
-  path: '/produto/$id',
-  getParentRoute: () => MercadoRoute,
-} as any)
-const MercadoLojaIdRoute = MercadoLojaIdRouteImport.update({
-  id: '/loja/$id',
-  path: '/loja/$id',
-  getParentRoute: () => MercadoRoute,
-} as any)
-const MercadoConfirmadoIdRoute = MercadoConfirmadoIdRouteImport.update({
-  id: '/confirmado/$id',
-  path: '/confirmado/$id',
-  getParentRoute: () => MercadoRoute,
-} as any)
-const MercadoAcompanharIdRoute = MercadoAcompanharIdRouteImport.update({
-  id: '/acompanhar/$id',
-  path: '/acompanhar/$id',
-  getParentRoute: () => MercadoRoute,
-} as any)
 const AdmGateAdmPrecosRoute = AdmGateAdmPrecosRouteImport.update({
   id: '/adm/precos',
   path: '/adm/precos',
@@ -535,13 +265,8 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRoute
   '/administrador': typeof AdministradorRoute
   '/cidade': typeof CidadeRouteWithChildren
-  '/entregas': typeof EntregasRoute
-  '/escolher': typeof EscolherRoute
   '/mcp': typeof McpRoute
-  '/mercado': typeof MercadoRouteWithChildren
   '/mototaxi': typeof MototaxiRoute
-  '/parceiros': typeof ParceirosRouteWithChildren
-  '/pedir': typeof PedirRouteWithChildren
   '/privacidade': typeof PrivacidadeRoute
   '/splash': typeof SplashRoute
   '/termos': typeof TermosRoute
@@ -550,82 +275,39 @@ export interface FileRoutesByFullPath {
   '/adm/negado': typeof AdmNegadoRoute
   '/adm/suspenso': typeof AdmSuspensoRoute
   '/app/administrador': typeof AppAdministradorRoute
-  '/app/entregas': typeof AppEntregasRoute
   '/app/mototaxi': typeof AppMototaxiRoute
-  '/app/parceiros': typeof AppParceirosRoute
   '/app/passageiro': typeof AppPassageiroRoute
   '/auth/mototaxista': typeof AuthMototaxistaRoute
   '/auth/passageiro': typeof AuthPassageiroRoute
   '/cadastro/passageiro': typeof CadastroPassageiroRoute
-  '/cidade/servicos': typeof CidadeServicosRoute
-  '/empresa/auth': typeof EmpresaAuthRoute
-  '/empresa/cadastro': typeof EmpresaCadastroRoute
-  '/empresa/home': typeof EmpresaHomeRoute
-  '/estabelecimento/mercado': typeof EstabelecimentoMercadoRoute
-  '/estabelecimento/painel': typeof EstabelecimentoPainelRoute
-  '/food/auth': typeof FoodAuthRoute
-  '/food/cadastro': typeof FoodCadastroRoute
-  '/food/esqueci-pin': typeof FoodEsqueciPinRoute
-  '/food/home': typeof FoodHomeRoute
-  '/mercado/buscar': typeof MercadoBuscarRoute
-  '/mercado/carrinho': typeof MercadoCarrinhoRoute
-  '/mercado/checkout': typeof MercadoCheckoutRoute
-  '/mercado/pedidos': typeof MercadoPedidosRoute
-  '/mercado/perfil': typeof MercadoPerfilRoute
   '/mototaxista/aguardando': typeof MototaxistaAguardandoRoute
   '/mototaxista/auth': typeof MototaxistaAuthRoute
   '/mototaxista/cadastro': typeof MototaxistaCadastroRoute
   '/mototaxista/documentos': typeof MototaxistaDocumentosRoute
-  '/mototaxista/food': typeof MototaxistaFoodRoute
   '/mototaxista/foto': typeof MototaxistaFotoRoute
   '/mototaxista/home': typeof MototaxistaHomeRoute
-  '/mototaxista/mercado': typeof MototaxistaMercadoRoute
   '/mototaxista/pagamento': typeof MototaxistaPagamentoRoute
   '/mototaxista/planos': typeof MototaxistaPlanosRoute
-  '/parceiros/auth': typeof ParceirosAuthRoute
-  '/parceiros/cadastro': typeof ParceirosCadastroRoute
-  '/parceiros/mercado': typeof ParceirosMercadoRoute
-  '/parceiros/painel': typeof ParceirosPainelRoute
   '/passageiro/carteira': typeof PassageiroCarteiraRoute
   '/passageiro/corridas': typeof PassageiroCorridasRoute
   '/passageiro/home': typeof PassageiroHomeRoute
   '/passageiro/perfil': typeof PassageiroPerfilRoute
-  '/pedir/buscar': typeof PedirBuscarRoute
-  '/pedir/carrinho': typeof PedirCarrinhoRoute
-  '/pedir/categorias': typeof PedirCategoriasRoute
-  '/pedir/checkout': typeof PedirCheckoutRoute
-  '/pedir/pedidos': typeof PedirPedidosRoute
-  '/pedir/perfil': typeof PedirPerfilRoute
   '/cidade/': typeof CidadeIndexRoute
-  '/food/': typeof FoodIndexRoute
-  '/mercado/': typeof MercadoIndexRoute
   '/mototaxista/': typeof MototaxistaIndexRoute
   '/passageiro/': typeof PassageiroIndexRoute
-  '/pedir/': typeof PedirIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/adm/gestao': typeof AdmGateAdmGestaoRoute
   '/adm/painel': typeof AdmGateAdmPainelRoute
   '/adm/precos': typeof AdmGateAdmPrecosRoute
-  '/mercado/acompanhar/$id': typeof MercadoAcompanharIdRoute
-  '/mercado/confirmado/$id': typeof MercadoConfirmadoIdRoute
-  '/mercado/loja/$id': typeof MercadoLojaIdRoute
-  '/mercado/produto/$id': typeof MercadoProdutoIdRoute
-  '/pedir/acompanhar/$id': typeof PedirAcompanharIdRoute
-  '/pedir/confirmado/$id': typeof PedirConfirmadoIdRoute
-  '/pedir/loja/$id': typeof PedirLojaIdRoute
-  '/pedir/produto/$id': typeof PedirProdutoIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/adm': typeof AdmRouteWithChildren
   '/admin': typeof AdminRoute
   '/administrador': typeof AdministradorRoute
-  '/entregas': typeof EntregasRoute
-  '/escolher': typeof EscolherRoute
   '/mcp': typeof McpRoute
   '/mototaxi': typeof MototaxiRoute
-  '/parceiros': typeof ParceirosRouteWithChildren
   '/privacidade': typeof PrivacidadeRoute
   '/splash': typeof SplashRoute
   '/termos': typeof TermosRoute
@@ -634,71 +316,31 @@ export interface FileRoutesByTo {
   '/adm/negado': typeof AdmNegadoRoute
   '/adm/suspenso': typeof AdmSuspensoRoute
   '/app/administrador': typeof AppAdministradorRoute
-  '/app/entregas': typeof AppEntregasRoute
   '/app/mototaxi': typeof AppMototaxiRoute
-  '/app/parceiros': typeof AppParceirosRoute
   '/app/passageiro': typeof AppPassageiroRoute
   '/auth/mototaxista': typeof AuthMototaxistaRoute
   '/auth/passageiro': typeof AuthPassageiroRoute
   '/cadastro/passageiro': typeof CadastroPassageiroRoute
-  '/cidade/servicos': typeof CidadeServicosRoute
-  '/empresa/auth': typeof EmpresaAuthRoute
-  '/empresa/cadastro': typeof EmpresaCadastroRoute
-  '/empresa/home': typeof EmpresaHomeRoute
-  '/estabelecimento/mercado': typeof EstabelecimentoMercadoRoute
-  '/estabelecimento/painel': typeof EstabelecimentoPainelRoute
-  '/food/auth': typeof FoodAuthRoute
-  '/food/cadastro': typeof FoodCadastroRoute
-  '/food/esqueci-pin': typeof FoodEsqueciPinRoute
-  '/food/home': typeof FoodHomeRoute
-  '/mercado/buscar': typeof MercadoBuscarRoute
-  '/mercado/carrinho': typeof MercadoCarrinhoRoute
-  '/mercado/checkout': typeof MercadoCheckoutRoute
-  '/mercado/pedidos': typeof MercadoPedidosRoute
-  '/mercado/perfil': typeof MercadoPerfilRoute
   '/mototaxista/aguardando': typeof MototaxistaAguardandoRoute
   '/mototaxista/auth': typeof MototaxistaAuthRoute
   '/mototaxista/cadastro': typeof MototaxistaCadastroRoute
   '/mototaxista/documentos': typeof MototaxistaDocumentosRoute
-  '/mototaxista/food': typeof MototaxistaFoodRoute
   '/mototaxista/foto': typeof MototaxistaFotoRoute
   '/mototaxista/home': typeof MototaxistaHomeRoute
-  '/mototaxista/mercado': typeof MototaxistaMercadoRoute
   '/mototaxista/pagamento': typeof MototaxistaPagamentoRoute
   '/mototaxista/planos': typeof MototaxistaPlanosRoute
-  '/parceiros/auth': typeof ParceirosAuthRoute
-  '/parceiros/cadastro': typeof ParceirosCadastroRoute
-  '/parceiros/mercado': typeof ParceirosMercadoRoute
-  '/parceiros/painel': typeof ParceirosPainelRoute
   '/passageiro/carteira': typeof PassageiroCarteiraRoute
   '/passageiro/corridas': typeof PassageiroCorridasRoute
   '/passageiro/home': typeof PassageiroHomeRoute
   '/passageiro/perfil': typeof PassageiroPerfilRoute
-  '/pedir/buscar': typeof PedirBuscarRoute
-  '/pedir/carrinho': typeof PedirCarrinhoRoute
-  '/pedir/categorias': typeof PedirCategoriasRoute
-  '/pedir/checkout': typeof PedirCheckoutRoute
-  '/pedir/pedidos': typeof PedirPedidosRoute
-  '/pedir/perfil': typeof PedirPerfilRoute
   '/cidade': typeof CidadeIndexRoute
-  '/food': typeof FoodIndexRoute
-  '/mercado': typeof MercadoIndexRoute
   '/mototaxista': typeof MototaxistaIndexRoute
   '/passageiro': typeof PassageiroIndexRoute
-  '/pedir': typeof PedirIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/adm/gestao': typeof AdmGateAdmGestaoRoute
   '/adm/painel': typeof AdmGateAdmPainelRoute
   '/adm/precos': typeof AdmGateAdmPrecosRoute
-  '/mercado/acompanhar/$id': typeof MercadoAcompanharIdRoute
-  '/mercado/confirmado/$id': typeof MercadoConfirmadoIdRoute
-  '/mercado/loja/$id': typeof MercadoLojaIdRoute
-  '/mercado/produto/$id': typeof MercadoProdutoIdRoute
-  '/pedir/acompanhar/$id': typeof PedirAcompanharIdRoute
-  '/pedir/confirmado/$id': typeof PedirConfirmadoIdRoute
-  '/pedir/loja/$id': typeof PedirLojaIdRoute
-  '/pedir/produto/$id': typeof PedirProdutoIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -708,13 +350,8 @@ export interface FileRoutesById {
   '/admin': typeof AdminRoute
   '/administrador': typeof AdministradorRoute
   '/cidade': typeof CidadeRouteWithChildren
-  '/entregas': typeof EntregasRoute
-  '/escolher': typeof EscolherRoute
   '/mcp': typeof McpRoute
-  '/mercado': typeof MercadoRouteWithChildren
   '/mototaxi': typeof MototaxiRoute
-  '/parceiros': typeof ParceirosRouteWithChildren
-  '/pedir': typeof PedirRouteWithChildren
   '/privacidade': typeof PrivacidadeRoute
   '/splash': typeof SplashRoute
   '/termos': typeof TermosRoute
@@ -723,71 +360,31 @@ export interface FileRoutesById {
   '/adm/negado': typeof AdmNegadoRoute
   '/adm/suspenso': typeof AdmSuspensoRoute
   '/app/administrador': typeof AppAdministradorRoute
-  '/app/entregas': typeof AppEntregasRoute
   '/app/mototaxi': typeof AppMototaxiRoute
-  '/app/parceiros': typeof AppParceirosRoute
   '/app/passageiro': typeof AppPassageiroRoute
   '/auth/mototaxista': typeof AuthMototaxistaRoute
   '/auth/passageiro': typeof AuthPassageiroRoute
   '/cadastro/passageiro': typeof CadastroPassageiroRoute
-  '/cidade/servicos': typeof CidadeServicosRoute
-  '/empresa/auth': typeof EmpresaAuthRoute
-  '/empresa/cadastro': typeof EmpresaCadastroRoute
-  '/empresa/home': typeof EmpresaHomeRoute
-  '/estabelecimento/mercado': typeof EstabelecimentoMercadoRoute
-  '/estabelecimento/painel': typeof EstabelecimentoPainelRoute
-  '/food/auth': typeof FoodAuthRoute
-  '/food/cadastro': typeof FoodCadastroRoute
-  '/food/esqueci-pin': typeof FoodEsqueciPinRoute
-  '/food/home': typeof FoodHomeRoute
-  '/mercado/buscar': typeof MercadoBuscarRoute
-  '/mercado/carrinho': typeof MercadoCarrinhoRoute
-  '/mercado/checkout': typeof MercadoCheckoutRoute
-  '/mercado/pedidos': typeof MercadoPedidosRoute
-  '/mercado/perfil': typeof MercadoPerfilRoute
   '/mototaxista/aguardando': typeof MototaxistaAguardandoRoute
   '/mototaxista/auth': typeof MototaxistaAuthRoute
   '/mototaxista/cadastro': typeof MototaxistaCadastroRoute
   '/mototaxista/documentos': typeof MototaxistaDocumentosRoute
-  '/mototaxista/food': typeof MototaxistaFoodRoute
   '/mototaxista/foto': typeof MototaxistaFotoRoute
   '/mototaxista/home': typeof MototaxistaHomeRoute
-  '/mototaxista/mercado': typeof MototaxistaMercadoRoute
   '/mototaxista/pagamento': typeof MototaxistaPagamentoRoute
   '/mototaxista/planos': typeof MototaxistaPlanosRoute
-  '/parceiros/auth': typeof ParceirosAuthRoute
-  '/parceiros/cadastro': typeof ParceirosCadastroRoute
-  '/parceiros/mercado': typeof ParceirosMercadoRoute
-  '/parceiros/painel': typeof ParceirosPainelRoute
   '/passageiro/carteira': typeof PassageiroCarteiraRoute
   '/passageiro/corridas': typeof PassageiroCorridasRoute
   '/passageiro/home': typeof PassageiroHomeRoute
   '/passageiro/perfil': typeof PassageiroPerfilRoute
-  '/pedir/buscar': typeof PedirBuscarRoute
-  '/pedir/carrinho': typeof PedirCarrinhoRoute
-  '/pedir/categorias': typeof PedirCategoriasRoute
-  '/pedir/checkout': typeof PedirCheckoutRoute
-  '/pedir/pedidos': typeof PedirPedidosRoute
-  '/pedir/perfil': typeof PedirPerfilRoute
   '/cidade/': typeof CidadeIndexRoute
-  '/food/': typeof FoodIndexRoute
-  '/mercado/': typeof MercadoIndexRoute
   '/mototaxista/': typeof MototaxistaIndexRoute
   '/passageiro/': typeof PassageiroIndexRoute
-  '/pedir/': typeof PedirIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/_admGate/adm/gestao': typeof AdmGateAdmGestaoRoute
   '/_admGate/adm/painel': typeof AdmGateAdmPainelRoute
   '/_admGate/adm/precos': typeof AdmGateAdmPrecosRoute
-  '/mercado/acompanhar/$id': typeof MercadoAcompanharIdRoute
-  '/mercado/confirmado/$id': typeof MercadoConfirmadoIdRoute
-  '/mercado/loja/$id': typeof MercadoLojaIdRoute
-  '/mercado/produto/$id': typeof MercadoProdutoIdRoute
-  '/pedir/acompanhar/$id': typeof PedirAcompanharIdRoute
-  '/pedir/confirmado/$id': typeof PedirConfirmadoIdRoute
-  '/pedir/loja/$id': typeof PedirLojaIdRoute
-  '/pedir/produto/$id': typeof PedirProdutoIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -797,13 +394,8 @@ export interface FileRouteTypes {
     | '/admin'
     | '/administrador'
     | '/cidade'
-    | '/entregas'
-    | '/escolher'
     | '/mcp'
-    | '/mercado'
     | '/mototaxi'
-    | '/parceiros'
-    | '/pedir'
     | '/privacidade'
     | '/splash'
     | '/termos'
@@ -812,82 +404,39 @@ export interface FileRouteTypes {
     | '/adm/negado'
     | '/adm/suspenso'
     | '/app/administrador'
-    | '/app/entregas'
     | '/app/mototaxi'
-    | '/app/parceiros'
     | '/app/passageiro'
     | '/auth/mototaxista'
     | '/auth/passageiro'
     | '/cadastro/passageiro'
-    | '/cidade/servicos'
-    | '/empresa/auth'
-    | '/empresa/cadastro'
-    | '/empresa/home'
-    | '/estabelecimento/mercado'
-    | '/estabelecimento/painel'
-    | '/food/auth'
-    | '/food/cadastro'
-    | '/food/esqueci-pin'
-    | '/food/home'
-    | '/mercado/buscar'
-    | '/mercado/carrinho'
-    | '/mercado/checkout'
-    | '/mercado/pedidos'
-    | '/mercado/perfil'
     | '/mototaxista/aguardando'
     | '/mototaxista/auth'
     | '/mototaxista/cadastro'
     | '/mototaxista/documentos'
-    | '/mototaxista/food'
     | '/mototaxista/foto'
     | '/mototaxista/home'
-    | '/mototaxista/mercado'
     | '/mototaxista/pagamento'
     | '/mototaxista/planos'
-    | '/parceiros/auth'
-    | '/parceiros/cadastro'
-    | '/parceiros/mercado'
-    | '/parceiros/painel'
     | '/passageiro/carteira'
     | '/passageiro/corridas'
     | '/passageiro/home'
     | '/passageiro/perfil'
-    | '/pedir/buscar'
-    | '/pedir/carrinho'
-    | '/pedir/categorias'
-    | '/pedir/checkout'
-    | '/pedir/pedidos'
-    | '/pedir/perfil'
     | '/cidade/'
-    | '/food/'
-    | '/mercado/'
     | '/mototaxista/'
     | '/passageiro/'
-    | '/pedir/'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
     | '/adm/gestao'
     | '/adm/painel'
     | '/adm/precos'
-    | '/mercado/acompanhar/$id'
-    | '/mercado/confirmado/$id'
-    | '/mercado/loja/$id'
-    | '/mercado/produto/$id'
-    | '/pedir/acompanhar/$id'
-    | '/pedir/confirmado/$id'
-    | '/pedir/loja/$id'
-    | '/pedir/produto/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/adm'
     | '/admin'
     | '/administrador'
-    | '/entregas'
-    | '/escolher'
     | '/mcp'
     | '/mototaxi'
-    | '/parceiros'
     | '/privacidade'
     | '/splash'
     | '/termos'
@@ -896,71 +445,31 @@ export interface FileRouteTypes {
     | '/adm/negado'
     | '/adm/suspenso'
     | '/app/administrador'
-    | '/app/entregas'
     | '/app/mototaxi'
-    | '/app/parceiros'
     | '/app/passageiro'
     | '/auth/mototaxista'
     | '/auth/passageiro'
     | '/cadastro/passageiro'
-    | '/cidade/servicos'
-    | '/empresa/auth'
-    | '/empresa/cadastro'
-    | '/empresa/home'
-    | '/estabelecimento/mercado'
-    | '/estabelecimento/painel'
-    | '/food/auth'
-    | '/food/cadastro'
-    | '/food/esqueci-pin'
-    | '/food/home'
-    | '/mercado/buscar'
-    | '/mercado/carrinho'
-    | '/mercado/checkout'
-    | '/mercado/pedidos'
-    | '/mercado/perfil'
     | '/mototaxista/aguardando'
     | '/mototaxista/auth'
     | '/mototaxista/cadastro'
     | '/mototaxista/documentos'
-    | '/mototaxista/food'
     | '/mototaxista/foto'
     | '/mototaxista/home'
-    | '/mototaxista/mercado'
     | '/mototaxista/pagamento'
     | '/mototaxista/planos'
-    | '/parceiros/auth'
-    | '/parceiros/cadastro'
-    | '/parceiros/mercado'
-    | '/parceiros/painel'
     | '/passageiro/carteira'
     | '/passageiro/corridas'
     | '/passageiro/home'
     | '/passageiro/perfil'
-    | '/pedir/buscar'
-    | '/pedir/carrinho'
-    | '/pedir/categorias'
-    | '/pedir/checkout'
-    | '/pedir/pedidos'
-    | '/pedir/perfil'
     | '/cidade'
-    | '/food'
-    | '/mercado'
     | '/mototaxista'
     | '/passageiro'
-    | '/pedir'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
     | '/adm/gestao'
     | '/adm/painel'
     | '/adm/precos'
-    | '/mercado/acompanhar/$id'
-    | '/mercado/confirmado/$id'
-    | '/mercado/loja/$id'
-    | '/mercado/produto/$id'
-    | '/pedir/acompanhar/$id'
-    | '/pedir/confirmado/$id'
-    | '/pedir/loja/$id'
-    | '/pedir/produto/$id'
   id:
     | '__root__'
     | '/'
@@ -969,13 +478,8 @@ export interface FileRouteTypes {
     | '/admin'
     | '/administrador'
     | '/cidade'
-    | '/entregas'
-    | '/escolher'
     | '/mcp'
-    | '/mercado'
     | '/mototaxi'
-    | '/parceiros'
-    | '/pedir'
     | '/privacidade'
     | '/splash'
     | '/termos'
@@ -984,71 +488,31 @@ export interface FileRouteTypes {
     | '/adm/negado'
     | '/adm/suspenso'
     | '/app/administrador'
-    | '/app/entregas'
     | '/app/mototaxi'
-    | '/app/parceiros'
     | '/app/passageiro'
     | '/auth/mototaxista'
     | '/auth/passageiro'
     | '/cadastro/passageiro'
-    | '/cidade/servicos'
-    | '/empresa/auth'
-    | '/empresa/cadastro'
-    | '/empresa/home'
-    | '/estabelecimento/mercado'
-    | '/estabelecimento/painel'
-    | '/food/auth'
-    | '/food/cadastro'
-    | '/food/esqueci-pin'
-    | '/food/home'
-    | '/mercado/buscar'
-    | '/mercado/carrinho'
-    | '/mercado/checkout'
-    | '/mercado/pedidos'
-    | '/mercado/perfil'
     | '/mototaxista/aguardando'
     | '/mototaxista/auth'
     | '/mototaxista/cadastro'
     | '/mototaxista/documentos'
-    | '/mototaxista/food'
     | '/mototaxista/foto'
     | '/mototaxista/home'
-    | '/mototaxista/mercado'
     | '/mototaxista/pagamento'
     | '/mototaxista/planos'
-    | '/parceiros/auth'
-    | '/parceiros/cadastro'
-    | '/parceiros/mercado'
-    | '/parceiros/painel'
     | '/passageiro/carteira'
     | '/passageiro/corridas'
     | '/passageiro/home'
     | '/passageiro/perfil'
-    | '/pedir/buscar'
-    | '/pedir/carrinho'
-    | '/pedir/categorias'
-    | '/pedir/checkout'
-    | '/pedir/pedidos'
-    | '/pedir/perfil'
     | '/cidade/'
-    | '/food/'
-    | '/mercado/'
     | '/mototaxista/'
     | '/passageiro/'
-    | '/pedir/'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
     | '/_admGate/adm/gestao'
     | '/_admGate/adm/painel'
     | '/_admGate/adm/precos'
-    | '/mercado/acompanhar/$id'
-    | '/mercado/confirmado/$id'
-    | '/mercado/loja/$id'
-    | '/mercado/produto/$id'
-    | '/pedir/acompanhar/$id'
-    | '/pedir/confirmado/$id'
-    | '/pedir/loja/$id'
-    | '/pedir/produto/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -1058,50 +522,31 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRoute
   AdministradorRoute: typeof AdministradorRoute
   CidadeRoute: typeof CidadeRouteWithChildren
-  EntregasRoute: typeof EntregasRoute
-  EscolherRoute: typeof EscolherRoute
   McpRoute: typeof McpRoute
-  MercadoRoute: typeof MercadoRouteWithChildren
   MototaxiRoute: typeof MototaxiRoute
-  ParceirosRoute: typeof ParceirosRouteWithChildren
-  PedirRoute: typeof PedirRouteWithChildren
   PrivacidadeRoute: typeof PrivacidadeRoute
   SplashRoute: typeof SplashRoute
   TermosRoute: typeof TermosRoute
   Char91DotmcpChar93ListToolsRoute: typeof Char91DotmcpChar93ListToolsRoute
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   AppAdministradorRoute: typeof AppAdministradorRoute
-  AppEntregasRoute: typeof AppEntregasRoute
   AppMototaxiRoute: typeof AppMototaxiRoute
-  AppParceirosRoute: typeof AppParceirosRoute
   AppPassageiroRoute: typeof AppPassageiroRoute
   AuthMototaxistaRoute: typeof AuthMototaxistaRoute
   AuthPassageiroRoute: typeof AuthPassageiroRoute
   CadastroPassageiroRoute: typeof CadastroPassageiroRoute
-  EmpresaAuthRoute: typeof EmpresaAuthRoute
-  EmpresaCadastroRoute: typeof EmpresaCadastroRoute
-  EmpresaHomeRoute: typeof EmpresaHomeRoute
-  EstabelecimentoMercadoRoute: typeof EstabelecimentoMercadoRoute
-  EstabelecimentoPainelRoute: typeof EstabelecimentoPainelRoute
-  FoodAuthRoute: typeof FoodAuthRoute
-  FoodCadastroRoute: typeof FoodCadastroRoute
-  FoodEsqueciPinRoute: typeof FoodEsqueciPinRoute
-  FoodHomeRoute: typeof FoodHomeRoute
   MototaxistaAguardandoRoute: typeof MototaxistaAguardandoRoute
   MototaxistaAuthRoute: typeof MototaxistaAuthRoute
   MototaxistaCadastroRoute: typeof MototaxistaCadastroRoute
   MototaxistaDocumentosRoute: typeof MototaxistaDocumentosRoute
-  MototaxistaFoodRoute: typeof MototaxistaFoodRoute
   MototaxistaFotoRoute: typeof MototaxistaFotoRoute
   MototaxistaHomeRoute: typeof MototaxistaHomeRoute
-  MototaxistaMercadoRoute: typeof MototaxistaMercadoRoute
   MototaxistaPagamentoRoute: typeof MototaxistaPagamentoRoute
   MototaxistaPlanosRoute: typeof MototaxistaPlanosRoute
   PassageiroCarteiraRoute: typeof PassageiroCarteiraRoute
   PassageiroCorridasRoute: typeof PassageiroCorridasRoute
   PassageiroHomeRoute: typeof PassageiroHomeRoute
   PassageiroPerfilRoute: typeof PassageiroPerfilRoute
-  FoodIndexRoute: typeof FoodIndexRoute
   MototaxistaIndexRoute: typeof MototaxistaIndexRoute
   PassageiroIndexRoute: typeof PassageiroIndexRoute
   DotlovableOauthConsentRoute: typeof DotlovableOauthConsentRoute
@@ -1131,20 +576,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacidadeRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/pedir': {
-      id: '/pedir'
-      path: '/pedir'
-      fullPath: '/pedir'
-      preLoaderRoute: typeof PedirRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/parceiros': {
-      id: '/parceiros'
-      path: '/parceiros'
-      fullPath: '/parceiros'
-      preLoaderRoute: typeof ParceirosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/mototaxi': {
       id: '/mototaxi'
       path: '/mototaxi'
@@ -1152,32 +583,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MototaxiRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/mercado': {
-      id: '/mercado'
-      path: '/mercado'
-      fullPath: '/mercado'
-      preLoaderRoute: typeof MercadoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/mcp': {
       id: '/mcp'
       path: '/mcp'
       fullPath: '/mcp'
       preLoaderRoute: typeof McpRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/escolher': {
-      id: '/escolher'
-      path: '/escolher'
-      fullPath: '/escolher'
-      preLoaderRoute: typeof EscolherRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/entregas': {
-      id: '/entregas'
-      path: '/entregas'
-      fullPath: '/entregas'
-      preLoaderRoute: typeof EntregasRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cidade': {
@@ -1222,13 +632,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/pedir/': {
-      id: '/pedir/'
-      path: '/'
-      fullPath: '/pedir/'
-      preLoaderRoute: typeof PedirIndexRouteImport
-      parentRoute: typeof PedirRoute
-    }
     '/passageiro/': {
       id: '/passageiro/'
       path: '/passageiro'
@@ -1243,68 +646,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MototaxistaIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/mercado/': {
-      id: '/mercado/'
-      path: '/'
-      fullPath: '/mercado/'
-      preLoaderRoute: typeof MercadoIndexRouteImport
-      parentRoute: typeof MercadoRoute
-    }
-    '/food/': {
-      id: '/food/'
-      path: '/food'
-      fullPath: '/food/'
-      preLoaderRoute: typeof FoodIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/cidade/': {
       id: '/cidade/'
       path: '/'
       fullPath: '/cidade/'
       preLoaderRoute: typeof CidadeIndexRouteImport
       parentRoute: typeof CidadeRoute
-    }
-    '/pedir/perfil': {
-      id: '/pedir/perfil'
-      path: '/perfil'
-      fullPath: '/pedir/perfil'
-      preLoaderRoute: typeof PedirPerfilRouteImport
-      parentRoute: typeof PedirRoute
-    }
-    '/pedir/pedidos': {
-      id: '/pedir/pedidos'
-      path: '/pedidos'
-      fullPath: '/pedir/pedidos'
-      preLoaderRoute: typeof PedirPedidosRouteImport
-      parentRoute: typeof PedirRoute
-    }
-    '/pedir/checkout': {
-      id: '/pedir/checkout'
-      path: '/checkout'
-      fullPath: '/pedir/checkout'
-      preLoaderRoute: typeof PedirCheckoutRouteImport
-      parentRoute: typeof PedirRoute
-    }
-    '/pedir/categorias': {
-      id: '/pedir/categorias'
-      path: '/categorias'
-      fullPath: '/pedir/categorias'
-      preLoaderRoute: typeof PedirCategoriasRouteImport
-      parentRoute: typeof PedirRoute
-    }
-    '/pedir/carrinho': {
-      id: '/pedir/carrinho'
-      path: '/carrinho'
-      fullPath: '/pedir/carrinho'
-      preLoaderRoute: typeof PedirCarrinhoRouteImport
-      parentRoute: typeof PedirRoute
-    }
-    '/pedir/buscar': {
-      id: '/pedir/buscar'
-      path: '/buscar'
-      fullPath: '/pedir/buscar'
-      preLoaderRoute: typeof PedirBuscarRouteImport
-      parentRoute: typeof PedirRoute
     }
     '/passageiro/perfil': {
       id: '/passageiro/perfil'
@@ -1334,34 +681,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PassageiroCarteiraRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/parceiros/painel': {
-      id: '/parceiros/painel'
-      path: '/painel'
-      fullPath: '/parceiros/painel'
-      preLoaderRoute: typeof ParceirosPainelRouteImport
-      parentRoute: typeof ParceirosRoute
-    }
-    '/parceiros/mercado': {
-      id: '/parceiros/mercado'
-      path: '/mercado'
-      fullPath: '/parceiros/mercado'
-      preLoaderRoute: typeof ParceirosMercadoRouteImport
-      parentRoute: typeof ParceirosRoute
-    }
-    '/parceiros/cadastro': {
-      id: '/parceiros/cadastro'
-      path: '/cadastro'
-      fullPath: '/parceiros/cadastro'
-      preLoaderRoute: typeof ParceirosCadastroRouteImport
-      parentRoute: typeof ParceirosRoute
-    }
-    '/parceiros/auth': {
-      id: '/parceiros/auth'
-      path: '/auth'
-      fullPath: '/parceiros/auth'
-      preLoaderRoute: typeof ParceirosAuthRouteImport
-      parentRoute: typeof ParceirosRoute
-    }
     '/mototaxista/planos': {
       id: '/mototaxista/planos'
       path: '/mototaxista/planos'
@@ -1376,13 +695,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MototaxistaPagamentoRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/mototaxista/mercado': {
-      id: '/mototaxista/mercado'
-      path: '/mototaxista/mercado'
-      fullPath: '/mototaxista/mercado'
-      preLoaderRoute: typeof MototaxistaMercadoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/mototaxista/home': {
       id: '/mototaxista/home'
       path: '/mototaxista/home'
@@ -1395,13 +707,6 @@ declare module '@tanstack/react-router' {
       path: '/mototaxista/foto'
       fullPath: '/mototaxista/foto'
       preLoaderRoute: typeof MototaxistaFotoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/mototaxista/food': {
-      id: '/mototaxista/food'
-      path: '/mototaxista/food'
-      fullPath: '/mototaxista/food'
-      preLoaderRoute: typeof MototaxistaFoodRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/mototaxista/documentos': {
@@ -1432,111 +737,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MototaxistaAguardandoRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/mercado/perfil': {
-      id: '/mercado/perfil'
-      path: '/perfil'
-      fullPath: '/mercado/perfil'
-      preLoaderRoute: typeof MercadoPerfilRouteImport
-      parentRoute: typeof MercadoRoute
-    }
-    '/mercado/pedidos': {
-      id: '/mercado/pedidos'
-      path: '/pedidos'
-      fullPath: '/mercado/pedidos'
-      preLoaderRoute: typeof MercadoPedidosRouteImport
-      parentRoute: typeof MercadoRoute
-    }
-    '/mercado/checkout': {
-      id: '/mercado/checkout'
-      path: '/checkout'
-      fullPath: '/mercado/checkout'
-      preLoaderRoute: typeof MercadoCheckoutRouteImport
-      parentRoute: typeof MercadoRoute
-    }
-    '/mercado/carrinho': {
-      id: '/mercado/carrinho'
-      path: '/carrinho'
-      fullPath: '/mercado/carrinho'
-      preLoaderRoute: typeof MercadoCarrinhoRouteImport
-      parentRoute: typeof MercadoRoute
-    }
-    '/mercado/buscar': {
-      id: '/mercado/buscar'
-      path: '/buscar'
-      fullPath: '/mercado/buscar'
-      preLoaderRoute: typeof MercadoBuscarRouteImport
-      parentRoute: typeof MercadoRoute
-    }
-    '/food/home': {
-      id: '/food/home'
-      path: '/food/home'
-      fullPath: '/food/home'
-      preLoaderRoute: typeof FoodHomeRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/food/esqueci-pin': {
-      id: '/food/esqueci-pin'
-      path: '/food/esqueci-pin'
-      fullPath: '/food/esqueci-pin'
-      preLoaderRoute: typeof FoodEsqueciPinRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/food/cadastro': {
-      id: '/food/cadastro'
-      path: '/food/cadastro'
-      fullPath: '/food/cadastro'
-      preLoaderRoute: typeof FoodCadastroRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/food/auth': {
-      id: '/food/auth'
-      path: '/food/auth'
-      fullPath: '/food/auth'
-      preLoaderRoute: typeof FoodAuthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/estabelecimento/painel': {
-      id: '/estabelecimento/painel'
-      path: '/estabelecimento/painel'
-      fullPath: '/estabelecimento/painel'
-      preLoaderRoute: typeof EstabelecimentoPainelRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/estabelecimento/mercado': {
-      id: '/estabelecimento/mercado'
-      path: '/estabelecimento/mercado'
-      fullPath: '/estabelecimento/mercado'
-      preLoaderRoute: typeof EstabelecimentoMercadoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/empresa/home': {
-      id: '/empresa/home'
-      path: '/empresa/home'
-      fullPath: '/empresa/home'
-      preLoaderRoute: typeof EmpresaHomeRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/empresa/cadastro': {
-      id: '/empresa/cadastro'
-      path: '/empresa/cadastro'
-      fullPath: '/empresa/cadastro'
-      preLoaderRoute: typeof EmpresaCadastroRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/empresa/auth': {
-      id: '/empresa/auth'
-      path: '/empresa/auth'
-      fullPath: '/empresa/auth'
-      preLoaderRoute: typeof EmpresaAuthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/cidade/servicos': {
-      id: '/cidade/servicos'
-      path: '/servicos'
-      fullPath: '/cidade/servicos'
-      preLoaderRoute: typeof CidadeServicosRouteImport
-      parentRoute: typeof CidadeRoute
-    }
     '/cadastro/passageiro': {
       id: '/cadastro/passageiro'
       path: '/cadastro/passageiro'
@@ -1565,25 +765,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppPassageiroRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/app/parceiros': {
-      id: '/app/parceiros'
-      path: '/app/parceiros'
-      fullPath: '/app/parceiros'
-      preLoaderRoute: typeof AppParceirosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/app/mototaxi': {
       id: '/app/mototaxi'
       path: '/app/mototaxi'
       fullPath: '/app/mototaxi'
       preLoaderRoute: typeof AppMototaxiRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/app/entregas': {
-      id: '/app/entregas'
-      path: '/app/entregas'
-      fullPath: '/app/entregas'
-      preLoaderRoute: typeof AppEntregasRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/app/administrador': {
@@ -1620,62 +806,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/.mcp/list-tools'
       preLoaderRoute: typeof Char91DotmcpChar93ListToolsRouteImport
       parentRoute: typeof rootRouteImport
-    }
-    '/pedir/produto/$id': {
-      id: '/pedir/produto/$id'
-      path: '/produto/$id'
-      fullPath: '/pedir/produto/$id'
-      preLoaderRoute: typeof PedirProdutoIdRouteImport
-      parentRoute: typeof PedirRoute
-    }
-    '/pedir/loja/$id': {
-      id: '/pedir/loja/$id'
-      path: '/loja/$id'
-      fullPath: '/pedir/loja/$id'
-      preLoaderRoute: typeof PedirLojaIdRouteImport
-      parentRoute: typeof PedirRoute
-    }
-    '/pedir/confirmado/$id': {
-      id: '/pedir/confirmado/$id'
-      path: '/confirmado/$id'
-      fullPath: '/pedir/confirmado/$id'
-      preLoaderRoute: typeof PedirConfirmadoIdRouteImport
-      parentRoute: typeof PedirRoute
-    }
-    '/pedir/acompanhar/$id': {
-      id: '/pedir/acompanhar/$id'
-      path: '/acompanhar/$id'
-      fullPath: '/pedir/acompanhar/$id'
-      preLoaderRoute: typeof PedirAcompanharIdRouteImport
-      parentRoute: typeof PedirRoute
-    }
-    '/mercado/produto/$id': {
-      id: '/mercado/produto/$id'
-      path: '/produto/$id'
-      fullPath: '/mercado/produto/$id'
-      preLoaderRoute: typeof MercadoProdutoIdRouteImport
-      parentRoute: typeof MercadoRoute
-    }
-    '/mercado/loja/$id': {
-      id: '/mercado/loja/$id'
-      path: '/loja/$id'
-      fullPath: '/mercado/loja/$id'
-      preLoaderRoute: typeof MercadoLojaIdRouteImport
-      parentRoute: typeof MercadoRoute
-    }
-    '/mercado/confirmado/$id': {
-      id: '/mercado/confirmado/$id'
-      path: '/confirmado/$id'
-      fullPath: '/mercado/confirmado/$id'
-      preLoaderRoute: typeof MercadoConfirmadoIdRouteImport
-      parentRoute: typeof MercadoRoute
-    }
-    '/mercado/acompanhar/$id': {
-      id: '/mercado/acompanhar/$id'
-      path: '/acompanhar/$id'
-      fullPath: '/mercado/acompanhar/$id'
-      preLoaderRoute: typeof MercadoAcompanharIdRouteImport
-      parentRoute: typeof MercadoRoute
     }
     '/_admGate/adm/precos': {
       id: '/_admGate/adm/precos'
@@ -1743,94 +873,15 @@ const AdmRouteChildren: AdmRouteChildren = {
 const AdmRouteWithChildren = AdmRoute._addFileChildren(AdmRouteChildren)
 
 interface CidadeRouteChildren {
-  CidadeServicosRoute: typeof CidadeServicosRoute
   CidadeIndexRoute: typeof CidadeIndexRoute
 }
 
 const CidadeRouteChildren: CidadeRouteChildren = {
-  CidadeServicosRoute: CidadeServicosRoute,
   CidadeIndexRoute: CidadeIndexRoute,
 }
 
 const CidadeRouteWithChildren =
   CidadeRoute._addFileChildren(CidadeRouteChildren)
-
-interface MercadoRouteChildren {
-  MercadoBuscarRoute: typeof MercadoBuscarRoute
-  MercadoCarrinhoRoute: typeof MercadoCarrinhoRoute
-  MercadoCheckoutRoute: typeof MercadoCheckoutRoute
-  MercadoPedidosRoute: typeof MercadoPedidosRoute
-  MercadoPerfilRoute: typeof MercadoPerfilRoute
-  MercadoIndexRoute: typeof MercadoIndexRoute
-  MercadoAcompanharIdRoute: typeof MercadoAcompanharIdRoute
-  MercadoConfirmadoIdRoute: typeof MercadoConfirmadoIdRoute
-  MercadoLojaIdRoute: typeof MercadoLojaIdRoute
-  MercadoProdutoIdRoute: typeof MercadoProdutoIdRoute
-}
-
-const MercadoRouteChildren: MercadoRouteChildren = {
-  MercadoBuscarRoute: MercadoBuscarRoute,
-  MercadoCarrinhoRoute: MercadoCarrinhoRoute,
-  MercadoCheckoutRoute: MercadoCheckoutRoute,
-  MercadoPedidosRoute: MercadoPedidosRoute,
-  MercadoPerfilRoute: MercadoPerfilRoute,
-  MercadoIndexRoute: MercadoIndexRoute,
-  MercadoAcompanharIdRoute: MercadoAcompanharIdRoute,
-  MercadoConfirmadoIdRoute: MercadoConfirmadoIdRoute,
-  MercadoLojaIdRoute: MercadoLojaIdRoute,
-  MercadoProdutoIdRoute: MercadoProdutoIdRoute,
-}
-
-const MercadoRouteWithChildren =
-  MercadoRoute._addFileChildren(MercadoRouteChildren)
-
-interface ParceirosRouteChildren {
-  ParceirosAuthRoute: typeof ParceirosAuthRoute
-  ParceirosCadastroRoute: typeof ParceirosCadastroRoute
-  ParceirosMercadoRoute: typeof ParceirosMercadoRoute
-  ParceirosPainelRoute: typeof ParceirosPainelRoute
-}
-
-const ParceirosRouteChildren: ParceirosRouteChildren = {
-  ParceirosAuthRoute: ParceirosAuthRoute,
-  ParceirosCadastroRoute: ParceirosCadastroRoute,
-  ParceirosMercadoRoute: ParceirosMercadoRoute,
-  ParceirosPainelRoute: ParceirosPainelRoute,
-}
-
-const ParceirosRouteWithChildren = ParceirosRoute._addFileChildren(
-  ParceirosRouteChildren,
-)
-
-interface PedirRouteChildren {
-  PedirBuscarRoute: typeof PedirBuscarRoute
-  PedirCarrinhoRoute: typeof PedirCarrinhoRoute
-  PedirCategoriasRoute: typeof PedirCategoriasRoute
-  PedirCheckoutRoute: typeof PedirCheckoutRoute
-  PedirPedidosRoute: typeof PedirPedidosRoute
-  PedirPerfilRoute: typeof PedirPerfilRoute
-  PedirIndexRoute: typeof PedirIndexRoute
-  PedirAcompanharIdRoute: typeof PedirAcompanharIdRoute
-  PedirConfirmadoIdRoute: typeof PedirConfirmadoIdRoute
-  PedirLojaIdRoute: typeof PedirLojaIdRoute
-  PedirProdutoIdRoute: typeof PedirProdutoIdRoute
-}
-
-const PedirRouteChildren: PedirRouteChildren = {
-  PedirBuscarRoute: PedirBuscarRoute,
-  PedirCarrinhoRoute: PedirCarrinhoRoute,
-  PedirCategoriasRoute: PedirCategoriasRoute,
-  PedirCheckoutRoute: PedirCheckoutRoute,
-  PedirPedidosRoute: PedirPedidosRoute,
-  PedirPerfilRoute: PedirPerfilRoute,
-  PedirIndexRoute: PedirIndexRoute,
-  PedirAcompanharIdRoute: PedirAcompanharIdRoute,
-  PedirConfirmadoIdRoute: PedirConfirmadoIdRoute,
-  PedirLojaIdRoute: PedirLojaIdRoute,
-  PedirProdutoIdRoute: PedirProdutoIdRoute,
-}
-
-const PedirRouteWithChildren = PedirRoute._addFileChildren(PedirRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -1839,13 +890,8 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRoute,
   AdministradorRoute: AdministradorRoute,
   CidadeRoute: CidadeRouteWithChildren,
-  EntregasRoute: EntregasRoute,
-  EscolherRoute: EscolherRoute,
   McpRoute: McpRoute,
-  MercadoRoute: MercadoRouteWithChildren,
   MototaxiRoute: MototaxiRoute,
-  ParceirosRoute: ParceirosRouteWithChildren,
-  PedirRoute: PedirRouteWithChildren,
   PrivacidadeRoute: PrivacidadeRoute,
   SplashRoute: SplashRoute,
   TermosRoute: TermosRoute,
@@ -1853,37 +899,23 @@ const rootRouteChildren: RootRouteChildren = {
   Char91DotwellKnownChar93OauthProtectedResourceRoute:
     Char91DotwellKnownChar93OauthProtectedResourceRoute,
   AppAdministradorRoute: AppAdministradorRoute,
-  AppEntregasRoute: AppEntregasRoute,
   AppMototaxiRoute: AppMototaxiRoute,
-  AppParceirosRoute: AppParceirosRoute,
   AppPassageiroRoute: AppPassageiroRoute,
   AuthMototaxistaRoute: AuthMototaxistaRoute,
   AuthPassageiroRoute: AuthPassageiroRoute,
   CadastroPassageiroRoute: CadastroPassageiroRoute,
-  EmpresaAuthRoute: EmpresaAuthRoute,
-  EmpresaCadastroRoute: EmpresaCadastroRoute,
-  EmpresaHomeRoute: EmpresaHomeRoute,
-  EstabelecimentoMercadoRoute: EstabelecimentoMercadoRoute,
-  EstabelecimentoPainelRoute: EstabelecimentoPainelRoute,
-  FoodAuthRoute: FoodAuthRoute,
-  FoodCadastroRoute: FoodCadastroRoute,
-  FoodEsqueciPinRoute: FoodEsqueciPinRoute,
-  FoodHomeRoute: FoodHomeRoute,
   MototaxistaAguardandoRoute: MototaxistaAguardandoRoute,
   MototaxistaAuthRoute: MototaxistaAuthRoute,
   MototaxistaCadastroRoute: MototaxistaCadastroRoute,
   MototaxistaDocumentosRoute: MototaxistaDocumentosRoute,
-  MototaxistaFoodRoute: MototaxistaFoodRoute,
   MototaxistaFotoRoute: MototaxistaFotoRoute,
   MototaxistaHomeRoute: MototaxistaHomeRoute,
-  MototaxistaMercadoRoute: MototaxistaMercadoRoute,
   MototaxistaPagamentoRoute: MototaxistaPagamentoRoute,
   MototaxistaPlanosRoute: MototaxistaPlanosRoute,
   PassageiroCarteiraRoute: PassageiroCarteiraRoute,
   PassageiroCorridasRoute: PassageiroCorridasRoute,
   PassageiroHomeRoute: PassageiroHomeRoute,
   PassageiroPerfilRoute: PassageiroPerfilRoute,
-  FoodIndexRoute: FoodIndexRoute,
   MototaxistaIndexRoute: MototaxistaIndexRoute,
   PassageiroIndexRoute: PassageiroIndexRoute,
   DotlovableOauthConsentRoute: DotlovableOauthConsentRoute,

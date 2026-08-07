@@ -10,8 +10,8 @@ import { EmojiIcon } from "@/components/emoji-icon";
 export const Route = createFileRoute("/splash")({
   head: () => ({
     meta: [
-      { title: "Bora Zé! — Mototáxi rápido na sua cidade" },
-      { name: "description", content: "Bora Zé!: peça mototáxi em minutos nas cidades do interior. Para passageiros e mototaxistas." },
+      { title: "InterGO — Mototáxi rápido na sua cidade" },
+      { name: "description", content: "InterGO: peça mototáxi em minutos nas cidades do interior. Para passageiros e mototaxistas." },
     ],
   }),
   component: Splash,
@@ -50,7 +50,7 @@ function Splash() {
       <main className="min-h-screen flex items-center justify-center bg-background overflow-hidden">
         <img
           src={iconMz.url}
-          alt="Bora Zé!"
+          alt="InterGO"
           className="w-40 max-w-[50vw] h-auto absolute transition-opacity duration-500 ease-in-out"
           style={{
             opacity: phase === "icon" ? 1 : 0,
@@ -59,7 +59,7 @@ function Splash() {
         />
         <img
           src={textMz.url}
-          alt="Bora Zé!"
+          alt="InterGO"
           className="w-72 max-w-[80vw] h-auto absolute transition-all duration-500 ease-out"
           style={{
             opacity: phase === "text" ? 1 : 0,
@@ -77,7 +77,7 @@ function Splash() {
       <div className="flex-1 flex flex-col items-center justify-center text-center gap-6 w-full">
         <img
           src={logoMz.url}
-          alt="Bora Zé!"
+          alt="InterGO"
           className="w-72 max-w-[85vw] h-auto drop-shadow-[0_0_24px_rgba(0,255,26,0.35)] animate-scale-in"
         />
       </div>
@@ -94,7 +94,7 @@ function Splash() {
             letterSpacing: "0.02em",
           }}
         >
-          BORA ZÉ!
+          INTERGO
         </Link>
         <Link
           to="/auth/passageiro"
@@ -112,21 +112,8 @@ function Splash() {
             letterSpacing: "0.02em",
           }}
         >
-          BORA ZÉ! MOTO-TAXISTA
+          INTERGO MOTO-TAXISTA
         </Link>
-        <Link
-          to="/empresa/auth"
-          className="w-full rounded-2xl px-6 py-4 font-bold text-center transition-all active:scale-[0.98]"
-          style={{
-            background: "#FFFFFF",
-            color: "#000000",
-            boxShadow: "0 4px 16px rgba(255,255,255,0.15)",
-            letterSpacing: "0.02em",
-          }}
-        >
-          BORA ZÉ! ENTREGAS
-        </Link>
-
         {canInstall && showInstall && (
           <button
             onClick={handleInstall}

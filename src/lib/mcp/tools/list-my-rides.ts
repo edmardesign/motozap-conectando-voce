@@ -13,7 +13,7 @@ export default defineTool({
   name: "list_my_rides",
   title: "List my rides",
   description:
-    "List the signed-in user's most recent Bora Zé! rides (as passenger or mototaxista). Ordered newest first.",
+    "List the signed-in user's most recent InterGO rides (as passenger or mototaxista). Ordered newest first.",
   inputSchema: {
     limit: z
       .number()

@@ -9,7 +9,7 @@ import { EmojiIcon } from "@/components/emoji-icon";
 export const Route = createFileRoute("/mototaxista/aguardando")({
   head: () => ({
     meta: [
-      { title: "Bem-vindo ao Bora Zé!" },
+      { title: "Bem-vindo ao InterGO" },
       { name: "description", content: "Seu cadastro foi recebido e está em análise." },
     ],
   }),
@@ -83,7 +83,7 @@ function AguardandoPage() {
           <>
             <div className="text-5xl"><EmojiIcon e="🎉" /></div>
             <h1 className="text-2xl font-bold">
-              Bem-vindo ao Bora Zé!{nome ? `, ${nome}` : ""}!
+              Bem-vindo ao InterGO{nome ? `, ${nome}` : ""}!
             </h1>
             <p className="text-white/80 text-sm leading-relaxed">
               Seu cadastro foi recebido e seu primeiro mês é por nossa conta. <EmojiIcon e="🏍️" />
@@ -104,7 +104,7 @@ function AguardandoPage() {
 
             <a
               href={`https://wa.me/${SUPORTE_WHATSAPP}?text=${encodeURIComponent(
-                "Olá! Acabei de me cadastrar no Bora Zé! e gostaria de tirar uma dúvida.",
+                "Olá! Acabei de me cadastrar no InterGO e gostaria de tirar uma dúvida.",
               )}`}
               target="_blank"
               rel="noreferrer"

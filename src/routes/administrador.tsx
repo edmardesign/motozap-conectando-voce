@@ -10,8 +10,8 @@ export const Route = createFileRoute("/administrador")({
   },
   head: () => ({
     meta: [
-      { title: "Bora Zé! Administrador" },
-      { name: "description", content: "Painel administrativo Bora Zé!" },
+      { title: "InterGO Administrador" },
+      { name: "description", content: "Painel administrativo InterGO" },
       { name: "robots", content: "noindex, nofollow" },
     ],
     links: [{ rel: "manifest", href: "/manifest-administrador.webmanifest" }],

@@ -60,7 +60,7 @@ export function BoraZeIntroAnimation({
       >
         <img
           src={logoMz.url}
-          alt="Bora Zé!"
+          alt="InterGO"
           className="animate-scale-in"
           style={{
             width: "min(85vw, 320px)",
@@ -87,7 +87,7 @@ export function BoraZeIntroAnimation({
     >
       <img
         src={iconMz.url}
-        alt="Bora Zé!"
+        alt="InterGO"
         style={{
           position: "absolute",
           width: "min(50vw, 200px)",
@@ -99,7 +99,7 @@ export function BoraZeIntroAnimation({
       />
       <img
         src={textMz.url}
-        alt="Bora Zé!"
+        alt="InterGO"
         style={{
           position: "absolute",
           width: "min(80vw, 320px)",

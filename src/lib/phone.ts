@@ -1,4 +1,4 @@
-// Helpers for phone+PIN auth (Bora Zé!)
+// Helpers for phone+PIN auth (InterGO)
 
 export function onlyDigits(v: string): string {
   return v.replace(/\D/g, "");

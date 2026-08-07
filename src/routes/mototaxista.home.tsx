@@ -67,17 +67,6 @@ type CorridaBroadcast = {
 };
 
 type Passageiro = { nome: string; telefone: string; foto_url: string | null };
-type Entrega = {
-  id: string;
-  empresa_id: string;
-  mototaxista_id: string | null;
-  endereco_coleta: string;
-  endereco_entrega: string;
-  descricao_item: string | null;
-  valor_combinado: number;
-  status: "aguardando" | "aceita" | "coletado" | "entregue" | "cancelada";
-};
-type EmpresaMin = { id: string; nome: string; telefone: string };
 type MotoData = {
   nome: string;
   telefone: string;
@@ -88,7 +77,7 @@ type MotoData = {
   created_at?: string | null;
 };
 
-type Aba = "corridas" | "entregas" | "financeiro" | "perfil";
+type Aba = "corridas" | "financeiro" | "perfil";
 
 const COLORS = {
   bg: "#000000",
@@ -119,7 +108,6 @@ function MototaxistaHome() {
   const db = supabase as any;
 
   const [online, setOnline] = useState(false);
-  const [aceitaDelivery, setAceitaDelivery] = useState(false);
   const [aceitaPegueAli, setAceitaPegueAli] = useState(true);
   const [prefDistanciaKm, setPrefDistanciaKm] = useState(5);
   const [prefValorMinimo, setPrefValorMinimo] = useState(5);
@@ -141,13 +129,8 @@ function MototaxistaHome() {
   const [passageiro, setPassageiro] = useState<Passageiro | null>(null);
   const [busy, setBusy] = useState(false);
   const [aba, setAba] = useState<Aba>("corridas");
-  const [entregasAbertas, setEntregasAbertas] = useState<Entrega[]>([]);
-  const [entregaAtual, setEntregaAtual] = useState<Entrega | null>(null);
-  const [empresasMap, setEmpresasMap] = useState<Record<string, EmpresaMin>>({});
   const [ganhosCorridas, setGanhosCorridas] = useState(0);
-  const [ganhosEntregas, setGanhosEntregas] = useState(0);
   const [countCorridas, setCountCorridas] = useState(0);
-  const [countEntregas, setCountEntregas] = useState(0);
   const [chegou, setChegou] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
   const [confirmConcluir, setConfirmConcluir] = useState(false);
@@ -267,7 +250,6 @@ function MototaxistaHome() {
         }
         setOnline(m.status === "disponivel");
         setMensalidadeAtiva(m.mensalidade_ativa);
-        setAceitaDelivery(!!m.aceita_delivery);
         setAceitaPegueAli((m as any).aceita_pegue_ali ?? true);
         const prefs = ((m as any).preferencias ?? {}) as Record<string, unknown>;
         if (typeof prefs.distancia_max_km === "number") setPrefDistanciaKm(prefs.distancia_max_km);
@@ -298,14 +280,6 @@ function MototaxistaHome() {
         .in("status", ["aceita", "em_andamento"])
         .maybeSingle();
       if (c) setAtual(c as Corrida);
-
-      const { data: ea } = await db
-        .from("entregas")
-        .select("*")
-        .eq("mototaxista_id", user.id)
-        .in("status", ["aceita", "coletado"])
-        .maybeSingle();
-      if (ea) setEntregaAtual(ea as Entrega);
     })();
   }, [user]);
 
@@ -328,49 +302,9 @@ function MototaxistaHome() {
     return () => { supabase.removeChannel(ch); };
   }, [user]);
 
-  useEffect(() => {
-    if (!user || !aceitaDelivery || !mensalidadeAtiva || entregaAtual) {
-      setEntregasAbertas([]);
-      return;
-    }
-    let cancel = false;
-    const load = async () => {
-      const { data } = await db
-        .from("entregas")
-        .select("*")
-        .eq("status", "aguardando")
-        .order("criado_em", { ascending: true })
-        .limit(20);
-      if (!cancel) setEntregasAbertas((data ?? []) as Entrega[]);
-    };
-    load();
-    const ch = supabase
-      .channel("entregas-aguardando")
-      .on("postgres_changes", { event: "*", schema: "public", table: "entregas" }, () => load())
-      .subscribe();
-    return () => { cancel = true; supabase.removeChannel(ch); };
-  }, [user, aceitaDelivery, mensalidadeAtiva, entregaAtual]);
-
-  useEffect(() => {
-    const ids = Array.from(new Set([
-      ...entregasAbertas.map((e) => e.empresa_id),
-      entregaAtual?.empresa_id,
-    ].filter(Boolean))) as string[];
-    const missing = ids.filter((id) => !empresasMap[id]);
-    if (missing.length === 0) return;
-    (async () => {
-      const { data } = await db.from("empresas").select("id,nome,telefone").in("id", missing);
-      if (data) {
-        const next = { ...empresasMap };
-        for (const e of data) next[e.id] = e;
-        setEmpresasMap(next);
-      }
-    })();
-  }, [entregasAbertas, entregaAtual]);
-
   type ItemFinanceiro = {
     id: string;
-    tipo: "corrida" | "pegue_ali" | "delivery";
+    tipo: "corrida" | "pegue_ali";
     data: string;
     nome: string;
     valor: number;
@@ -403,26 +337,6 @@ function MototaxistaHome() {
         (profs ?? []).forEach((p: any) => { nomesMap[p.id] = p.nome ?? "Passageiro"; });
       }
 
-      const { data: ent } = await db
-        .from("entregas")
-        .select("id,valor_combinado,criado_em,empresa_id")
-        .eq("mototaxista_id", user.id)
-        .eq("status", "entregue")
-        .gte("criado_em", inicioIso)
-        .lte("criado_em", fimIso)
-        .order("criado_em", { ascending: false });
-      const eRows = (ent ?? []) as any[];
-      const eTot = eRows.reduce((s, r) => s + Number(r.valor_combinado ?? 0), 0);
-      setGanhosEntregas(eTot);
-      setCountEntregas(eRows.length);
-
-      const empIds = Array.from(new Set(eRows.map((r) => r.empresa_id).filter(Boolean)));
-      const empMap: Record<string, string> = {};
-      if (empIds.length > 0) {
-        const { data: emps } = await db.from("empresas").select("id,nome").in("id", empIds);
-        (emps ?? []).forEach((e: any) => { empMap[e.id] = e.nome ?? "Empresa"; });
-      }
-
       const itens: ItemFinanceiro[] = [
         ...cRows.map((r) => ({
           id: r.id as string,
@@ -431,17 +345,10 @@ function MototaxistaHome() {
           nome: nomesMap[r.passageiro_id] ?? "Passageiro",
           valor: Number(r.valor_final ?? r.valor_estimado ?? 0),
         })),
-        ...eRows.map((r) => ({
-          id: r.id as string,
-          tipo: "delivery" as const,
-          data: r.criado_em as string,
-          nome: empMap[r.empresa_id] ?? "Empresa",
-          valor: Number(r.valor_combinado ?? 0),
-        })),
       ].sort((a, b) => (a.data < b.data ? 1 : -1));
       setItensPeriodo(itens);
     })();
-  }, [user, atual, entregaAtual, periodoRange, db]);
+  }, [user, atual, periodoRange, db]);
 
 
   // Carrega saldos, chave Pix e histórico de saques
@@ -770,15 +677,6 @@ function MototaxistaHome() {
   }
 
 
-  async function toggleDelivery() {
-    if (!user) return;
-    const novo = !aceitaDelivery;
-    const { error } = await db.from("mototaxistas").update({ aceita_delivery: novo }).eq("id", user.id);
-    if (error) return toast.error(error.message);
-    setAceitaDelivery(novo);
-    toast.success(novo ? "Aceitando Delivery" : "Delivery desativado");
-  }
-
   async function togglePegueAli() {
     if (!user) return;
     const novo = !aceitaPegueAli;
@@ -802,35 +700,6 @@ function MototaxistaHome() {
     toast.success("Preferências salvas");
   }
 
-
-  async function aceitarEntrega(e: Entrega) {
-    if (!user) return;
-    setBusy(true);
-    const { error, data } = await db
-      .from("entregas")
-      .update({ mototaxista_id: user.id, status: "aceita" })
-      .eq("id", e.id).eq("status", "aguardando")
-      .select().single();
-    setBusy(false);
-    if (error || !data) return toast.error("Não foi possível aceitar");
-    setEntregaAtual(data as Entrega);
-    toast.success("Entrega aceita!");
-  }
-
-  async function atualizarEntrega(status: "coletado" | "entregue") {
-    if (!entregaAtual) return;
-    setBusy(true);
-    const { error } = await db.from("entregas").update({ status }).eq("id", entregaAtual.id);
-    setBusy(false);
-    if (error) return toast.error(error.message);
-    if (status === "entregue") {
-      toast.success("Entrega concluída");
-      setEntregaAtual(null);
-    } else {
-      toast.info("Item coletado");
-      setEntregaAtual({ ...entregaAtual, status });
-    }
-  }
 
   // Raio expansivo: começa em 2km, +1km a cada 15s, máx 15km.
   // Corridas sem coords ou com passageiro na mesma cidade sempre aparecem após 45s.
@@ -885,7 +754,7 @@ function MototaxistaHome() {
         <div className="text-5xl">⏰</div>
         <h1 className="text-2xl font-bold text-center">Seu período grátis acabou</h1>
         <p className="text-center text-base max-w-sm" style={{ color: COLORS.textDim }}>
-          Escolha um plano para continuar recebendo corridas no Bora Zé!
+          Escolha um plano para continuar recebendo corridas no InterGO
         </p>
         <Link to="/mototaxista/planos" className="btn-cta">VER PLANOS</Link>
         <button onClick={async () => { await supabase.auth.signOut(); navigate({ to: "/auth/mototaxista" }); }} className="text-[13px]" style={{ color: COLORS.textDim }}>
@@ -896,7 +765,7 @@ function MototaxistaHome() {
   }
 
   if (contaBloqueada) {
-    const wa = `https://wa.me/5575988558754?text=${encodeURIComponent(`Olá! Acabei de pagar minha comissão Bora Zé! (${valorCicloFmt} - 20 corridas). Segue comprovante:`)}`;
+    const wa = `https://wa.me/5575988558754?text=${encodeURIComponent(`Olá! Acabei de pagar minha comissão InterGO (${valorCicloFmt} - 20 corridas). Segue comprovante:`)}`;
     return (
       <main className="min-h-screen px-6 py-10 flex flex-col gap-5 items-center justify-center" style={{ background: COLORS.bg, color: COLORS.text }}>
         <div className="text-6xl"><EmojiIcon e="🏍️" /></div>
@@ -920,8 +789,6 @@ function MototaxistaHome() {
       </main>
     );
   }
-
-  const empAtiva = entregaAtual ? empresasMap[entregaAtual.empresa_id] : null;
 
   return (
     <main className="min-h-screen pb-24" style={{ background: COLORS.bg, color: COLORS.text }}>
@@ -990,21 +857,6 @@ function MototaxistaHome() {
           <div className="flex flex-col items-end gap-1">
             <IOSSwitch checked={online} onChange={toggleOnline} disabled={busy} ariaLabel="Online" />
           </div>
-        </div>
-
-        {/* Card aceitar Delivery */}
-        <div
-          className="mt-4 rounded-xl p-4 flex items-center gap-3"
-          style={{ background: COLORS.card, boxShadow: CARD_SHADOW }}
-        >
-          <div className="text-2xl" aria-hidden><EmojiIcon e="🍕" /></div>
-          <div className="flex-1 min-w-0">
-            <div className="font-semibold text-[15px]">Aceitar Delivery</div>
-            <div className="text-[12px]" style={{ color: COLORS.textDim }}>
-              Chamados de empresas cadastradas
-            </div>
-          </div>
-          <IOSSwitch checked={aceitaDelivery} onChange={toggleDelivery} ariaLabel="Aceitar Delivery" />
         </div>
 
         {/* Card aceitar PEGUE ALI */}
@@ -1122,103 +974,6 @@ function MototaxistaHome() {
           )
         )}
 
-        {aba === "entregas" && (<>
-          <section className="px-5 mt-5 space-y-3">
-            <Link
-              to="/mototaxista/food"
-              className="flex items-center justify-between rounded-xl p-4"
-              style={{ background: COLORS.card, boxShadow: CARD_SHADOW, borderLeft: `4px solid ${COLORS.accent}` }}
-            >
-              <div>
-                <div className="font-bold text-[15px]" style={{ color: COLORS.text }}>Entregas de Comida 🍔</div>
-                <div className="text-[12px]" style={{ color: COLORS.textDim }}>Ver pedidos prontos para retirar</div>
-              </div>
-              <span className="text-lg" style={{ color: COLORS.accent }}>→</span>
-            </Link>
-            <Link
-              to="/mototaxista/mercado"
-              className="flex items-center justify-between rounded-xl p-4"
-              style={{ background: COLORS.card, boxShadow: CARD_SHADOW, borderLeft: `4px solid ${COLORS.accent}` }}
-            >
-              <div>
-                <div className="font-bold text-[15px]" style={{ color: COLORS.text }}>Entregas Mercado 🛒</div>
-                <div className="text-[12px]" style={{ color: COLORS.textDim }}>Ver pedidos de mercado prontos</div>
-              </div>
-              <span className="text-lg" style={{ color: COLORS.accent }}>→</span>
-            </Link>
-          </section>
-        </>)}
-
-        {aba === "entregas" && (
-          !aceitaDelivery ? (
-            <EmptyState
-              icon=""
-              title="Entregas desativadas"
-              subtitle="Ative 'Aceitar Delivery' para começar a receber chamados."
-              action={{ label: "ATIVAR AGORA", onClick: toggleDelivery }}
-            />
-          ) : entregaAtual ? (
-            <section className="px-5 mt-5">
-              <div className="rounded-xl p-5 space-y-3" style={{ background: COLORS.card, boxShadow: CARD_SHADOW }}>
-                <div className="text-[13px] font-semibold" style={{ color: COLORS.textDim }}><EmojiIcon e="🏢" /> {empAtiva?.nome ?? "Empresa"}</div>
-                <div className="space-y-1.5 text-[14px]">
-                  <div><EmojiIcon e="📍" /> Coleta: {entregaAtual.endereco_coleta}
-                    <a className="ml-1 underline text-[12px]" style={{ color: COLORS.accent }} href={`https://maps.google.com/?q=${encodeURIComponent(entregaAtual.endereco_coleta)}`} target="_blank" rel="noreferrer">Maps</a>
-                  </div>
-                  <div><EmojiIcon e="🏁" /> Entrega: {entregaAtual.endereco_entrega}
-                    <a className="ml-1 underline text-[12px]" style={{ color: COLORS.accent }} href={`https://maps.google.com/?q=${encodeURIComponent(entregaAtual.endereco_entrega)}`} target="_blank" rel="noreferrer">Maps</a>
-                  </div>
-                  {entregaAtual.descricao_item && <div style={{ color: COLORS.textDim }}><EmojiIcon e="📦" /> {entregaAtual.descricao_item}</div>}
-                  <div className="font-bold text-xl pt-1" style={{ color: COLORS.accent }}>{formatBRL(Number(entregaAtual.valor_combinado))}</div>
-                </div>
-                {empAtiva?.telefone && (
-                  <a href={whatsappLink(empAtiva.telefone, "Olá, sou seu mototaxista do Bora Zé! Delivery") ?? "#"} target="_blank" rel="noreferrer" className="btn-cta w-full text-center block">
-                    <EmojiIcon e="💬" /> WhatsApp empresa
-                  </a>
-                )}
-                {entregaAtual.status === "aceita" && <button onClick={() => atualizarEntrega("coletado")} disabled={busy} className="btn-cta w-full"><EmojiIcon e="📦" /> Coletado</button>}
-                {entregaAtual.status === "coletado" && <button onClick={() => atualizarEntrega("entregue")} disabled={busy} className="btn-cta w-full"><EmojiIcon e="✅" /> Entregue</button>}
-              </div>
-            </section>
-          ) : entregasAbertas.length === 0 ? (
-            <EmptyState
-              icon=""
-              pulse
-              title="Procurando entregas disponíveis..."
-              subtitle="Você será notificado assim que houver uma entrega na sua área."
-            />
-          ) : (
-            <section className="px-5 mt-5 space-y-3">
-              <h2 className="font-semibold text-[15px]" style={{ color: COLORS.textDim }}>
-                {entregasAbertas.length} {entregasAbertas.length === 1 ? "entrega disponível" : "entregas disponíveis"}
-              </h2>
-              {entregasAbertas.map((e) => {
-                const emp = empresasMap[e.empresa_id];
-                return (
-                  <div key={e.id} className="rounded-xl p-4 space-y-2" style={{ background: COLORS.card, boxShadow: CARD_SHADOW }}>
-                    <div className="text-[12px]" style={{ color: COLORS.textDim }}><EmojiIcon e="🏢" /> {emp?.nome ?? "—"}</div>
-                    <div className="text-[14px] space-y-1">
-                      <div><EmojiIcon e="📍" /> {e.endereco_coleta}</div>
-                      <div><EmojiIcon e="🏁" /> {e.endereco_entrega}</div>
-                      {e.descricao_item && <div style={{ color: COLORS.textDim }}><EmojiIcon e="📦" /> {e.descricao_item}</div>}
-                    </div>
-                    <div className="flex items-center justify-between pt-1">
-                      <div className="font-bold text-lg" style={{ color: COLORS.accent }}>{formatBRL(Number(e.valor_combinado))}</div>
-                      <button
-                        onClick={() => aceitarEntrega(e)} disabled={busy}
-                        className="px-4 py-2.5 rounded-xl font-bold text-[14px] disabled:opacity-60"
-                        style={{ background: COLORS.accent, color: "#000", boxShadow: "0 4px 12px rgba(0,168,132,0.35)" }}
-                      >
-                        ACEITAR
-                      </button>
-                    </div>
-                  </div>
-                );
-              })}
-            </section>
-          )
-        )}
-
         {aba === "financeiro" && (
           <section className="px-5 mt-5 space-y-3">
             {/* Filtros de período */}
@@ -1252,7 +1007,7 @@ function MototaxistaHome() {
             <div className="rounded-xl p-5" style={{ background: COLORS.card, boxShadow: CARD_SHADOW, border: `1px solid ${COLORS.accent}` }}>
               <div className="text-[11px] uppercase tracking-wide" style={{ color: COLORS.textDim }}>Total recebido no período</div>
               <div className="mt-1 font-bold text-3xl" style={{ color: COLORS.accent }}>
-                {formatBRL(ganhosCorridas + ganhosEntregas)}
+                {formatBRL(ganhosCorridas)}
               </div>
               <div className="mt-2 text-[11px]" style={{ color: COLORS.textDim }}>
                 {itensPeriodo.length} corrida(s) · pagamento direto com o passageiro (dinheiro/Pix pessoal)
@@ -1270,7 +1025,6 @@ function MototaxistaHome() {
                 {itensPeriodo.map((it) => {
                   const badge =
                     it.tipo === "pegue_ali" ? { label: "PEGUE ALI", emoji: "", cor: "#FFC107" }
-                    : it.tipo === "delivery" ? { label: "Delivery", emoji: "", cor: "#FF6EC7" }
                     : { label: "Corrida", emoji: "", cor: COLORS.accent };
                   const d = new Date(it.data);
                   return (
@@ -1483,7 +1237,7 @@ function MototaxistaHome() {
 
               <SettingsRow icon="" label="Meus dados bancários / Pix" onClick={() => toast.info("Em breve")} />
               <SettingsRow icon="" label="Ajuda e suporte" onClick={() => toast.info("Em breve")} />
-              <SettingsRow icon="ℹ️" label="Sobre o Bora Zé!" onClick={() => toast.info("Bora Zé! v1.0")} last />
+              <SettingsRow icon="ℹ️" label="Sobre o InterGO" onClick={() => toast.info("InterGO v1.0")} last />
             </div>
 
             <button
@@ -1503,7 +1257,6 @@ function MototaxistaHome() {
         onChange={setAba}
         tabs={[
           { id: "corridas", label: "Corridas", icon: "" },
-          { id: "entregas", label: "Entregas", icon: "" },
           { id: "financeiro", label: "Financeiro", icon: "" },
           { id: "perfil", label: "Perfil", icon: "" },
         ]}
@@ -1825,13 +1578,13 @@ function CorridaAtual({
           {!atual.eh_gratuita && atual.valor_base_aplicado != null && atual.taxa_bora_ze_aplicada != null && (
             <div className="text-[11px] leading-tight" style={{ color: COLORS.textDim }}>
               Seu ganho: <strong style={{ color: COLORS.text }}>{formatBRL(atual.valor_base_aplicado)}</strong>
-              {" · "}Taxa Bora Zé!: {formatBRL(atual.taxa_bora_ze_aplicada)}
+              {" · "}Taxa InterGO: {formatBRL(atual.taxa_bora_ze_aplicada)}
             </div>
           )}
           <div className="text-[12px]" style={{ color: COLORS.textDim }}>{atual.distancia_km} km</div>
         </div>
         {passageiro?.telefone && (
-          <a href={whatsappLink(passageiro.telefone, "Olá, sou seu mototaxista do Bora Zé!!") ?? "#"} target="_blank" rel="noreferrer" className="btn-cta w-full text-center block">
+          <a href={whatsappLink(passageiro.telefone, "Olá, sou seu mototaxista do InterGO!") ?? "#"} target="_blank" rel="noreferrer" className="btn-cta w-full text-center block">
             <EmojiIcon e="💬" /> WhatsApp passageiro
           </a>
         )}
@@ -1933,7 +1686,7 @@ function PegueAliAtual({
         </div>
 
         {passageiro?.telefone && (
-          <a href={whatsappLink(passageiro.telefone, "Olá! Sou o entregador do seu pedido no Bora Zé.") ?? "#"} target="_blank" rel="noreferrer" className="btn-cta w-full text-center block">
+          <a href={whatsappLink(passageiro.telefone, "Olá! Sou o entregador do seu pedido no InterGO.") ?? "#"} target="_blank" rel="noreferrer" className="btn-cta w-full text-center block">
             <EmojiIcon e="💬" /> Falar com passageiro
           </a>
         )}

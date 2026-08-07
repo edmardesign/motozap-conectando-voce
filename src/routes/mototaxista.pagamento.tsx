@@ -9,7 +9,7 @@ import { EmojiIcon } from "@/components/emoji-icon";
 export const Route = createFileRoute("/mototaxista/pagamento")({
   head: () => ({
     meta: [
-      { title: "Pague via Pix — Bora Zé!" },
+      { title: "Pague via Pix — InterGO" },
       { name: "description", content: "Pague seu plano via Pix manual e ative seu acesso." },
     ],
   }),
@@ -18,7 +18,7 @@ export const Route = createFileRoute("/mototaxista/pagamento")({
 
 // <EmojiIcon e="🔑" /> Chave Pix da plataforma — edite aqui quando tiver a chave definitiva
 const PIX_KEY = "[sua chave pix aqui]";
-const PIX_BENEFICIARIO = "Bora Zé!";
+const PIX_BENEFICIARIO = "InterGO";
 
 type PlanoId = "mensal" | "semestral" | "anual";
 
@@ -201,7 +201,7 @@ function PagamentoPage() {
 
         <div className="flex items-center justify-center gap-2 text-xs text-white/55 font-sans">
           <ShieldCheck className="w-4 h-4" style={{ color: "var(--color-neon)" }} />
-          Pagamento conferido manualmente pela equipe Bora Zé!
+          Pagamento conferido manualmente pela equipe InterGO
         </div>
       </div>
     </main>

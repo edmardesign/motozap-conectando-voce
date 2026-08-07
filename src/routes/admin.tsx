@@ -59,8 +59,6 @@ type Tab =
   | "sorteios"
   | "parceiros"
   | "corridas"
-  | "empresas"
-  | "entregas"
   | "config";
 
 function AdminPage() {
@@ -430,15 +428,13 @@ function AdminShell({ onLogout }: { onLogout: () => void }) {
     { key: "sorteios", label: "Sorteios" },
     { key: "parceiros", label: "Parceiros" },
     { key: "corridas", label: "Corridas" },
-    { key: "empresas", label: "Empresas" },
-    { key: "entregas", label: "Entregas" },
     { key: "config", label: "Config" },
   ];
 
   return (
     <main className="min-h-screen bg-background text-white">
       <header className="sticky top-0 z-10 bg-background/95 backdrop-blur border-b border-white/10 px-4 py-3 flex items-center justify-between">
-        <h1 className="text-lg font-bold">Bora Zé! • Admin</h1>
+        <h1 className="text-lg font-bold">InterGO • Admin</h1>
         <button
           className="text-xs text-white/70 hover:text-white"
           onClick={async () => {
@@ -474,8 +470,6 @@ function AdminShell({ onLogout }: { onLogout: () => void }) {
         {tab === "sorteios" && <SorteiosTab />}
         {tab === "parceiros" && <ParceirosTab />}
         {tab === "corridas" && <CorridasTab />}
-        {tab === "empresas" && <EmpresasTab />}
-        {tab === "entregas" && <EntregasTab />}
         {tab === "config" && <ConfigTab />}
       </section>
     </main>
@@ -495,11 +489,6 @@ function Dashboard() {
     custo_gratuitas: 0,
     recargas_pendentes: 0,
     saques_pendentes: 0,
-    empresas_ativas: 0,
-    entregas_hoje: 0,
-    entregas_conc: 0,
-    entregas_canc: 0,
-    delivery_on: 0,
   });
 
   useEffect(() => {
@@ -511,7 +500,6 @@ function Dashboard() {
       const [
         cHoje, cConc, cCanc, cOn, cAtivos,
         carPass, carMot, gratMes, recPend, sqPend,
-        eAtivas, eHoje, eConc, eCanc, dOn,
       ] = await Promise.all([
         supabase.from("corridas").select("id", { count: "exact", head: true }).gte("criado_em", hoje.toISOString()),
         supabase.from("corridas").select("id", { count: "exact", head: true }).eq("status", "concluida").gte("criado_em", hoje.toISOString()),
@@ -523,11 +511,6 @@ function Dashboard() {
         supabase.from("corridas").select("valor_final,valor_estimado").eq("eh_gratuita", true).eq("status", "concluida").gte("criado_em", inicioMes.toISOString()),
         supabase.from("transacoes_carteira_passageiro").select("id", { count: "exact", head: true }).eq("status", "pendente").like("tipo", "recarga_%"),
         supabase.from("solicitacoes_saque").select("id", { count: "exact", head: true }).eq("status", "pendente"),
-        db.from("empresas").select("id", { count: "exact", head: true }).eq("mensalidade_ativa", true),
-        db.from("entregas").select("id", { count: "exact", head: true }).gte("criado_em", hoje.toISOString()),
-        db.from("entregas").select("id", { count: "exact", head: true }).eq("status", "entregue").gte("criado_em", hoje.toISOString()),
-        db.from("entregas").select("id", { count: "exact", head: true }).eq("status", "cancelada").gte("criado_em", hoje.toISOString()),
-        db.from("mototaxistas").select("id", { count: "exact", head: true }).eq("aceita_delivery", true).eq("status", "disponivel"),
       ]);
 
       const somaP = (carPass.data ?? []).reduce((a, r) => a + Number(r.saldo_disponivel ?? 0), 0);
@@ -545,11 +528,6 @@ function Dashboard() {
         custo_gratuitas: custo,
         recargas_pendentes: recPend.count ?? 0,
         saques_pendentes: sqPend.count ?? 0,
-        empresas_ativas: eAtivas.count ?? 0,
-        entregas_hoje: eHoje.count ?? 0,
-        entregas_conc: eConc.count ?? 0,
-        entregas_canc: eCanc.count ?? 0,
-        delivery_on: dOn.count ?? 0,
       });
     })();
   }, []);
@@ -563,9 +541,6 @@ function Dashboard() {
     { label: "Custo corridas grátis (mês)", value: formatBRL(m.custo_gratuitas) },
     { label: "Recargas pendentes", value: m.recargas_pendentes, alert: m.recargas_pendentes > 0 },
     { label: "Saques pendentes", value: m.saques_pendentes, alert: m.saques_pendentes > 0 },
-    { label: "Empresas ativas", value: m.empresas_ativas },
-    { label: "Entregas hoje", value: `${m.entregas_conc}/${m.entregas_hoje}`, sub: `${m.entregas_canc} canceladas` },
-    { label: "Delivery online", value: m.delivery_on },
   ];
 
   return (
@@ -894,7 +869,7 @@ function SorteiosTab() {
     if (error) { toast.error(error.message); return; }
     const sorteio = lista.find(s => s.id === id);
     const p: any = winner.profiles;
-    const link = whatsappLink(p.telefone, `Parabéns ${p.nome}! Você ganhou ${sorteio?.descricao} no sorteio Bora Zé! de ${sorteio?.mes?.slice(0,7)}! Entre em contato para retirar seu prêmio.`);
+    const link = whatsappLink(p.telefone, `Parabéns ${p.nome}! Você ganhou ${sorteio?.descricao} no sorteio InterGO de ${sorteio?.mes?.slice(0,7)}! Entre em contato para retirar seu prêmio.`);
     if (link) window.open(link, "_blank");
     carregar();
   }
@@ -1099,133 +1074,6 @@ function ConfigTab() {
     </div>
   );
 }
-
-/* ============================ EMPRESAS ============================ */
-function EmpresasTab() {
-  const db = supabase as any;
-  const [rows, setRows] = useState<any[]>([]);
-  const [filtro, setFiltro] = useState<"todas" | "ativas" | "pendentes">("todas");
-
-  async function load() {
-    let q = db.from("empresas").select("*").order("criado_em", { ascending: false });
-    if (filtro === "ativas") q = q.eq("mensalidade_ativa", true);
-    if (filtro === "pendentes") q = q.eq("mensalidade_ativa", false);
-    const { data } = await q;
-    setRows(data ?? []);
-  }
-  useEffect(() => { load(); }, [filtro]);
-
-  async function aprovar(id: string) {
-    const { error } = await db.rpc("admin_aprovar_empresa", { _id: id });
-    if (error) return toast.error(error.message);
-    toast.success("Empresa aprovada"); load();
-  }
-  async function bloquear(id: string) {
-    const { error } = await db.rpc("admin_bloquear_empresa", { _id: id });
-    if (error) return toast.error(error.message);
-    toast.success("Empresa bloqueada"); load();
-  }
-
-  return (
-    <div className="space-y-3">
-      <div className="flex gap-2">
-        {(["todas","ativas","pendentes"] as const).map((f) => (
-          <button key={f} onClick={() => setFiltro(f)}
-            className={`px-3 py-1 rounded-full text-xs ${filtro===f?"bg-neon text-neon-foreground font-bold":"bg-white/10"}`}>
-            {f}
-          </button>
-        ))}
-      </div>
-      {rows.length === 0 && <p className="text-white/60 text-sm">Sem empresas.</p>}
-      {rows.map((e) => (
-        <div key={e.id} className="rounded-xl bg-card p-4 space-y-2">
-          <div className="flex justify-between items-start">
-            <div>
-              <div className="font-bold">{e.nome}</div>
-              <div className="text-xs text-white/70">{e.responsavel} • {formatarTelefone(e.telefone)}{(e as any).documento ? ` • ${formatarDocumento((e as any).documento)}` : ""}</div>
-              <div className="text-xs text-white/60">
-                {e.mensalidade_ativa ? `Ativa${e.plano_validade ? ` • vence ${e.plano_validade}` : ""}` : "⏳ Pendente"}
-              </div>
-            </div>
-            <div className="flex gap-2">
-              {!e.mensalidade_ativa && <button onClick={() => aprovar(e.id)} className="btn-cta text-xs px-3 py-1">Aprovar</button>}
-              {e.mensalidade_ativa && <button onClick={() => bloquear(e.id)} className="bg-red-500 text-white text-xs px-3 py-1 rounded">Bloquear</button>}
-            </div>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-/* ============================ ENTREGAS ============================ */
-function EntregasTab() {
-  const db = supabase as any;
-  const [rows, setRows] = useState<any[]>([]);
-  const [empresas, setEmpresas] = useState<any[]>([]);
-  const [fEmp, setFEmp] = useState<string>("");
-  const [fStatus, setFStatus] = useState<string>("");
-  const [fData, setFData] = useState<string>("");
-
-  useEffect(() => { db.from("empresas").select("id,nome").then(({ data }: any) => setEmpresas(data ?? [])); }, []);
-
-  async function load() {
-    let q = db.from("entregas").select("*, empresa:empresa_id(nome), mototaxista:mototaxista_id(nome)")
-      .order("criado_em", { ascending: false }).limit(100);
-    if (fEmp) q = q.eq("empresa_id", fEmp);
-    if (fStatus) q = q.eq("status", fStatus);
-    if (fData) {
-      q = q.gte("criado_em", `${fData}T00:00:00`).lte("criado_em", `${fData}T23:59:59`);
-    }
-    const { data } = await q;
-    setRows(data ?? []);
-  }
-  useEffect(() => { load(); }, [fEmp, fStatus, fData]);
-
-  const cores: Record<string,string> = {
-    aguardando: "bg-yellow-500/30 text-yellow-200",
-    aceita: "bg-blue-500/30 text-blue-200",
-    coletado: "bg-purple-500/30 text-purple-200",
-    entregue: "bg-green-500/30 text-green-200",
-    cancelada: "bg-red-500/30 text-red-200",
-  };
-
-  return (
-    <div className="space-y-3">
-      <div className="flex gap-2 flex-wrap">
-        <select className="bg-white/10 rounded px-2 py-1 text-sm" value={fEmp} onChange={(e)=>setFEmp(e.target.value)}>
-          <option value="">Todas empresas</option>
-          {empresas.map((e:any) => <option key={e.id} value={e.id}>{e.nome}</option>)}
-        </select>
-        <select className="bg-white/10 rounded px-2 py-1 text-sm" value={fStatus} onChange={(e)=>setFStatus(e.target.value)}>
-          <option value="">Todos status</option>
-          {["aguardando","aceita","coletado","entregue","cancelada"].map((s)=>(<option key={s}>{s}</option>))}
-        </select>
-        <input type="date" className="bg-white/10 rounded px-2 py-1 text-sm" value={fData} onChange={(e)=>setFData(e.target.value)} />
-        {(fEmp||fStatus||fData) && <button className="text-xs underline" onClick={()=>{setFEmp("");setFStatus("");setFData("")}}>Limpar</button>}
-      </div>
-      {rows.length === 0 && <p className="text-white/60 text-sm">Sem entregas.</p>}
-      {rows.map((e) => (
-        <div key={e.id} className="rounded-xl bg-card p-3 text-sm">
-          <div className="flex justify-between items-start">
-            <div className="flex-1 min-w-0">
-              <div className="font-bold"><EmojiIcon e="🏢" /> {e.empresa?.nome ?? "—"}</div>
-              <div className="truncate"><EmojiIcon e="📍" /> {e.endereco_coleta}</div>
-              <div className="truncate"><EmojiIcon e="🏁" /> {e.endereco_entrega}</div>
-              <div className="text-xs text-white/60"><EmojiIcon e="🛵" /> {e.mototaxista?.nome ?? "—"} • {new Date(e.criado_em).toLocaleString("pt-BR")}</div>
-            </div>
-            <div className="text-right ml-3">
-              <div className="font-bold">{formatBRL(Number(e.valor_combinado))}</div>
-              <span className={`inline-block px-2 py-0.5 rounded text-[10px] mt-1 ${cores[e.status]}`}>{e.status}</span>
-            </div>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-/* ============================ CIDADES E TARIFAS ============================ */
 function CidadesTab() {
   const db = supabase as any;
   const [cidades, setCidades] = useState<any[]>([]);
