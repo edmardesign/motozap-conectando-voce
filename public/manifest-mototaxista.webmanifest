@@ -1,7 +1,7 @@
 {
   "name": "InterGO Mototaxista",
   "short_name": "InterGO Moto",
-  "description": "Receba corridas e entregas na sua cidade",
+  "description": "Receba corridas na sua cidade",
   "start_url": "/mototaxista",
   "scope": "/",
   "display": "standalone",
