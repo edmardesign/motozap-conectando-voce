@@ -114,19 +114,6 @@ function Splash() {
         >
           BORA ZÉ! MOTO-TAXISTA
         </Link>
-        <Link
-          to="/empresa/auth"
-          className="w-full rounded-2xl px-6 py-4 font-bold text-center transition-all active:scale-[0.98]"
-          style={{
-            background: "#FFFFFF",
-            color: "#000000",
-            boxShadow: "0 4px 16px rgba(255,255,255,0.15)",
-            letterSpacing: "0.02em",
-          }}
-        >
-          BORA ZÉ! ENTREGAS
-        </Link>
-
         {canInstall && showInstall && (
           <button
             onClick={handleInstall}
