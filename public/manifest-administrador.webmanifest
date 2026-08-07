@@ -7,7 +7,7 @@
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#0F0F10",
-  "theme_color": "#0F0F10",
+  "theme_color": "#3DB54A",
   "description": "Painel administrativo InterGO",
   "icons": [
     { "src": "/app-icon-admin.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
