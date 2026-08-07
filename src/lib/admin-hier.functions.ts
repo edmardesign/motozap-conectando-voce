@@ -65,7 +65,7 @@ export const listarCidades = createServerFn({ method: "GET" })
   .handler(async ({ context }) => {
     const { data, error } = await context.supabase
       .from("cidades_configuradas")
-      .select("id,cidade,estado,ativa,criado_em,delivery_ativo,mercado_ativo,mototaxi_ativo")
+      .select("id,cidade,estado,ativa,criado_em,mototaxi_ativo")
       .order("estado", { ascending: true })
       .order("cidade", { ascending: true });
     if (error) throw new Error(error.message);
@@ -76,15 +76,13 @@ export const cidadeDefinirServicos = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((d: {
     id: string;
-    delivery_ativo: boolean;
-    mercado_ativo: boolean;
     mototaxi_ativo: boolean;
   }) => d)
   .handler(async ({ data, context }) => {
     const { error } = await context.supabase.rpc("admin_cidade_definir_servicos", {
       _id: data.id,
-      _delivery_ativo: data.delivery_ativo,
-      _mercado_ativo: data.mercado_ativo,
+      _delivery_ativo: false,
+      _mercado_ativo: false,
       _mototaxi_ativo: data.mototaxi_ativo,
     });
     if (error) throw new Error(error.message);
@@ -450,7 +448,7 @@ export const contagensCidade = createServerFn({ method: "POST" })
     const { supabase } = context;
     const cid = data.cidade_id;
     async function countRows(
-      table: "profiles" | "empresas" | "corridas" | "entregas",
+      table: "profiles" | "corridas",
       extra?: { col: "tipo"; val: "passageiro" | "mototaxista" },
     ): Promise<number> {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -460,14 +458,12 @@ export const contagensCidade = createServerFn({ method: "POST" })
       const { count } = await q;
       return count ?? 0;
     }
-    const [passageiros, mototaxistas, empresas, corridas, entregas] = await Promise.all([
+    const [passageiros, mototaxistas, corridas] = await Promise.all([
       countRows("profiles", { col: "tipo", val: "passageiro" }),
       countRows("profiles", { col: "tipo", val: "mototaxista" }),
-      countRows("empresas"),
       countRows("corridas"),
-      countRows("entregas"),
     ]);
-    return { passageiros, mototaxistas, empresas, corridas, entregas };
+    return { passageiros, mototaxistas, corridas };
   });
 
 // ------- Perfis administrativos pendentes de ativação (recuperação de criação parcial) -------
