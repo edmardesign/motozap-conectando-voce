@@ -1,0 +1,17 @@
+{
+  "name": "Bora Zé!",
+  "short_name": "Bora Zé!",
+  "id": "/app/passageiro",
+  "start_url": "/app/passageiro",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#000000",
+  "theme_color": "#00FF1A",
+  "description": "Peça mototáxi em minutos na sua cidade",
+  "icons": [
+    { "src": "/app-icon-passageiro.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/app-icon-passageiro.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/app-icon-passageiro.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "name": "Bora Zé! Entregas",
+  "short_name": "Entregas",
+  "id": "/app/entregas",
+  "start_url": "/app/entregas",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#000000",
+  "theme_color": "#00FF1A",
+  "description": "Envie entregas rápidas com mototaxistas Bora Zé!",
+  "icons": [
+    { "src": "/app-icon-entregas.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/app-icon-entregas.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/app-icon-entregas.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

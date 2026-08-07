@@ -1,0 +1,31 @@
+{
+  "name": "Bora Zé! Mototaxista",
+  "short_name": "Bora Zé! Moto",
+  "description": "Receba corridas e entregas na sua cidade",
+  "start_url": "/mototaxista",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#000000",
+  "theme_color": "#00FF1A",
+  "icons": [
+    {
+      "src": "/app-icon-mototaxista.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/app-icon-mototaxista.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/app-icon-mototaxista.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
