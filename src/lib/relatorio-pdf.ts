@@ -3,7 +3,7 @@
 
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
-import logoAsset from "@/assets/motozap-logo.png.asset.json";
+import logoAsset from "@/assets/intergo-logo-green.png.asset.json";
 
 export type CorridaRel = {
   data: string; // ISO

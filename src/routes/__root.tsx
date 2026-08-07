@@ -96,8 +96,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary" },
       { name: "twitter:title", content: "InterGO — Mototáxi rápido na sua cidade" },
       { name: "twitter:description", content: "Peça mototáxi em minutos nas cidades do interior do Brasil." },
-      { property: "og:image", content: "https://mtztexte.lovable.app/__l5e/assets-v1/3da3e039-90f3-42cc-b4b6-47ad2a7a213c/boraze-full-logo.png" },
-      { name: "twitter:image", content: "https://mtztexte.lovable.app/__l5e/assets-v1/3da3e039-90f3-42cc-b4b6-47ad2a7a213c/boraze-full-logo.png" },
+      { property: "og:image", content: "https://mtztexte.lovable.app/__l5e/assets-v1/4341b3fd-c130-4a33-84ff-54a66f93374b/intergo-logo-green.png" },
+      { name: "twitter:image", content: "https://mtztexte.lovable.app/__l5e/assets-v1/4341b3fd-c130-4a33-84ff-54a66f93374b/intergo-logo-green.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },

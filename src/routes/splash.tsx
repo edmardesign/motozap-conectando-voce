@@ -2,9 +2,9 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { usePwaInstall } from "@/hooks/use-pwa-install";
 import { toast } from "sonner";
-import iconMz from "@/assets/boraze-icon-anim.png.asset.json";
-import textMz from "@/assets/boraze-text-anim.png.asset.json";
-import logoMz from "@/assets/boraze-full-anim.png.asset.json";
+import iconMz from "@/assets/intergo-icon-green.png.asset.json";
+import textMz from "@/assets/intergo-logo-white.png.asset.json";
+import logoMz from "@/assets/intergo-logo-white.png.asset.json";
 import { EmojiIcon } from "@/components/emoji-icon";
 
 export const Route = createFileRoute("/splash")({

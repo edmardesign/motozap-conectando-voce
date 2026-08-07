@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import iconMz from "@/assets/boraze-icon-anim.png.asset.json";
-import textMz from "@/assets/boraze-text-anim.png.asset.json";
-import logoMz from "@/assets/boraze-full-anim.png.asset.json";
+import iconMz from "@/assets/intergo-icon-green.png.asset.json";
+import textMz from "@/assets/intergo-logo-white.png.asset.json";
+import logoMz from "@/assets/intergo-logo-white.png.asset.json";
 
 type Phase = "icon" | "text" | "done";
 

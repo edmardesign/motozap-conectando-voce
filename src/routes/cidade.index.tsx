@@ -5,7 +5,7 @@ import { getCidadeLocal, setCidadeLocal } from "@/lib/cidade-local";
 import { salvarCidadeNoPerfil } from "@/lib/cidade-perfil";
 import { supabase } from "@/integrations/supabase/client";
 import { EmojiIcon } from "@/components/emoji-icon";
-import logoMz from "@/assets/boraze-full-anim.png.asset.json";
+import logoMz from "@/assets/intergo-logo-white.png.asset.json";
 
 type Search = { next?: string };
 
