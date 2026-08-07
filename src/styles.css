@@ -45,6 +45,9 @@ body { overflow-x: hidden; }
   --color-neon-foreground: var(--neon-foreground);
   --color-hero: var(--hero);
   --color-hero-foreground: var(--hero-foreground);
+  --color-gray-light: var(--gray-light);
+  --color-gray-mid: var(--gray-mid);
+  --color-gray-dark: var(--gray-dark);
   --font-display: "Bergen Sans", "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-sans: "Bergen Sans", "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-button: "Bergen Sans", "Inter", ui-sans-serif, system-ui, sans-serif;
@@ -185,7 +188,7 @@ body { overflow-x: hidden; }
 }
 
 @utility card-mz {
-  background-color: #0a0a0a;
+  background-color: #17171A;
   color: var(--color-foreground);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-xl);
@@ -195,7 +198,7 @@ body { overflow-x: hidden; }
 @utility input-mz {
   border-radius: var(--radius-lg);
   padding: 0.85rem 1rem;
-  background-color: #0a0a0a;
+  background-color: #17171A;
   color: var(--color-foreground);
   border: 1px solid var(--color-border);
   outline: none;
