@@ -80,8 +80,8 @@ type MotoData = {
 type Aba = "corridas" | "financeiro" | "perfil";
 
 const COLORS = {
-  bg: "#0F0F10",
-  bg2: "#131F24",
+  bg: "#FFFFFF",
+  bg2: "#FFFFFF",
   card: "#1A2C33",
   border: "rgba(134,150,160,0.15)",
   text: "#F5F5F5",
@@ -795,7 +795,7 @@ function MototaxistaHome() {
       {/* HEADER */}
       <header
         className="px-6 pt-6 pb-5"
-        style={{ background: "linear-gradient(180deg, #0F0F10 0%, #131F24 100%)" }}
+        style={{ background: "linear-gradient(180deg, #FFFFFF 0%, #FFFFFF 100%)" }}
       >
         {trialDiasRestantes !== null && trialDiasRestantes <= 15 && (
           <Link
@@ -955,7 +955,7 @@ function MototaxistaHome() {
                           onClick={() => aceitar(c)}
                           disabled={busy}
                           className="px-5 py-3 rounded-xl font-bold text-[15px] disabled:opacity-60"
-                          style={{ background: COLORS.accent, color: "#0F0F10", boxShadow: "0 4px 12px rgba(0,168,132,0.35)" }}
+                          style={{ background: COLORS.accent, color: "#FFFFFF", boxShadow: "0 4px 12px rgba(0,168,132,0.35)" }}
                         >
                           ACEITAR
                         </button>
@@ -989,7 +989,7 @@ function MototaxistaHome() {
                   onClick={() => setFiltroPeriodo(f.id)}
                   className="px-3 py-1.5 rounded-lg text-[12px] font-semibold"
                   style={filtroPeriodo === f.id
-                    ? { background: COLORS.accent, color: "#0F0F10" }
+                    ? { background: COLORS.accent, color: "#FFFFFF" }
                     : { background: "rgba(255,255,255,0.08)", color: COLORS.textDim }}
                 >
                   {f.label}
@@ -1067,7 +1067,7 @@ function MototaxistaHome() {
                       key={p} onClick={() => setExportPeriodo(p)}
                       className="px-3 py-1.5 rounded-lg text-[12px] font-semibold"
                       style={exportPeriodo === p
-                        ? { background: COLORS.accent, color: "#0F0F10" }
+                        ? { background: COLORS.accent, color: "#FFFFFF" }
                         : { background: "rgba(255,255,255,0.08)", color: COLORS.textDim }}
                     >
                       {p === "semana" ? "Semana" : p === "mes" ? "Mês" : "Personalizado"}
@@ -1285,7 +1285,7 @@ function MototaxistaHome() {
       )}
 
       {confirmConcluir && atual && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/70 p-4" onClick={() => !busy && setConfirmConcluir(false)}>
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-background/70 p-4" onClick={() => !busy && setConfirmConcluir(false)}>
           <div className="w-full max-w-md rounded-2xl p-5 space-y-4" style={{ background: COLORS.bg2 }} onClick={(e) => e.stopPropagation()}>
             <h3 className="text-lg font-bold">Confirmar valor final</h3>
             <p className="text-[14px]" style={{ color: COLORS.textDim }}>Confirme o valor cobrado do passageiro. Será creditado na sua carteira.</p>
@@ -1310,7 +1310,7 @@ function MototaxistaHome() {
       )}
 
       {confirmLogout && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/70 p-4" onClick={() => setConfirmLogout(false)}>
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-background/70 p-4" onClick={() => setConfirmLogout(false)}>
           <div className="w-full max-w-md rounded-2xl p-5 space-y-4" style={{ background: COLORS.bg2 }} onClick={(e) => e.stopPropagation()}>
             <h3 className="text-lg font-bold">Sair da conta?</h3>
             <p className="text-[14px]" style={{ color: COLORS.textDim }}>Você precisará entrar novamente com seu telefone e PIN.</p>
@@ -1386,7 +1386,7 @@ function MototaxistaHome() {
                   setNovaChavePix("");
                 }}
                 className="flex-1 py-2 rounded-lg font-bold"
-                style={{ background: COLORS.accent, color: "#0F0F10" }}
+                style={{ background: COLORS.accent, color: "#FFFFFF" }}
               >
                 Salvar
               </button>
@@ -1461,7 +1461,7 @@ function MototaxistaHome() {
                   carregarFinanceiro();
                 }}
                 className="flex-1 py-2 rounded-lg font-bold"
-                style={{ background: COLORS.accent, color: "#0F0F10" }}
+                style={{ background: COLORS.accent, color: "#FFFFFF" }}
               >
                 {saqueBusy ? "Enviando..." : "CONFIRMAR SAQUE"}
               </button>
@@ -1503,7 +1503,7 @@ function EmptyState({
         <button
           onClick={action.onClick}
           className="mt-6 px-5 py-2.5 rounded-xl font-semibold text-[14px]"
-          style={{ background: COLORS.accent, color: "#0F0F10", boxShadow: "0 4px 12px rgba(0,168,132,0.35)" }}
+          style={{ background: COLORS.accent, color: "#FFFFFF", boxShadow: "0 4px 12px rgba(0,168,132,0.35)" }}
         >
           {action.label}
         </button>
@@ -1760,7 +1760,7 @@ function PegueAliAtual({
       </div>
 
       {showValor && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/70 p-4" onClick={() => setShowValor(false)}>
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-background/70 p-4" onClick={() => setShowValor(false)}>
           <div className="rounded-2xl p-5 w-full max-w-sm space-y-3" style={{ background: COLORS.card }} onClick={(e) => e.stopPropagation()}>
             <h3 className="font-bold text-lg">Novo valor do produto</h3>
             <input type="number" step="0.01" value={novoValor} onChange={(e) => setNovoValor(e.target.value)} placeholder="R$ 0,00" className="w-full p-3 rounded-lg" style={{ background: "rgba(255,255,255,0.06)", color: "#fff" }} />

@@ -103,7 +103,7 @@ function PassageiroPerfil() {
   }
 
   return (
-    <main className="min-h-screen bg-background text-white" style={{ paddingBottom: 80 }}>
+    <main className="min-h-screen bg-background text-foreground" style={{ paddingBottom: 80 }}>
       <header className="px-5 pt-6 pb-4">
         <h1 className="text-xl font-bold">Meu perfil</h1>
       </header>
@@ -171,7 +171,7 @@ function PassageiroPerfil() {
 function Field({ icon, label, children }: { icon: React.ReactNode; label: string; children: React.ReactNode }) {
   return (
     <label className="block">
-      <span className="flex items-center gap-1.5 text-xs text-white/70 mb-1">
+      <span className="flex items-center gap-1.5 text-xs text-muted-foreground mb-1">
         {icon}
         {label}
       </span>

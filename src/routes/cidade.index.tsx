@@ -89,7 +89,7 @@ function EscolherCidade() {
   }
 
   return (
-    <main className="min-h-screen bg-background text-white flex flex-col">
+    <main className="min-h-screen bg-background text-foreground flex flex-col">
       <div className="w-full max-w-[560px] mx-auto px-6 pt-10 pb-8 flex flex-col gap-5 flex-1">
         <div className="flex flex-col items-center gap-3 text-center">
           <img
@@ -105,8 +105,8 @@ function EscolherCidade() {
           </h1>
 
           {atual && (
-            <div className="text-xs text-white/50">
-              Atual: <strong className="text-white/80">{atual.cidade}/{atual.uf}</strong>
+            <div className="text-xs text-muted-foreground">
+              Atual: <strong className="text-foreground/80">{atual.cidade}/{atual.uf}</strong>
             </div>
           )}
         </div>
@@ -125,13 +125,13 @@ function EscolherCidade() {
         </div>
 
         <div
-          className="flex-1 rounded-2xl border border-white/10 bg-black/40 overflow-hidden"
+          className="flex-1 rounded-2xl border border-white/10 bg-background/40 overflow-hidden"
           style={{ boxShadow: "0 0 24px rgba(61, 181, 74,0.08)" }}
         >
           {loading ? (
-            <div className="p-6 text-center text-sm text-white/60">Carregando cidades...</div>
+            <div className="p-6 text-center text-sm text-muted-foreground">Carregando cidades...</div>
           ) : filtrados.length === 0 ? (
-            <div className="p-6 text-center text-sm text-white/60">
+            <div className="p-6 text-center text-sm text-muted-foreground">
               Nenhuma cidade encontrada para “{busca}”.
             </div>
           ) : (
@@ -163,7 +163,7 @@ function EscolherCidade() {
           )}
         </div>
 
-        <p className="text-center text-xs text-white/50">
+        <p className="text-center text-xs text-muted-foreground">
           Você poderá trocar sua cidade depois nas configurações.
         </p>
       </div>

@@ -34,7 +34,7 @@ function IndexGate() {
 
   return (
     <main className="min-h-screen bg-background flex items-center justify-center">
-      <div className="text-white/60 text-sm">Carregando…</div>
+      <div className="text-muted-foreground text-sm">Carregando…</div>
     </main>
   );
 }

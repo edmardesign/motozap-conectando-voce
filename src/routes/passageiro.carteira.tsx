@@ -90,12 +90,12 @@ function PassageiroCarteira() {
   if (!carteiraAtiva) {
     return (
       <main
-        className="min-h-screen bg-background text-white px-6 py-10 flex flex-col items-center justify-center gap-4 text-center"
+        className="min-h-screen bg-background text-foreground px-6 py-10 flex flex-col items-center justify-center gap-4 text-center"
         style={{ paddingBottom: 80 }}
       >
         <div className="text-5xl"><EmojiIcon e="💳" /></div>
         <h1 className="text-xl font-bold">Carteira em breve</h1>
-        <p className="text-sm text-white/70 max-w-xs">
+        <p className="text-sm text-muted-foreground max-w-xs">
           A carteira digital ainda não foi liberada. Por enquanto pague suas corridas direto com o mototaxista.
         </p>
         <Link to="/passageiro/home" className="btn-cta">Voltar</Link>
@@ -105,20 +105,20 @@ function PassageiroCarteira() {
   }
 
   return (
-    <main className="min-h-screen bg-background text-white" style={{ paddingBottom: 80 }}>
+    <main className="min-h-screen bg-background text-foreground" style={{ paddingBottom: 80 }}>
       <header className="px-5 pt-6 pb-4">
         <h1 className="text-xl font-bold">Minha Carteira</h1>
       </header>
 
       <section className="px-5 grid grid-cols-2 gap-3">
         <div className="card-mz p-4">
-          <div className="text-xs text-white/70">Saldo disponível</div>
+          <div className="text-xs text-muted-foreground">Saldo disponível</div>
           <div className="text-2xl font-extrabold mt-1" style={{ color: "var(--color-neon)" }}>
             {formatBRL(carteira.saldo_disponivel)}
           </div>
         </div>
         <div className="card-mz p-4">
-          <div className="text-xs text-white/70">Saldo pendente</div>
+          <div className="text-xs text-muted-foreground">Saldo pendente</div>
           <div className="text-2xl font-extrabold mt-1">{formatBRL(carteira.saldo_pendente)}</div>
         </div>
       </section>
@@ -130,7 +130,7 @@ function PassageiroCarteira() {
             <button
               key={v}
               onClick={() => setValorRecarga(v)}
-              className={`p-2 rounded-md text-sm font-bold border-2 ${valorRecarga === v ? "border-[color:var(--color-neon)]" : "border-transparent bg-black/30"}`}
+              className={`p-2 rounded-md text-sm font-bold border-2 ${valorRecarga === v ? "border-[color:var(--color-neon)]" : "border-transparent bg-background/30"}`}
             >
               R${v}
             </button>
@@ -146,14 +146,14 @@ function PassageiroCarteira() {
         <button onClick={handleRecarregar} className="btn-cta w-full mt-3" disabled={valorRecarga < 20}>
           RECARREGAR {formatBRL(valorRecarga)}
         </button>
-        <div className="text-xs text-white/50 mt-2 text-center">Pix ou cartão (Stripe — em breve)</div>
+        <div className="text-xs text-muted-foreground mt-2 text-center">Pix ou cartão (Stripe — em breve)</div>
       </section>
 
       <section className="px-5 mt-4">
         <div className="font-bold text-sm mb-2">Extrato</div>
         <div className="flex flex-col gap-2">
           {transacoes.length === 0 && (
-            <div className="text-sm text-white/60 text-center py-6 card-mz">
+            <div className="text-sm text-muted-foreground text-center py-6 card-mz">
               Nenhuma transação ainda.
             </div>
           )}
@@ -166,10 +166,10 @@ function PassageiroCarteira() {
                 </div>
                 <div className="flex-1">
                   <div className="text-sm font-semibold">{info.label}</div>
-                  <div className="text-xs text-white/60">
+                  <div className="text-xs text-muted-foreground">
                     {new Date(t.criado_em).toLocaleString("pt-BR")}
                   </div>
-                  {t.descricao && <div className="text-xs text-white/70">{t.descricao}</div>}
+                  {t.descricao && <div className="text-xs text-muted-foreground">{t.descricao}</div>}
                 </div>
                 <div className="text-sm font-bold" style={{ color: info.color }}>
                   {formatBRL(t.valor)}

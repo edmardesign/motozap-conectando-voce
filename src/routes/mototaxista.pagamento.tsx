@@ -132,11 +132,11 @@ function PagamentoPage() {
           }}
         >
           <div>
-            <div className="text-[11px] font-button tracking-widest uppercase text-white/55">Plano escolhido</div>
+            <div className="text-[11px] font-button tracking-widest uppercase text-foreground/55">Plano escolhido</div>
             <div className="font-button text-2xl tracking-wider uppercase">{plano.nome}</div>
           </div>
           <div className="text-right">
-            <div className="text-[11px] font-button tracking-widest uppercase text-white/55">Valor</div>
+            <div className="text-[11px] font-button tracking-widest uppercase text-foreground/55">Valor</div>
             <div className="font-display text-3xl" style={{ color: "var(--color-neon)" }}>{plano.valor}</div>
           </div>
         </div>
@@ -146,7 +146,7 @@ function PagamentoPage() {
           className="rounded-2xl border p-5 backdrop-blur-xl flex flex-col items-center gap-3"
           style={{ borderColor: "rgba(255,255,255,0.08)", background: "rgba(255,255,255,0.03)" }}
         >
-          <div className="text-[11px] font-button tracking-widest uppercase text-white/55">
+          <div className="text-[11px] font-button tracking-widest uppercase text-foreground/55">
             Escaneie o QR Code
           </div>
           <div className="bg-white p-3 rounded-xl">
@@ -158,7 +158,7 @@ function PagamentoPage() {
               className="block"
             />
           </div>
-          <div className="text-xs text-white/60 font-sans">Beneficiário: {PIX_BENEFICIARIO}</div>
+          <div className="text-xs text-muted-foreground font-sans">Beneficiário: {PIX_BENEFICIARIO}</div>
         </div>
 
         {/* Chave Pix copiável */}
@@ -166,10 +166,10 @@ function PagamentoPage() {
           className="rounded-2xl border p-5 backdrop-blur-xl flex flex-col gap-3"
           style={{ borderColor: "rgba(255,255,255,0.08)", background: "rgba(255,255,255,0.03)" }}
         >
-          <div className="text-[11px] font-button tracking-widest uppercase text-white/55">
+          <div className="text-[11px] font-button tracking-widest uppercase text-foreground/55">
             Chave Pix
           </div>
-          <div className="rounded-xl bg-black/40 border border-white/10 px-4 py-3 font-mono text-sm break-all text-white/90">
+          <div className="rounded-xl bg-background/40 border border-white/10 px-4 py-3 font-mono text-sm break-all text-foreground/90">
             {PIX_KEY}
           </div>
           <button
@@ -187,7 +187,7 @@ function PagamentoPage() {
           style={{ borderColor: "rgba(61, 181, 74,0.2)", background: "rgba(61, 181, 74,0.05)" }}
         >
           <Clock className="w-5 h-5 mt-0.5 shrink-0" style={{ color: "var(--color-neon)" }} />
-          <p className="text-sm text-white/80 font-sans leading-relaxed">
+          <p className="text-sm text-foreground/80 font-sans leading-relaxed">
             Após pagar, toque em <strong>"Já fiz o pagamento"</strong> e aguarde a confirmação
             em até <strong>2 horas</strong>.
           </p>
@@ -199,7 +199,7 @@ function PagamentoPage() {
           {enviando ? "ENVIANDO..." : "JÁ FIZ O PAGAMENTO"}
         </button>
 
-        <div className="flex items-center justify-center gap-2 text-xs text-white/55 font-sans">
+        <div className="flex items-center justify-center gap-2 text-xs text-foreground/55 font-sans">
           <ShieldCheck className="w-4 h-4" style={{ color: "var(--color-neon)" }} />
           Pagamento conferido manualmente pela equipe InterGO
         </div>

@@ -62,8 +62,8 @@ export function BoraZeIntroAnimation({
           height: "min(88vw, 380px)",
           borderRadius: "9999px",
           background:
-            "radial-gradient(circle, var(--primary) 0%, rgba(61,181,74,0) 68%)",
-          filter: "blur(44px)",
+            "radial-gradient(circle, rgba(61,181,74,0.22) 0%, rgba(61,181,74,0) 70%)",
+          filter: "blur(38px)",
         }}
       />
 
@@ -91,7 +91,7 @@ export function BoraZeIntroAnimation({
           width: "min(78vw, 300px)",
           opacity: showLogo ? 1 : 0,
           transform: showLogo ? "scale(1)" : "scale(0.92)",
-          filter: showLogo ? "blur(0px)" : "blur(12px)",
+          filter: showLogo ? "brightness(0) blur(0px)" : "brightness(0) blur(12px)",
           transition:
             "opacity 720ms var(--ease-apple-out), transform 900ms var(--ease-spring), filter 720ms var(--ease-apple-out)",
         }}

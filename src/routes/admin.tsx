@@ -92,7 +92,7 @@ function AdminPage() {
     })();
   }, [navigate]);
 
-  if (checking) return <div className="min-h-screen flex items-center justify-center text-white">Carregando…</div>;
+  if (checking) return <div className="min-h-screen flex items-center justify-center text-foreground">Carregando…</div>;
   if (!authed) return <AdminLogin onAuthed={() => setAuthed(true)} />;
   return <AdminShell onLogout={() => setAuthed(false)} />;
 }
@@ -101,7 +101,7 @@ function AdminPage() {
 function AdminLogin({ onAuthed }: { onAuthed: () => void }) {
   const [mode, setMode] = useState<"entrar" | "ativar">("entrar");
   return (
-    <main className="min-h-screen flex items-center justify-center px-6 bg-background text-white">
+    <main className="min-h-screen flex items-center justify-center px-6 bg-background text-foreground">
       <div className="w-full max-w-sm rounded-2xl p-6 bg-card border border-white/10 space-y-4">
         <h1 className="text-2xl font-bold text-center"><EmojiIcon e="🔐" /> Painel Administrativo</h1>
         <div className="grid grid-cols-2 gap-2 rounded-xl bg-white/5 p-1">
@@ -109,7 +109,7 @@ function AdminLogin({ onAuthed }: { onAuthed: () => void }) {
             type="button"
             onClick={() => setMode("entrar")}
             className={`rounded-lg py-2 text-sm font-semibold transition ${
-              mode === "entrar" ? "bg-neon text-neon-foreground" : "text-white/70"
+              mode === "entrar" ? "bg-neon text-neon-foreground" : "text-muted-foreground"
             }`}
           >
             Já tenho acesso
@@ -118,14 +118,14 @@ function AdminLogin({ onAuthed }: { onAuthed: () => void }) {
             type="button"
             onClick={() => setMode("ativar")}
             className={`rounded-lg py-2 text-sm font-semibold transition ${
-              mode === "ativar" ? "bg-neon text-neon-foreground" : "text-white/70"
+              mode === "ativar" ? "bg-neon text-neon-foreground" : "text-muted-foreground"
             }`}
           >
             Ativar meu acesso
           </button>
         </div>
         {mode === "entrar" ? <AdminLoginForm onAuthed={onAuthed} /> : <AdminAtivarWizard onAuthed={onAuthed} />}
-        <Link to="/splash" className="block text-center text-xs text-white/60 hover:text-white">
+        <Link to="/splash" className="block text-center text-xs text-muted-foreground hover:text-foreground">
           Voltar
         </Link>
       </div>
@@ -269,7 +269,7 @@ function AdminLoginForm({ onAuthed }: { onAuthed: () => void }) {
       <button
         type="button"
         onClick={() => setUsarMaster((v) => !v)}
-        className="w-full text-xs text-white/60 hover:text-white"
+        className="w-full text-xs text-muted-foreground hover:text-foreground"
       >
         {usarMaster ? "Usar telefone + PIN" : "Sou o administrador principal (e-mail master)"}
       </button>
@@ -326,7 +326,7 @@ function AdminAtivarWizard({ onAuthed }: { onAuthed: () => void }) {
 
       {step === 1 && (
         <>
-          <p className="text-xs text-white/70">Digite o telefone cadastrado pelo administrador principal.</p>
+          <p className="text-xs text-muted-foreground">Digite o telefone cadastrado pelo administrador principal.</p>
           <input
             type="tel"
             required
@@ -351,7 +351,7 @@ function AdminAtivarWizard({ onAuthed }: { onAuthed: () => void }) {
 
       {step === 2 && (
         <>
-          <p className="text-xs text-white/70">Informe o código de 6 dígitos recebido do administrador.</p>
+          <p className="text-xs text-muted-foreground">Informe o código de 6 dígitos recebido do administrador.</p>
           <input
             type="text"
             required
@@ -380,7 +380,7 @@ function AdminAtivarWizard({ onAuthed }: { onAuthed: () => void }) {
 
       {step === 3 && (
         <>
-          <p className="text-xs text-white/70">Defina seu PIN de 4 dígitos. Ele será a sua senha de acesso.</p>
+          <p className="text-xs text-muted-foreground">Defina seu PIN de 4 dígitos. Ele será a sua senha de acesso.</p>
           <input
             type="password"
             required
@@ -432,11 +432,11 @@ function AdminShell({ onLogout }: { onLogout: () => void }) {
   ];
 
   return (
-    <main className="min-h-screen bg-background text-white">
+    <main className="min-h-screen bg-background text-foreground">
       <header className="sticky top-0 z-10 bg-background/95 backdrop-blur border-b border-white/10 px-4 py-3 flex items-center justify-between">
         <h1 className="text-lg font-bold">InterGO • Admin</h1>
         <button
-          className="text-xs text-white/70 hover:text-white"
+          className="text-xs text-muted-foreground hover:text-foreground"
           onClick={async () => {
             await supabase.auth.signOut();
             onLogout();
@@ -452,7 +452,7 @@ function AdminShell({ onLogout }: { onLogout: () => void }) {
             key={t.key}
             onClick={() => setTab(t.key)}
             className={`whitespace-nowrap rounded-full px-3 py-1.5 text-sm transition ${
-              tab === t.key ? "bg-neon text-neon-foreground font-bold" : "bg-white/10 text-white/80"
+              tab === t.key ? "bg-neon text-neon-foreground font-bold" : "bg-white/10 text-foreground/80"
             }`}
           >
             {t.label}
@@ -548,9 +548,9 @@ function Dashboard() {
       {cards.map((c) => (
         <div key={c.label} className="rounded-xl bg-card p-4 border border-white/10 relative">
           {c.alert && <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-red-500 animate-pulse" />}
-          <div className="text-xs text-white/70">{c.label}</div>
+          <div className="text-xs text-muted-foreground">{c.label}</div>
           <div className="text-xl font-bold mt-1">{c.value}</div>
-          {c.sub && <div className="text-[10px] text-white/50 mt-1">{c.sub}</div>}
+          {c.sub && <div className="text-[10px] text-muted-foreground mt-1">{c.sub}</div>}
         </div>
       ))}
     </div>
@@ -625,7 +625,7 @@ function MototaxistasTab() {
           </button>
         ))}
       </div>
-      {filtrados.length === 0 && <p className="text-white/60 text-sm">Nenhum mototaxista.</p>}
+      {filtrados.length === 0 && <p className="text-muted-foreground text-sm">Nenhum mototaxista.</p>}
       {filtrados.map((m: any) => (
         <div key={m.id} className="rounded-xl bg-card p-3 flex items-center gap-3">
           {m.profiles.foto_url
@@ -649,14 +649,14 @@ function MototaxistasTab() {
                 </span>
               )}
             </div>
-            <div className="text-xs text-white/70">{formatarTelefone(m.profiles.telefone)} • {m.status} • plano: {m.plano ?? "—"}</div>
+            <div className="text-xs text-muted-foreground">{formatarTelefone(m.profiles.telefone)} • {m.status} • plano: {m.plano ?? "—"}</div>
             <div className="text-[10px]">Mensalidade: {m.mensalidade_ativa ? "ativa" : "inativa"}</div>
             <div className="text-[10px]" style={{ color: m.conta_bloqueada_comissao ? "#FFB4B4" : m.corridas_desde_pagamento >= 15 ? "#FFD27A" : "rgba(255,255,255,0.6)" }}>
               Comissão: {m.corridas_desde_pagamento ?? 0}/20 corridas
               {m.conta_bloqueada_comissao ? " • BLOQUEADO (deve R$10)" : ""}
               {typeof m.total_corridas === "number" ? ` • total ${m.total_corridas}` : ""}
             </div>
-            <div className="text-[10px] text-white/60 mt-1">
+            <div className="text-[10px] text-muted-foreground mt-1">
               {m.modelo_moto ? `${m.modelo_moto} ${m.ano_moto ?? ""} ${m.placa_moto ? formatarPlaca(m.placa_moto) : ""}` : ""}
               {m.numero_cnh ? ` • CNH: ${m.numero_cnh}` : ""}
               {m.cpf ? ` • CPF: ${formatarCpf(m.cpf)}` : ""}
@@ -669,12 +669,12 @@ function MototaxistasTab() {
               </button>
             )}
             {!m.pagamento_declarado && !m.mensalidade_ativa && (
-              <button onClick={() => confirmarPagamento(m.id, m.plano)} className="text-xs bg-white/10 text-white px-2 py-1 rounded whitespace-nowrap">
+              <button onClick={() => confirmarPagamento(m.id, m.plano)} className="text-xs bg-white/10 text-foreground px-2 py-1 rounded whitespace-nowrap">
                 Aprovar manual
               </button>
             )}
             {m.mensalidade_ativa && (
-              <button onClick={() => bloquear(m.id)} className="text-xs bg-red-500 text-white px-2 py-1 rounded">Bloquear</button>
+              <button onClick={() => bloquear(m.id)} className="text-xs bg-red-500 text-foreground px-2 py-1 rounded">Bloquear</button>
             )}
             {m.conta_bloqueada_comissao && (
               <button onClick={() => confirmarComissao(m.id)} className="text-xs bg-yellow-400 text-black px-2 py-1 rounded font-bold whitespace-nowrap">
@@ -682,7 +682,7 @@ function MototaxistasTab() {
               </button>
             )}
             {!m.conta_bloqueada_comissao && (m.corridas_desde_pagamento ?? 0) > 0 && (
-              <button onClick={() => confirmarComissao(m.id)} className="text-xs bg-white/10 text-white px-2 py-1 rounded whitespace-nowrap" title="Zerar ciclo">
+              <button onClick={() => confirmarComissao(m.id)} className="text-xs bg-white/10 text-foreground px-2 py-1 rounded whitespace-nowrap" title="Zerar ciclo">
                 Zerar ciclo
               </button>
             )}
@@ -722,12 +722,12 @@ function MensalidadesTab() {
   return (
     <div className="space-y-3">
       <input type="month" value={mes} onChange={(e)=>setMes(e.target.value)} className="bg-white/10 px-3 py-2 rounded" />
-      {lista.length === 0 && <p className="text-white/60 text-sm">Sem mensalidades.</p>}
+      {lista.length === 0 && <p className="text-muted-foreground text-sm">Sem mensalidades.</p>}
       {lista.map((r: any) => (
         <div key={r.id} className="rounded-xl bg-card p-3 flex items-center justify-between">
           <div>
             <div className="font-bold">{r.profiles.nome}</div>
-            <div className="text-xs text-white/70">Vencimento: {r.vencimento} • {formatBRL(Number(r.valor))}</div>
+            <div className="text-xs text-muted-foreground">Vencimento: {r.vencimento} • {formatBRL(Number(r.valor))}</div>
           </div>
           <div className="flex gap-2 items-center">
             <span className={`text-[10px] px-2 py-1 rounded text-black font-bold ${cor[r.status]}`}>{r.status}</span>
@@ -767,20 +767,20 @@ function RecargasTab() {
 
   return (
     <div className="space-y-3">
-      {lista.length === 0 && <p className="text-white/60 text-sm">Sem recargas pendentes.</p>}
+      {lista.length === 0 && <p className="text-muted-foreground text-sm">Sem recargas pendentes.</p>}
       {lista.map((r: any) => (
         <div key={r.id} className="rounded-xl bg-card p-3 space-y-2">
           <div className="flex items-center gap-2">
             {r.profiles.foto_url ? <img src={r.profiles.foto_url} className="w-9 h-9 rounded-full" /> : <div className="w-9 h-9 rounded-full bg-white/10" />}
             <div className="flex-1">
               <div className="font-bold">{r.profiles.nome}</div>
-              <div className="text-xs text-white/70">{formatBRL(Number(r.valor))} • {r.tipo.replace("recarga_","")}</div>
+              <div className="text-xs text-muted-foreground">{formatBRL(Number(r.valor))} • {r.tipo.replace("recarga_","")}</div>
             </div>
           </div>
           <input value={motivo[r.id] ?? ""} onChange={(e)=>setMotivo(s=>({...s,[r.id]:e.target.value}))} placeholder="Motivo (se rejeitar)" className="w-full bg-white/10 rounded px-2 py-1 text-xs" />
           <div className="flex gap-2">
             <button onClick={()=>confirmar(r.id)} className="flex-1 bg-green-500 text-black font-bold py-1 rounded text-sm">Confirmar</button>
-            <button onClick={()=>rejeitar(r.id)} className="flex-1 bg-red-500 text-white py-1 rounded text-sm">Rejeitar</button>
+            <button onClick={()=>rejeitar(r.id)} className="flex-1 bg-red-500 text-foreground py-1 rounded text-sm">Rejeitar</button>
           </div>
         </div>
       ))}
@@ -820,21 +820,21 @@ function SaquesTab() {
 
   return (
     <div className="space-y-3">
-      {lista.length === 0 && <p className="text-white/60 text-sm">Sem saques pendentes.</p>}
+      {lista.length === 0 && <p className="text-muted-foreground text-sm">Sem saques pendentes.</p>}
       {lista.map((r: any) => (
         <div key={r.id} className="rounded-xl bg-card p-3 space-y-2">
           <div className="flex items-center gap-2">
             {r.profiles.foto_url ? <img src={r.profiles.foto_url} className="w-9 h-9 rounded-full" /> : <div className="w-9 h-9 rounded-full bg-white/10" />}
             <div className="flex-1">
               <div className="font-bold">{r.profiles.nome}</div>
-              <div className="text-xs text-white/70">{formatBRL(Number(r.valor))} • {r.tipo}</div>
-              {r.chave_pix && <div className="text-[10px] text-white/60">Pix: {r.chave_pix}</div>}
+              <div className="text-xs text-muted-foreground">{formatBRL(Number(r.valor))} • {r.tipo}</div>
+              {r.chave_pix && <div className="text-[10px] text-muted-foreground">Pix: {r.chave_pix}</div>}
             </div>
           </div>
           <input value={motivo[r.id] ?? ""} onChange={(e)=>setMotivo(s=>({...s,[r.id]:e.target.value}))} placeholder="Motivo (se rejeitar)" className="w-full bg-white/10 rounded px-2 py-1 text-xs" />
           <div className="flex gap-2">
             <button onClick={()=>aprovar(r.id)} className="flex-1 bg-green-500 text-black font-bold py-1 rounded text-sm">Aprovar</button>
-            <button onClick={()=>rejeitar(r.id, r.profiles.telefone, r.profiles.nome)} className="flex-1 bg-red-500 text-white py-1 rounded text-sm">Rejeitar</button>
+            <button onClick={()=>rejeitar(r.id, r.profiles.telefone, r.profiles.nome)} className="flex-1 bg-red-500 text-foreground py-1 rounded text-sm">Rejeitar</button>
           </div>
         </div>
       ))}
@@ -897,7 +897,7 @@ function SorteiosTab() {
             <div className="flex justify-between">
               <div>
                 <div className="font-bold">{s.mes?.slice(0,7)} • {s.descricao}</div>
-                <div className="text-xs text-white/70">{s.tipo} • {s.parceiro ?? "—"} • {formatBRL(Number(s.valor_premio))}</div>
+                <div className="text-xs text-muted-foreground">{s.tipo} • {s.parceiro ?? "—"} • {formatBRL(Number(s.valor_premio))}</div>
                 {s.profiles && <div className="text-xs mt-1"><EmojiIcon e="🏆" /> {s.profiles.nome} ({formatarTelefone(s.profiles.telefone)})</div>}
               </div>
               <button onClick={()=>sortear(s.id)} className="bg-neon text-neon-foreground font-bold text-xs px-2 py-1 rounded h-fit">
@@ -951,7 +951,7 @@ function ParceirosTab() {
         <div key={p.id} className="rounded-xl bg-card p-3 flex justify-between items-center">
           <div>
             <div className="font-bold">{p.nome}</div>
-            <div className="text-xs text-white/70">{p.tipo} • {p.cupom} • {p.desconto_percentual}%</div>
+            <div className="text-xs text-muted-foreground">{p.tipo} • {p.cupom} • {p.desconto_percentual}%</div>
           </div>
           <button onClick={()=>toggle(p.id, p.ativo)} className={`text-xs px-2 py-1 rounded ${p.ativo?"bg-green-500 text-black":"bg-white/20"}`}>
             {p.ativo ? "Ativo" : "Inativo"}
@@ -994,8 +994,8 @@ function CorridasTab() {
           <div className="flex justify-between">
             <div className="truncate flex-1">
               <div className="font-bold truncate">{c.passageiro?.nome ?? "—"} → {c.mototaxista?.nome ?? "—"}</div>
-              <div className="text-xs text-white/70 truncate">{c.origem_endereco} → {c.destino_endereco}</div>
-              <div className="text-[10px] text-white/50">{new Date(c.criado_em).toLocaleString("pt-BR")} • {formatBRL(Number(c.valor_final ?? c.valor_estimado))}</div>
+              <div className="text-xs text-muted-foreground truncate">{c.origem_endereco} → {c.destino_endereco}</div>
+              <div className="text-[10px] text-muted-foreground">{new Date(c.criado_em).toLocaleString("pt-BR")} • {formatBRL(Number(c.valor_final ?? c.valor_estimado))}</div>
             </div>
             <span className={`text-[10px] px-2 py-1 rounded h-fit text-black font-bold ${cor[c.status] ?? "bg-white/20"}`}>{c.status}</span>
           </div>
@@ -1045,9 +1045,9 @@ function ConfigTab() {
         <div className="flex items-center justify-between">
           <div>
             <div className="font-bold"><EmojiIcon e="💳" /> Carteira Digital</div>
-            <div className="text-xs text-white/70">{carteiraAtiva ? "Ativada" : "Desativada"}</div>
+            <div className="text-xs text-muted-foreground">{carteiraAtiva ? "Ativada" : "Desativada"}</div>
           </div>
-          <button onClick={() => toggleCarteira(!carteiraAtiva)} className={`px-4 py-2 rounded font-bold ${carteiraAtiva?"bg-red-500 text-white":"bg-green-500 text-black"}`}>
+          <button onClick={() => toggleCarteira(!carteiraAtiva)} className={`px-4 py-2 rounded font-bold ${carteiraAtiva?"bg-red-500 text-foreground":"bg-green-500 text-black"}`}>
             {carteiraAtiva ? "Desativar" : "Ativar"}
           </button>
         </div>
@@ -1055,7 +1055,7 @@ function ConfigTab() {
           <div className="mt-3 p-3 bg-yellow-500/20 rounded text-xs space-y-2">
             <p>Saldos existentes são preservados. Novas recargas e pagamentos via app serão bloqueados. Confirmar?</p>
             <div className="flex gap-2">
-              <button onClick={()=>toggleCarteira(false)} className="bg-red-500 text-white px-3 py-1 rounded">Confirmar</button>
+              <button onClick={()=>toggleCarteira(false)} className="bg-red-500 text-foreground px-3 py-1 rounded">Confirmar</button>
               <button onClick={()=>setConfirmandoDesativar(false)} className="bg-white/20 px-3 py-1 rounded">Cancelar</button>
             </div>
           </div>
@@ -1064,7 +1064,7 @@ function ConfigTab() {
 
       {campos.map((c) => (
         <div key={c.chave} className="rounded-xl bg-card p-3 space-y-2">
-          <label className="text-xs text-white/70">{c.label}</label>
+          <label className="text-xs text-muted-foreground">{c.label}</label>
           <div className="flex gap-2">
             <input value={vals[c.chave] ?? ""} onChange={(e)=>setVals({...vals,[c.chave]:e.target.value})} className="flex-1 bg-white/10 px-3 py-2 rounded" />
             <button onClick={()=>salvarChave(c.chave, vals[c.chave] ?? "")} className="btn-cta text-sm px-4">Salvar</button>
@@ -1098,15 +1098,15 @@ function CidadesTab() {
         <h2 className="text-lg font-bold"><EmojiIcon e="🏙️" /> Cidades configuradas</h2>
         <button onClick={() => setOpenAdd(true)} className="btn-cta text-sm">+ Adicionar cidade</button>
       </div>
-      {cidades.length === 0 && <p className="text-white/60 text-sm">Nenhuma cidade configurada.</p>}
+      {cidades.length === 0 && <p className="text-muted-foreground text-sm">Nenhuma cidade configurada.</p>}
       <div className="space-y-2">
         {cidades.map((c) => (
           <div key={c.id} className={`rounded-xl bg-card p-3 flex items-center justify-between cursor-pointer ${sel?.id === c.id ? "ring-2 ring-[color:var(--color-neon)]" : ""}`} onClick={() => setSel(c)}>
             <div>
-              <div className="font-bold">{c.cidade} <span className="text-xs text-white/60">— {c.estado}</span></div>
-              <div className="text-xs text-white/60">{c.ativa ? "Ativa" : "Inativa"}</div>
+              <div className="font-bold">{c.cidade} <span className="text-xs text-muted-foreground">— {c.estado}</span></div>
+              <div className="text-xs text-muted-foreground">{c.ativa ? "Ativa" : "Inativa"}</div>
             </div>
-            <button onClick={(e) => { e.stopPropagation(); toggleAtiva(c); }} className={`text-xs px-3 py-1 rounded ${c.ativa ? "bg-red-500 text-white" : "bg-green-500 text-black font-bold"}`}>
+            <button onClick={(e) => { e.stopPropagation(); toggleAtiva(c); }} className={`text-xs px-3 py-1 rounded ${c.ativa ? "bg-red-500 text-foreground" : "bg-green-500 text-black font-bold"}`}>
               {c.ativa ? "Desativar" : "Ativar"}
             </button>
           </div>
@@ -1136,7 +1136,7 @@ function AddCidadeModal({ onClose, onAdded }: { onClose: () => void; onAdded: ()
   }
 
   return (
-    <div className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50" onClick={onClose}>
+    <div className="fixed inset-0 bg-background/70 flex items-center justify-center p-4 z-50" onClick={onClose}>
       <div className="card-mz p-6 max-w-md w-full space-y-4" onClick={(e) => e.stopPropagation()}>
         <h3 className="text-lg font-bold">Nova cidade</h3>
         <LocationPicker value={loc} onChange={setLoc} />
@@ -1190,10 +1190,10 @@ function TarifasSection({ cidade }: { cidade: any }) {
       {avisos.map((a, i) => <div key={i} className="text-xs text-yellow-400">{a}</div>)}
       <div className="space-y-2">
         {tarifas.map((t) => (
-          <div key={t.id} className="flex items-center justify-between bg-black/30 rounded p-2 text-sm">
+          <div key={t.id} className="flex items-center justify-between bg-background/30 rounded p-2 text-sm">
             <div>
               <div className="font-bold">{t.nome}</div>
-              <div className="text-xs text-white/70">{t.hora_inicio.slice(0,5)} – {t.hora_fim.slice(0,5)} • {formatBRL(Number(t.valor))}</div>
+              <div className="text-xs text-muted-foreground">{t.hora_inicio.slice(0,5)} – {t.hora_fim.slice(0,5)} • {formatBRL(Number(t.valor))}</div>
             </div>
             <div className="flex gap-1">
               <button onClick={() => toggle(t.id, t.ativo)} className={`text-[10px] px-2 py-1 rounded ${t.ativo ? "bg-green-500 text-black font-bold" : "bg-white/20"}`}>{t.ativo ? "Ativa" : "Inativa"}</button>
@@ -1238,13 +1238,13 @@ function BairrosSection({ cidade }: { cidade: any }) {
   return (
     <div className="card-mz p-4 space-y-3">
       <h3 className="font-bold"><EmojiIcon e="🏘️" /> Bairros com adicional — {cidade.cidade}</h3>
-      <div className="text-xs text-white/60">Bairros sem adicional não precisam ser cadastrados.</div>
+      <div className="text-xs text-muted-foreground">Bairros sem adicional não precisam ser cadastrados.</div>
       <div className="space-y-2">
         {lista.map((b) => (
-          <div key={b.id} className="flex items-center justify-between bg-black/30 rounded p-2 text-sm">
+          <div key={b.id} className="flex items-center justify-between bg-background/30 rounded p-2 text-sm">
             <div>
               <div className="font-bold">{b.nome_bairro}</div>
-              <div className="text-xs text-white/70">+{formatBRL(Number(b.valor_adicional))}</div>
+              <div className="text-xs text-muted-foreground">+{formatBRL(Number(b.valor_adicional))}</div>
             </div>
             <div className="flex gap-1">
               <button onClick={() => toggle(b.id, b.ativo)} className={`text-[10px] px-2 py-1 rounded ${b.ativo ? "bg-green-500 text-black font-bold" : "bg-white/20"}`}>{b.ativo ? "Ativo" : "Inativo"}</button>

@@ -110,7 +110,7 @@ function PlanosPage() {
         <div className="card-mz p-8 max-w-sm w-full text-center flex flex-col items-center gap-5">
           <Loader2 className="w-14 h-14 animate-spin" style={{ color: "var(--color-neon)" }} />
           <h1 className="text-2xl font-display">Processando sua entrada</h1>
-          <p className="text-white/70 text-sm font-sans">
+          <p className="text-muted-foreground text-sm font-sans">
             Aguarde alguns segundos enquanto liberamos seu acesso à plataforma...
           </p>
         </div>
@@ -139,7 +139,7 @@ function PlanosPage() {
       <div className="sticky top-0 z-20 w-full">
         <div
           className="mx-auto max-w-xl px-4 pt-3"
-          style={{ color: "#0F0F10" }}
+          style={{ color: "#FFFFFF" }}
         >
           <div
             className="flex items-center justify-center gap-2 rounded-b-xl px-4 py-2.5 text-xs sm:text-sm font-button tracking-wide text-center"
@@ -167,7 +167,7 @@ function PlanosPage() {
         <button
           onClick={scrollToCards}
           className="mt-6 inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-button tracking-wider uppercase transition-transform hover:scale-105"
-          style={{ background: "#3DB54A", color: "#0F0F10" }}
+          style={{ background: "#3DB54A", color: "#FFFFFF" }}
         >
           VER PLANOS
           <ArrowDown className="w-4 h-4" />
@@ -182,7 +182,7 @@ function PlanosPage() {
           ))}
         </div>
 
-        <div className="mt-8 flex flex-col items-center gap-2 text-sm text-white/70 font-sans text-center">
+        <div className="mt-8 flex flex-col items-center gap-2 text-sm text-muted-foreground font-sans text-center">
           <p><EmojiIcon e="🔒" /> Sem contrato. Sem multa. Cancele quando quiser.</p>
           <p><EmojiIcon e="✅" /> Suporte via WhatsApp incluído</p>
           <p><EmojiIcon e="✅" /> Acesso imediato após cadastro</p>
@@ -255,12 +255,12 @@ function PlanCard({ plano, onChoose }: { plano: Plano; onChoose: () => void }) {
 
       {/* Discreet billing info */}
       {plano.cobrancaDiscreta && (
-        <p className="mt-1.5 text-xs text-white/40 font-sans">
+        <p className="mt-1.5 text-xs text-foreground/40 font-sans">
           {plano.cobrancaDiscreta}
         </p>
       )}
 
-      <p className="mt-3 text-sm text-white/65 font-sans leading-relaxed">{plano.subtexto}</p>
+      <p className="mt-3 text-sm text-foreground/65 font-sans leading-relaxed">{plano.subtexto}</p>
 
       <div
         className="my-6 h-px w-full"
@@ -269,7 +269,7 @@ function PlanCard({ plano, onChoose }: { plano: Plano; onChoose: () => void }) {
 
       <ul className="flex-1 flex flex-col gap-3">
         {plano.beneficios.map((b) => (
-          <li key={b} className="flex items-start gap-3 text-sm text-white/85 font-sans">
+          <li key={b} className="flex items-start gap-3 text-sm text-foreground/85 font-sans">
             <span
               className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full"
               style={{ background: "rgba(61, 181, 74,0.15)", color: "var(--color-neon)" }}

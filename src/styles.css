@@ -4,16 +4,15 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Hard baseline — evita flash branco no Android antes/durante hidratação
-   e em cenários de PWA standalone onde utilitários podem não estar aplicados ainda. */
+/* Baseline claro institucional InterGO */
 html, body {
-  background: #0F0F10;
-  color: #F5F5F5;
+  background: #FFFFFF;
+  color: #111111;
   min-height: 100dvh;
   min-height: 100vh; /* fallback */
   -webkit-tap-highlight-color: transparent;
 }
-html { color-scheme: dark; }
+html { color-scheme: light; }
 body { overflow-x: hidden; }
 
 
@@ -55,34 +54,34 @@ body { overflow-x: hidden; }
 
 :root {
   --radius: 0.875rem;
-  /* InterGO — preto institucional + verde */
-  --background: #0F0F10;
-  --foreground: #FFFFFF;
-  --card: #17171A;
-  --card-foreground: #FFFFFF;
-  --popover: #17171A;
-  --popover-foreground: #FFFFFF;
+  /* InterGO — branco institucional (80%), preto para texto, verde para ações */
+  --background: #FFFFFF;
+  --foreground: #111111;
+  --card: #F7F7F7;
+  --card-foreground: #111111;
+  --popover: #FFFFFF;
+  --popover-foreground: #111111;
   --primary: #3DB54A;
-  --primary-foreground: #0F0F10;
-  --secondary: #4A4A4A;
-  --secondary-foreground: #FFFFFF;
-  --muted: #4A4A4A;
-  --muted-foreground: #D9D9D9;
+  --primary-foreground: #FFFFFF;
+  --secondary: #F7F7F7;
+  --secondary-foreground: #111111;
+  --muted: #F7F7F7;
+  --muted-foreground: #6B6B6B;
   --accent: #4CC65A;
-  --accent-foreground: #0F0F10;
+  --accent-foreground: #FFFFFF;
   --neon: #3DB54A;
-  --neon-foreground: #0F0F10;
+  --neon-foreground: #FFFFFF;
   --hero: #3DB54A;
-  --hero-foreground: #0F0F10;
-  --destructive: oklch(0.62 0.24 27);
+  --hero-foreground: #FFFFFF;
+  --destructive: oklch(0.58 0.22 27);
   --destructive-foreground: #FFFFFF;
-  --border: rgba(217, 217, 217, 0.16);
-  --input: rgba(217, 217, 217, 0.14);
-  --ring: #4CC65A;
-  --neon-glow: rgba(61, 181, 74, 0.45);
-  --gray-light: #F5F5F5;
-  --gray-mid: #D9D9D9;
-  --gray-dark: #4A4A4A;
+  --border: #E8E8E8;
+  --input: #E8E8E8;
+  --ring: #3DB54A;
+  --neon-glow: rgba(61, 181, 74, 0.28);
+  --gray-light: #F7F7F7;
+  --gray-mid: #E8E8E8;
+  --gray-dark: #6B6B6B;
 
   /* Apple-like motion + elevation */
   --ease-apple: cubic-bezier(0.32, 0.72, 0, 1);
@@ -91,8 +90,8 @@ body { overflow-x: hidden; }
   --dur-fast: 180ms;
   --dur-base: 320ms;
   --dur-slow: 620ms;
-  --shadow-soft: 0 1px 2px rgba(0,0,0,0.4), 0 8px 24px -12px rgba(0,0,0,0.7);
-  --shadow-raised: 0 1px 1px rgba(255,255,255,0.05) inset, 0 10px 30px -12px rgba(0,0,0,0.85);
+  --shadow-soft: 0 1px 2px rgba(17,17,17,0.04), 0 8px 24px -14px rgba(17,17,17,0.18);
+  --shadow-raised: 0 1px 1px rgba(255,255,255,0.6) inset, 0 10px 30px -18px rgba(17,17,17,0.25);
 }
 
 
@@ -198,7 +197,7 @@ body { overflow-x: hidden; }
 }
 
 @utility card-mz {
-  background-color: rgba(23, 23, 26, 0.92);
+  background-color: var(--color-card);
   color: var(--color-foreground);
   border: 1px solid var(--color-border);
   border-radius: 20px;
@@ -209,7 +208,7 @@ body { overflow-x: hidden; }
 @utility input-mz {
   border-radius: 14px;
   padding: 0.85rem 1rem;
-  background-color: #17171A;
+  background-color: #FFFFFF;
   color: var(--color-foreground);
   border: 1px solid var(--color-border);
   outline: none;

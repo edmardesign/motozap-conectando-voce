@@ -71,13 +71,13 @@ function AguardandoPage() {
   }, [user, loading, navigate]);
 
   return (
-    <main className="min-h-screen bg-background text-white flex items-center justify-center px-6 py-8">
+    <main className="min-h-screen bg-background text-foreground flex items-center justify-center px-6 py-8">
       <div className="card-mz p-8 max-w-md w-full text-center flex flex-col items-center gap-5">
         {aprovado ? (
           <>
             <div className="text-6xl"><EmojiIcon e="✅" /></div>
             <h1 className="text-2xl font-bold">Cadastro aprovado!</h1>
-            <p className="text-white/70 text-sm">Redirecionando para o painel...</p>
+            <p className="text-muted-foreground text-sm">Redirecionando para o painel...</p>
           </>
         ) : (
           <>
@@ -85,7 +85,7 @@ function AguardandoPage() {
             <h1 className="text-2xl font-bold">
               Bem-vindo ao InterGO{nome ? `, ${nome}` : ""}!
             </h1>
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-foreground/80 text-sm leading-relaxed">
               Seu cadastro foi recebido e seu primeiro mês é por nossa conta. <EmojiIcon e="🏍️" />
               <br />
               <br />

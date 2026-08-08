@@ -17,7 +17,7 @@ export function TabBar<T extends string>({ tabs, active, onChange }: TabBarProps
     <nav
       className="fixed bottom-0 left-0 right-0 z-40 flex items-stretch border-t"
       style={{
-        background: "#131F24",
+        background: "#FFFFFF",
         borderTopColor: "rgba(134,150,160,0.15)",
         paddingBottom: "env(safe-area-inset-bottom)",
         boxShadow: "0 -2px 12px rgba(0,0,0,0.4)",

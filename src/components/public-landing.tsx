@@ -125,13 +125,13 @@ export function PublicLanding({ persona, title, subtitle, iconUrl, accent, manif
         }}
       >
         <header className="animate-apple-rise stagger-1" style={{ width: "100%", textAlign: "center", paddingTop: 8 }}>
-          <p style={{ color: "rgba(255,255,255,0.45)", fontSize: 12, letterSpacing: "0.22em", fontWeight: 590 }}>
+          <p style={{ color: "var(--muted-foreground)", fontSize: 12, letterSpacing: "0.22em", fontWeight: 590 }}>
             INTERGO
           </p>
           <h1 style={{ fontSize: 30, fontWeight: 700, letterSpacing: "-0.03em", marginTop: 8, color: accent, lineHeight: 1.1 }}>
             {title}
           </h1>
-          <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 16, marginTop: 8, lineHeight: 1.4 }}>{subtitle}</p>
+          <p style={{ color: "var(--muted-foreground)", fontSize: 16, marginTop: 8, lineHeight: 1.4 }}>{subtitle}</p>
         </header>
 
         <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", width: "100%" }}>
@@ -149,8 +149,8 @@ export function PublicLanding({ persona, title, subtitle, iconUrl, accent, manif
               fontWeight: 600,
               fontSize: 17,
               letterSpacing: "-0.01em",
-              background: installed ? "rgba(255,255,255,0.06)" : accent,
-              color: installed ? accent : "#0F0F10",
+              background: installed ? "var(--card)" : accent,
+              color: installed ? accent : "#FFFFFF",
               border: installed ? `1px solid ${accent}55` : "none",
               boxShadow: installed ? "none" : `0 10px 28px -12px ${accent}99`,
               transition: "transform 180ms cubic-bezier(0.32,0.72,0,1), filter 180ms cubic-bezier(0.32,0.72,0,1)",
@@ -174,7 +174,7 @@ export function PublicLanding({ persona, title, subtitle, iconUrl, accent, manif
                 textAlign: "center",
                 marginTop: 16,
                 fontSize: 15,
-                color: "rgba(255,255,255,0.55)",
+                color: "var(--muted-foreground)",
                 textDecoration: "none",
               }}
             >
@@ -247,10 +247,10 @@ function IosInstallModal({ title, iconUrl, accent, mode, inAppName, onClose }: M
           <img
             src={iconUrl}
             alt={title}
-            style={{ width: 48, height: 48, borderRadius: 12, background: "#0F0F10", flexShrink: 0 }}
+            style={{ width: 48, height: 48, borderRadius: 12, background: "#FFFFFF", flexShrink: 0 }}
           />
           <div style={{ flex: 1 }}>
-            <p style={{ fontSize: 11, letterSpacing: "0.24em", color: "rgba(255,255,255,0.55)" }}>INSTALAR</p>
+            <p style={{ fontSize: 11, letterSpacing: "0.24em", color: "var(--muted-foreground)" }}>INSTALAR</p>
             <h2 style={{ fontSize: 20, fontWeight: 900, color: accent, lineHeight: 1.1 }}>{title}</h2>
           </div>
           <button
@@ -304,7 +304,7 @@ function IosInstallModal({ title, iconUrl, accent, mode, inAppName, onClose }: M
                 background: "#111",
                 padding: 14,
                 borderRadius: 14,
-                border: "1px solid rgba(255,255,255,0.06)",
+                border: "1px solid var(--card)",
               }}
             >
               <div
@@ -313,7 +313,7 @@ function IosInstallModal({ title, iconUrl, accent, mode, inAppName, onClose }: M
                   height: 28,
                   borderRadius: 999,
                   background: accent,
-                  color: "#0F0F10",
+                  color: "#FFFFFF",
                   fontWeight: 900,
                   display: "flex",
                   alignItems: "center",
@@ -335,7 +335,7 @@ function IosInstallModal({ title, iconUrl, accent, mode, inAppName, onClose }: M
         </ol>
 
         {/* Final message */}
-        <p style={{ marginTop: 16, fontSize: 14, color: "rgba(255,255,255,0.85)", textAlign: "center" }}>
+        <p style={{ marginTop: 16, fontSize: 14, color: "var(--foreground)", textAlign: "center" }}>
           O ícone <b style={{ color: accent }}>{title}</b> aparecerá na sua tela inicial.
         </p>
 
@@ -351,7 +351,7 @@ function IosInstallModal({ title, iconUrl, accent, mode, inAppName, onClose }: M
               fontSize: 15,
               letterSpacing: "0.06em",
               background: accent,
-              color: "#0F0F10",
+              color: "#FFFFFF",
               border: "none",
               cursor: "pointer",
             }}
@@ -367,8 +367,8 @@ function IosInstallModal({ title, iconUrl, accent, mode, inAppName, onClose }: M
               fontWeight: 700,
               fontSize: 14,
               background: "transparent",
-              color: "rgba(255,255,255,0.7)",
-              border: "1px solid rgba(255,255,255,0.15)",
+              color: "var(--muted-foreground)",
+              border: "1px solid var(--border)",
               cursor: "pointer",
             }}
           >

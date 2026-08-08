@@ -117,7 +117,7 @@ export function AddressFields({ value, onChange, cidade, estado }: Props) {
       </label>
 
       {geocoding && (
-        <div className="text-xs text-white/60"><EmojiIcon e="📍" /> Localizando endereço…</div>
+        <div className="text-xs text-muted-foreground"><EmojiIcon e="📍" /> Localizando endereço…</div>
       )}
 
       {value.latitude != null && value.longitude != null && !geocoding && (

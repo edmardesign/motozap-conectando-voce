@@ -102,7 +102,7 @@ export function LocationPicker({
           }}
         />
         {value.estado && busca && filtrados.length > 0 && !value.cidade && (
-          <div className="max-h-48 overflow-auto rounded-lg bg-black/40 border border-white/10 mt-1">
+          <div className="max-h-48 overflow-auto rounded-lg bg-background/40 border border-white/10 mt-1">
             {filtrados.map((m) => (
               <button
                 type="button"
@@ -119,7 +119,7 @@ export function LocationPicker({
           </div>
         )}
         {value.cidade && (
-          <div className="text-xs text-white/60 mt-1">
+          <div className="text-xs text-muted-foreground mt-1">
             Selecionada: <strong>{value.cidade}</strong> ·{" "}
             <button type="button" className="underline" onClick={() => onChange({ ...value, cidade: "" })}>
               trocar

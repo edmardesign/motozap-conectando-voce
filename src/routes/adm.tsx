@@ -74,8 +74,8 @@ function AdminEntry() {
             style={{ filter: "drop-shadow(0 0 24px rgba(255,255,255,0.2))" }}
           />
           <div>
-            <h1 className="text-3xl font-black tracking-tight text-white">INTERGO</h1>
-            <p className="text-white/70 text-sm mt-1 tracking-widest">ADMIN</p>
+            <h1 className="text-3xl font-black tracking-tight text-foreground">INTERGO</h1>
+            <p className="text-muted-foreground text-sm mt-1 tracking-widest">ADMIN</p>
           </div>
         </div>
 
@@ -86,12 +86,12 @@ function AdminEntry() {
               className="w-full rounded-2xl px-6 py-4 font-bold text-center transition-all active:scale-[0.98] flex items-center justify-center gap-2"
               style={{
                 background: "linear-gradient(135deg, #ffffff, #cccccc)",
-                color: "#0F0F10",
+                color: "#FFFFFF",
                 boxShadow: "0 0 32px rgba(255,255,255,0.35)",
                 letterSpacing: "0.02em",
               }}
             >
-              <EmojiIcon e="📲" color="#0F0F10" /> INSTALAR NO CELULAR
+              <EmojiIcon e="📲" color="#FFFFFF" /> INSTALAR NO CELULAR
             </button>
           )}
 
@@ -100,7 +100,7 @@ function AdminEntry() {
             className="w-full rounded-2xl px-6 py-4 font-bold text-center transition-all active:scale-[0.98]"
             style={{
               background: "#ffffff",
-              color: "#0F0F10",
+              color: "#FFFFFF",
               boxShadow: "0 0 24px rgba(255,255,255,0.2)",
             }}
           >
@@ -112,7 +112,7 @@ function AdminEntry() {
               toast.info("Peça ao administrador principal um código de ativação de 6 dígitos e faça login em seguida.");
               navigate({ to: "/admin" });
             }}
-            className="w-full rounded-2xl px-6 py-3 font-medium text-center transition-all active:scale-[0.98] border border-white/20 text-white/90 hover:bg-white/10"
+            className="w-full rounded-2xl px-6 py-3 font-medium text-center transition-all active:scale-[0.98] border border-white/20 text-foreground/90 hover:bg-white/10"
           >
             Ativar meu acesso
           </button>
