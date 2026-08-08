@@ -20,8 +20,8 @@ export const Route = createFileRoute("/passageiro/")({
   component: () => (
     <PublicLanding
       persona="passageiro"
-      title="USUÁRIO"
-      subtitle="Peça seu mototáxi em minutos"
+      title="SERVIDOR PÚBLICO"
+      subtitle="Solicite transporte institucional em minutos"
       iconUrl={iconPax.url}
       accent="#3DB54A"
       manifestHref="/manifest-passageiro.webmanifest"
