@@ -2,10 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { usePwaInstall } from "@/hooks/use-pwa-install";
 import { toast } from "sonner";
-import iconMz from "@/assets/intergo-icon-green.png.asset.json";
-import textMz from "@/assets/intergo-logo-white.png.asset.json";
-import logoMz from "@/assets/intergo-logo-white.png.asset.json";
 import { EmojiIcon } from "@/components/emoji-icon";
+import { BoraZeIntroAnimation } from "@/components/boraze-intro-animation";
 
 export const Route = createFileRoute("/splash")({
   head: () => ({
@@ -17,27 +15,20 @@ export const Route = createFileRoute("/splash")({
   component: Splash,
 });
 
-type Phase = "icon" | "text" | "done";
-
 function Splash() {
   const { canInstall, installed, install } = usePwaInstall();
-  const [phase, setPhase] = useState<Phase>("icon");
-  const [showInstall, setShowInstall] = useState(false);
+  const [showActions, setShowActions] = useState(false);
 
   useEffect(() => {
-    if (typeof window !== "undefined" && sessionStorage.getItem("boraze.splashSeen")) {
-      setPhase("done");
-      setShowInstall(true);
+    if (typeof window !== "undefined" && sessionStorage.getItem("intergo.splashSeen")) {
+      setShowActions(true);
       return;
     }
-    const t1 = setTimeout(() => setPhase("text"), 500);
-    const t2 = setTimeout(() => {
-      setPhase("done");
-      try { sessionStorage.setItem("boraze.splashSeen", "1"); } catch {}
-    }, 1000);
-    const t3 = setTimeout(() => setShowInstall(true), 1300);
-
-    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
+    const t = setTimeout(() => {
+      setShowActions(true);
+      try { sessionStorage.setItem("intergo.splashSeen", "1"); } catch { /* ignora */ }
+    }, 1700);
+    return () => clearTimeout(t);
   }, []);
 
   async function handleInstall() {
@@ -45,96 +36,54 @@ function Splash() {
     if (ok) toast.success("App instalado!");
   }
 
-  if (phase !== "done") {
-    return (
-      <main className="min-h-screen flex items-center justify-center bg-background overflow-hidden">
-        <img
-          src={iconMz.url}
-          alt="InterGO"
-          className="w-40 max-w-[50vw] h-auto absolute transition-opacity duration-500 ease-in-out"
-          style={{
-            opacity: phase === "icon" ? 1 : 0,
-            filter: "drop-shadow(0 0 32px rgba(61, 181, 74,0.5))",
-          }}
-        />
-        <img
-          src={textMz.url}
-          alt="InterGO"
-          className="w-72 max-w-[80vw] h-auto absolute transition-all duration-500 ease-out"
-          style={{
-            opacity: phase === "text" ? 1 : 0,
-            transform: phase === "text" ? "scale(1)" : "scale(0.92)",
-            filter: "drop-shadow(0 0 24px rgba(61, 181, 74,0.4))",
-          }}
-        />
-      </main>
-    );
-  }
-
   return (
-    <main className="min-h-screen flex flex-col items-center justify-between px-6 py-12 bg-background animate-fade-in">
-      <div className="w-full max-w-[480px] mx-auto flex-1 flex flex-col items-center justify-between">
-      <div className="flex-1 flex flex-col items-center justify-center text-center gap-6 w-full">
-        <img
-          src={logoMz.url}
-          alt="InterGO"
-          className="w-72 max-w-[85vw] h-auto drop-shadow-[0_0_24px_rgba(61, 181, 74,0.35)] animate-scale-in"
-        />
-      </div>
+    <main
+      className="flex flex-col items-center justify-between bg-background"
+      style={{
+        minHeight: "100dvh",
+        padding: "calc(env(safe-area-inset-top,0px) + 32px) 24px calc(env(safe-area-inset-bottom,0px) + 32px)",
+      }}
+    >
+      <div className="mx-auto flex w-full max-w-[420px] flex-1 flex-col items-center justify-between gap-10">
+        <div className="flex w-full flex-1 flex-col items-center justify-center">
+          <BoraZeIntroAnimation storageKey="intergo.intro.splash" />
+        </div>
 
-      <div className="w-full max-w-sm flex flex-col gap-3">
-        <Link
-          to="/cadastro/passageiro"
-          className="w-full rounded-2xl px-6 py-4 font-bold text-center border-2 transition-all active:scale-[0.98]"
-          style={{
-            background: "#0F0F10",
-            color: "#3DB54A",
-            borderColor: "#3DB54A",
-            boxShadow: "0 0 24px rgba(61, 181, 74,0.25)",
-            letterSpacing: "0.02em",
-          }}
-        >
-          INTERGO
-        </Link>
-        <Link
-          to="/auth/passageiro"
-          className="text-center text-sm text-white/70 hover:text-white underline"
-        >
-          Já tenho conta
-        </Link>
-        <Link
-          to="/mototaxista/auth"
-          className="w-full rounded-2xl px-6 py-4 font-bold text-center transition-all active:scale-[0.98]"
-          style={{
-            background: "#3DB54A",
-            color: "#0F0F10",
-            boxShadow: "0 0 24px rgba(61, 181, 74,0.35)",
-            letterSpacing: "0.02em",
-          }}
-        >
-          INTERGO MOTO-TAXISTA
-        </Link>
-        {canInstall && showInstall && (
-          <button
-            onClick={handleInstall}
-            className="w-full rounded-2xl px-6 py-4 font-bold text-center transition-all active:scale-[0.98] animate-fade-in flex items-center justify-center gap-2"
-            style={{
-              background: "linear-gradient(135deg, #3DB54A, #2E9A3B)",
-              color: "#0F0F10",
-              boxShadow: "0 0 32px rgba(61, 181, 74,0.55)",
-              letterSpacing: "0.02em",
-            }}
-          >
-            <EmojiIcon e="📲" color="#0F0F10" /> INSTALAR NO CELULAR
-          </button>
+        {showActions && (
+          <div className="flex w-full flex-col gap-3">
+            <Link
+              to="/cadastro/passageiro"
+              className="animate-apple-rise stagger-1 btn-hero w-full"
+            >
+              Pedir mototáxi
+            </Link>
+            <Link
+              to="/mototaxista/auth"
+              className="animate-apple-rise stagger-2 btn-outline-neon w-full"
+            >
+              Sou mototaxista
+            </Link>
+            {canInstall && (
+              <button
+                onClick={handleInstall}
+                className="animate-apple-rise stagger-3 btn-cta w-full"
+              >
+                <EmojiIcon e="📲" color="#0F0F10" /> Instalar no celular
+              </button>
+            )}
+            {installed && (
+              <p className="animate-apple-fade stagger-3 text-center text-sm text-muted-foreground">
+                App instalado <EmojiIcon e="✓" />
+              </p>
+            )}
+            <Link
+              to="/auth/passageiro"
+              className="animate-apple-fade stagger-4 mt-1 text-center text-[15px] text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Já tenho conta
+            </Link>
+          </div>
         )}
-        {installed && (
-          <p className="text-center text-sm text-white/60">App instalado <EmojiIcon e="✓" /></p>
-        )}
-
-        {/* Acesso administrativo intencionalmente oculto: use /admin diretamente. */}
-
-      </div>
       </div>
     </main>
   );
