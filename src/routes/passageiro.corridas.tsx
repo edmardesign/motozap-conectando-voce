@@ -9,13 +9,31 @@ import { EmojiIcon } from "@/components/emoji-icon";
 
 export const Route = createFileRoute("/passageiro/corridas")({
   component: PassageiroCorridas,
+  validateSearch: (s: Record<string, unknown>) => ({
+    historico: s.historico === "1" || s.historico === 1 ? "1" : undefined,
+  }),
   head: () => ({
-    meta: [{ title: "Minhas corridas — InterGO" }],
+    meta: [
+      { title: "Solicitações — InterGO" },
+      {
+        name: "description",
+        content:
+          "Acompanhe as solicitações de transporte institucional e o histórico de entregas da sua secretaria na InterGO.",
+      },
+      { property: "og:title", content: "Solicitações — InterGO" },
+      {
+        property: "og:description",
+        content: "Acompanhe solicitações e histórico de transporte institucional.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
   }),
 });
 
 type Corrida = {
   id: string;
+  descricao?: string | null;
   origem_endereco: string;
   destino_endereco: string;
   status: string;
@@ -35,6 +53,8 @@ const STATUS_LABEL: Record<string, { label: string; color: string }> = {
 function PassageiroCorridas() {
   const { user, loading: authLoading } = useAuth();
   const navigate = useNavigate();
+  const { historico } = Route.useSearch();
+  const isHistorico = historico === "1";
   const [corridas, setCorridas] = useState<Corrida[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -47,7 +67,7 @@ function PassageiroCorridas() {
     (async () => {
       const { data } = await supabase
         .from("corridas")
-        .select("id,origem_endereco,destino_endereco,status,valor_estimado,valor_final,criado_em")
+        .select("id,descricao,origem_endereco,destino_endereco,status,valor_estimado,valor_final,criado_em")
         .eq("passageiro_id", user.id)
         .order("criado_em", { ascending: false })
         .limit(50);
@@ -55,6 +75,12 @@ function PassageiroCorridas() {
       setLoading(false);
     })();
   }, [user]);
+
+  const lista = corridas.filter((c) =>
+    isHistorico
+      ? c.status === "concluida" || c.status === "cancelada"
+      : c.status !== "concluida" && c.status !== "cancelada",
+  );
 
   if (authLoading || loading) {
     return (
@@ -65,23 +91,32 @@ function PassageiroCorridas() {
   }
 
   return (
-    <main className="min-h-screen bg-background text-white" style={{ paddingBottom: 80 }}>
-      <header className="px-5 pt-6 pb-4">
-        <h1 className="text-xl font-bold">Minhas corridas</h1>
+    <main className="min-h-screen bg-background text-foreground" style={{ paddingBottom: 80 }}>
+      <header className="px-5 pt-6 pb-4 border-b border-border">
+        <h1 className="text-xl font-bold">{isHistorico ? "Histórico" : "Solicitações"}</h1>
+        <p className="text-sm text-muted-foreground mt-0.5">
+          {isHistorico
+            ? "Solicitações concluídas e canceladas"
+            : "Transportes institucionais em andamento"}
+        </p>
       </header>
 
       <section className="px-5">
-        {corridas.length === 0 ? (
+        {lista.length === 0 ? (
           <div className="flex flex-col items-center justify-center text-center py-16 gap-3">
-            <div className="text-6xl"><EmojiIcon e="🏍️" /></div>
-            <h2 className="text-lg font-bold">Você ainda não fez nenhuma corrida</h2>
-            <p className="text-sm text-white/60 max-w-xs">
-              Quando você chamar seu primeiro mototaxista, o histórico aparece aqui.
+            <div className="text-6xl"><EmojiIcon e="📦" /></div>
+            <h2 className="text-lg font-bold">
+              {isHistorico ? "Nenhuma solicitação finalizada" : "Nenhuma solicitação ativa"}
+            </h2>
+            <p className="text-sm text-muted-foreground max-w-xs">
+              {isHistorico
+                ? "As solicitações concluídas ou canceladas aparecem aqui."
+                : "Crie uma solicitação de transporte na tela inicial."}
             </p>
           </div>
         ) : (
           <div className="flex flex-col gap-2">
-            {corridas.map((c) => {
+            {lista.map((c) => {
               const st = STATUS_LABEL[c.status] ?? { label: c.status, color: "#9ca3af" };
               const valor = c.valor_final ?? c.valor_estimado;
               return (
@@ -93,12 +128,15 @@ function PassageiroCorridas() {
                     >
                       {st.label}
                     </span>
-                    <span className="text-xs text-white/60">
+                    <span className="text-xs text-muted-foreground">
                       {new Date(c.criado_em).toLocaleDateString("pt-BR")}
                     </span>
                   </div>
+                  {c.descricao && (
+                    <div className="text-sm font-semibold mb-1">{c.descricao}</div>
+                  )}
                   <div className="flex items-start gap-2 text-sm mb-1">
-                    <MapPin size={14} className="mt-0.5 shrink-0 text-white/60" />
+                    <MapPin size={14} className="mt-0.5 shrink-0 text-muted-foreground" />
                     <span className="truncate">{c.origem_endereco}</span>
                   </div>
                   <div className="flex items-start gap-2 text-sm">

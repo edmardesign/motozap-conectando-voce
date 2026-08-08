@@ -77,7 +77,7 @@ export function CidadeModal({
       role="dialog"
       aria-modal="true"
       aria-labelledby="cidade-modal-title"
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-background/70 p-4"
     >
       <form
         onSubmit={submit}
@@ -85,7 +85,7 @@ export function CidadeModal({
       >
         <h3
           id="cidade-modal-title"
-          className="mb-3 text-lg font-semibold text-white"
+          className="mb-3 text-lg font-semibold text-foreground"
         >
           {titulo}
         </h3>
@@ -95,7 +95,7 @@ export function CidadeModal({
             <select
               value={cidadeSel}
               onChange={(e) => setCidadeSel(e.target.value)}
-              className="mt-1 w-full rounded-lg border border-neutral-700 bg-neutral-900 px-3 py-2 text-sm text-white"
+              className="mt-1 w-full rounded-lg border border-neutral-700 bg-neutral-900 px-3 py-2 text-sm text-foreground"
             >
               <option value="">— selecionar —</option>
               {(cidades ?? []).map((c) => (
@@ -113,7 +113,7 @@ export function CidadeModal({
                 autoFocus
                 value={cidade}
                 onChange={(e) => setCidade(e.target.value)}
-                className="mt-1 w-full rounded-lg border border-neutral-700 bg-neutral-900 px-3 py-2 text-sm text-white"
+                className="mt-1 w-full rounded-lg border border-neutral-700 bg-neutral-900 px-3 py-2 text-sm text-foreground"
                 placeholder="Ex: Recife"
               />
             </label>
@@ -123,7 +123,7 @@ export function CidadeModal({
                 value={estado}
                 onChange={(e) => setEstado(e.target.value.toUpperCase().slice(0, 2))}
                 maxLength={2}
-                className="mt-1 w-24 rounded-lg border border-neutral-700 bg-neutral-900 px-3 py-2 text-sm uppercase text-white"
+                className="mt-1 w-24 rounded-lg border border-neutral-700 bg-neutral-900 px-3 py-2 text-sm uppercase text-foreground"
                 placeholder="PE"
               />
             </label>

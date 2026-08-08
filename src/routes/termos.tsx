@@ -12,13 +12,13 @@ export const Route = createFileRoute("/termos")({
 
 function TermosPage() {
   return (
-    <main className="min-h-screen bg-black text-white px-6 py-10">
+    <main className="min-h-screen bg-background text-foreground px-6 py-10">
       <div className="max-w-2xl mx-auto flex flex-col gap-4 leading-relaxed">
-        <Link to="/" className="text-sm text-white/60 hover:text-white">← Voltar</Link>
+        <Link to="/" className="text-sm text-muted-foreground hover:text-foreground">← Voltar</Link>
         <h1 className="text-3xl">Termos de Uso</h1>
-        <p className="text-white/60 text-sm">Versão 1.0 — Última atualização: 19/07/2026</p>
+        <p className="text-muted-foreground text-sm">Versão 1.0 — Última atualização: 19/07/2026</p>
 
-        <section className="flex flex-col gap-3 text-white/85 text-[15px]">
+        <section className="flex flex-col gap-3 text-foreground/85 text-[15px]">
           <h2 className="text-xl mt-4">1. Sobre o InterGO</h2>
           <p>
             O <strong>InterGO</strong> é uma plataforma tecnológica que conecta passageiros e mototaxistas
@@ -85,7 +85,7 @@ function TermosPage() {
           </p>
         </section>
 
-        <p className="text-white/50 text-xs mt-6">
+        <p className="text-muted-foreground text-xs mt-6">
           Ao usar o InterGO, você declara ter lido e concordado com estes Termos de Uso.
         </p>
       </div>

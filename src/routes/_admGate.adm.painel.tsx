@@ -139,7 +139,7 @@ function PainelMunicipal() {
 
   if (!ctx) {
     return (
-      <div className="min-h-screen bg-black p-6 text-white/70">Carregando painel…</div>
+      <div className="min-h-screen bg-background p-6 text-muted-foreground">Carregando painel…</div>
     );
   }
 
@@ -163,8 +163,8 @@ function PainelMunicipal() {
   const abasVisiveis = abas.filter((a) => !a.perm || perms.has(a.perm));
 
   return (
-    <div className="min-h-screen bg-black text-white">
-      <header className="sticky top-0 z-10 border-b border-white/10 bg-black/95 backdrop-blur">
+    <div className="min-h-screen bg-background text-foreground">
+      <header className="sticky top-0 z-10 border-b border-white/10 bg-background/95 backdrop-blur">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-3">
           <div className="flex items-center gap-3">
             <span className="font-bold">InterGO</span>
@@ -216,7 +216,7 @@ function PainelMunicipal() {
                 onClick={() => setTab(a.id)}
                 aria-current={tab === a.id ? "page" : undefined}
                 className={`whitespace-nowrap rounded-lg px-3 py-1.5 text-sm ${
-                  tab === a.id ? "bg-[#3DB54A] text-black font-semibold" : "text-white/80 hover:bg-white/5"
+                  tab === a.id ? "bg-[#3DB54A] text-black font-semibold" : "text-foreground/80 hover:bg-white/5"
                 }`}
               >
                 {a.label}
@@ -335,7 +335,7 @@ function Toolbar({
         >
           ‹
         </button>
-        <span className="text-white/70">
+        <span className="text-muted-foreground">
           {page} / {maxPage} · {total} total
         </span>
         <button
@@ -366,9 +366,9 @@ function TabResumo({ cidadeId }: { cidadeId: string | null }) {
     <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
       {cards.map((c) => (
         <div key={c.k} className="rounded-xl border border-white/10 bg-neutral-950 p-4">
-          <div className="text-xs uppercase tracking-wide text-white/50">{c.k}</div>
+          <div className="text-xs uppercase tracking-wide text-muted-foreground">{c.k}</div>
           <div className="mt-1 text-2xl font-bold">
-            {c.v ?? <span className="text-white/30">—</span>}
+            {c.v ?? <span className="text-foreground/30">—</span>}
           </div>
         </div>
       ))}
@@ -402,7 +402,7 @@ function TabPassageiros({ cidadeId, podeAdmin }: { cidadeId: string | null; pode
           <div key={r.id} className="flex flex-wrap items-center gap-3 rounded-lg border border-white/5 bg-neutral-950 p-3">
             <div className="flex-1 min-w-[200px]">
               <div className="font-medium">{r.nome}</div>
-              <div className="text-xs text-white/60">{maskPhone(r.telefone)} · {r.cidade ?? "—"}</div>
+              <div className="text-xs text-muted-foreground">{maskPhone(r.telefone)} · {r.cidade ?? "—"}</div>
             </div>
             <span className={`rounded-full px-2 py-0.5 text-xs ${r.ativo ? "bg-green-600/20 text-green-200" : "bg-red-600/20 text-red-200"}`}>
               {r.ativo ? "Ativo" : "Bloqueado"}
@@ -474,7 +474,7 @@ function TabMototaxistas({
           <div key={r.id} className="flex flex-wrap items-center gap-3 rounded-lg border border-white/5 bg-neutral-950 p-3">
             <div className="flex-1 min-w-[220px]">
               <div className="font-medium">{r.nome}</div>
-              <div className="text-xs text-white/60">
+              <div className="text-xs text-muted-foreground">
                 {maskPhone(r.telefone)} · {r.cidade ?? "—"} · {r.moto?.total_corridas ?? 0} corridas
               </div>
               <div className="mt-1 flex flex-wrap gap-1">
@@ -543,15 +543,15 @@ function TabCorridas({ cidadeId }: { cidadeId: string | null }) {
             <div className="flex items-center justify-between gap-3">
               <div className="flex-1 min-w-0">
                 <div className="truncate text-sm">
-                  <span className="text-white/60">De:</span> {r.origem_endereco}
+                  <span className="text-muted-foreground">De:</span> {r.origem_endereco}
                 </div>
                 <div className="truncate text-sm">
-                  <span className="text-white/60">Para:</span> {r.destino_endereco}
+                  <span className="text-muted-foreground">Para:</span> {r.destino_endereco}
                 </div>
               </div>
               <div className="text-right text-xs">
                 <div className="font-semibold">{r.valor_final ? `R$ ${Number(r.valor_final).toFixed(2)}` : "—"}</div>
-                <div className="text-white/50">{new Date(r.criado_em).toLocaleString("pt-BR")}</div>
+                <div className="text-muted-foreground">{new Date(r.criado_em).toLocaleString("pt-BR")}</div>
                 <span className="mt-1 inline-block rounded-full bg-white/5 px-2 py-0.5 text-[10px]">{r.status}</span>
               </div>
             </div>
@@ -597,10 +597,10 @@ function TabSaques({ cidadeId, podeAdmin }: { cidadeId: string | null; podeAdmin
           <div key={r.id} className="flex flex-wrap items-center gap-3 rounded-lg border border-white/5 bg-neutral-950 p-3">
             <div className="flex-1 min-w-[220px]">
               <div className="font-medium">{r.moto?.nome ?? "(sem nome)"}</div>
-              <div className="text-xs text-white/60">
+              <div className="text-xs text-muted-foreground">
                 {r.moto?.telefone ? maskPhone(r.moto.telefone) : ""} · PIX: {r.chave_pix ?? "—"}
               </div>
-              <div className="text-xs text-white/50">{new Date(r.solicitado_em).toLocaleString("pt-BR")}</div>
+              <div className="text-xs text-muted-foreground">{new Date(r.solicitado_em).toLocaleString("pt-BR")}</div>
             </div>
             <div className="text-right">
               <div className="text-lg font-bold">R$ {Number(r.valor).toFixed(2)}</div>
@@ -635,11 +635,11 @@ function TabAvaliacoes({ cidadeId }: { cidadeId: string | null }) {
           <div key={r.id} className="rounded-lg border border-white/5 bg-neutral-950 p-3">
             <div className="flex items-center justify-between">
               <div className="text-sm">{"★".repeat(r.nota)}{"☆".repeat(5 - r.nota)}</div>
-              <div className="text-xs text-white/50">{new Date(r.criado_em).toLocaleString("pt-BR")}</div>
+              <div className="text-xs text-muted-foreground">{new Date(r.criado_em).toLocaleString("pt-BR")}</div>
             </div>
-            {r.comentario && <p className="mt-1 text-sm text-white/80">{r.comentario}</p>}
+            {r.comentario && <p className="mt-1 text-sm text-foreground/80">{r.comentario}</p>}
             {r.corrida && (
-              <div className="mt-1 text-xs text-white/50">
+              <div className="mt-1 text-xs text-muted-foreground">
                 {r.corrida.origem_endereco} → {r.corrida.destino_endereco}
               </div>
             )}
@@ -672,12 +672,12 @@ function TabAuditoria({ cidadeId }: { cidadeId: string | null }) {
         <div key={r.id} className="rounded-lg border border-white/5 bg-neutral-950 p-3">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <span className="rounded-full bg-white/5 px-2 py-0.5 text-[10px] uppercase">{r.acao}</span>
-            <span className="text-xs text-white/50">{new Date(r.criado_em).toLocaleString("pt-BR")}</span>
+            <span className="text-xs text-muted-foreground">{new Date(r.criado_em).toLocaleString("pt-BR")}</span>
           </div>
           <div className="mt-1 text-sm">
             {r.entidade ?? "?"} · {r.entidade_id ?? ""}
           </div>
-          {r.autor_nome && <div className="text-xs text-white/50">por {r.autor_nome}</div>}
+          {r.autor_nome && <div className="text-xs text-muted-foreground">por {r.autor_nome}</div>}
         </div>
       ))}
     </TabelaBase>
@@ -687,7 +687,7 @@ function TabAuditoria({ cidadeId }: { cidadeId: string | null }) {
 function TabelaBase({
   carregando, vazio, children,
 }: { carregando: boolean; vazio: boolean; children: React.ReactNode }) {
-  if (carregando) return <div className="rounded-xl border border-white/10 bg-neutral-950 p-6 text-center text-white/60">Carregando…</div>;
-  if (vazio) return <div className="rounded-xl border border-white/10 bg-neutral-950 p-6 text-center text-white/50">Nenhum registro encontrado.</div>;
+  if (carregando) return <div className="rounded-xl border border-white/10 bg-neutral-950 p-6 text-center text-muted-foreground">Carregando…</div>;
+  if (vazio) return <div className="rounded-xl border border-white/10 bg-neutral-950 p-6 text-center text-muted-foreground">Nenhum registro encontrado.</div>;
   return <div className="space-y-2">{children}</div>;
 }

@@ -77,18 +77,18 @@ function PrecosPage() {
   }
 
   if (loading) {
-    return <main className="min-h-screen flex items-center justify-center bg-background text-white">Carregando…</main>;
+    return <main className="min-h-screen flex items-center justify-center bg-background text-foreground">Carregando…</main>;
   }
 
   return (
-    <main className="min-h-screen bg-background text-white pb-24">
+    <main className="min-h-screen bg-background text-foreground pb-24">
       <header className="sticky top-0 z-10 bg-background/95 backdrop-blur border-b border-white/10">
         <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
           <div>
             <h1 className="text-lg font-bold">Preços e tarifas</h1>
-            <p className="text-xs text-white/60">Taxa InterGO, valor-base por cidade e regras por bairro.</p>
+            <p className="text-xs text-muted-foreground">Taxa InterGO, valor-base por cidade e regras por bairro.</p>
           </div>
-          <Link to="/adm/gestao" className="text-sm text-white/70 underline">Voltar</Link>
+          <Link to="/adm/gestao" className="text-sm text-muted-foreground underline">Voltar</Link>
         </div>
       </header>
 
@@ -122,7 +122,7 @@ function PrecosPage() {
                   <button
                     key={c.id}
                     onClick={() => setCidadeSel(c.id)}
-                    className="text-left rounded-xl bg-black/40 border border-white/10 p-4 hover:border-neon transition"
+                    className="text-left rounded-xl bg-background/40 border border-white/10 p-4 hover:border-neon transition"
                   >
                     <div className="flex justify-between">
                       <div className="font-bold">{c.cidade} · {c.estado}</div>
@@ -130,11 +130,11 @@ function PrecosPage() {
                         {c.ativa ? "ativa" : "suspensa"}
                       </span>
                     </div>
-                    <div className="text-xs text-white/60 mt-2">
-                      Valor-base: <b className="text-white">{brl(cfg?.valor_base)}</b>
+                    <div className="text-xs text-muted-foreground mt-2">
+                      Valor-base: <b className="text-foreground">{brl(cfg?.valor_base)}</b>
                     </div>
-                    <div className="text-xs text-white/60">
-                      Taxa: <b className="text-white">{brl(cfg?.taxa_bora_ze ?? cfgGlobal?.taxa_bora_ze)}</b>
+                    <div className="text-xs text-muted-foreground">
+                      Taxa: <b className="text-foreground">{brl(cfg?.taxa_bora_ze ?? cfgGlobal?.taxa_bora_ze)}</b>
                     </div>
                   </button>
                 );
@@ -157,7 +157,7 @@ function PrecosPage() {
           <div className="space-y-2 max-h-96 overflow-auto">
             {configs.map((c) => (
               <div key={c.id} className="text-sm border border-white/10 rounded-lg px-3 py-2 flex flex-wrap gap-x-4 gap-y-1 items-center">
-                <span className={`text-[10px] px-2 py-0.5 rounded ${c.ativo ? "bg-green-500/20 text-green-300" : "bg-white/10 text-white/50"}`}>
+                <span className={`text-[10px] px-2 py-0.5 rounded ${c.ativo ? "bg-green-500/20 text-green-300" : "bg-white/10 text-muted-foreground"}`}>
                   {c.ativo ? "vigente" : "encerrada"}
                 </span>
                 <span className="font-bold">
@@ -165,9 +165,9 @@ function PrecosPage() {
                 </span>
                 <span>Taxa: <b>{brl(c.taxa_bora_ze)}</b></span>
                 {c.valor_base != null && <span>Base: <b>{brl(c.valor_base)}</b></span>}
-                <span className="text-white/60">v{c.versao}</span>
-                <span className="text-white/60">{new Date(c.inicio_vigencia).toLocaleString("pt-BR")}</span>
-                <span className="text-white/50 basis-full text-xs">📝 {c.justificativa}</span>
+                <span className="text-muted-foreground">v{c.versao}</span>
+                <span className="text-muted-foreground">{new Date(c.inicio_vigencia).toLocaleString("pt-BR")}</span>
+                <span className="text-muted-foreground basis-full text-xs">📝 {c.justificativa}</span>
               </div>
             ))}
           </div>
@@ -208,14 +208,14 @@ function TaxaGlobalCard({ cfg, onSaved }: { cfg: Config | null; onSaved: () => v
         <h2 className="font-bold">Taxa global InterGO</h2>
         <div className="text-3xl font-extrabold text-neon">{brl(cfg?.taxa_bora_ze ?? 0.5)}</div>
       </div>
-      <p className="text-xs text-white/60 mt-1">Padrão aplicado quando a cidade não tem taxa própria configurada.</p>
+      <p className="text-xs text-muted-foreground mt-1">Padrão aplicado quando a cidade não tem taxa própria configurada.</p>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-4">
         <div>
-          <label className="text-xs text-white/60">Nova taxa (R$)</label>
+          <label className="text-xs text-muted-foreground">Nova taxa (R$)</label>
           <input className="input-mz" inputMode="decimal" value={taxa} onChange={(e) => setTaxa(e.target.value)} />
         </div>
         <div className="sm:col-span-2">
-          <label className="text-xs text-white/60">Justificativa</label>
+          <label className="text-xs text-muted-foreground">Justificativa</label>
           <input className="input-mz" value={justificativa} onChange={(e) => setJustificativa(e.target.value)} placeholder="Ex: reajuste operacional trimestral" />
         </div>
       </div>
@@ -233,15 +233,15 @@ function CidadePanel({
   const [aba, setAba] = useState<"tarifa" | "bairros" | "regras" | "simular">("tarifa");
 
   return (
-    <div className="rounded-xl bg-black/40 border border-white/10 p-4">
+    <div className="rounded-xl bg-background/40 border border-white/10 p-4">
       <div className="flex items-center justify-between mb-4">
         <div>
           <h3 className="font-bold text-lg">{cidade.cidade} · {cidade.estado}</h3>
-          <p className="text-xs text-white/60">
+          <p className="text-xs text-muted-foreground">
             Vigente: base {brl(cfgAtiva?.valor_base)} + taxa {brl(cfgAtiva?.taxa_bora_ze)} = {brl((cfgAtiva?.valor_base ?? 0) + (cfgAtiva?.taxa_bora_ze ?? 0))}
           </p>
         </div>
-        <button className="text-sm text-white/70 underline" onClick={onClose}>× Fechar</button>
+        <button className="text-sm text-muted-foreground underline" onClick={onClose}>× Fechar</button>
       </div>
 
       <div className="flex gap-2 mb-4 overflow-x-auto">
@@ -250,7 +250,7 @@ function CidadePanel({
             key={a}
             onClick={() => setAba(a)}
             className={`whitespace-nowrap rounded-full px-3 py-1.5 text-sm ${
-              aba === a ? "bg-neon text-neon-foreground font-bold" : "bg-white/10 text-white/80"
+              aba === a ? "bg-neon text-neon-foreground font-bold" : "bg-white/10 text-foreground/80"
             }`}
           >
             {a === "tarifa" && "Tarifa"}
@@ -299,19 +299,19 @@ function TarifaCidadeForm({ cidade, cfg, onSaved }: { cidade: Cidade; cfg: Confi
     <div className="space-y-3">
       <div className="grid grid-cols-2 gap-3">
         <div>
-          <label className="text-xs text-white/60">Valor-base (R$)</label>
+          <label className="text-xs text-muted-foreground">Valor-base (R$)</label>
           <input className="input-mz" inputMode="decimal" value={base} onChange={(e) => setBase(e.target.value)} />
         </div>
         <div>
-          <label className="text-xs text-white/60">Taxa InterGO (R$)</label>
+          <label className="text-xs text-muted-foreground">Taxa InterGO (R$)</label>
           <input className="input-mz" inputMode="decimal" value={taxa} onChange={(e) => setTaxa(e.target.value)} />
         </div>
       </div>
       <div>
-        <label className="text-xs text-white/60">Justificativa</label>
+        <label className="text-xs text-muted-foreground">Justificativa</label>
         <input className="input-mz" value={just} onChange={(e) => setJust(e.target.value)} placeholder="Ex: novo custo operacional" />
       </div>
-      <div className="text-xs text-white/60">
+      <div className="text-xs text-muted-foreground">
         Passageiro pagará: <b className="text-neon">{brl((Number(base.replace(",", ".")) || 0) + (Number(taxa.replace(",", ".")) || 0))}</b>
       </div>
       <button className="btn-cta" onClick={save} disabled={saving}>{saving ? "Salvando…" : "Aplicar"}</button>
@@ -356,17 +356,17 @@ function BairrosPanel({ cidade }: { cidade: Cidade }) {
       <button className="btn-cta" onClick={add}>+ Cadastrar bairro</button>
       <div className="max-h-72 overflow-auto space-y-1">
         {bairros.map((b) => (
-          <div key={b.id} className="text-sm bg-black/30 border border-white/10 rounded-lg px-3 py-2 flex justify-between">
+          <div key={b.id} className="text-sm bg-background/30 border border-white/10 rounded-lg px-3 py-2 flex justify-between">
             <div>
               <div className="font-bold">{b.nome}</div>
-              {b.aliases.length > 0 && <div className="text-xs text-white/60">↔ {b.aliases.join(", ")}</div>}
+              {b.aliases.length > 0 && <div className="text-xs text-muted-foreground">↔ {b.aliases.join(", ")}</div>}
             </div>
             <span className={`text-[10px] px-2 py-0.5 rounded ${b.ativo ? "bg-green-500/20 text-green-300" : "bg-red-500/20 text-red-300"}`}>
               {b.ativo ? "ativo" : "inativo"}
             </span>
           </div>
         ))}
-        {bairros.length === 0 && <p className="text-sm text-white/50">Nenhum bairro cadastrado.</p>}
+        {bairros.length === 0 && <p className="text-sm text-muted-foreground">Nenhum bairro cadastrado.</p>}
       </div>
     </div>
   );
@@ -441,10 +441,10 @@ function RegrasPanel({ cidade }: { cidade: Cidade }) {
       </button>
 
       {showForm && (
-        <div className="rounded-xl bg-black/50 border border-white/10 p-3 space-y-2">
+        <div className="rounded-xl bg-background/50 border border-white/10 p-3 space-y-2">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             <div>
-              <label className="text-xs text-white/60">Aplicação</label>
+              <label className="text-xs text-muted-foreground">Aplicação</label>
               <select className="input-mz" value={tipo} onChange={(e) => setTipo(e.target.value as any)}>
                 <option value="origem">Quando bairro for a origem</option>
                 <option value="destino">Quando bairro for o destino</option>
@@ -453,12 +453,12 @@ function RegrasPanel({ cidade }: { cidade: Cidade }) {
               </select>
             </div>
             <div>
-              <label className="text-xs text-white/60">Valor-base (R$)</label>
+              <label className="text-xs text-muted-foreground">Valor-base (R$)</label>
               <input className="input-mz" inputMode="decimal" value={valor} onChange={(e) => setValor(e.target.value)} />
             </div>
             {(tipo === "origem" || tipo === "origem_ou_destino" || tipo === "rota") && (
               <div>
-                <label className="text-xs text-white/60">Bairro de origem</label>
+                <label className="text-xs text-muted-foreground">Bairro de origem</label>
                 <select className="input-mz" value={origem} onChange={(e) => setOrigem(e.target.value)}>
                   <option value="">Selecione…</option>
                   {bairros.filter((b) => b.ativo).map((b) => <option key={b.id} value={b.id}>{b.nome}</option>)}
@@ -467,7 +467,7 @@ function RegrasPanel({ cidade }: { cidade: Cidade }) {
             )}
             {(tipo === "destino" || tipo === "rota") && (
               <div>
-                <label className="text-xs text-white/60">Bairro de destino</label>
+                <label className="text-xs text-muted-foreground">Bairro de destino</label>
                 <select className="input-mz" value={destino} onChange={(e) => setDestino(e.target.value)}>
                   <option value="">Selecione…</option>
                   {bairros.filter((b) => b.ativo).map((b) => <option key={b.id} value={b.id}>{b.nome}</option>)}
@@ -475,11 +475,11 @@ function RegrasPanel({ cidade }: { cidade: Cidade }) {
               </div>
             )}
             <div>
-              <label className="text-xs text-white/60">Prioridade (menor = maior prioridade)</label>
+              <label className="text-xs text-muted-foreground">Prioridade (menor = maior prioridade)</label>
               <input className="input-mz" type="number" value={prio} onChange={(e) => setPrio(e.target.value)} />
             </div>
             <div className="sm:col-span-2">
-              <label className="text-xs text-white/60">Justificativa</label>
+              <label className="text-xs text-muted-foreground">Justificativa</label>
               <input className="input-mz" value={just} onChange={(e) => setJust(e.target.value)} />
             </div>
           </div>
@@ -489,7 +489,7 @@ function RegrasPanel({ cidade }: { cidade: Cidade }) {
 
       <div className="max-h-80 overflow-auto space-y-1">
         {regras.map((r) => (
-          <div key={r.id} className="text-sm bg-black/30 border border-white/10 rounded-lg px-3 py-2 flex justify-between items-center">
+          <div key={r.id} className="text-sm bg-background/30 border border-white/10 rounded-lg px-3 py-2 flex justify-between items-center">
             <div>
               <div className="font-bold">
                 {r.tipo_aplicacao === "rota"
@@ -500,19 +500,19 @@ function RegrasPanel({ cidade }: { cidade: Cidade }) {
                   ? `Destino: ${nomeB(r.bairro_destino_id)}`
                   : `Origem ou destino: ${nomeB(r.bairro_origem_id)}`}
               </div>
-              <div className="text-xs text-white/60">
-                Base: <b className="text-white">{brl(r.valor_base)}</b> · Prio: {r.prioridade}
+              <div className="text-xs text-muted-foreground">
+                Base: <b className="text-foreground">{brl(r.valor_base)}</b> · Prio: {r.prioridade}
               </div>
             </div>
             <button
               onClick={() => toggle(r)}
-              className={`text-[10px] px-2 py-1 rounded ${r.ativo ? "bg-green-500/30 text-green-200" : "bg-white/10 text-white/60"}`}
+              className={`text-[10px] px-2 py-1 rounded ${r.ativo ? "bg-green-500/30 text-green-200" : "bg-white/10 text-muted-foreground"}`}
             >
               {r.ativo ? "ativa · desativar" : "inativa · ativar"}
             </button>
           </div>
         ))}
-        {regras.length === 0 && <p className="text-sm text-white/50">Nenhuma regra cadastrada.</p>}
+        {regras.length === 0 && <p className="text-sm text-muted-foreground">Nenhuma regra cadastrada.</p>}
       </div>
     </div>
   );
@@ -551,14 +551,14 @@ function SimuladorPanel({ cidade }: { cidade: Cidade }) {
     <div className="space-y-3">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
         <div>
-          <label className="text-xs text-white/60">Origem</label>
+          <label className="text-xs text-muted-foreground">Origem</label>
           <select className="input-mz" value={origem} onChange={(e) => setOrigem(e.target.value)}>
             <option value="">— sem bairro específico —</option>
             {bairros.map((b) => <option key={b.id} value={b.id}>{b.nome}</option>)}
           </select>
         </div>
         <div>
-          <label className="text-xs text-white/60">Destino</label>
+          <label className="text-xs text-muted-foreground">Destino</label>
           <select className="input-mz" value={destino} onChange={(e) => setDestino(e.target.value)}>
             <option value="">— sem bairro específico —</option>
             {bairros.map((b) => <option key={b.id} value={b.id}>{b.nome}</option>)}
@@ -567,11 +567,11 @@ function SimuladorPanel({ cidade }: { cidade: Cidade }) {
       </div>
       <button className="btn-cta" onClick={simular}>Calcular prévia</button>
       {resultado && resultado.valor_total != null && (
-        <div className="rounded-xl border border-neon/30 bg-black/50 p-4 space-y-1">
+        <div className="rounded-xl border border-neon/30 bg-background/50 p-4 space-y-1">
           <div className="text-sm">Base aplicável: <b>{brl(resultado.valor_base)}</b></div>
           <div className="text-sm">Taxa InterGO: <b>{brl(resultado.taxa_bora_ze)}</b></div>
           <div className="text-lg font-extrabold text-neon">Passageiro paga {brl(resultado.valor_total)}</div>
-          <div className="text-xs text-white/60">Mototaxista recebe {brl(resultado.valor_base)}</div>
+          <div className="text-xs text-muted-foreground">Mototaxista recebe {brl(resultado.valor_base)}</div>
         </div>
       )}
     </div>

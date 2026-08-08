@@ -29,10 +29,10 @@ export const Route = createFileRoute("/mototaxista/cadastro")({
 });
 
 const COLORS = {
-  bg: "#0F0F10",
+  bg: "#FFFFFF",
   panel: "#1A2C33",
   neon: "#3DB54A",
-  neonText: "#0F0F10",
+  neonText: "#FFFFFF",
   text: "#F5F5F5",
 };
 
@@ -230,7 +230,7 @@ function MototaxistaCadastroWizard() {
         {step > 1 ? (
           <button
             onClick={goBack}
-            className="text-sm text-white/70 hover:text-white px-2 py-1"
+            className="text-sm text-muted-foreground hover:text-foreground px-2 py-1"
             disabled={submitting}
           >
             ← Voltar
@@ -238,13 +238,13 @@ function MototaxistaCadastroWizard() {
         ) : (
           <button
             onClick={() => navigate({ to: "/mototaxista/auth" })}
-            className="text-sm text-white/70 hover:text-white px-2 py-1"
+            className="text-sm text-muted-foreground hover:text-foreground px-2 py-1"
           >
             ← Voltar
           </button>
         )}
         <div className="flex-1" />
-        <span className="text-xs font-bold text-white/80">
+        <span className="text-xs font-bold text-foreground/80">
           {step} de {TOTAL_STEPS}
         </span>
       </header>
@@ -315,7 +315,7 @@ function MototaxistaCadastroWizard() {
                 inputMode="numeric"
                 maxLength={11}
               />
-              <p className="text-xs text-white/50 mt-3">
+              <p className="text-xs text-muted-foreground mt-3">
                 <EmojiIcon e="🔒" /> Seus dados são protegidos e nunca compartilhados com terceiros.
               </p>
             </StepWrapper>
@@ -381,7 +381,7 @@ function StepWrapper({
     <div className="max-w-md mx-auto flex flex-col gap-5 pt-2">
       <div>
         <h1 className="text-2xl font-bold leading-tight">{title}</h1>
-        {subtitle && <p className="text-white/60 mt-1 text-sm">{subtitle}</p>}
+        {subtitle && <p className="text-muted-foreground mt-1 text-sm">{subtitle}</p>}
       </div>
       <div className="mt-2">{children}</div>
     </div>
@@ -413,7 +413,7 @@ function NeonInput({
       inputMode={inputMode}
       maxLength={maxLength}
       autoComplete={autoComplete}
-      className="w-full bg-transparent border-2 rounded-xl px-4 py-3.5 text-base outline-none transition-colors focus:border-[var(--neon-on)] border-white/20 placeholder:text-white/40"
+      className="w-full bg-transparent border-2 rounded-xl px-4 py-3.5 text-base outline-none transition-colors focus:border-[var(--neon-on)] border-white/20 placeholder:text-foreground/40"
       style={{ color: COLORS.text, ["--neon-on" as any]: COLORS.neon } as React.CSSProperties}
     />
   );
@@ -440,9 +440,9 @@ function StepMoto({
           className="w-full bg-transparent border-2 border-white/20 rounded-xl px-4 py-3.5 text-base outline-none focus:border-[#00FF00]"
           style={{ color: COLORS.text }}
         >
-          <option value="" style={{ color: "#0F0F10" }}>Ano da moto</option>
+          <option value="" style={{ color: "#FFFFFF" }}>Ano da moto</option>
           {anos.map((a) => (
-            <option key={a} value={String(a)} style={{ color: "#0F0F10" }}>{a}</option>
+            <option key={a} value={String(a)} style={{ color: "#FFFFFF" }}>{a}</option>
           ))}
         </select>
         <NeonInput
@@ -456,7 +456,7 @@ function StepMoto({
         )}
 
         <div className="mt-2">
-          <label className="text-xs uppercase tracking-wider text-white/60 mb-2 block">
+          <label className="text-xs uppercase tracking-wider text-muted-foreground mb-2 block">
             Cor da moto
           </label>
           <div className="grid grid-cols-3 gap-2">
@@ -470,7 +470,7 @@ function StepMoto({
                   className={`py-2.5 rounded-lg border font-semibold text-sm transition ${
                     active
                       ? "bg-[#3DB54A] text-black border-[#3DB54A]"
-                      : "bg-white/5 text-white border-white/10 hover:border-white/30"
+                      : "bg-white/5 text-foreground border-white/10 hover:border-white/30"
                   }`}
                 >
                   {c}
@@ -496,7 +496,7 @@ function PinField({
   }, [autoFocus]);
   return (
     <div>
-      <p className="text-sm text-white/70 mb-2 text-center">{label}</p>
+      <p className="text-sm text-muted-foreground mb-2 text-center">{label}</p>
       <div className="relative" onClick={() => ref.current?.focus()}>
         <input
           ref={ref}
@@ -549,7 +549,7 @@ function StepResumo({ data }: { data: WizardData }) {
 function ResumoRow({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex flex-col gap-0.5">
-      <span className="text-xs text-white/50">{label}</span>
+      <span className="text-xs text-muted-foreground">{label}</span>
       <span className="font-semibold">{value}</span>
     </div>
   );

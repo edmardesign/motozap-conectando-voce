@@ -17,17 +17,17 @@ function NegadoPage() {
     window.location.href = "/admin";
   }
   return (
-    <main className="min-h-screen flex items-center justify-center px-6 bg-background text-white">
+    <main className="min-h-screen flex items-center justify-center px-6 bg-background text-foreground">
       <div className="max-w-md w-full rounded-2xl p-8 bg-card border border-white/10 text-center space-y-4">
         <h1 className="text-2xl font-bold">Acesso não autorizado</h1>
-        <p className="text-white/70 text-sm">
+        <p className="text-muted-foreground text-sm">
           Sua conta está autenticada, mas não possui um perfil administrativo
           ativo para acessar este painel. Se você foi convidado recentemente,
           verifique com o administrador que gerou seu convite.
         </p>
         <div className="flex flex-col gap-2 pt-2">
           <button onClick={sair} className="btn-cta w-full">Sair e voltar ao login</button>
-          <Link to="/" className="text-xs text-white/60 hover:text-white">
+          <Link to="/" className="text-xs text-muted-foreground hover:text-foreground">
             Ir para o app
           </Link>
         </div>

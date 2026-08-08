@@ -144,7 +144,7 @@ function GestaoPage() {
   }, [navigate, fetchCtx]);
 
   if (checking) {
-    return <div className="min-h-screen flex items-center justify-center text-white">Carregando…</div>;
+    return <div className="min-h-screen flex items-center justify-center text-foreground">Carregando…</div>;
   }
   if (!ctx) return null;
 
@@ -156,7 +156,7 @@ function GestaoPage() {
   const podeVerAdminStuff = ctx.is_principal;
 
   return (
-    <main className="min-h-screen bg-background text-white">
+    <main className="min-h-screen bg-background text-foreground">
       <header className="sticky top-0 z-10 bg-background/95 backdrop-blur border-b border-white/10 px-4 py-3 flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-3">
           <h1 className="text-lg font-bold">InterGO • Gestão</h1>
@@ -180,7 +180,7 @@ function GestaoPage() {
               ))}
             </select>
           )}
-          <Link to="/admin" className="text-xs text-white/70 hover:text-white">
+          <Link to="/admin" className="text-xs text-muted-foreground hover:text-foreground">
             Painel operacional
           </Link>
           <button
@@ -188,7 +188,7 @@ function GestaoPage() {
               try { await supabase.auth.signOut(); } catch { /* ignore */ }
               navigate({ to: "/admin", replace: true });
             }}
-            className="text-xs text-white/70 hover:text-white underline"
+            className="text-xs text-muted-foreground hover:text-foreground underline"
           >
             Sair
           </button>
@@ -214,7 +214,7 @@ function GestaoPage() {
         <TabBtn active={tab === "auditoria"} onClick={() => setTab("auditoria")}>
           Histórico
         </TabBtn>
-        <a href="/adm/precos" className="whitespace-nowrap rounded-full px-3 py-1.5 text-sm bg-white/10 text-white/80 hover:bg-white/20">
+        <a href="/adm/precos" className="whitespace-nowrap rounded-full px-3 py-1.5 text-sm bg-white/10 text-foreground/80 hover:bg-white/20">
           Preços e tarifas
         </a>
       </nav>
@@ -235,7 +235,7 @@ function TabBtn({ active, onClick, children }: { active: boolean; onClick: () =>
     <button
       onClick={onClick}
       className={`whitespace-nowrap rounded-full px-3 py-1.5 text-sm transition ${
-        active ? "bg-neon text-neon-foreground font-bold" : "bg-white/10 text-white/80"
+        active ? "bg-neon text-neon-foreground font-bold" : "bg-white/10 text-foreground/80"
       }`}
     >
       {children}
@@ -262,7 +262,7 @@ function IndicadoresCidade({ cidadeId }: { cidadeId: string | null }) {
     <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
       {cards.map((k) => (
         <div key={k.label} className="rounded-xl bg-card p-3 border border-white/10">
-          <div className="text-[11px] text-white/60 uppercase tracking-wider">{k.label}</div>
+          <div className="text-[11px] text-muted-foreground uppercase tracking-wider">{k.label}</div>
           <div className="text-2xl font-bold">{k.value}</div>
         </div>
       ))}
@@ -292,9 +292,9 @@ function SubadminsTab({ ctx }: { ctx: Ctx }) {
         <h2 className="text-xl font-bold">Subadministradores</h2>
         <button className="btn-cta" onClick={() => setWizard(true)}>Adicionar subadministrador</button>
       </div>
-      {rows === null && <div className="text-white/60">Carregando…</div>}
+      {rows === null && <div className="text-muted-foreground">Carregando…</div>}
       {rows && rows.length === 0 && (
-        <div className="rounded-xl bg-card border border-white/10 p-6 text-center text-white/60">
+        <div className="rounded-xl bg-card border border-white/10 p-6 text-center text-muted-foreground">
           Nenhum subadministrador cadastrado.
         </div>
       )}
@@ -335,9 +335,9 @@ function EmbaixadoresTab({ ctx }: { ctx: Ctx }) {
         <h2 className="text-xl font-bold">Embaixadores</h2>
         <button className="btn-cta" onClick={() => setWizard(true)}>Adicionar embaixador</button>
       </div>
-      {rows === null && <div className="text-white/60">Carregando…</div>}
+      {rows === null && <div className="text-muted-foreground">Carregando…</div>}
       {rows && rows.length === 0 && (
-        <div className="rounded-xl bg-card border border-white/10 p-6 text-center text-white/60">
+        <div className="rounded-xl bg-card border border-white/10 p-6 text-center text-muted-foreground">
           Nenhum embaixador cadastrado.
         </div>
       )}
@@ -434,23 +434,23 @@ function PerfilCard({
             {row.suspenso && <span className="text-xs px-2 py-0.5 rounded-full bg-red-600/40">Suspenso</span>}
             {!row.ativo && <span className="text-xs px-2 py-0.5 rounded-full bg-white/20">Removido</span>}
           </div>
-          <div className="text-xs text-white/60">
+          <div className="text-xs text-muted-foreground">
             {row.profile?.telefone ? maskPhone(row.profile.telefone) : ""} • {new Date(row.criado_em).toLocaleDateString("pt-BR")}
           </div>
-          <div className="text-xs text-white/50">
+          <div className="text-xs text-muted-foreground">
             {row.todas_cidades ? "Todas as cidades" : `${row.cidades.length} cidade(s)`} • {row.permissoes.length} permissão(ões)
           </div>
         </div>
-        <span className="text-white/50">{aberto ? "▲" : "▼"}</span>
+        <span className="text-muted-foreground">{aberto ? "▲" : "▼"}</span>
       </button>
 
       {aberto && (
         <div className="px-3 pb-3 space-y-4 border-t border-white/10 pt-3">
           {row.nivel === "subadmin" && cidadesDb && (
             <div>
-              <div className="text-xs uppercase tracking-wider text-white/60 mb-2">Cidades vinculadas</div>
+              <div className="text-xs uppercase tracking-wider text-muted-foreground mb-2">Cidades vinculadas</div>
               {row.todas_cidades ? (
-                <div className="text-sm text-white/70">Este subadmin tem acesso a todas as cidades.</div>
+                <div className="text-sm text-muted-foreground">Este subadmin tem acesso a todas as cidades.</div>
               ) : (
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                   {cidadesDb.map((c) => {
@@ -474,12 +474,12 @@ function PerfilCard({
 
           {row.nivel === "embaixador" && (
             <div>
-              <div className="text-xs uppercase tracking-wider text-white/60 mb-2">Cidade vinculada</div>
+              <div className="text-xs uppercase tracking-wider text-muted-foreground mb-2">Cidade vinculada</div>
               <div className="text-sm">
                 {row.cidades[0] ? `${row.cidades[0].cidade}/${row.cidades[0].estado}` : "—"}
               </div>
               {podeGerir && (
-                <button onClick={() => setModalTransferir(true)} className="mt-2 text-xs underline text-white/80">
+                <button onClick={() => setModalTransferir(true)} className="mt-2 text-xs underline text-foreground/80">
                   Transferir para outra cidade
                 </button>
               )}
@@ -501,13 +501,13 @@ function PerfilCard({
 
           {podeGerir && (
             <div className="flex flex-wrap gap-2 pt-2 border-t border-white/10">
-              {!row.suspenso && <button className="rounded-lg px-3 py-2 bg-yellow-600 text-white text-sm" onClick={() => acaoSuspender(true)}>Suspender</button>}
-              {row.suspenso && <button className="rounded-lg px-3 py-2 bg-green-600 text-white text-sm" onClick={() => acaoSuspender(false)}>Reativar</button>}
-              <button className="rounded-lg px-3 py-2 bg-red-600 text-white text-sm" onClick={acaoRemover}>Remover função</button>
+              {!row.suspenso && <button className="rounded-lg px-3 py-2 bg-yellow-600 text-foreground text-sm" onClick={() => acaoSuspender(true)}>Suspender</button>}
+              {row.suspenso && <button className="rounded-lg px-3 py-2 bg-green-600 text-foreground text-sm" onClick={() => acaoSuspender(false)}>Reativar</button>}
+              <button className="rounded-lg px-3 py-2 bg-red-600 text-foreground text-sm" onClick={acaoRemover}>Remover função</button>
             </div>
           )}
           {isSelf && (
-            <div className="text-xs text-white/60">Você não pode alterar o próprio perfil administrativo.</div>
+            <div className="text-xs text-muted-foreground">Você não pode alterar o próprio perfil administrativo.</div>
           )}
         </div>
       )}
@@ -523,7 +523,7 @@ function PermissoesGrid({
     <div className="space-y-3">
       {GRUPOS.map((g) => (
         <div key={g.titulo}>
-          <div className="text-xs uppercase tracking-wider text-white/60 mb-1">{g.titulo}</div>
+          <div className="text-xs uppercase tracking-wider text-muted-foreground mb-1">{g.titulo}</div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-1.5">
             {g.perms.map((p) => {
               const on = selecionadas.has(p.codigo);
@@ -538,7 +538,7 @@ function PermissoesGrid({
                   />
                   <div>
                     <div className="font-semibold">{p.label}</div>
-                    <div className="text-[11px] text-white/60">{p.desc}</div>
+                    <div className="text-[11px] text-muted-foreground">{p.desc}</div>
                   </div>
                 </label>
               );
@@ -649,7 +649,7 @@ function SubadminWizard({ onClose, onDone }: { onClose: () => void; onDone: () =
             </div>
           )}
           <div className="flex justify-end gap-2">
-            <button className="text-white/70 px-3 py-2" onClick={onClose}>Cancelar</button>
+            <button className="text-muted-foreground px-3 py-2" onClick={onClose}>Cancelar</button>
             <button className="btn-cta" onClick={localizarOuCriar} disabled={busy || onlyDigits(telefone).length !== 11}>
               {busy ? "…" : "Localizar / criar"}
             </button>
@@ -679,7 +679,7 @@ function SubadminWizard({ onClose, onDone }: { onClose: () => void; onDone: () =
             </div>
           )}
           <div className="flex justify-between">
-            <button className="text-white/70 px-3 py-2" onClick={() => setEtapa("usuario")}>Voltar</button>
+            <button className="text-muted-foreground px-3 py-2" onClick={() => setEtapa("usuario")}>Voltar</button>
             <button className="btn-cta" onClick={() => setEtapa("permissoes")} disabled={!todasCidades && cidadeIds.size === 0}>Próximo</button>
           </div>
         </div>
@@ -688,7 +688,7 @@ function SubadminWizard({ onClose, onDone }: { onClose: () => void; onDone: () =
         <div className="space-y-3">
           <PermissoesGrid selecionadas={permissoes} onChange={togglePerm} />
           <div className="flex justify-between">
-            <button className="text-white/70 px-3 py-2" onClick={() => setEtapa("cidades")}>Voltar</button>
+            <button className="text-muted-foreground px-3 py-2" onClick={() => setEtapa("cidades")}>Voltar</button>
             <button className="btn-cta" onClick={() => setEtapa("revisar")}>Próximo</button>
           </div>
         </div>
@@ -699,7 +699,7 @@ function SubadminWizard({ onClose, onDone }: { onClose: () => void; onDone: () =
           <div><strong>Abrangência:</strong> {todasCidades ? "Todas as cidades" : `${cidadeIds.size} cidade(s)`}</div>
           <div><strong>Permissões:</strong> {permissoes.size === 0 ? "(nenhuma)" : Array.from(permissoes).map((c) => PERMS_FLAT[c]?.label ?? c).join(", ")}</div>
           <div className="flex justify-between">
-            <button className="text-white/70 px-3 py-2" onClick={() => setEtapa("permissoes")}>Voltar</button>
+            <button className="text-muted-foreground px-3 py-2" onClick={() => setEtapa("permissoes")}>Voltar</button>
             <button className="btn-cta" onClick={confirmar} disabled={busy}>{busy ? "…" : "Confirmar cadastro"}</button>
           </div>
         </div>
@@ -787,7 +787,7 @@ function EmbaixadorWizard({ onClose, onDone }: { onClose: () => void; onDone: ()
             </div>
           )}
           <div className="flex justify-end gap-2">
-            <button className="text-white/70 px-3 py-2" onClick={onClose}>Cancelar</button>
+            <button className="text-muted-foreground px-3 py-2" onClick={onClose}>Cancelar</button>
             <button className="btn-cta" onClick={localizarOuCriar} disabled={busy || onlyDigits(telefone).length !== 11}>
               {busy ? "…" : "Localizar / criar"}
             </button>
@@ -806,7 +806,7 @@ function EmbaixadorWizard({ onClose, onDone }: { onClose: () => void; onDone: ()
             </select>
           </label>
           <div className="flex justify-between">
-            <button className="text-white/70 px-3 py-2" onClick={() => setEtapa("usuario")}>Voltar</button>
+            <button className="text-muted-foreground px-3 py-2" onClick={() => setEtapa("usuario")}>Voltar</button>
             <button className="btn-cta" onClick={() => setEtapa("permissoes")} disabled={!cidadeId}>Próximo</button>
           </div>
         </div>
@@ -815,7 +815,7 @@ function EmbaixadorWizard({ onClose, onDone }: { onClose: () => void; onDone: ()
         <div className="space-y-3">
           <PermissoesGrid selecionadas={permissoes} onChange={togglePerm} />
           <div className="flex justify-between">
-            <button className="text-white/70 px-3 py-2" onClick={() => setEtapa("cidade")}>Voltar</button>
+            <button className="text-muted-foreground px-3 py-2" onClick={() => setEtapa("cidade")}>Voltar</button>
             <button className="btn-cta" onClick={() => setEtapa("revisar")}>Próximo</button>
           </div>
         </div>
@@ -826,7 +826,7 @@ function EmbaixadorWizard({ onClose, onDone }: { onClose: () => void; onDone: ()
           <div><strong>Cidade:</strong> {cidades?.find((c) => c.id === cidadeId)?.cidade}</div>
           <div><strong>Permissões:</strong> {permissoes.size === 0 ? "(nenhuma)" : Array.from(permissoes).map((c) => PERMS_FLAT[c]?.label ?? c).join(", ")}</div>
           <div className="flex justify-between">
-            <button className="text-white/70 px-3 py-2" onClick={() => setEtapa("permissoes")}>Voltar</button>
+            <button className="text-muted-foreground px-3 py-2" onClick={() => setEtapa("permissoes")}>Voltar</button>
             <button className="btn-cta" onClick={confirmar} disabled={busy}>{busy ? "…" : "Confirmar cadastro"}</button>
           </div>
         </div>
@@ -843,11 +843,11 @@ function labelEtapa(e: string) {
 /* ================= Modal ================= */
 function Modal({ children, onClose, titulo }: { children: React.ReactNode; onClose: () => void; titulo: string }) {
   return (
-    <div className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4" role="dialog" aria-modal="true">
+    <div className="fixed inset-0 z-50 bg-background/70 flex items-center justify-center p-4" role="dialog" aria-modal="true">
       <div className="bg-background border border-white/10 rounded-2xl w-full max-w-lg max-h-[90vh] overflow-auto">
         <div className="flex items-center justify-between p-4 border-b border-white/10">
           <h3 className="font-bold">{titulo}</h3>
-          <button onClick={onClose} className="text-white/60 hover:text-white">✕</button>
+          <button onClick={onClose} className="text-muted-foreground hover:text-foreground">✕</button>
         </div>
         <div className="p-4">{children}</div>
       </div>
@@ -925,9 +925,9 @@ function CidadesTab() {
         <h2 className="text-xl font-bold">Cidades</h2>
         <button className="btn-cta" onClick={abrirCriar}>Cadastrar cidade</button>
       </div>
-      {rows === null && <div className="text-white/60">Carregando…</div>}
+      {rows === null && <div className="text-muted-foreground">Carregando…</div>}
       {rows && rows.length === 0 && (
-        <div className="rounded-xl bg-card border border-white/10 p-6 text-center text-white/60">
+        <div className="rounded-xl bg-card border border-white/10 p-6 text-center text-muted-foreground">
           Nenhuma cidade cadastrada.
         </div>
       )}
@@ -936,15 +936,15 @@ function CidadesTab() {
           <div key={c.id} className="rounded-xl bg-card border border-white/10 p-3 space-y-2">
             <div className="flex items-center justify-between">
               <div>
-                <div className="font-bold">{c.cidade} <span className="text-white/50 text-sm">/ {c.estado}</span></div>
-                <div className="text-xs text-white/60">Cadastrada em {new Date(c.criado_em).toLocaleDateString("pt-BR")}</div>
+                <div className="font-bold">{c.cidade} <span className="text-muted-foreground text-sm">/ {c.estado}</span></div>
+                <div className="text-xs text-muted-foreground">Cadastrada em {new Date(c.criado_em).toLocaleDateString("pt-BR")}</div>
               </div>
               <div className="flex items-center gap-2">
                 <span className={`text-xs px-2 py-0.5 rounded-full ${c.ativa ? "bg-green-600/40" : "bg-red-600/40"}`}>
                   {c.ativa ? "Ativa" : "Suspensa"}
                 </span>
-                <button onClick={() => abrirEditar(c)} className="text-xs underline text-white/80">Editar</button>
-                <button onClick={() => toggleAtiva(c)} className="text-xs underline text-white/80">
+                <button onClick={() => abrirEditar(c)} className="text-xs underline text-foreground/80">Editar</button>
+                <button onClick={() => toggleAtiva(c)} className="text-xs underline text-foreground/80">
                   {c.ativa ? "Suspender" : "Reativar"}
                 </button>
               </div>
@@ -953,12 +953,12 @@ function CidadesTab() {
               {([
                 ["mototaxi_ativo", "Moto Táxi"],
               ] as const).map(([key, label]) => (
-                <label key={key} className={`flex items-center gap-2 text-xs px-3 py-1.5 rounded-full border cursor-pointer ${c[key] ? "border-primary bg-primary/20 text-primary" : "border-white/20 text-white/60"}`}>
+                <label key={key} className={`flex items-center gap-2 text-xs px-3 py-1.5 rounded-full border cursor-pointer ${c[key] ? "border-primary bg-primary/20 text-primary" : "border-white/20 text-muted-foreground"}`}>
                   <input type="checkbox" checked={c[key]} onChange={() => toggleServico(c, key)} className="accent-primary" disabled={!c.ativa} />
                   {label}
                 </label>
               ))}
-              {!c.ativa && <span className="text-xs text-white/40 self-center">Reative a cidade para configurar serviços</span>}
+              {!c.ativa && <span className="text-xs text-foreground/40 self-center">Reative a cidade para configurar serviços</span>}
             </div>
           </div>
         ))}
@@ -999,9 +999,9 @@ function AuditoriaTab({ cidadeId }: { cidadeId: string | null }) {
   return (
     <div className="space-y-3">
       <h2 className="text-xl font-bold">Histórico de atividades</h2>
-      {rows === null && <div className="text-white/60">Carregando…</div>}
+      {rows === null && <div className="text-muted-foreground">Carregando…</div>}
       {rows && rows.length === 0 && (
-        <div className="rounded-xl bg-card border border-white/10 p-6 text-center text-white/60">
+        <div className="rounded-xl bg-card border border-white/10 p-6 text-center text-muted-foreground">
           Sem registros.
         </div>
       )}
@@ -1011,11 +1011,11 @@ function AuditoriaTab({ cidadeId }: { cidadeId: string | null }) {
             <div className="flex items-center justify-between gap-2 flex-wrap">
               <div>
                 <span className="font-bold">{r.acao}</span>
-                {r.entidade && <span className="text-white/60"> · {r.entidade}</span>}
+                {r.entidade && <span className="text-muted-foreground"> · {r.entidade}</span>}
               </div>
-              <div className="text-xs text-white/60">{new Date(r.criado_em).toLocaleString("pt-BR")}</div>
+              <div className="text-xs text-muted-foreground">{new Date(r.criado_em).toLocaleString("pt-BR")}</div>
             </div>
-            <div className="text-xs text-white/70 mt-1">
+            <div className="text-xs text-muted-foreground mt-1">
               {r.autor_nome ?? r.autor_user_id.slice(0, 8)} ({r.tipo_autor ?? "?"})
               {r.entidade_id ? ` · registro ${r.entidade_id.slice(0, 8)}` : ""}
             </div>

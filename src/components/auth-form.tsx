@@ -158,11 +158,11 @@ export function AuthForm({ role, title, redirectTo, formMode = "both", signupRed
 
   if (done) {
     return (
-      <main className="min-h-screen bg-background text-white flex items-center justify-center px-6">
+      <main className="min-h-screen bg-background text-foreground flex items-center justify-center px-6">
         <div className="card-mz p-8 max-w-md w-full text-center flex flex-col gap-4">
           <div className="text-5xl">⏳</div>
           <h1 className="text-2xl font-bold">Cadastro recebido</h1>
-          <p className="text-white/80">
+          <p className="text-foreground/80">
             Acesso liberado após confirmação do administrador. Você receberá uma notificação quando
             sua conta for aprovada.
           </p>
@@ -175,17 +175,17 @@ export function AuthForm({ role, title, redirectTo, formMode = "both", signupRed
   }
 
   return (
-    <main className="min-h-screen bg-background text-white px-6 py-10 flex flex-col items-center">
+    <main className="min-h-screen bg-background text-foreground px-6 py-10 flex flex-col items-center">
       <div className="card-mz p-7 max-w-md w-full flex flex-col gap-5">
         <header className="text-center">
           <h1 className="text-2xl font-bold" style={{ textShadow: "none" }}>{title}</h1>
-          <p className="text-white/70 text-sm mt-1">
+          <p className="text-muted-foreground text-sm mt-1">
             {isSignup ? "Crie sua conta com telefone e senha" : "Entre com telefone e senha"}
           </p>
         </header>
 
         {(formMode === "both" || (formMode === "login" && signupRedirectTo)) && (
-          <div className="flex gap-2 bg-black/20 p-1 rounded-xl">
+          <div className="flex gap-2 bg-background/20 p-1 rounded-xl">
             <button
               type="button"
               onClick={() => setMode("login")}
@@ -280,11 +280,11 @@ export function AuthForm({ role, title, redirectTo, formMode = "both", signupRed
                   style={{ borderColor: "var(--color-neon)" }}
                 />
               ) : (
-                <div className="w-28 h-28 rounded-full bg-black/30 flex items-center justify-center">
-                  <Upload className="w-8 h-8 text-white/60" />
+                <div className="w-28 h-28 rounded-full bg-background/30 flex items-center justify-center">
+                  <Upload className="w-8 h-8 text-muted-foreground" />
                 </div>
               )}
-              <span className="text-sm text-white/80">
+              <span className="text-sm text-foreground/80">
                 {fotoPreview ? "Trocar foto" : "Enviar foto de perfil (obrigatório)"}
               </span>
               <input type="file" accept="image/*" capture="user" className="hidden" onChange={handlePhoto} />

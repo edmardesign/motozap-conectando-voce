@@ -35,7 +35,7 @@ export function SeletorMapaManual({
       <div className="card-mz p-3 flex flex-col gap-2 border border-yellow-500/30 bg-yellow-500/5">
         <div className="flex items-start gap-2 text-sm">
           <span className="text-lg leading-none"><EmojiIcon e="📍" /></span>
-          <span className="text-white/85">{message}</span>
+          <span className="text-foreground/85">{message}</span>
         </div>
         {value && (
           <div className="text-xs text-emerald-400">
@@ -51,12 +51,12 @@ export function SeletorMapaManual({
           {value ? "AJUSTAR NO MAPA" : buttonLabel}
         </button>
         {disabled && (
-          <div className="text-[11px] text-white/50">
+          <div className="text-[11px] text-muted-foreground">
             Selecione estado e cidade primeiro.
           </div>
         )}
         {hint && (
-          <div className="text-[11px] text-white/60 italic">{hint}</div>
+          <div className="text-[11px] text-muted-foreground italic">{hint}</div>
         )}
       </div>
 

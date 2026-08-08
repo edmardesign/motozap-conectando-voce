@@ -122,7 +122,7 @@ function MeusDocumentos() {
     <main
       style={{
         minHeight: "100dvh",
-        background: "#0F0F10",
+        background: "#FFFFFF",
         color: "#F5F5F5",
         padding: "calc(env(safe-area-inset-top,0px) + 20px) 20px 40px",
       }}
@@ -239,7 +239,7 @@ function MeusDocumentos() {
                     padding: "12px 16px",
                     borderRadius: 12,
                     background: status === "aprovado" ? "#1a1a1a" : "#3DB54A",
-                    color: status === "aprovado" ? "#3DB54A" : "#0F0F10",
+                    color: status === "aprovado" ? "#3DB54A" : "#FFFFFF",
                     border: status === "aprovado" ? "1px solid #3DB54A" : "none",
                     fontWeight: 800,
                     fontSize: 14,

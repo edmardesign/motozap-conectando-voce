@@ -68,7 +68,7 @@ function Splash() {
                 onClick={handleInstall}
                 className="animate-apple-rise stagger-3 btn-cta w-full"
               >
-                <EmojiIcon e="📲" color="#0F0F10" /> Instalar no celular
+                <EmojiIcon e="📲" color="#FFFFFF" /> Instalar no celular
               </button>
             )}
             {installed && (

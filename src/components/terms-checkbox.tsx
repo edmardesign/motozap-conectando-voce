@@ -18,12 +18,12 @@ export function TermsCheckbox({
         className="mt-1 w-5 h-5 rounded accent-current cursor-pointer flex-shrink-0"
         style={{ accentColor: accent }}
       />
-      <span className="text-sm text-white/80 leading-snug">
+      <span className="text-sm text-foreground/80 leading-snug">
         Li e aceito os{" "}
         <Link
           to="/termos"
           target="_blank"
-          className="underline hover:text-white"
+          className="underline hover:text-foreground"
           style={{ color: accent }}
         >
           Termos de Uso
@@ -32,7 +32,7 @@ export function TermsCheckbox({
         <Link
           to="/privacidade"
           target="_blank"
-          className="underline hover:text-white"
+          className="underline hover:text-foreground"
           style={{ color: accent }}
         >
           Política de Privacidade

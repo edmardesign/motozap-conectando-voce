@@ -6,9 +6,10 @@ import { toast } from "sonner";
 import {
   MapPin,
   Navigation,
-  Sun,
-  Moon,
-  Trophy,
+  FileText,
+  Stethoscope,
+  Pill,
+  Package,
   Star,
   Phone,
   X,
@@ -33,6 +34,7 @@ import {
   type NominatimResult,
 } from "@/lib/geocoding";
 import { EmojiIcon } from "@/components/emoji-icon";
+import logoIntergo from "@/assets/intergo-logo-white.png.asset.json";
 
 export const Route = createFileRoute("/passageiro/home")({
   component: PassageiroHomePage,
@@ -93,18 +95,21 @@ type Palette = {
   text: string; textMuted: string; sysBubble: string; userBubble: string;
   btn: string; btnText: string; divider: string;
 };
-const PALETTES: Record<Theme, Palette> = {
-  dark: {
-    bg: "#0F0F10", panel: "#0F0F10", headerBg: "#0a0a0a", cardBg: "#0a0a0a", inputBg: "#2A3942",
-    text: "#F5F5F5", textMuted: "#8696A0", sysBubble: "#0a0a0a", userBubble: "#005C4B",
-    btn: "#3DB54A", btnText: "#FFFFFF", divider: "rgba(134,150,160,0.18)",
-  },
-  light: {
-    bg: "#F0F2F5", panel: "#F0F2F5", headerBg: "#008069", cardBg: "#FFFFFF", inputBg: "#FFFFFF",
-    text: "#111B21", textMuted: "#667781", sysBubble: "#FFFFFF", userBubble: "#D9FDD3",
-    btn: "#008069", btnText: "#FFFFFF", divider: "rgba(0,0,0,0.08)",
-  },
+const INSTITUCIONAL: Palette = {
+  bg: "#FFFFFF", panel: "#FFFFFF", headerBg: "#FFFFFF", cardBg: "#F7F7F7", inputBg: "#FFFFFF",
+  text: "#111111", textMuted: "#6B6B6B", sysBubble: "#F7F7F7", userBubble: "#E7F6E9",
+  btn: "#3DB54A", btnText: "#FFFFFF", divider: "#E8E8E8",
 };
+const PALETTES: Record<Theme, Palette> = { dark: INSTITUCIONAL, light: INSTITUCIONAL };
+
+// ===== Demandas de logística institucional =====
+type TipoDemanda = "documentos" | "exames" | "medicamentos" | "encomendas";
+const TIPOS_DEMANDA: { id: TipoDemanda; label: string; Icon: typeof FileText }[] = [
+  { id: "documentos", label: "Documentos", Icon: FileText },
+  { id: "exames", label: "Exames", Icon: Stethoscope },
+  { id: "medicamentos", label: "Medicamentos", Icon: Pill },
+  { id: "encomendas", label: "Encomendas", Icon: Package },
+];
 
 // ===== Map icon helpers =====
 function emojiIcon(emoji: string, size = 38, ring?: string) {
@@ -172,14 +177,8 @@ function PassageiroHomePage() {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
-  const [theme, setTheme] = useState<Theme>(() => {
-    if (typeof window === "undefined") return "dark";
-    return (window.localStorage.getItem("motozap-chat-theme") as Theme) || "dark";
-  });
-  useEffect(() => {
-    if (typeof window !== "undefined") localStorage.setItem("motozap-chat-theme", theme);
-  }, [theme]);
-  const c = PALETTES[theme];
+  // Paleta institucional única (branco predominante, verde só em ações)
+  const c = INSTITUCIONAL;
 
   const [profile, setProfile] = useState<Profile | null>(null);
   const [cidadeId, setCidadeId] = useState<string | null>(null);
@@ -207,6 +206,8 @@ function PassageiroHomePage() {
 
   // Modo de solicitação: corrida normal ou "Pegue Ali" (favor/erranda)
   const [mode, setMode] = useState<"corrida" | "pegue_ali">("corrida");
+  const [tipoDemanda, setTipoDemanda] = useState<TipoDemanda | null>(null);
+  const [observacao, setObservacao] = useState("");
   const [pegueDescricao, setPegueDescricao] = useState("");
   const [pegueFoto, setPegueFoto] = useState<File | null>(null);
   const [pegueFotoPreview, setPegueFotoPreview] = useState<string | null>(null);
@@ -632,8 +633,9 @@ function PassageiroHomePage() {
   // ----- Chamar mototaxi -----
   async function callRide() {
     if (!user || !profile?.cidade) return;
-    if (!origemCoords) return toast.error("Selecione o endereço de partida na lista.");
-    if (!destinoCoords) return toast.error("Selecione o destino na lista.");
+    if (!origemCoords) return toast.error("Selecione o local de coleta na lista.");
+    if (!destinoCoords) return toast.error("Selecione o local de entrega na lista.");
+    if (!tipoDemanda) return toast.error("Selecione o tipo de solicitação.");
     const ehGratuita = contadorBrinde >= 10;
     const valor = ehGratuita ? 0 : tarifaInfo?.total ?? 0;
 
@@ -694,6 +696,12 @@ function PassageiroHomePage() {
         eh_gratuita: ehGratuita,
         pagamento_tipo: "dinheiro",
         status: "aguardando" as const,
+        descricao: [
+          tipoDemanda ? TIPOS_DEMANDA.find((t) => t.id === tipoDemanda)?.label : null,
+          observacao.trim() || null,
+        ]
+          .filter(Boolean)
+          .join(" — ") || null,
         bairro_origem: bairroOrigem,
         bairro_destino: bairroDestino,
         cidade: profile.cidade,
@@ -939,7 +947,7 @@ function PassageiroHomePage() {
   }
 
   // ===== Render =====
-  const headerName = profile?.nome ?? "passageiro";
+  const headerName = profile?.nome ?? "Secretaria";
   const faltam = Math.max(0, 10 - contadorBrinde);
   const mapCenter: [number, number] | null = useMemo(() => {
     if (origemCoords) return [origemCoords.lat, origemCoords.lng];
@@ -978,26 +986,30 @@ function PassageiroHomePage() {
     >
       {/* HEADER */}
       <header
-        className="flex items-center justify-between px-4 py-3 z-30 shadow-md shrink-0 gap-2"
-        style={{ background: c.headerBg, color: "#FFFFFF" }}
+        className="flex items-center justify-between px-4 py-3 z-30 shrink-0 gap-3 border-b"
+        style={{ background: c.headerBg, color: c.text, borderBottomColor: c.divider }}
       >
+        <img
+          src={logoIntergo.url}
+          alt="InterGO"
+          className="h-8 w-auto shrink-0"
+          style={{ objectFit: "contain", filter: "brightness(0)" }}
+        />
         <div className="min-w-0 flex-1">
-          <div className="font-semibold truncate text-sm sm:text-base">
-            Olá, {headerName}! <EmojiIcon e="👋" />
+          <div className="font-semibold truncate text-sm sm:text-base" style={{ letterSpacing: "-0.02em" }}>
+            {headerName}
           </div>
-          <div className="flex items-center gap-1.5 text-[11px] sm:text-xs opacity-90">
-            <Trophy size={12} />
-            {faltam > 0
-              ? `${contadorBrinde}/10 para corrida grátis`
-              : "Sua próxima é grátis!"}
+          <div className="text-[11px] sm:text-xs truncate" style={{ color: c.textMuted }}>
+            {profile?.cidade ? `Logística institucional • ${profile.cidade}` : "Logística institucional"}
           </div>
         </div>
         <button
-          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-          aria-label="Alternar tema"
-          className="p-2 rounded-full hover:bg-white/10 transition"
+          onClick={() => navigate({ to: "/passageiro/perfil" })}
+          aria-label="Perfil do servidor"
+          className="h-9 w-9 rounded-full flex items-center justify-center text-xs font-semibold shrink-0"
+          style={{ background: c.cardBg, color: c.text, border: `1px solid ${c.divider}` }}
         >
-          {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
+          {headerName.slice(0, 2).toUpperCase()}
         </button>
       </header>
 
@@ -1222,6 +1234,11 @@ function PassageiroHomePage() {
               setPegueEmNomeDe={setPegueEmNomeDe}
               pegueSubmitting={pegueSubmitting}
               onPegueSubmit={callPegueAli}
+              saudacao={headerName}
+              tipo={tipoDemanda}
+              setTipo={setTipoDemanda}
+              observacao={observacao}
+              setObservacao={setObservacao}
             />
           )}
 
@@ -1400,10 +1417,15 @@ function SetupPanel(props: {
   setPegueEmNomeDe: (v: string) => void;
   pegueSubmitting: boolean;
   onPegueSubmit: () => void;
+  saudacao: string;
+  tipo: TipoDemanda | null;
+  setTipo: (t: TipoDemanda) => void;
+  observacao: string;
+  setObservacao: (v: string) => void;
 }) {
   const { c } = props;
   const isPegue = props.mode === "pegue_ali";
-  const canCall = !!props.origemCoords && !!props.destinoCoords;
+  const canCall = !!props.origemCoords && !!props.destinoCoords && !!props.tipo;
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   // Placeholder rotativo do textarea "O que buscar?"
   const PLACEHOLDERS = [
@@ -1417,52 +1439,44 @@ function SetupPanel(props: {
     const t = setInterval(() => setPhIdx((i) => (i + 1) % PLACEHOLDERS.length), 3000);
     return () => clearInterval(t);
   }, [isPegue]);
-  const LUGARES: { emoji: string; label: string; termo: string }[] = [
-    { emoji: "", label: "Hospital", termo: "hospital" },
-    { emoji: "", label: "Mercado", termo: "supermercado" },
-    { emoji: "", label: "Farmácia", termo: "farmácia" },
-    { emoji: "", label: "Banco", termo: "banco" },
-    { emoji: "", label: "Rodoviária", termo: "rodoviária" },
-    { emoji: "", label: "Igreja", termo: "igreja" },
-    { emoji: "", label: "Escola", termo: "escola" },
-  ];
   return (
     <div className="space-y-3">
-      {/* Toggle segmentado: Corrida | Pegue Ali */}
-      <div
-        className="rounded-full p-1 grid grid-cols-2 gap-1"
-        style={{ background: c.cardBg, border: `1px solid ${c.divider}` }}
-      >
-        {[
-          { id: "corrida" as const, label: "CORRIDA" },
-          { id: "pegue_ali" as const, label: "PEGUE ALI" },
-        ].map((opt) => {
-          const active = props.mode === opt.id;
+      {/* Saudação + demanda */}
+      <div className="pt-1">
+        <h1 className="text-[22px] font-semibold" style={{ color: c.text, letterSpacing: "-0.03em" }}>
+          Olá, {props.saudacao}
+        </h1>
+        <p className="text-sm mt-0.5" style={{ color: c.textMuted }}>
+          O que você precisa enviar?
+        </p>
+      </div>
+
+      <div className="grid grid-cols-2 gap-2">
+        {TIPOS_DEMANDA.map((t) => {
+          const active = props.tipo === t.id;
+          const Icon = t.Icon;
           return (
             <button
-              key={opt.id}
+              key={t.id}
               type="button"
-              onPointerDown={(e) => { e.preventDefault(); props.setMode(opt.id); }}
-              onClick={() => props.setMode(opt.id)}
-              className="rounded-full py-2 text-xs font-bold transition"
+              onClick={() => props.setTipo(t.id)}
+              className="rounded-2xl px-3 py-3.5 flex items-center gap-2.5 text-left transition active:scale-[0.98]"
               style={{
-                background: active ? c.btn : "transparent",
-                color: active ? c.btnText : c.text,
-                fontFamily: "'Bebas Neue', sans-serif",
-                letterSpacing: 1,
+                background: active ? "rgba(61,181,74,0.08)" : c.cardBg,
+                border: `1px solid ${active ? c.btn : c.divider}`,
+                color: c.text,
               }}
             >
-              {opt.label}
+              <Icon size={18} style={{ color: active ? c.btn : c.textMuted }} />
+              <span className="text-sm font-medium">{t.label}</span>
             </button>
           );
         })}
       </div>
 
-      {isPegue && (
-        <div className="text-[11px] text-center" style={{ color: c.textMuted }}>
-          Peça pra alguém buscar/entregar algo pra você.
-        </div>
-      )}
+      <div className="text-xs font-medium px-1 pt-1" style={{ color: c.textMuted }}>
+        De onde será coletado?
+      </div>
 
       {/* Origem */}
       <div className="relative">
@@ -1476,7 +1490,7 @@ function SetupPanel(props: {
             onChange={(e) => props.setOrigem(e.target.value)}
             onFocus={() => props.setOrigemFocused(true)}
             onBlur={() => setTimeout(() => props.setOrigemFocused(false), 150)}
-            placeholder={isPegue ? "Buscar em:" : "De onde você sai?"}
+            placeholder="Local de coleta — ex.: Farmácia Central"
             className="flex-1 bg-transparent outline-none text-sm"
             style={{ color: c.text }}
           />
@@ -1522,7 +1536,7 @@ function SetupPanel(props: {
       {!isPegue && props.destinos.length > 0 && (
         <div className="space-y-2">
           <div className="text-xs font-medium px-1" style={{ color: c.textMuted }}>
-            Meus destinos
+            Destinos frequentes
           </div>
           <div className="space-y-1.5">
             {props.destinos.slice(0, 5).map((d) => {
@@ -1609,32 +1623,6 @@ function SetupPanel(props: {
                     </div>
                   )}
                 </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
-
-      {/* Lugares comuns */}
-      {!isPegue && (
-        <div className="space-y-2">
-          <div className="text-xs font-medium px-1" style={{ color: c.textMuted }}>
-            Lugares comuns
-          </div>
-          <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1 scrollbar-thin">
-            {LUGARES.map((l) => {
-              const loading = props.buscandoLugar === l.termo;
-              return (
-                <button
-                  key={l.termo}
-                  onClick={() => props.onPickLugarComum(l.termo, l.label)}
-                  disabled={loading}
-                  className="shrink-0 flex flex-col items-center gap-1 px-3 py-2 rounded-2xl disabled:opacity-60"
-                  style={{ background: c.cardBg, color: c.text, minWidth: 72 }}
-                >
-                  <span className="text-xl">{loading ? "…" : l.emoji}</span>
-                  <span className="text-[11px] whitespace-nowrap">{l.label}</span>
-                </button>
               );
             })}
           </div>
@@ -1790,6 +1778,10 @@ function SetupPanel(props: {
         </div>
       )}
 
+      <div className="text-xs font-medium px-1" style={{ color: c.textMuted }}>
+        Para onde será levado?
+      </div>
+
       {/* Destino */}
       <div className="relative">
         <div
@@ -1802,7 +1794,7 @@ function SetupPanel(props: {
             onChange={(e) => props.setDestino(e.target.value)}
             onFocus={() => props.setDestFocused(true)}
             onBlur={() => setTimeout(() => props.setDestFocused(false), 150)}
-            placeholder={isPegue ? "Entregar em:" : "Para onde?"}
+            placeholder="Local de entrega — ex.: PSF Bombinha"
             className="flex-1 bg-transparent outline-none text-sm"
             style={{ color: c.text }}
           />
@@ -1840,6 +1832,21 @@ function SetupPanel(props: {
         )}
       </div>
 
+
+      {/* Observação */}
+      <label className="block">
+        <span className="text-xs font-medium px-1 block mb-1" style={{ color: c.textMuted }}>
+          Observação (opcional)
+        </span>
+        <textarea
+          value={props.observacao}
+          onChange={(e) => props.setObservacao(e.target.value.slice(0, 180))}
+          placeholder="Ex.: Reposição de medicamentos"
+          rows={2}
+          className="w-full rounded-2xl p-3 text-sm outline-none resize-none"
+          style={{ background: c.cardBg, color: c.text, border: `1px solid ${c.divider}` }}
+        />
+      </label>
 
       {/* Tarifa */}
       {(props.tarifaInfo || props.calculatingTarifa) && props.destinoCoords && (
@@ -1903,11 +1910,11 @@ function SetupPanel(props: {
           ? props.pegueSubmitting
             ? "ENVIANDO…"
             : "ENVIAR PEDIDO"
-          : "CHAMAR MOTOTAXI"}
+          : "SOLICITAR TRANSPORTE"}
       </button>
       {!canCall && (
         <div className="text-xs text-center" style={{ color: c.textMuted }}>
-          Selecione origem e destino na lista de sugestões.
+          Escolha o tipo, o local de coleta e o local de entrega.
         </div>
       )}
     </div>

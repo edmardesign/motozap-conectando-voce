@@ -73,11 +73,11 @@ function FotoPage() {
   }
 
   return (
-    <main className="min-h-screen bg-background text-white px-6 py-10 flex flex-col items-center">
+    <main className="min-h-screen bg-background text-foreground px-6 py-10 flex flex-col items-center">
       <div className="card-mz p-7 max-w-md w-full flex flex-col gap-5">
         <header className="text-center">
           <h1 className="text-2xl font-bold">Sua foto de perfil</h1>
-          <p className="text-white/70 text-sm mt-1">
+          <p className="text-muted-foreground text-sm mt-1">
             Os passageiros precisam ver quem vai atendê-los
           </p>
         </header>
@@ -91,11 +91,11 @@ function FotoPage() {
               style={{ borderColor: "var(--color-neon)" }}
             />
           ) : (
-            <div className="w-36 h-36 rounded-full bg-black/30 flex items-center justify-center">
-              <Upload className="w-10 h-10 text-white/60" />
+            <div className="w-36 h-36 rounded-full bg-background/30 flex items-center justify-center">
+              <Upload className="w-10 h-10 text-muted-foreground" />
             </div>
           )}
-          <span className="text-sm text-white/80">
+          <span className="text-sm text-foreground/80">
             {preview ? "Trocar foto" : "Tirar ou selecionar foto"}
           </span>
           <input

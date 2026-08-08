@@ -103,19 +103,19 @@ export default function MapaModal({ cidade, estado, initial, onClose, onConfirm 
   // Para o pino fixo no centro, usamos um overlay HTML (não Marker) — assim ele não se move
   if (!center) {
     return (
-      <div className="fixed inset-0 z-[999] bg-black flex items-center justify-center text-white">
+      <div className="fixed inset-0 z-[999] bg-background flex items-center justify-center text-foreground">
         <div className="spinner-mz" />
       </div>
     );
   }
 
   return (
-    <div className="fixed inset-0 z-[999] bg-black flex flex-col">
+    <div className="fixed inset-0 z-[999] bg-background flex flex-col">
       {/* Topbar */}
-      <div className="absolute top-0 left-0 right-0 z-[1001] px-4 py-3 bg-gradient-to-b from-black/80 to-transparent text-white pointer-events-none">
+      <div className="absolute top-0 left-0 right-0 z-[1001] px-4 py-3 bg-gradient-to-b from-black/80 to-transparent text-foreground pointer-events-none">
         <div className="flex items-center justify-between pointer-events-auto">
-          <button onClick={onClose} className="text-sm bg-black/60 px-3 py-1.5 rounded-md"><EmojiIcon e="✕" /> Fechar</button>
-          <div className="text-xs font-semibold bg-black/60 px-3 py-1.5 rounded-md">
+          <button onClick={onClose} className="text-sm bg-background/60 px-3 py-1.5 rounded-md"><EmojiIcon e="✕" /> Fechar</button>
+          <div className="text-xs font-semibold bg-background/60 px-3 py-1.5 rounded-md">
             Arraste o mapa até o local exato
           </div>
           <div className="w-12" />
@@ -156,7 +156,7 @@ export default function MapaModal({ cidade, estado, initial, onClose, onConfirm 
 
       {/* Footer */}
       <div className="z-[1001] bg-background border-t border-white/10 p-4 flex flex-col gap-2">
-        <div className="text-xs text-white/70 line-clamp-2 min-h-[2.5rem]">
+        <div className="text-xs text-muted-foreground line-clamp-2 min-h-[2.5rem]">
           <EmojiIcon e="📍" /> {endereco || "Localizando endereço aproximado…"}
         </div>
         <button
