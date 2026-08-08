@@ -288,8 +288,8 @@ body { overflow-x: hidden; }
   100% { transform: translateX(220%); }
 }
 @keyframes apple-glow {
-  0%, 100% { opacity: 0.18; transform: scale(1); }
-  50%      { opacity: 0.34; transform: scale(1.06); }
+  0%, 100% { opacity: 0.10; transform: scale(1); }
+  50%      { opacity: 0.18; transform: scale(1.05); }
 }
 
 .animate-apple-rise { animation: apple-rise var(--dur-slow) var(--ease-apple-out) both; }

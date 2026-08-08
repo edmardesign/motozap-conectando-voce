@@ -58,12 +58,12 @@ export function BoraZeIntroAnimation({
         aria-hidden
         className="animate-apple-glow pointer-events-none absolute"
         style={{
-          width: "min(70vw, 300px)",
-          height: "min(70vw, 300px)",
+          width: "min(88vw, 380px)",
+          height: "min(88vw, 380px)",
           borderRadius: "9999px",
           background:
             "radial-gradient(circle, var(--primary) 0%, rgba(61,181,74,0) 68%)",
-          filter: "blur(28px)",
+          filter: "blur(44px)",
         }}
       />
 
