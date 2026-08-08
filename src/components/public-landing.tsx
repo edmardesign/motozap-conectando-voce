@@ -106,8 +106,8 @@ export function PublicLanding({ persona, title, subtitle, iconUrl, accent, manif
         alignItems: "center",
         justifyContent: "space-between",
         padding: "calc(env(safe-area-inset-top,0px) + 24px) 24px calc(env(safe-area-inset-bottom,0px) + 24px)",
-        background: "#0F0F10",
-        color: "#F5F5F5",
+        background: "var(--background)",
+        color: "var(--foreground)",
         overflowX: "hidden",
       }}
     >
@@ -121,17 +121,17 @@ export function PublicLanding({ persona, title, subtitle, iconUrl, accent, manif
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "space-between",
-          gap: 24,
+          gap: 32,
         }}
       >
-        <header style={{ width: "100%", textAlign: "center", paddingTop: 8 }}>
-          <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 12, letterSpacing: "0.3em", fontWeight: 500 }}>
+        <header className="animate-apple-rise stagger-1" style={{ width: "100%", textAlign: "center", paddingTop: 8 }}>
+          <p style={{ color: "rgba(255,255,255,0.45)", fontSize: 12, letterSpacing: "0.22em", fontWeight: 590 }}>
             INTERGO
           </p>
-          <h1 style={{ fontSize: 28, fontWeight: 900, letterSpacing: "-0.5px", marginTop: 4, color: accent }}>
+          <h1 style={{ fontSize: 30, fontWeight: 700, letterSpacing: "-0.03em", marginTop: 8, color: accent, lineHeight: 1.1 }}>
             {title}
           </h1>
-          <p style={{ color: "rgba(255,255,255,0.7)", fontSize: 14, marginTop: 4 }}>{subtitle}</p>
+          <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 16, marginTop: 8, lineHeight: 1.4 }}>{subtitle}</p>
         </header>
 
         <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", width: "100%" }}>
@@ -141,17 +141,19 @@ export function PublicLanding({ persona, title, subtitle, iconUrl, accent, manif
         <div style={{ width: "100%", paddingBottom: 8 }}>
           <button
             onClick={onClick}
+            className="animate-apple-rise stagger-2"
             style={{
               width: "100%",
-              borderRadius: 20,
-              padding: "20px 24px",
-              fontWeight: 900,
-              fontSize: 18,
-              letterSpacing: "0.06em",
-              background: installed ? "#111" : accent,
+              borderRadius: 18,
+              padding: "18px 24px",
+              fontWeight: 600,
+              fontSize: 17,
+              letterSpacing: "-0.01em",
+              background: installed ? "rgba(255,255,255,0.06)" : accent,
               color: installed ? accent : "#0F0F10",
-              border: installed ? `2px solid ${accent}` : "none",
-              boxShadow: installed ? "none" : `0 0 32px ${accent}66`,
+              border: installed ? `1px solid ${accent}55` : "none",
+              boxShadow: installed ? "none" : `0 10px 28px -12px ${accent}99`,
+              transition: "transform 180ms cubic-bezier(0.32,0.72,0,1), filter 180ms cubic-bezier(0.32,0.72,0,1)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -161,18 +163,19 @@ export function PublicLanding({ persona, title, subtitle, iconUrl, accent, manif
             }}
           >
             {installed && <CheckCircle2 style={{ width: 20, height: 20 }} />}
-            BAIXE AGORA!
+            Baixe agora
           </button>
           {loginHref && (
             <a
               href={loginHref}
+              className="animate-apple-fade stagger-3"
               style={{
                 display: "block",
                 textAlign: "center",
-                marginTop: 14,
-                fontSize: 13,
-                color: "rgba(255,255,255,0.6)",
-                textDecoration: "underline",
+                marginTop: 16,
+                fontSize: 15,
+                color: "rgba(255,255,255,0.55)",
+                textDecoration: "none",
               }}
             >
               Já tenho conta
