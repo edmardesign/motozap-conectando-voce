@@ -71,10 +71,11 @@ export function BoraZeIntroAnimation({
       <img
         src={iconMz.url}
         alt="InterGO"
-        className="animate-apple-pop absolute h-auto"
+        className={showLogo ? "absolute h-auto" : "animate-apple-pop absolute h-auto"}
         style={{
           width: "min(40vw, 148px)",
           opacity: showLogo ? 0 : 1,
+          visibility: showLogo ? "hidden" : "visible",
           transform: showLogo ? "scale(1.18)" : "scale(1)",
           filter: showLogo ? "blur(10px)" : "blur(0px)",
           transition:
