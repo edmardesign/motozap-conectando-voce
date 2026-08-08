@@ -1,20 +1,17 @@
 import { useEffect, useState } from "react";
 import iconMz from "@/assets/intergo-icon-green.png.asset.json";
-import textMz from "@/assets/intergo-logo-white.png.asset.json";
 import logoMz from "@/assets/intergo-logo-white.png.asset.json";
 
-type Phase = "icon" | "text" | "done";
+type Phase = "icon" | "logo" | "done";
 
 /**
- * BoraZeIntroAnimation
- * Reutiliza exatamente a sequência da Home (splash):
- *   1) ícone   →  2) texto  →  3) logomarca completa (estado final estático).
- * A logomarca completa NUNCA desaparece após o fim da sequência.
+ * IntroAnimation — abertura da marca InterGO no estilo Apple.
+ * Sequência: ícone verde (blur-in + spring) → logomarca completa (crossfade suave).
+ * O estado final é estático: a logomarca permanece visível para sempre.
  * Respeita prefers-reduced-motion → salta direto para o estado final.
- * Não faz loop, não volta ao símbolo, não posiciona a logo no canto.
  */
 export function BoraZeIntroAnimation({
-  storageKey = "boraze.introSeen",
+  storageKey = "intergo.introSeen",
   onDone,
 }: {
   storageKey?: string;
@@ -23,7 +20,6 @@ export function BoraZeIntroAnimation({
   const [phase, setPhase] = useState<Phase>("icon");
 
   useEffect(() => {
-    // Fallback total: reduced-motion ou storage já viu → estado final imediato.
     const reduce =
       typeof window !== "undefined" &&
       window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
@@ -37,77 +33,67 @@ export function BoraZeIntroAnimation({
       return;
     }
 
-    const t1 = setTimeout(() => setPhase("text"), 1300);
+    const t1 = setTimeout(() => setPhase("logo"), 1100);
     const t2 = setTimeout(() => {
       setPhase("done");
-      try { sessionStorage.setItem(storageKey, "1"); } catch {}
+      try {
+        sessionStorage.setItem(storageKey, "1");
+      } catch {
+        /* storage indisponível — segue sem persistir */
+      }
       onDone?.();
-    }, 2600);
-    return () => { clearTimeout(t1); clearTimeout(t2); };
+    }, 2100);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+    };
   }, [storageKey, onDone]);
 
-  // Estado final estático — logomarca completa centralizada, sempre visível.
-  if (phase === "done") {
-    return (
-      <div
-        style={{
-          width: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          minHeight: 240,
-        }}
-      >
-        <img
-          src={logoMz.url}
-          alt="InterGO"
-          className="animate-scale-in"
-          style={{
-            width: "min(85vw, 320px)",
-            height: "auto",
-            filter: "drop-shadow(0 0 24px rgba(61, 181, 74,0.35))",
-          }}
-        />
-      </div>
-    );
-  }
+  const showLogo = phase !== "icon";
 
-  // Sequência animada — ícone e texto se alternam, ambos centralizados.
   return (
-    <div
-      style={{
-        position: "relative",
-        width: "100%",
-        minHeight: 240,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        overflow: "hidden",
-      }}
-    >
+    <div className="relative flex w-full items-center justify-center" style={{ minHeight: 240 }}>
+      {/* Halo verde institucional, bem sutil (estilo Apple) */}
+      <div
+        aria-hidden
+        className="animate-apple-glow pointer-events-none absolute"
+        style={{
+          width: "min(88vw, 380px)",
+          height: "min(88vw, 380px)",
+          borderRadius: "9999px",
+          background:
+            "radial-gradient(circle, var(--primary) 0%, rgba(61,181,74,0) 68%)",
+          filter: "blur(44px)",
+        }}
+      />
+
+      {/* Ícone */}
       <img
         src={iconMz.url}
         alt="InterGO"
+        className="animate-apple-pop absolute h-auto"
         style={{
-          position: "absolute",
-          width: "min(50vw, 200px)",
-          height: "auto",
-          opacity: phase === "icon" ? 1 : 0,
-          transition: "opacity 500ms ease-in-out",
-          filter: "drop-shadow(0 0 32px rgba(61, 181, 74,0.5))",
+          width: "min(40vw, 148px)",
+          opacity: showLogo ? 0 : 1,
+          transform: showLogo ? "scale(1.18)" : "scale(1)",
+          filter: showLogo ? "blur(10px)" : "blur(0px)",
+          transition:
+            "opacity 620ms var(--ease-apple), transform 620ms var(--ease-apple), filter 620ms var(--ease-apple)",
         }}
       />
+
+      {/* Logomarca completa — estado final permanente */}
       <img
-        src={textMz.url}
+        src={logoMz.url}
         alt="InterGO"
+        className="absolute h-auto"
         style={{
-          position: "absolute",
-          width: "min(80vw, 320px)",
-          height: "auto",
-          opacity: phase === "text" ? 1 : 0,
-          transform: phase === "text" ? "scale(1)" : "scale(0.92)",
-          transition: "opacity 500ms ease-out, transform 500ms ease-out",
-          filter: "drop-shadow(0 0 24px rgba(61, 181, 74,0.4))",
+          width: "min(78vw, 300px)",
+          opacity: showLogo ? 1 : 0,
+          transform: showLogo ? "scale(1)" : "scale(0.92)",
+          filter: showLogo ? "blur(0px)" : "blur(12px)",
+          transition:
+            "opacity 720ms var(--ease-apple-out), transform 900ms var(--ease-spring), filter 720ms var(--ease-apple-out)",
         }}
       />
     </div>
