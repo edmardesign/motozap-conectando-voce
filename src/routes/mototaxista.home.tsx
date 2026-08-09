@@ -397,7 +397,7 @@ function MototaxistaHome() {
 
 
   useEffect(() => {
-    if (!user || !online || !mensalidadeAtiva || atual) return;
+    if (!user || !online || atual) return;
     let cancel = false;
     const load = async () => {
       const { data } = await (supabase as any)
@@ -413,7 +413,7 @@ function MototaxistaHome() {
       .on("postgres_changes", { event: "*", schema: "public", table: "corridas" }, () => load())
       .subscribe();
     return () => { cancel = true; supabase.removeChannel(ch); };
-  }, [user, online, mensalidadeAtiva, atual]);
+  }, [user, online, atual]);
 
   useEffect(() => {
     if (!atual) { setPassageiro(null); return; }
@@ -479,11 +479,8 @@ function MototaxistaHome() {
       "mototaxista_definir_disponibilidade",
       { _aceitar: novo },
     );
-    if (rpcErr) {
-      setBusy(false);
-      toast.error(rpcErr.message);
-      return;
-    }
+    // Chamadas liberadas: falha na validação não impede ficar online.
+    if (rpcErr) console.warn("disponibilidade rpc:", rpcErr.message);
 
     // 2) Atualiza status/localização legados (compat) — não toca em campos sensíveis
     const { error } = await supabase
@@ -744,48 +741,6 @@ function MototaxistaHome() {
     return (
       <main className="min-h-screen flex items-center justify-center" style={{ background: COLORS.bg }}>
         <div className="spinner-mz" />
-      </main>
-    );
-  }
-
-  if (mensalidadeAtiva === false) {
-    return (
-      <main className="min-h-screen px-6 py-10 flex flex-col gap-4 items-center justify-center" style={{ background: COLORS.bg, color: COLORS.text }}>
-        <div className="text-5xl">⏰</div>
-        <h1 className="text-2xl font-bold text-center">Seu período grátis acabou</h1>
-        <p className="text-center text-base max-w-sm" style={{ color: COLORS.textDim }}>
-          Escolha um plano para continuar recebendo corridas no InterGO
-        </p>
-        <Link to="/mototaxista/planos" className="btn-cta">VER PLANOS</Link>
-        <button onClick={async () => { await supabase.auth.signOut(); navigate({ to: "/auth/mototaxista" }); }} className="text-[13px]" style={{ color: COLORS.textDim }}>
-          Sair
-        </button>
-      </main>
-    );
-  }
-
-  if (contaBloqueada) {
-    const wa = `https://wa.me/5575988558754?text=${encodeURIComponent(`Olá! Acabei de pagar minha comissão InterGO (${valorCicloFmt} - 20 corridas). Segue comprovante:`)}`;
-    return (
-      <main className="min-h-screen px-6 py-10 flex flex-col gap-5 items-center justify-center" style={{ background: COLORS.bg, color: COLORS.text }}>
-        <div className="text-6xl"><EmojiIcon e="🏍️" /></div>
-        <h1 className="text-2xl font-bold text-center leading-tight">
-          Você já rodou 20 corridas<br />com a gente!
-        </h1>
-        <p className="text-center text-[15px] max-w-sm" style={{ color: COLORS.textDim }}>
-          Passa o Pix de <strong style={{ color: COLORS.accent }}>{valorCicloFmt}</strong> pra continuar recebendo chamados. É rapidinho <EmojiIcon e="🙌" />
-        </p>
-        <p className="text-[11px]" style={{ color: COLORS.textDim }}>Taxa vigente neste ciclo: {taxaCiclo.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })} × 20</p>
-        <div className="w-full max-w-sm rounded-xl p-4 flex flex-col gap-2" style={{ background: COLORS.card, boxShadow: CARD_SHADOW }}>
-          <div className="text-[12px]" style={{ color: COLORS.textDim }}>Chave Pix</div>
-          <div className="font-mono text-[15px] break-all">motozap@pix.com.br</div>
-        </div>
-        <a href={wa} target="_blank" rel="noreferrer" className="btn-cta w-full max-w-sm">
-          JÁ PAGUEI — ENVIAR COMPROVANTE
-        </a>
-        <button onClick={async () => { await supabase.auth.signOut(); navigate({ to: "/auth/mototaxista" }); }} className="text-[13px]" style={{ color: COLORS.textDim }}>
-          Sair
-        </button>
       </main>
     );
   }

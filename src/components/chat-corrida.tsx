@@ -195,7 +195,7 @@ export function ChatCorrida({
       </div>
 
       {/* Mensagens rápidas */}
-      <div className="px-2 py-2 flex gap-2 overflow-x-auto border-t border-white/5" style={{ background: "#FFFFFF" }}>
+      <div className="px-2 py-2 flex gap-2 overflow-x-auto border-t border-border" style={{ background: "#FFFFFF" }}>
         {quicks.map((q) => (
           <button
             key={q}
@@ -242,7 +242,7 @@ export function ChatCorrida({
           onClick={() => enviar(texto)}
           disabled={sending || !texto.trim()}
           className="rounded-full w-11 h-11 flex items-center justify-center disabled:opacity-40"
-          style={{ background: "#00A884" }}
+          style={{ background: "#3DB54A" }}
           aria-label="Enviar"
         >
           <span style={{ color: "#FFFFFF", fontSize: 20 }}><EmojiIcon e="➤" /></span>
@@ -258,7 +258,7 @@ export function ChatFab({ onClick, badge }: { onClick: () => void; badge?: numbe
     <button
       onClick={onClick}
       className="fixed bottom-24 right-5 z-40 w-14 h-14 rounded-full flex items-center justify-center shadow-xl"
-      style={{ background: "#00A884", boxShadow: "0 8px 24px rgba(0,168,132,0.45)" }}
+      style={{ background: "#3DB54A", boxShadow: "0 8px 24px rgba(61,181,74,0.45)" }}
       aria-label="Chat"
     >
       <span style={{ fontSize: 24 }}><EmojiIcon e="💬" /></span>
