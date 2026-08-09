@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import { usePwaInstall } from "@/hooks/use-pwa-install";
 import { supabase } from "@/integrations/supabase/client";
 import { EmojiIcon } from "@/components/emoji-icon";
-import iconAdmin from "@/assets/btn-administrador.png.asset.json";
+import iconAdmin from "@/assets/intergo-mark.png.asset.json";
 
 
 export const Route = createFileRoute("/adm")({
@@ -70,7 +70,7 @@ function AdminEntry() {
           <img
             src={iconAdmin.url}
             alt="InterGO Admin"
-            className="w-36 h-36 rounded-3xl"
+            className="w-32 h-32 object-contain"
             style={{ filter: "drop-shadow(0 12px 24px rgba(17,17,17,0.12))" }}
           />
           <div>

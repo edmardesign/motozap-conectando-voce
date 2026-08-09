@@ -78,7 +78,7 @@ function Splash() {
             )}
             <Link
               to="/auth/passageiro"
-              className="animate-apple-fade stagger-4 mt-1 text-center text-[15px] text-muted-foreground transition-colors hover:text-foreground"
+              className="animate-apple-fade stagger-4 mt-1 text-center text-[15px] font-medium text-foreground transition-opacity hover:opacity-70"
             >
               Já tenho conta
             </Link>
