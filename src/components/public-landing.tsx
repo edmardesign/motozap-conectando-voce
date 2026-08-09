@@ -259,7 +259,7 @@ function IosInstallModal({ title, iconUrl, accent, mode, inAppName, onClose }: M
             style={{
               background: "transparent",
               border: "none",
-              color: "#fff",
+              color: "#111111",
               padding: 8,
               cursor: "pointer",
               display: "flex",
