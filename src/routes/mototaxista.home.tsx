@@ -82,22 +82,22 @@ type Aba = "corridas" | "financeiro" | "perfil";
 const COLORS = {
   bg: "#FFFFFF",
   bg2: "#FFFFFF",
-  card: "#1A2C33",
-  border: "rgba(134,150,160,0.15)",
-  text: "#F5F5F5",
-  textDim: "#8696A0",
+  card: "#F7F7F7",
+  border: "#E8E8E8",
+  text: "#111111",
+  textDim: "#6B6B6B",
   accent: "#3DB54A",
   danger: "#E04848",
 };
 
-const CARD_SHADOW = "0 2px 8px rgba(0,0,0,0.3)";
+const CARD_SHADOW = "0 1px 2px rgba(17,17,17,0.04), 0 8px 24px -14px rgba(17,17,17,0.18)";
 
 function planoLabel(p: string | null): { label: string; color: string } {
   switch (p) {
     case "ouro": return { label: "OURO", color: "#FFD700" };
     case "prata": return { label: "PRATA", color: "#C0C0C0" };
     case "mensal": return { label: "MENSAL", color: "#3DB54A" };
-    default: return { label: "—", color: "#8696A0" };
+    default: return { label: "—", color: "#6B6B6B" };
   }
 }
 
@@ -990,7 +990,7 @@ function MototaxistaHome() {
                   className="px-3 py-1.5 rounded-lg text-[12px] font-semibold"
                   style={filtroPeriodo === f.id
                     ? { background: COLORS.accent, color: "#FFFFFF" }
-                    : { background: "rgba(255,255,255,0.08)", color: COLORS.textDim }}
+                    : { background: "#E8E8E8", color: COLORS.textDim }}
                 >
                   {f.label}
                 </button>
@@ -1068,7 +1068,7 @@ function MototaxistaHome() {
                       className="px-3 py-1.5 rounded-lg text-[12px] font-semibold"
                       style={exportPeriodo === p
                         ? { background: COLORS.accent, color: "#FFFFFF" }
-                        : { background: "rgba(255,255,255,0.08)", color: COLORS.textDim }}
+                        : { background: "#E8E8E8", color: COLORS.textDim }}
                     >
                       {p === "semana" ? "Semana" : p === "mes" ? "Mês" : "Personalizado"}
                     </button>
@@ -1298,7 +1298,7 @@ function MototaxistaHome() {
               />
             </div>
             <div className="flex gap-2">
-              <button onClick={() => setConfirmConcluir(false)} disabled={busy} className="flex-1 py-3 rounded-lg font-semibold" style={{ background: "rgba(255,255,255,0.08)", color: COLORS.text }}>
+              <button onClick={() => setConfirmConcluir(false)} disabled={busy} className="flex-1 py-3 rounded-lg font-semibold" style={{ background: "#E8E8E8", color: COLORS.text }}>
                 Cancelar
               </button>
               <button onClick={concluir} disabled={busy} className="flex-1 btn-cta">
@@ -1315,7 +1315,7 @@ function MototaxistaHome() {
             <h3 className="text-lg font-bold">Sair da conta?</h3>
             <p className="text-[14px]" style={{ color: COLORS.textDim }}>Você precisará entrar novamente com seu telefone e PIN.</p>
             <div className="flex gap-2">
-              <button onClick={() => setConfirmLogout(false)} className="flex-1 py-3 rounded-lg font-semibold" style={{ background: "rgba(255,255,255,0.08)", color: COLORS.text }}>
+              <button onClick={() => setConfirmLogout(false)} className="flex-1 py-3 rounded-lg font-semibold" style={{ background: "#E8E8E8", color: COLORS.text }}>
                 Cancelar
               </button>
               <button
@@ -1365,7 +1365,7 @@ function MototaxistaHome() {
               <button
                 onClick={() => setShowPixCadastro(false)}
                 className="flex-1 py-2 rounded-lg font-semibold"
-                style={{ background: "rgba(255,255,255,0.08)", color: COLORS.text }}
+                style={{ background: "#E8E8E8", color: COLORS.text }}
               >
                 Cancelar
               </button>
@@ -1433,7 +1433,7 @@ function MototaxistaHome() {
                 disabled={saqueBusy}
                 onClick={() => setShowSaqueModal(false)}
                 className="flex-1 py-2 rounded-lg font-semibold"
-                style={{ background: "rgba(255,255,255,0.08)", color: COLORS.text }}
+                style={{ background: "#E8E8E8", color: COLORS.text }}
               >
                 Cancelar
               </button>
@@ -1765,7 +1765,7 @@ function PegueAliAtual({
             <h3 className="font-bold text-lg">Novo valor do produto</h3>
             <input type="number" step="0.01" value={novoValor} onChange={(e) => setNovoValor(e.target.value)} placeholder="R$ 0,00" className="w-full p-3 rounded-lg" style={{ background: "rgba(255,255,255,0.06)", color: "#fff" }} />
             <div className="flex gap-2">
-              <button onClick={() => setShowValor(false)} className="flex-1 py-3 rounded-lg" style={{ background: "rgba(255,255,255,0.08)", color: "#fff" }}>Cancelar</button>
+              <button onClick={() => setShowValor(false)} className="flex-1 py-3 rounded-lg" style={{ background: "#E8E8E8", color: "#fff" }}>Cancelar</button>
               <button
                 onClick={() => { const v = parseFloat(novoValor.replace(",", ".")); if (v > 0) { onProporValor(v); setShowValor(false); setNovoValor(""); } }}
                 disabled={busy}

@@ -30,10 +30,10 @@ export const Route = createFileRoute("/mototaxista/cadastro")({
 
 const COLORS = {
   bg: "#FFFFFF",
-  panel: "#1A2C33",
+  panel: "#F7F7F7",
   neon: "#3DB54A",
   neonText: "#FFFFFF",
-  text: "#F5F5F5",
+  text: "#111111",
 };
 
 const STORAGE_KEY = "moto_wizard_v2";
@@ -531,7 +531,7 @@ function StepResumo({ data }: { data: WizardData }) {
     <StepWrapper title="Tudo certo!" subtitle="Confirme seus dados">
       <div
         className="rounded-2xl p-5 flex flex-col gap-3 text-sm"
-        style={{ background: COLORS.panel, border: "1px solid rgba(255,255,255,0.08)" }}
+        style={{ background: COLORS.panel, border: "1px solid #E8E8E8" }}
       >
         <ResumoRow label="Nome" value={data.nome} />
         <ResumoRow label="CPF" value={formatarCpf(data.cpf)} />

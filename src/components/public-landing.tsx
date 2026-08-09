@@ -234,11 +234,11 @@ function IosInstallModal({ title, iconUrl, accent, mode, inAppName, onClose }: M
           maxWidth: 460,
           maxHeight: "92dvh",
           overflowY: "auto",
-          background: "#0B0B0B",
+          background: "#FFFFFF",
           border: `1px solid ${accent}44`,
           borderRadius: "24px 24px 0 0",
           padding: "20px 20px calc(env(safe-area-inset-bottom, 0px) + 20px)",
-          color: "#F5F5F5",
+          color: "#111111",
           boxShadow: `0 -20px 60px ${accent}22`,
         }}
       >
@@ -273,7 +273,7 @@ function IosInstallModal({ title, iconUrl, accent, mode, inAppName, onClose }: M
         {mode === "in-app-browser" && (
           <div
             style={{
-              background: "#1a1a1a",
+              background: "#F7F7F7",
               border: `1px solid ${accent}55`,
               borderRadius: 14,
               padding: 14,
