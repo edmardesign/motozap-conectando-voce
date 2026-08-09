@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import iconMz from "@/assets/intergo-icon-green.png.asset.json";
-import logoMz from "@/assets/intergo-logo-white.png.asset.json";
+import markAsset from "@/assets/intergo-mark.png.asset.json";
+import wordmarkAsset from "@/assets/intergo-wordmark.png.asset.json";
 
 type Phase = "icon" | "logo" | "done";
 
 /**
  * IntroAnimation — abertura da marca InterGO no estilo Apple.
- * Sequência: ícone verde (blur-in + spring) → logomarca completa (crossfade suave).
- * O estado final é estático: a logomarca permanece visível para sempre.
+ * Sequência: ícone (capacete) entra com blur + spring → some →
+ * logomarca horizontal entra e permanece fixa.
  * Respeita prefers-reduced-motion → salta direto para o estado final.
  */
 export function BoraZeIntroAnimation({
@@ -33,7 +33,7 @@ export function BoraZeIntroAnimation({
       return;
     }
 
-    const t1 = setTimeout(() => setPhase("logo"), 1100);
+    const t1 = setTimeout(() => setPhase("logo"), 1200);
     const t2 = setTimeout(() => {
       setPhase("done");
       try {
@@ -42,7 +42,7 @@ export function BoraZeIntroAnimation({
         /* storage indisponível — segue sem persistir */
       }
       onDone?.();
-    }, 2100);
+    }, 2200);
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
@@ -62,37 +62,37 @@ export function BoraZeIntroAnimation({
           height: "min(88vw, 380px)",
           borderRadius: "9999px",
           background:
-            "radial-gradient(circle, rgba(61,181,74,0.22) 0%, rgba(61,181,74,0) 70%)",
+            "radial-gradient(circle, rgba(61,181,74,0.20) 0%, rgba(61,181,74,0) 70%)",
           filter: "blur(38px)",
         }}
       />
 
-      {/* Ícone */}
+      {/* Ícone (capacete) — some ao final */}
       <img
-        src={iconMz.url}
+        src={markAsset.url}
         alt="InterGO"
         className={showLogo ? "absolute h-auto" : "animate-apple-pop absolute h-auto"}
         style={{
-          width: "min(40vw, 148px)",
+          width: "min(34vw, 132px)",
           opacity: showLogo ? 0 : 1,
           visibility: showLogo ? "hidden" : "visible",
           transform: showLogo ? "scale(1.18)" : "scale(1)",
           filter: showLogo ? "blur(10px)" : "blur(0px)",
           transition:
-            "opacity 620ms var(--ease-apple), transform 620ms var(--ease-apple), filter 620ms var(--ease-apple)",
+            "opacity 560ms var(--ease-apple), transform 560ms var(--ease-apple), filter 560ms var(--ease-apple)",
         }}
       />
 
-      {/* Logomarca completa — estado final permanente */}
+      {/* Logomarca horizontal — estado final permanente */}
       <img
-        src={logoMz.url}
+        src={wordmarkAsset.url}
         alt="InterGO"
         className="absolute h-auto"
         style={{
-          width: "min(78vw, 300px)",
+          width: "min(74vw, 288px)",
           opacity: showLogo ? 1 : 0,
-          transform: showLogo ? "scale(1)" : "scale(0.92)",
-          filter: showLogo ? "brightness(0) blur(0px)" : "brightness(0) blur(12px)",
+          transform: showLogo ? "scale(1)" : "scale(0.9)",
+          filter: showLogo ? "blur(0px)" : "blur(12px)",
           transition:
             "opacity 720ms var(--ease-apple-out), transform 900ms var(--ease-spring), filter 720ms var(--ease-apple-out)",
         }}
