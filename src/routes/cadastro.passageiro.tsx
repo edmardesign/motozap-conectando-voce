@@ -35,9 +35,9 @@ export const Route = createFileRoute("/cadastro/passageiro")({
 
 const TOTAL_STEPS = 5;
 const BG = "#FFFFFF";
-const FG = "#F5F5F5";
+const FG = "#111111";
 const ACCENT = "#3DB54A";
-const CARD = "#0a0a0a";
+const CARD = "#F7F7F7";
 
 // Steps:
 // 0: nome → 1: telefone → 2: pin1 → 3: pin2 → 4: creating/success

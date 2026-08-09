@@ -82,22 +82,22 @@ type Aba = "corridas" | "financeiro" | "perfil";
 const COLORS = {
   bg: "#FFFFFF",
   bg2: "#FFFFFF",
-  card: "#1A2C33",
-  border: "rgba(134,150,160,0.15)",
-  text: "#F5F5F5",
-  textDim: "#8696A0",
+  card: "#F7F7F7",
+  border: "#E8E8E8",
+  text: "#111111",
+  textDim: "#6B6B6B",
   accent: "#3DB54A",
   danger: "#E04848",
 };
 
-const CARD_SHADOW = "0 2px 8px rgba(0,0,0,0.3)";
+const CARD_SHADOW = "0 1px 2px rgba(17,17,17,0.04), 0 8px 24px -14px rgba(17,17,17,0.18)";
 
 function planoLabel(p: string | null): { label: string; color: string } {
   switch (p) {
     case "ouro": return { label: "OURO", color: "#FFD700" };
     case "prata": return { label: "PRATA", color: "#C0C0C0" };
     case "mensal": return { label: "MENSAL", color: "#3DB54A" };
-    default: return { label: "—", color: "#8696A0" };
+    default: return { label: "—", color: "#6B6B6B" };
   }
 }
 
@@ -397,7 +397,7 @@ function MototaxistaHome() {
 
 
   useEffect(() => {
-    if (!user || !online || !mensalidadeAtiva || atual) return;
+    if (!user || !online || atual) return;
     let cancel = false;
     const load = async () => {
       const { data } = await (supabase as any)
@@ -413,7 +413,7 @@ function MototaxistaHome() {
       .on("postgres_changes", { event: "*", schema: "public", table: "corridas" }, () => load())
       .subscribe();
     return () => { cancel = true; supabase.removeChannel(ch); };
-  }, [user, online, mensalidadeAtiva, atual]);
+  }, [user, online, atual]);
 
   useEffect(() => {
     if (!atual) { setPassageiro(null); return; }
@@ -479,11 +479,8 @@ function MototaxistaHome() {
       "mototaxista_definir_disponibilidade",
       { _aceitar: novo },
     );
-    if (rpcErr) {
-      setBusy(false);
-      toast.error(rpcErr.message);
-      return;
-    }
+    // Chamadas liberadas: falha na validação não impede ficar online.
+    if (rpcErr) console.warn("disponibilidade rpc:", rpcErr.message);
 
     // 2) Atualiza status/localização legados (compat) — não toca em campos sensíveis
     const { error } = await supabase
@@ -748,48 +745,6 @@ function MototaxistaHome() {
     );
   }
 
-  if (mensalidadeAtiva === false) {
-    return (
-      <main className="min-h-screen px-6 py-10 flex flex-col gap-4 items-center justify-center" style={{ background: COLORS.bg, color: COLORS.text }}>
-        <div className="text-5xl">⏰</div>
-        <h1 className="text-2xl font-bold text-center">Seu período grátis acabou</h1>
-        <p className="text-center text-base max-w-sm" style={{ color: COLORS.textDim }}>
-          Escolha um plano para continuar recebendo corridas no InterGO
-        </p>
-        <Link to="/mototaxista/planos" className="btn-cta">VER PLANOS</Link>
-        <button onClick={async () => { await supabase.auth.signOut(); navigate({ to: "/auth/mototaxista" }); }} className="text-[13px]" style={{ color: COLORS.textDim }}>
-          Sair
-        </button>
-      </main>
-    );
-  }
-
-  if (contaBloqueada) {
-    const wa = `https://wa.me/5575988558754?text=${encodeURIComponent(`Olá! Acabei de pagar minha comissão InterGO (${valorCicloFmt} - 20 corridas). Segue comprovante:`)}`;
-    return (
-      <main className="min-h-screen px-6 py-10 flex flex-col gap-5 items-center justify-center" style={{ background: COLORS.bg, color: COLORS.text }}>
-        <div className="text-6xl"><EmojiIcon e="🏍️" /></div>
-        <h1 className="text-2xl font-bold text-center leading-tight">
-          Você já rodou 20 corridas<br />com a gente!
-        </h1>
-        <p className="text-center text-[15px] max-w-sm" style={{ color: COLORS.textDim }}>
-          Passa o Pix de <strong style={{ color: COLORS.accent }}>{valorCicloFmt}</strong> pra continuar recebendo chamados. É rapidinho <EmojiIcon e="🙌" />
-        </p>
-        <p className="text-[11px]" style={{ color: COLORS.textDim }}>Taxa vigente neste ciclo: {taxaCiclo.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })} × 20</p>
-        <div className="w-full max-w-sm rounded-xl p-4 flex flex-col gap-2" style={{ background: COLORS.card, boxShadow: CARD_SHADOW }}>
-          <div className="text-[12px]" style={{ color: COLORS.textDim }}>Chave Pix</div>
-          <div className="font-mono text-[15px] break-all">motozap@pix.com.br</div>
-        </div>
-        <a href={wa} target="_blank" rel="noreferrer" className="btn-cta w-full max-w-sm">
-          JÁ PAGUEI — ENVIAR COMPROVANTE
-        </a>
-        <button onClick={async () => { await supabase.auth.signOut(); navigate({ to: "/auth/mototaxista" }); }} className="text-[13px]" style={{ color: COLORS.textDim }}>
-          Sair
-        </button>
-      </main>
-    );
-  }
-
   return (
     <main className="min-h-screen pb-24" style={{ background: COLORS.bg, color: COLORS.text }}>
       {/* HEADER */}
@@ -990,7 +945,7 @@ function MototaxistaHome() {
                   className="px-3 py-1.5 rounded-lg text-[12px] font-semibold"
                   style={filtroPeriodo === f.id
                     ? { background: COLORS.accent, color: "#FFFFFF" }
-                    : { background: "rgba(255,255,255,0.08)", color: COLORS.textDim }}
+                    : { background: "#E8E8E8", color: COLORS.textDim }}
                 >
                   {f.label}
                 </button>
@@ -1068,7 +1023,7 @@ function MototaxistaHome() {
                       className="px-3 py-1.5 rounded-lg text-[12px] font-semibold"
                       style={exportPeriodo === p
                         ? { background: COLORS.accent, color: "#FFFFFF" }
-                        : { background: "rgba(255,255,255,0.08)", color: COLORS.textDim }}
+                        : { background: "#E8E8E8", color: COLORS.textDim }}
                     >
                       {p === "semana" ? "Semana" : p === "mes" ? "Mês" : "Personalizado"}
                     </button>
@@ -1298,7 +1253,7 @@ function MototaxistaHome() {
               />
             </div>
             <div className="flex gap-2">
-              <button onClick={() => setConfirmConcluir(false)} disabled={busy} className="flex-1 py-3 rounded-lg font-semibold" style={{ background: "rgba(255,255,255,0.08)", color: COLORS.text }}>
+              <button onClick={() => setConfirmConcluir(false)} disabled={busy} className="flex-1 py-3 rounded-lg font-semibold" style={{ background: "#E8E8E8", color: COLORS.text }}>
                 Cancelar
               </button>
               <button onClick={concluir} disabled={busy} className="flex-1 btn-cta">
@@ -1315,7 +1270,7 @@ function MototaxistaHome() {
             <h3 className="text-lg font-bold">Sair da conta?</h3>
             <p className="text-[14px]" style={{ color: COLORS.textDim }}>Você precisará entrar novamente com seu telefone e PIN.</p>
             <div className="flex gap-2">
-              <button onClick={() => setConfirmLogout(false)} className="flex-1 py-3 rounded-lg font-semibold" style={{ background: "rgba(255,255,255,0.08)", color: COLORS.text }}>
+              <button onClick={() => setConfirmLogout(false)} className="flex-1 py-3 rounded-lg font-semibold" style={{ background: "#E8E8E8", color: COLORS.text }}>
                 Cancelar
               </button>
               <button
@@ -1365,7 +1320,7 @@ function MototaxistaHome() {
               <button
                 onClick={() => setShowPixCadastro(false)}
                 className="flex-1 py-2 rounded-lg font-semibold"
-                style={{ background: "rgba(255,255,255,0.08)", color: COLORS.text }}
+                style={{ background: "#E8E8E8", color: COLORS.text }}
               >
                 Cancelar
               </button>
@@ -1433,7 +1388,7 @@ function MototaxistaHome() {
                 disabled={saqueBusy}
                 onClick={() => setShowSaqueModal(false)}
                 className="flex-1 py-2 rounded-lg font-semibold"
-                style={{ background: "rgba(255,255,255,0.08)", color: COLORS.text }}
+                style={{ background: "#E8E8E8", color: COLORS.text }}
               >
                 Cancelar
               </button>
@@ -1765,7 +1720,7 @@ function PegueAliAtual({
             <h3 className="font-bold text-lg">Novo valor do produto</h3>
             <input type="number" step="0.01" value={novoValor} onChange={(e) => setNovoValor(e.target.value)} placeholder="R$ 0,00" className="w-full p-3 rounded-lg" style={{ background: "rgba(255,255,255,0.06)", color: "#fff" }} />
             <div className="flex gap-2">
-              <button onClick={() => setShowValor(false)} className="flex-1 py-3 rounded-lg" style={{ background: "rgba(255,255,255,0.08)", color: "#fff" }}>Cancelar</button>
+              <button onClick={() => setShowValor(false)} className="flex-1 py-3 rounded-lg" style={{ background: "#E8E8E8", color: "#fff" }}>Cancelar</button>
               <button
                 onClick={() => { const v = parseFloat(novoValor.replace(",", ".")); if (v > 0) { onProporValor(v); setShowValor(false); setNovoValor(""); } }}
                 disabled={busy}

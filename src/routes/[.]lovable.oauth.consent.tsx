@@ -56,7 +56,7 @@ export const Route = createFileRoute("/.lovable/oauth/consent")({
   },
   component: Consent,
   errorComponent: ({ error }) => (
-    <main className="min-h-screen flex items-center justify-center bg-[#FFFFFF] text-[#F5F5F5] p-6">
+    <main className="min-h-screen flex items-center justify-center bg-[#FFFFFF] text-[#111111] p-6">
       <div className="max-w-md text-center">
         <h1 className="text-lg font-semibold mb-2">Não foi possível carregar a autorização</h1>
         <p className="text-sm text-[#8696A0]">
@@ -96,13 +96,13 @@ function Consent() {
   }
 
   return (
-    <main className="min-h-screen bg-[#FFFFFF] text-[#F5F5F5] flex items-center justify-center p-6">
+    <main className="min-h-screen bg-[#FFFFFF] text-[#111111] flex items-center justify-center p-6">
       <div
         className="w-full max-w-md rounded-2xl p-6 border"
         style={{
           background: "#FFFFFF",
-          borderColor: "rgba(255,255,255,0.08)",
-          boxShadow: "0 2px 8px rgba(0,0,0,0.3)",
+          borderColor: "#E8E8E8",
+          boxShadow: "0 1px 2px rgba(17,17,17,0.04), 0 8px 24px -14px rgba(17,17,17,0.18)",
         }}
       >
         <h1 className="text-xl font-semibold mb-2">
@@ -128,7 +128,7 @@ function Consent() {
             disabled={busy}
             onClick={() => decide(false)}
             className="flex-1 py-3 rounded-xl border text-sm font-medium disabled:opacity-50"
-            style={{ borderColor: "rgba(255,255,255,0.15)", background: "#0a0a0a" }}
+            style={{ borderColor: "rgba(255,255,255,0.15)", background: "#F7F7F7" }}
           >
             Negar
           </button>

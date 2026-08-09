@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import { usePwaInstall } from "@/hooks/use-pwa-install";
 import { supabase } from "@/integrations/supabase/client";
 import { EmojiIcon } from "@/components/emoji-icon";
-import iconAdmin from "@/assets/btn-administrador.png.asset.json";
+import iconAdmin from "@/assets/intergo-mark.png.asset.json";
 
 
 export const Route = createFileRoute("/adm")({
@@ -57,7 +57,7 @@ function AdminEntry() {
           src={iconAdmin.url}
           alt="InterGO Admin"
           className="w-40 max-w-[50vw] h-auto animate-scale-in"
-          style={{ filter: "drop-shadow(0 0 32px rgba(255,255,255,0.25))" }}
+          style={{ filter: "drop-shadow(0 12px 28px rgba(17,17,17,0.15))" }}
         />
       </main>
     );
@@ -70,8 +70,8 @@ function AdminEntry() {
           <img
             src={iconAdmin.url}
             alt="InterGO Admin"
-            className="w-36 h-36 rounded-3xl"
-            style={{ filter: "drop-shadow(0 0 24px rgba(255,255,255,0.2))" }}
+            className="w-32 h-32 object-contain"
+            style={{ filter: "drop-shadow(0 12px 24px rgba(17,17,17,0.12))" }}
           />
           <div>
             <h1 className="text-3xl font-black tracking-tight text-foreground">INTERGO</h1>
@@ -85,9 +85,9 @@ function AdminEntry() {
               onClick={handleInstall}
               className="w-full rounded-2xl px-6 py-4 font-bold text-center transition-all active:scale-[0.98] flex items-center justify-center gap-2"
               style={{
-                background: "linear-gradient(135deg, #ffffff, #cccccc)",
+                background: "#3DB54A",
                 color: "#FFFFFF",
-                boxShadow: "0 0 32px rgba(255,255,255,0.35)",
+                boxShadow: "0 10px 28px -12px rgba(61,181,74,0.6)",
                 letterSpacing: "0.02em",
               }}
             >
@@ -99,9 +99,10 @@ function AdminEntry() {
             onClick={() => navigate({ to: "/admin" })}
             className="w-full rounded-2xl px-6 py-4 font-bold text-center transition-all active:scale-[0.98]"
             style={{
-              background: "#ffffff",
-              color: "#FFFFFF",
-              boxShadow: "0 0 24px rgba(255,255,255,0.2)",
+              background: "#FFFFFF",
+              color: "#111111",
+              border: "1px solid #E8E8E8",
+              boxShadow: "0 1px 2px rgba(17,17,17,0.06)",
             }}
           >
             JÁ TENHO ACESSO
@@ -112,7 +113,7 @@ function AdminEntry() {
               toast.info("Peça ao administrador principal um código de ativação de 6 dígitos e faça login em seguida.");
               navigate({ to: "/admin" });
             }}
-            className="w-full rounded-2xl px-6 py-3 font-medium text-center transition-all active:scale-[0.98] border border-white/20 text-foreground/90 hover:bg-white/10"
+            className="w-full rounded-2xl px-6 py-3 font-medium text-center transition-all active:scale-[0.98] border border-border text-foreground hover:bg-muted"
           >
             Ativar meu acesso
           </button>

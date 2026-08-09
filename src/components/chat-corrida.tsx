@@ -127,7 +127,7 @@ export function ChatCorrida({
         {outro.foto_url ? (
           <img src={outro.foto_url} className="w-10 h-10 rounded-full object-cover" alt="" />
         ) : (
-          <div className="w-10 h-10 rounded-full flex items-center justify-center text-lg" style={{ background: "#2A3942" }}><EmojiIcon e="🧑" /></div>
+          <div className="w-10 h-10 rounded-full flex items-center justify-center text-lg" style={{ background: "#F7F7F7" }}><EmojiIcon e="🧑" /></div>
         )}
         <div className="flex-1 min-w-0">
           <div className="font-bold text-foreground truncate">{outro.nome}</div>
@@ -142,7 +142,7 @@ export function ChatCorrida({
         )}
         <button onClick={() => setMenuOpen((v) => !v)} className="text-foreground text-xl px-2" aria-label="Mais">⋮</button>
         {menuOpen && (
-          <div className="absolute right-3 top-14 rounded-lg py-1 shadow-lg" style={{ background: "#202C33", minWidth: 160 }}>
+          <div className="absolute right-3 top-14 rounded-lg py-1 shadow-lg" style={{ background: "#FFFFFF", minWidth: 160 }}>
             <button
               onClick={() => { setMenuOpen(false); onReportar?.(); }}
               className="block w-full text-left px-4 py-2 text-foreground hover:bg-white/5"
@@ -173,8 +173,8 @@ export function ChatCorrida({
               <div
                 className="max-w-[75%] rounded-2xl px-3 py-2 text-[14px]"
                 style={{
-                  background: meu ? "#005C4B" : "#202C33",
-                  color: "#fff",
+                  background: meu ? "#3DB54A" : "#F7F7F7",
+                  color: meu ? "#FFFFFF" : "#111111",
                   borderTopRightRadius: meu ? 4 : 16,
                   borderTopLeftRadius: meu ? 16 : 4,
                 }}
@@ -195,14 +195,14 @@ export function ChatCorrida({
       </div>
 
       {/* Mensagens rápidas */}
-      <div className="px-2 py-2 flex gap-2 overflow-x-auto border-t border-white/5" style={{ background: "#FFFFFF" }}>
+      <div className="px-2 py-2 flex gap-2 overflow-x-auto border-t border-border" style={{ background: "#FFFFFF" }}>
         {quicks.map((q) => (
           <button
             key={q}
             onClick={() => enviar(q)}
             disabled={sending}
             className="whitespace-nowrap px-3 py-1.5 rounded-full text-[13px] text-foreground disabled:opacity-50"
-            style={{ background: "#2A3942" }}
+            style={{ background: "#F7F7F7" }}
           >
             {q}
           </button>
@@ -236,13 +236,13 @@ export function ChatCorrida({
           rows={1}
           placeholder="Mensagem"
           className="flex-1 resize-none rounded-2xl px-4 py-2 text-foreground outline-none max-h-32"
-          style={{ background: "#2A3942" }}
+          style={{ background: "#F7F7F7" }}
         />
         <button
           onClick={() => enviar(texto)}
           disabled={sending || !texto.trim()}
           className="rounded-full w-11 h-11 flex items-center justify-center disabled:opacity-40"
-          style={{ background: "#00A884" }}
+          style={{ background: "#3DB54A" }}
           aria-label="Enviar"
         >
           <span style={{ color: "#FFFFFF", fontSize: 20 }}><EmojiIcon e="➤" /></span>
@@ -258,7 +258,7 @@ export function ChatFab({ onClick, badge }: { onClick: () => void; badge?: numbe
     <button
       onClick={onClick}
       className="fixed bottom-24 right-5 z-40 w-14 h-14 rounded-full flex items-center justify-center shadow-xl"
-      style={{ background: "#00A884", boxShadow: "0 8px 24px rgba(0,168,132,0.45)" }}
+      style={{ background: "#3DB54A", boxShadow: "0 8px 24px rgba(61,181,74,0.45)" }}
       aria-label="Chat"
     >
       <span style={{ fontSize: 24 }}><EmojiIcon e="💬" /></span>
