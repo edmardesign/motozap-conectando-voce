@@ -1575,7 +1575,7 @@ function SetupPanel(props: {
 }) {
   const { c } = props;
   const isPegue = props.mode === "pegue_ali";
-  const canCall = !!props.origemCoords && !!props.destinoCoords && !!props.tipo;
+  const canCall = !!props.origem.trim() && !!props.destino.trim() && !!props.tipo;
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   // Placeholder rotativo do textarea "O que buscar?"
   const PLACEHOLDERS = [
