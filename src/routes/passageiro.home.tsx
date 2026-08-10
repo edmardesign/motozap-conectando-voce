@@ -1662,7 +1662,8 @@ function SetupPanel(props: {
       </div>
 
 
-      {/* Origem */}
+      {/* Origem (livre) */}
+      {props.origemModo === "outro" && (
       <div className="relative">
         <div
           className="rounded-2xl p-3 flex items-center gap-2"
