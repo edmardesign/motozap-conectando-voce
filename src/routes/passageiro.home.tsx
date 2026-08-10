@@ -369,6 +369,9 @@ function PassageiroHomePage() {
       const { display, bairro } = await reverseToAddress(coords.lat, coords.lng);
       setOrigem(display);
       setBairroOrigem(matchBairro(bairros, bairro));
+      setOrigemModo("outro");
+      setOrgaoOrigem(null);
+      setMeuEndereco({ display, coords, bairro: matchBairro(bairros, bairro) });
     } finally {
       setDetectingOrigin(false);
     }
