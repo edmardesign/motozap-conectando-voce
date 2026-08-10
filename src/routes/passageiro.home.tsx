@@ -1964,11 +1964,69 @@ function SetupPanel(props: {
         </div>
       )}
 
-      <div className="text-xs font-medium px-1" style={{ color: c.textMuted }}>
-        Para onde será levado?
+      <div className="text-xs font-semibold px-1" style={{ color: c.text }}>
+        Entregar em:
       </div>
 
-      {/* Destino */}
+      <button
+        type="button"
+        onClick={() => props.setEntregaModo("meu_endereco")}
+        className="w-full text-left rounded-2xl px-3 py-2.5 flex items-center gap-2.5 text-sm transition active:scale-[0.99]"
+        style={{
+          background: props.entregaModo === "meu_endereco" ? "rgba(61,181,74,0.08)" : c.cardBg,
+          border: `1px solid ${props.entregaModo === "meu_endereco" ? c.btn : c.divider}`,
+          color: c.text,
+        }}
+      >
+        <MapPin size={16} style={{ color: c.btn }} />
+        <div className="flex-1 min-w-0">
+          <div className="font-medium">Trazer para meu endereço</div>
+          <div className="truncate text-[11px]" style={{ color: c.textMuted }}>
+            {props.meuEndereco ?? "Identificando seu endereço…"}
+          </div>
+        </div>
+      </button>
+
+      <div className="text-xs font-medium px-1" style={{ color: c.textMuted }}>
+        Ou levar em:
+      </div>
+
+      <div className="flex flex-wrap gap-1.5">
+        {props.orgaos.map((o) => {
+          const active = props.entregaModo === "orgao" && props.orgaoDestino === o;
+          return (
+            <button
+              key={o}
+              type="button"
+              onClick={() => props.onPickOrgaoDestino(o)}
+              className="rounded-full px-3 py-1.5 text-xs font-medium transition active:scale-[0.97] flex items-center gap-1.5"
+              style={{
+                background: active ? c.btn : c.cardBg,
+                color: active ? c.btnText : c.text,
+                border: `1px solid ${active ? c.btn : c.divider}`,
+              }}
+            >
+              {props.buscandoLugar === o && <Loader2 size={12} className="animate-spin" />}
+              {o}
+            </button>
+          );
+        })}
+        <button
+          type="button"
+          onClick={() => props.setEntregaModo("outro")}
+          className="rounded-full px-3 py-1.5 text-xs font-medium"
+          style={{
+            background: props.entregaModo === "outro" ? c.btn : c.cardBg,
+            color: props.entregaModo === "outro" ? c.btnText : c.text,
+            border: `1px solid ${props.entregaModo === "outro" ? c.btn : c.divider}`,
+          }}
+        >
+          Outro local
+        </button>
+      </div>
+
+      {/* Destino (livre) */}
+      {props.entregaModo === "outro" && (
       <div className="relative">
         <div
           className="rounded-2xl p-3 flex items-center gap-2"
