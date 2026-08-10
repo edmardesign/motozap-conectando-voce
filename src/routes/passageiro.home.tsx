@@ -2075,6 +2075,37 @@ function SetupPanel(props: {
           </div>
         )}
       </div>
+      )}
+
+      {/* Sala e responsável */}
+      <div className="grid grid-cols-2 gap-2">
+        <label className="block">
+          <span className="text-xs font-medium px-1 block mb-1" style={{ color: c.textMuted }}>
+            Entregar em sala de:
+          </span>
+          <input
+            value={props.sala}
+            onChange={(e) => props.setSala(e.target.value.slice(0, 60))}
+            placeholder="Ex.: Sala 02 — Recepção"
+            className="w-full rounded-2xl p-3 text-sm outline-none"
+            style={{ background: c.cardBg, color: c.text, border: `1px solid ${c.divider}` }}
+          />
+        </label>
+        <label className="block">
+          <span className="text-xs font-medium px-1 block mb-1" style={{ color: c.textMuted }}>
+            Responsável:
+          </span>
+          <input
+            value={props.responsavel}
+            onChange={(e) => props.setResponsavel(e.target.value.slice(0, 60))}
+            placeholder="Ex.: Maria Silva"
+            className="w-full rounded-2xl p-3 text-sm outline-none"
+            style={{ background: c.cardBg, color: c.text, border: `1px solid ${c.divider}` }}
+          />
+        </label>
+      </div>
+
+
 
 
       {/* Observação */}
