@@ -202,6 +202,20 @@ function PassageiroHomePage() {
   const [bairros, setBairros] = useState<Bairro[]>([]);
   const [contadorBrinde, setContadorBrinde] = useState(0);
 
+  // fluxo institucional (coleta/entrega em órgãos)
+  const [origemModo, setOrigemModo] = useState<"orgao" | "outro">("orgao");
+  const [orgaoOrigem, setOrgaoOrigem] = useState<string | null>(null);
+  const [entregaModo, setEntregaModo] = useState<"meu_endereco" | "orgao" | "outro">("orgao");
+  const [orgaoDestino, setOrgaoDestino] = useState<string | null>(null);
+  const [salaEntrega, setSalaEntrega] = useState("");
+  const [responsavelEntrega, setResponsavelEntrega] = useState("");
+  const [meuEndereco, setMeuEndereco] = useState<{
+    display: string;
+    coords: { lat: number; lng: number };
+    bairro: string | null;
+  } | null>(null);
+  const [buscandoOrgaoOrigem, setBuscandoOrgaoOrigem] = useState<string | null>(null);
+
   // origem
   const [origem, setOrigem] = useState("");
   const [origemCoords, setOrigemCoords] = useState<{ lat: number; lng: number } | null>(null);
