@@ -1716,6 +1716,7 @@ function SetupPanel(props: {
           </div>
         )}
       </div>
+      )}
 
       {/* Meus destinos */}
       {!isPegue && props.destinos.length > 0 && (
