@@ -111,6 +111,23 @@ const TIPOS_DEMANDA: { id: TipoDemanda; label: string; Icon: typeof FileText }[]
   { id: "encomendas", label: "Encomendas", Icon: Package },
 ];
 
+// ===== Órgãos / unidades pré-definidos do município =====
+const ORGAOS: string[] = [
+  "Prefeitura",
+  "PSF Bombinha",
+  "PSF Tiracol",
+  "PSF Coqueiro",
+  "PSF Riacho",
+  "UPA",
+  "Secretaria de Saúde",
+  "Secretaria de Esporte",
+  "Secretaria de Transporte",
+  "Tributos",
+  "Finanças",
+  "Anexo",
+  "Posto de Saúde",
+];
+
 // ===== Map icon helpers =====
 function emojiIcon(emoji: string, size = 38, ring?: string) {
   const html = `<div style="display:flex;align-items:center;justify-content:center;width:${size}px;height:${size}px;border-radius:50%;background:#ffffff;box-shadow:0 2px 6px rgba(0,0,0,0.35);font-size:${size * 0.55}px;line-height:1;${
