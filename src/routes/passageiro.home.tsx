@@ -755,7 +755,7 @@ function PassageiroHomePage() {
         .eq("passageiro_id", user.id);
       const existing = ((mine ?? []) as any[]).find((d) => {
         if (d.endereco && d.endereco.toLowerCase() === destino.toLowerCase()) return true;
-        if (d.latitude && d.longitude) {
+        if (destinoCoords && d.latitude && d.longitude) {
           const km = haversine(d.latitude, d.longitude, destinoCoords.lat, destinoCoords.lng);
           return km < 0.1;
         }
@@ -773,8 +773,8 @@ function PassageiroHomePage() {
         await (supabase as any).from("destinos_passageiro").insert({
           passageiro_id: user.id,
           endereco: destino,
-          latitude: destinoCoords.lat,
-          longitude: destinoCoords.lng,
+          latitude: destinoCoords?.lat ?? null,
+          longitude: destinoCoords?.lng ?? null,
           vezes_usado: 1,
           ultima_vez_usado: new Date().toISOString(),
         });
