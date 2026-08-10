@@ -1624,9 +1624,43 @@ function SetupPanel(props: {
         })}
       </div>
 
-      <div className="text-xs font-medium px-1 pt-1" style={{ color: c.textMuted }}>
-        De onde será coletado?
+      <div className="text-xs font-semibold px-1 pt-1" style={{ color: c.text }}>
+        Busque em:
       </div>
+      <div className="flex flex-wrap gap-1.5">
+        {props.orgaos.map((o) => {
+          const active = props.origemModo === "orgao" && props.orgaoOrigem === o;
+          return (
+            <button
+              key={o}
+              type="button"
+              onClick={() => props.onPickOrgaoOrigem(o)}
+              className="rounded-full px-3 py-1.5 text-xs font-medium transition active:scale-[0.97] flex items-center gap-1.5"
+              style={{
+                background: active ? c.btn : c.cardBg,
+                color: active ? c.btnText : c.text,
+                border: `1px solid ${active ? c.btn : c.divider}`,
+              }}
+            >
+              {props.buscandoOrgaoOrigem === o && <Loader2 size={12} className="animate-spin" />}
+              {o}
+            </button>
+          );
+        })}
+        <button
+          type="button"
+          onClick={() => props.setOrigemModo("outro")}
+          className="rounded-full px-3 py-1.5 text-xs font-medium"
+          style={{
+            background: props.origemModo === "outro" ? c.btn : c.cardBg,
+            color: props.origemModo === "outro" ? c.btnText : c.text,
+            border: `1px solid ${props.origemModo === "outro" ? c.btn : c.divider}`,
+          }}
+        >
+          Outro local
+        </button>
+      </div>
+
 
       {/* Origem */}
       <div className="relative">
