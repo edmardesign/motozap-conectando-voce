@@ -1342,6 +1342,38 @@ function PassageiroHomePage() {
               setTipo={setTipoDemanda}
               observacao={observacao}
               setObservacao={setObservacao}
+              orgaos={ORGAOS}
+              origemModo={origemModo}
+              setOrigemModo={(m) => {
+                setOrigemModo(m);
+                if (m === "outro") {
+                  setOrgaoOrigem(null);
+                  setOrigem("");
+                  setOrigemCoords(null);
+                  setBairroOrigem(null);
+                }
+              }}
+              orgaoOrigem={orgaoOrigem}
+              onPickOrgaoOrigem={selecionarOrgaoOrigem}
+              buscandoOrgaoOrigem={buscandoOrgaoOrigem}
+              entregaModo={entregaModo}
+              setEntregaModo={(m) => {
+                if (m === "meu_endereco") return void usarMeuEnderecoNaEntrega();
+                setEntregaModo(m);
+                if (m === "outro") {
+                  setOrgaoDestino(null);
+                  setDestino("");
+                  setDestinoCoords(null);
+                  setBairroDestino(null);
+                }
+              }}
+              orgaoDestino={orgaoDestino}
+              onPickOrgaoDestino={selecionarOrgaoDestino}
+              meuEndereco={meuEndereco?.display ?? null}
+              sala={salaEntrega}
+              setSala={setSalaEntrega}
+              responsavel={responsavelEntrega}
+              setResponsavel={setResponsavelEntrega}
             />
           )}
 
