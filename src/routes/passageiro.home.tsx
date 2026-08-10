@@ -654,6 +654,73 @@ function PassageiroHomePage() {
       setBuscandoLugar(null);
     }
   }
+
+  /** Coleta em órgão pré-definido (geocode best-effort — nome sempre prevalece). */
+  async function selecionarOrgaoOrigem(nome: string) {
+    setOrigemModo("orgao");
+    setOrgaoOrigem(nome);
+    setOrigem(nome);
+    setOrigemCoords(null);
+    setBairroOrigem(null);
+    if (!profile?.cidade || !profile?.estado) return;
+    setBuscandoOrgaoOrigem(nome);
+    try {
+      const res = await searchSuggestions(nome, profile.cidade, profile.estado);
+      if (res[0]) {
+        setOrigemCoords({ lat: Number(res[0].lat), lng: Number(res[0].lon) });
+        setBairroOrigem(matchBairro(bairros, extractBairro(res[0])));
+      }
+    } catch {
+      /* geocode é opcional */
+    } finally {
+      setBuscandoOrgaoOrigem(null);
+    }
+  }
+
+  /** Entrega em órgão pré-definido. */
+  async function selecionarOrgaoDestino(nome: string) {
+    setEntregaModo("orgao");
+    setOrgaoDestino(nome);
+    setDestino(nome);
+    setDestinoCoords(null);
+    setBairroDestino(null);
+    if (!profile?.cidade || !profile?.estado) return;
+    setBuscandoLugar(nome);
+    try {
+      const res = await searchSuggestions(nome, profile.cidade, profile.estado);
+      if (res[0]) {
+        setDestinoCoords({ lat: Number(res[0].lat), lng: Number(res[0].lon) });
+        setBairroDestino(matchBairro(bairros, extractBairro(res[0])));
+      }
+    } catch {
+      /* geocode é opcional */
+    } finally {
+      setBuscandoLugar(null);
+    }
+  }
+
+  /** Entrega no endereço já identificado do servidor. */
+  async function usarMeuEnderecoNaEntrega() {
+    setEntregaModo("meu_endereco");
+    setOrgaoDestino(null);
+    if (meuEndereco) {
+      setDestino(meuEndereco.display);
+      setDestinoCoords(meuEndereco.coords);
+      setBairroDestino(meuEndereco.bairro);
+      return;
+    }
+    const coords = await geo.request();
+    if (!coords) {
+      toast.error("Não consegui identificar seu endereço. Escolha 'Outro local'.");
+      return;
+    }
+    const { display, bairro } = await reverseToAddress(coords.lat, coords.lng);
+    const b = matchBairro(bairros, bairro);
+    setMeuEndereco({ display, coords, bairro: b });
+    setDestino(display);
+    setDestinoCoords(coords);
+    setBairroDestino(b);
+  }
   async function pickOrigemSuggestion(s: NominatimResult) {
     const lat = Number(s.lat);
     const lng = Number(s.lon);
