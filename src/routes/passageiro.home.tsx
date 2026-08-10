@@ -734,8 +734,8 @@ function PassageiroHomePage() {
   // ----- Chamar mototaxi -----
   async function callRide() {
     if (!user || !profile?.cidade) return;
-    if (!origemCoords) return toast.error("Selecione o local de coleta na lista.");
-    if (!destinoCoords) return toast.error("Selecione o local de entrega na lista.");
+    if (!origem.trim()) return toast.error("Informe o local de coleta.");
+    if (!destino.trim()) return toast.error("Informe o local de entrega.");
     if (!tipoDemanda) return toast.error("Selecione o tipo de solicitação.");
     const ehGratuita = contadorBrinde >= 10;
     const valor = ehGratuita ? 0 : tarifaInfo?.total ?? 0;
