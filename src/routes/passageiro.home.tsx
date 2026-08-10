@@ -1557,6 +1557,21 @@ function SetupPanel(props: {
   setTipo: (t: TipoDemanda) => void;
   observacao: string;
   setObservacao: (v: string) => void;
+  orgaos: string[];
+  origemModo: "orgao" | "outro";
+  setOrigemModo: (m: "orgao" | "outro") => void;
+  orgaoOrigem: string | null;
+  onPickOrgaoOrigem: (nome: string) => void;
+  buscandoOrgaoOrigem: string | null;
+  entregaModo: "meu_endereco" | "orgao" | "outro";
+  setEntregaModo: (m: "meu_endereco" | "orgao" | "outro") => void;
+  orgaoDestino: string | null;
+  onPickOrgaoDestino: (nome: string) => void;
+  meuEndereco: string | null;
+  sala: string;
+  setSala: (v: string) => void;
+  responsavel: string;
+  setResponsavel: (v: string) => void;
 }) {
   const { c } = props;
   const isPegue = props.mode === "pegue_ali";
