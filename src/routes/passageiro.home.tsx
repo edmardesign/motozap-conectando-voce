@@ -111,6 +111,23 @@ const TIPOS_DEMANDA: { id: TipoDemanda; label: string; Icon: typeof FileText }[]
   { id: "encomendas", label: "Encomendas", Icon: Package },
 ];
 
+// ===== Órgãos / unidades pré-definidos do município =====
+const ORGAOS: string[] = [
+  "Prefeitura",
+  "PSF Bombinha",
+  "PSF Tiracol",
+  "PSF Coqueiro",
+  "PSF Riacho",
+  "UPA",
+  "Secretaria de Saúde",
+  "Secretaria de Esporte",
+  "Secretaria de Transporte",
+  "Tributos",
+  "Finanças",
+  "Anexo",
+  "Posto de Saúde",
+];
+
 // ===== Map icon helpers =====
 function emojiIcon(emoji: string, size = 38, ring?: string) {
   const html = `<div style="display:flex;align-items:center;justify-content:center;width:${size}px;height:${size}px;border-radius:50%;background:#ffffff;box-shadow:0 2px 6px rgba(0,0,0,0.35);font-size:${size * 0.55}px;line-height:1;${
@@ -184,6 +201,20 @@ function PassageiroHomePage() {
   const [cidadeId, setCidadeId] = useState<string | null>(null);
   const [bairros, setBairros] = useState<Bairro[]>([]);
   const [contadorBrinde, setContadorBrinde] = useState(0);
+
+  // fluxo institucional (coleta/entrega em órgãos)
+  const [origemModo, setOrigemModo] = useState<"orgao" | "outro">("orgao");
+  const [orgaoOrigem, setOrgaoOrigem] = useState<string | null>(null);
+  const [entregaModo, setEntregaModo] = useState<"meu_endereco" | "orgao" | "outro">("orgao");
+  const [orgaoDestino, setOrgaoDestino] = useState<string | null>(null);
+  const [salaEntrega, setSalaEntrega] = useState("");
+  const [responsavelEntrega, setResponsavelEntrega] = useState("");
+  const [meuEndereco, setMeuEndereco] = useState<{
+    display: string;
+    coords: { lat: number; lng: number };
+    bairro: string | null;
+  } | null>(null);
+  const [buscandoOrgaoOrigem, setBuscandoOrgaoOrigem] = useState<string | null>(null);
 
   // origem
   const [origem, setOrigem] = useState("");
@@ -338,6 +369,9 @@ function PassageiroHomePage() {
       const { display, bairro } = await reverseToAddress(coords.lat, coords.lng);
       setOrigem(display);
       setBairroOrigem(matchBairro(bairros, bairro));
+      setOrigemModo("outro");
+      setOrgaoOrigem(null);
+      setMeuEndereco({ display, coords, bairro: matchBairro(bairros, bairro) });
     } finally {
       setDetectingOrigin(false);
     }
@@ -620,6 +654,73 @@ function PassageiroHomePage() {
       setBuscandoLugar(null);
     }
   }
+
+  /** Coleta em órgão pré-definido (geocode best-effort — nome sempre prevalece). */
+  async function selecionarOrgaoOrigem(nome: string) {
+    setOrigemModo("orgao");
+    setOrgaoOrigem(nome);
+    setOrigem(nome);
+    setOrigemCoords(null);
+    setBairroOrigem(null);
+    if (!profile?.cidade || !profile?.estado) return;
+    setBuscandoOrgaoOrigem(nome);
+    try {
+      const res = await searchSuggestions(nome, profile.cidade, profile.estado);
+      if (res[0]) {
+        setOrigemCoords({ lat: Number(res[0].lat), lng: Number(res[0].lon) });
+        setBairroOrigem(matchBairro(bairros, extractBairro(res[0])));
+      }
+    } catch {
+      /* geocode é opcional */
+    } finally {
+      setBuscandoOrgaoOrigem(null);
+    }
+  }
+
+  /** Entrega em órgão pré-definido. */
+  async function selecionarOrgaoDestino(nome: string) {
+    setEntregaModo("orgao");
+    setOrgaoDestino(nome);
+    setDestino(nome);
+    setDestinoCoords(null);
+    setBairroDestino(null);
+    if (!profile?.cidade || !profile?.estado) return;
+    setBuscandoLugar(nome);
+    try {
+      const res = await searchSuggestions(nome, profile.cidade, profile.estado);
+      if (res[0]) {
+        setDestinoCoords({ lat: Number(res[0].lat), lng: Number(res[0].lon) });
+        setBairroDestino(matchBairro(bairros, extractBairro(res[0])));
+      }
+    } catch {
+      /* geocode é opcional */
+    } finally {
+      setBuscandoLugar(null);
+    }
+  }
+
+  /** Entrega no endereço já identificado do servidor. */
+  async function usarMeuEnderecoNaEntrega() {
+    setEntregaModo("meu_endereco");
+    setOrgaoDestino(null);
+    if (meuEndereco) {
+      setDestino(meuEndereco.display);
+      setDestinoCoords(meuEndereco.coords);
+      setBairroDestino(meuEndereco.bairro);
+      return;
+    }
+    const coords = await geo.request();
+    if (!coords) {
+      toast.error("Não consegui identificar seu endereço. Escolha 'Outro local'.");
+      return;
+    }
+    const { display, bairro } = await reverseToAddress(coords.lat, coords.lng);
+    const b = matchBairro(bairros, bairro);
+    setMeuEndereco({ display, coords, bairro: b });
+    setDestino(display);
+    setDestinoCoords(coords);
+    setBairroDestino(b);
+  }
   async function pickOrigemSuggestion(s: NominatimResult) {
     const lat = Number(s.lat);
     const lng = Number(s.lon);
@@ -633,8 +734,8 @@ function PassageiroHomePage() {
   // ----- Chamar mototaxi -----
   async function callRide() {
     if (!user || !profile?.cidade) return;
-    if (!origemCoords) return toast.error("Selecione o local de coleta na lista.");
-    if (!destinoCoords) return toast.error("Selecione o local de entrega na lista.");
+    if (!origem.trim()) return toast.error("Informe o local de coleta.");
+    if (!destino.trim()) return toast.error("Informe o local de entrega.");
     if (!tipoDemanda) return toast.error("Selecione o tipo de solicitação.");
     const ehGratuita = contadorBrinde >= 10;
     const valor = ehGratuita ? 0 : tarifaInfo?.total ?? 0;
@@ -654,7 +755,7 @@ function PassageiroHomePage() {
         .eq("passageiro_id", user.id);
       const existing = ((mine ?? []) as any[]).find((d) => {
         if (d.endereco && d.endereco.toLowerCase() === destino.toLowerCase()) return true;
-        if (d.latitude && d.longitude) {
+        if (destinoCoords && d.latitude && d.longitude) {
           const km = haversine(d.latitude, d.longitude, destinoCoords.lat, destinoCoords.lng);
           return km < 0.1;
         }
@@ -672,8 +773,8 @@ function PassageiroHomePage() {
         await (supabase as any).from("destinos_passageiro").insert({
           passageiro_id: user.id,
           endereco: destino,
-          latitude: destinoCoords.lat,
-          longitude: destinoCoords.lng,
+          latitude: destinoCoords?.lat ?? null,
+          longitude: destinoCoords?.lng ?? null,
           vezes_usado: 1,
           ultima_vez_usado: new Date().toISOString(),
         });
@@ -698,6 +799,8 @@ function PassageiroHomePage() {
         status: "aguardando" as const,
         descricao: [
           tipoDemanda ? TIPOS_DEMANDA.find((t) => t.id === tipoDemanda)?.label : null,
+          salaEntrega.trim() ? `Sala: ${salaEntrega.trim()}` : null,
+          responsavelEntrega.trim() ? `Responsável: ${responsavelEntrega.trim()}` : null,
           observacao.trim() || null,
         ]
           .filter(Boolean)
@@ -1239,6 +1342,38 @@ function PassageiroHomePage() {
               setTipo={setTipoDemanda}
               observacao={observacao}
               setObservacao={setObservacao}
+              orgaos={ORGAOS}
+              origemModo={origemModo}
+              setOrigemModo={(m) => {
+                setOrigemModo(m);
+                if (m === "outro") {
+                  setOrgaoOrigem(null);
+                  setOrigem("");
+                  setOrigemCoords(null);
+                  setBairroOrigem(null);
+                }
+              }}
+              orgaoOrigem={orgaoOrigem}
+              onPickOrgaoOrigem={selecionarOrgaoOrigem}
+              buscandoOrgaoOrigem={buscandoOrgaoOrigem}
+              entregaModo={entregaModo}
+              setEntregaModo={(m) => {
+                if (m === "meu_endereco") return void usarMeuEnderecoNaEntrega();
+                setEntregaModo(m);
+                if (m === "outro") {
+                  setOrgaoDestino(null);
+                  setDestino("");
+                  setDestinoCoords(null);
+                  setBairroDestino(null);
+                }
+              }}
+              orgaoDestino={orgaoDestino}
+              onPickOrgaoDestino={selecionarOrgaoDestino}
+              meuEndereco={meuEndereco?.display ?? null}
+              sala={salaEntrega}
+              setSala={setSalaEntrega}
+              responsavel={responsavelEntrega}
+              setResponsavel={setResponsavelEntrega}
             />
           )}
 
@@ -1422,10 +1557,25 @@ function SetupPanel(props: {
   setTipo: (t: TipoDemanda) => void;
   observacao: string;
   setObservacao: (v: string) => void;
+  orgaos: string[];
+  origemModo: "orgao" | "outro";
+  setOrigemModo: (m: "orgao" | "outro") => void;
+  orgaoOrigem: string | null;
+  onPickOrgaoOrigem: (nome: string) => void;
+  buscandoOrgaoOrigem: string | null;
+  entregaModo: "meu_endereco" | "orgao" | "outro";
+  setEntregaModo: (m: "meu_endereco" | "orgao" | "outro") => void;
+  orgaoDestino: string | null;
+  onPickOrgaoDestino: (nome: string) => void;
+  meuEndereco: string | null;
+  sala: string;
+  setSala: (v: string) => void;
+  responsavel: string;
+  setResponsavel: (v: string) => void;
 }) {
   const { c } = props;
   const isPegue = props.mode === "pegue_ali";
-  const canCall = !!props.origemCoords && !!props.destinoCoords && !!props.tipo;
+  const canCall = !!props.origem.trim() && !!props.destino.trim() && !!props.tipo;
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   // Placeholder rotativo do textarea "O que buscar?"
   const PLACEHOLDERS = [
@@ -1474,11 +1624,46 @@ function SetupPanel(props: {
         })}
       </div>
 
-      <div className="text-xs font-medium px-1 pt-1" style={{ color: c.textMuted }}>
-        De onde será coletado?
+      <div className="text-xs font-semibold px-1 pt-1" style={{ color: c.text }}>
+        Busque em:
+      </div>
+      <div className="flex flex-wrap gap-1.5">
+        {props.orgaos.map((o) => {
+          const active = props.origemModo === "orgao" && props.orgaoOrigem === o;
+          return (
+            <button
+              key={o}
+              type="button"
+              onClick={() => props.onPickOrgaoOrigem(o)}
+              className="rounded-full px-3 py-1.5 text-xs font-medium transition active:scale-[0.97] flex items-center gap-1.5"
+              style={{
+                background: active ? c.btn : c.cardBg,
+                color: active ? c.btnText : c.text,
+                border: `1px solid ${active ? c.btn : c.divider}`,
+              }}
+            >
+              {props.buscandoOrgaoOrigem === o && <Loader2 size={12} className="animate-spin" />}
+              {o}
+            </button>
+          );
+        })}
+        <button
+          type="button"
+          onClick={() => props.setOrigemModo("outro")}
+          className="rounded-full px-3 py-1.5 text-xs font-medium"
+          style={{
+            background: props.origemModo === "outro" ? c.btn : c.cardBg,
+            color: props.origemModo === "outro" ? c.btnText : c.text,
+            border: `1px solid ${props.origemModo === "outro" ? c.btn : c.divider}`,
+          }}
+        >
+          Outro local
+        </button>
       </div>
 
-      {/* Origem */}
+
+      {/* Origem (livre) */}
+      {props.origemModo === "outro" && (
       <div className="relative">
         <div
           className="rounded-2xl p-3 flex items-center gap-2"
@@ -1531,6 +1716,7 @@ function SetupPanel(props: {
           </div>
         )}
       </div>
+      )}
 
       {/* Meus destinos */}
       {!isPegue && props.destinos.length > 0 && (
@@ -1778,11 +1964,69 @@ function SetupPanel(props: {
         </div>
       )}
 
-      <div className="text-xs font-medium px-1" style={{ color: c.textMuted }}>
-        Para onde será levado?
+      <div className="text-xs font-semibold px-1" style={{ color: c.text }}>
+        Entregar em:
       </div>
 
-      {/* Destino */}
+      <button
+        type="button"
+        onClick={() => props.setEntregaModo("meu_endereco")}
+        className="w-full text-left rounded-2xl px-3 py-2.5 flex items-center gap-2.5 text-sm transition active:scale-[0.99]"
+        style={{
+          background: props.entregaModo === "meu_endereco" ? "rgba(61,181,74,0.08)" : c.cardBg,
+          border: `1px solid ${props.entregaModo === "meu_endereco" ? c.btn : c.divider}`,
+          color: c.text,
+        }}
+      >
+        <MapPin size={16} style={{ color: c.btn }} />
+        <div className="flex-1 min-w-0">
+          <div className="font-medium">Trazer para meu endereço</div>
+          <div className="truncate text-[11px]" style={{ color: c.textMuted }}>
+            {props.meuEndereco ?? "Identificando seu endereço…"}
+          </div>
+        </div>
+      </button>
+
+      <div className="text-xs font-medium px-1" style={{ color: c.textMuted }}>
+        Ou levar em:
+      </div>
+
+      <div className="flex flex-wrap gap-1.5">
+        {props.orgaos.map((o) => {
+          const active = props.entregaModo === "orgao" && props.orgaoDestino === o;
+          return (
+            <button
+              key={o}
+              type="button"
+              onClick={() => props.onPickOrgaoDestino(o)}
+              className="rounded-full px-3 py-1.5 text-xs font-medium transition active:scale-[0.97] flex items-center gap-1.5"
+              style={{
+                background: active ? c.btn : c.cardBg,
+                color: active ? c.btnText : c.text,
+                border: `1px solid ${active ? c.btn : c.divider}`,
+              }}
+            >
+              {props.buscandoLugar === o && <Loader2 size={12} className="animate-spin" />}
+              {o}
+            </button>
+          );
+        })}
+        <button
+          type="button"
+          onClick={() => props.setEntregaModo("outro")}
+          className="rounded-full px-3 py-1.5 text-xs font-medium"
+          style={{
+            background: props.entregaModo === "outro" ? c.btn : c.cardBg,
+            color: props.entregaModo === "outro" ? c.btnText : c.text,
+            border: `1px solid ${props.entregaModo === "outro" ? c.btn : c.divider}`,
+          }}
+        >
+          Outro local
+        </button>
+      </div>
+
+      {/* Destino (livre) */}
+      {props.entregaModo === "outro" && (
       <div className="relative">
         <div
           className="rounded-2xl p-3 flex items-center gap-2"
@@ -1831,6 +2075,37 @@ function SetupPanel(props: {
           </div>
         )}
       </div>
+      )}
+
+      {/* Sala e responsável */}
+      <div className="grid grid-cols-2 gap-2">
+        <label className="block">
+          <span className="text-xs font-medium px-1 block mb-1" style={{ color: c.textMuted }}>
+            Entregar em sala de:
+          </span>
+          <input
+            value={props.sala}
+            onChange={(e) => props.setSala(e.target.value.slice(0, 60))}
+            placeholder="Ex.: Sala 02 — Recepção"
+            className="w-full rounded-2xl p-3 text-sm outline-none"
+            style={{ background: c.cardBg, color: c.text, border: `1px solid ${c.divider}` }}
+          />
+        </label>
+        <label className="block">
+          <span className="text-xs font-medium px-1 block mb-1" style={{ color: c.textMuted }}>
+            Responsável:
+          </span>
+          <input
+            value={props.responsavel}
+            onChange={(e) => props.setResponsavel(e.target.value.slice(0, 60))}
+            placeholder="Ex.: Maria Silva"
+            className="w-full rounded-2xl p-3 text-sm outline-none"
+            style={{ background: c.cardBg, color: c.text, border: `1px solid ${c.divider}` }}
+          />
+        </label>
+      </div>
+
+
 
 
       {/* Observação */}
