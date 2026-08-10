@@ -799,6 +799,8 @@ function PassageiroHomePage() {
         status: "aguardando" as const,
         descricao: [
           tipoDemanda ? TIPOS_DEMANDA.find((t) => t.id === tipoDemanda)?.label : null,
+          salaEntrega.trim() ? `Sala: ${salaEntrega.trim()}` : null,
+          responsavelEntrega.trim() ? `Responsável: ${responsavelEntrega.trim()}` : null,
           observacao.trim() || null,
         ]
           .filter(Boolean)
