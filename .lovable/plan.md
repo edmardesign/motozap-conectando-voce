@@ -1,57 +1,38 @@
-# Estrutura: 3 PWAs no mesmo projeto
+# Plano de Ação: Intergo Logística - Reorganização e Expansão
 
-**Um repositório, três experiências instaláveis** — cada subdomínio se comporta como um app independente, com seu próprio ícone, nome, tela inicial e rotas visíveis, mas todos compartilham o mesmo backend (Cloud/Supabase).
+Vou transformar o projeto em um hub completo de logística institucional e mobilidade urbana, reorganizando a arquitetura atual para suportar os novos fluxos sem quebrar o que já existe.
 
-## Domínios finais
+## 1. Identidade e SEO
+- **Rebranding Global:** Atualizar meta tags, `title` em `__root.tsx`, e textos institucionais para "Intergo Logística".
+- **Slogan:** Implementar "Sua plataforma completa de logística e mobilidade urbana".
+- **Splash Screen:** Refinar animação de abertura e labels no seletor inicial.
 
-- `boraze.app` (raiz) — mantém splash atual com escolha de perfil (fallback / marketing)
-- `passageiro.boraze.app` — PWA do Passageiro
-- `mototaxista.boraze.app` — PWA do Mototaxista
-- `admin.boraze.app` — Painel Administrativo
+## 2. Reorganização da Home (Hub de Serviços)
+- **Novo Layout Hub:** Criar `src/routes/hub.tsx` (ou refatorar a index) com dois blocos principais:
+    - **Logística Institucional:** Transporte de Servidores (renomear labels), Solicitação Institucional, Frotas/Relatórios.
+    - **Mobilidade Urbana:** Novos cards para Automóvel e Mototáxi (particular).
+- **Seletor de Perfil:** Implementar interface de entrada clara: "Sou Servidor", "Sou Passageiro Comum", "Sou Motorista".
 
-> Você precisa **comprar/conectar o domínio boraze.app** em Project Settings → Domains e adicionar cada subdomínio como CNAME apontando para o Lovable. Sem isso, todos os subdomínios só existem em código — a configuração DNS é passo separado que você faz depois do deploy.
+## 3. Módulo de Mobilidade Urbana (Particular)
+- **Fluxo do Cliente:**
+    - Mapa interativo (Leaflet) integrado à seleção de serviço.
+    - Fluxo de solicitação: Seleção de destino -> Estimativa -> Chamada -> Acompanhamento.
+    - Status da corrida: Procurando -> A caminho -> Em viagem -> Concluída.
+- **Fluxo do Motorista:**
+    - Cadastro unificado: Dados pessoais, CNH, Documentos do Veículo (Carro/Moto).
+    - Painel do Motorista: Gerenciamento de disponibilidade, aceitação de corridas e extrato de ganhos.
 
-## O que muda no código
+## 4. Navegação e UX
+- **Bottom Nav Unificada:** Home, Serviços, Minhas Viagens, Carteira, Perfil.
+- **Design System:** Consolidar paleta (Branco #FFFFFF / Verde #3DB54A) e padrões Apple (bordas arredondadas, spring animations).
+- **Responsividade:** Garantir experiência Mobile-first e compatibilidade Desktop (menu lateral).
 
-### 1. Três manifests separados (`public/`)
-- `manifest-passageiro.webmanifest` — nome "Bora Zé! Passageiro", `start_url: /passageiro/home`, ícone verde
-- `manifest-mototaxista.webmanifest` — nome "Bora Zé! Mototaxista", `start_url: /mototaxista/home`, ícone verde
-- `manifest-admin.webmanifest` — nome "Bora Zé! Admin", `start_url: /admin`, ícone escuro
-- Cada um com `scope` limitado ao seu prefixo → o SO trata como app separado
+## 5. Qualidade e Segurança
+- **Segurança:** Revisar RLS nas tabelas e garantir que apenas usuários autorizados acessem o painel administrativo.
+- **Error Handling:** Implementar página 404 personalizada e amigável.
+- **Limpeza:** Remover rotas legadas e componentes órfãos.
 
-### 2. Detecção de subdomínio em `__root.tsx`
-- Ler `window.location.hostname` no cliente
-- Injetar dinamicamente a tag `<link rel="manifest">` correta
-- Ajustar `<title>` e theme-color por perfil
-
-### 3. Guard de rota por subdomínio (novo hook `useSubdomainGuard`)
-- Em `passageiro.boraze.app` → rotas `/mototaxista/*` e `/admin` redirecionam para `/passageiro/home` (ou splash)
-- Em `mototaxista.boraze.app` → só permite `/mototaxista/*`
-- Em `admin.boraze.app` → só permite `/admin` e `/auth`
-- Em `boraze.app` (raiz) → tudo liberado (splash escolhe)
-
-### 4. Splash inteligente
-- Se estiver no subdomínio do passageiro, splash pula direto para `/auth/passageiro`
-- Idem para mototaxista e admin
-- Só o domínio raiz mostra as 3 opções
-
-### 5. Logo Bora Zé! (já aplicado nesta rodada)
-- `src/assets/boraze-logo.png` (logo completa)
-- `src/assets/boraze-icon.png` (ícone quadrado para PWA/favicon)
-
-## O que NÃO muda
-
-- Backend, tabelas, RLS, RPCs, MCP, fluxos de auth, pagamento Pix, comissão, delivery — tudo continua igual
-- Não vou separar em dois projetos Lovable diferentes (você teria dois backends para manter em sincronia)
-- Não vou gerar builds nativos (Capacitor) — isso é outro projeto se quiser lojas
-
-## Passos técnicos (ordem)
-
-1. Criar 3 manifests em `public/`
-2. Criar `src/lib/subdomain.ts` (detecta perfil pelo hostname)
-3. Atualizar `__root.tsx` para injetar manifest/title dinâmicos
-4. Criar `src/hooks/use-subdomain-guard.ts` e aplicar no `_root` component
-5. Ajustar `splash.tsx` para pular etapa quando já em subdomínio dedicado
-6. Documentar em README como configurar os DNS
-
-Confirma que sigo com essa arquitetura? Depois disso é seu trabalho conectar o domínio boraze.app no Project Settings e criar os CNAMEs — te passo o passo-a-passo quando terminar o código.
+## Detalhes Técnicos
+- **TanStack Router:** Organização de rotas em `/passageiro/*` (comum), `/servidor/*` (institucional) e `/motorista/*`.
+- **Supabase:** Extensão da tabela de perfis para incluir `tipo_usuario` e `veiculo_tipo`.
+- **Framer Motion:** Uso de `animate-apple-*` tokens para transições fluidas.
