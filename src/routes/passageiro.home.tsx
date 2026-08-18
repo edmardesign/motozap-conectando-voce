@@ -24,7 +24,7 @@ export const Route = createFileRoute("/passageiro/home")({
 });
 
 export function IntergoHubPage() {
-  const { user, signOut } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [userName, setUserName] = useState("Servidor");
 
@@ -35,7 +35,7 @@ export function IntergoHubPage() {
   }, [user]);
 
   const handleLogout = async () => {
-    await signOut();
+    await supabase.auth.signOut();
     navigate({ to: "/splash" });
     toast.success("Até logo!");
   };
@@ -98,7 +98,7 @@ export function IntergoHubPage() {
               <HubSmallCard 
                 title="Frota"
                 icon={ShieldCheck}
-                onClick={() => navigate({ to: "/passageiro/corridas" })}
+                onClick={() => navigate({ to: "/passageiro/corridas", search: {} as any })}
               />
               <HubSmallCard 
                 title="Relatórios"
