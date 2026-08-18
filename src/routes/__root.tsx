@@ -8,7 +8,7 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
-import { Toaster } from "@/components/ui/sonner";
+
 import { supabase } from "@/integrations/supabase/client";
 import { useSubdomainGuard } from "@/hooks/use-subdomain-guard";
 
@@ -161,7 +161,7 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
-      <Toaster position="top-right" richColors theme="dark" duration={4000} />
+      
     </QueryClientProvider>
   );
 }
