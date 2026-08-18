@@ -54,7 +54,7 @@ export function PassageiroTabBar() {
             key={t.id}
             type="button"
             onClick={() =>
-              navigate({ to: t.to, search: (t.search ?? {}) as never })
+              navigate({ to: t.to, search: (t.search ?? {}) as any })
             }
             className="flex-1 relative flex flex-col items-center justify-center gap-1 py-2.5 transition-colors"
             style={{ color: isActive ? "#3DB54A" : "#6B6B6B" }}
@@ -75,5 +75,3 @@ export function PassageiroTabBar() {
     </nav>
   );
 }
-
-export const PASSAGEIRO_TABBAR_HEIGHT = 64;
