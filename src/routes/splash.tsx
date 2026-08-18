@@ -55,13 +55,13 @@ function Splash() {
               to="/cadastro/passageiro"
               className="animate-apple-rise stagger-1 btn-hero w-full"
             >
-              Pedir mototáxi
+              Sou Servidor
             </Link>
             <Link
               to="/mototaxista/auth"
               className="animate-apple-rise stagger-2 btn-outline-neon w-full"
             >
-              Sou mototaxista
+              Sou Motorista
             </Link>
             {canInstall && (
               <button

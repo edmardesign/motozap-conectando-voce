@@ -18,10 +18,10 @@ import { EmojiIcon } from "@/components/emoji-icon";
 export const Route = createFileRoute("/mototaxista/cadastro")({
   head: () => ({
     meta: [
-      { title: "Cadastro de Mototaxista" },
+      { title: "Cadastro de Motorista — Intergo Logística" },
       {
         name: "description",
-        content: "Crie sua conta de mototaxista no InterGO em poucos passos.",
+        content: "Crie sua conta de motorista no Intergo Logística em poucos passos.",
       },
     ],
   }),
