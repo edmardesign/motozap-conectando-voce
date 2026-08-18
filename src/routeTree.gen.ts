@@ -25,6 +25,7 @@ import { Route as PassageiroIndexRouteImport } from './routes/passageiro.index'
 import { Route as MototaxistaIndexRouteImport } from './routes/mototaxista.index'
 import { Route as CidadeIndexRouteImport } from './routes/cidade.index'
 import { Route as PassageiroPerfilRouteImport } from './routes/passageiro.perfil'
+import { Route as PassageiroHomeRouteImport } from './routes/passageiro.home'
 import { Route as PassageiroCorridasRouteImport } from './routes/passageiro.corridas'
 import { Route as PassageiroCarteiraRouteImport } from './routes/passageiro.carteira'
 import { Route as MototaxistaPlanosRouteImport } from './routes/mototaxista.planos'
@@ -128,6 +129,11 @@ const CidadeIndexRoute = CidadeIndexRouteImport.update({
 const PassageiroPerfilRoute = PassageiroPerfilRouteImport.update({
   id: '/passageiro/perfil',
   path: '/passageiro/perfil',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PassageiroHomeRoute = PassageiroHomeRouteImport.update({
+  id: '/passageiro/home',
+  path: '/passageiro/home',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PassageiroCorridasRoute = PassageiroCorridasRouteImport.update({
@@ -291,6 +297,7 @@ export interface FileRoutesByFullPath {
   '/mototaxista/planos': typeof MototaxistaPlanosRoute
   '/passageiro/carteira': typeof PassageiroCarteiraRoute
   '/passageiro/corridas': typeof PassageiroCorridasRoute
+  '/passageiro/home': typeof PassageiroHomeRoute
   '/passageiro/perfil': typeof PassageiroPerfilRoute
   '/cidade/': typeof CidadeIndexRoute
   '/mototaxista/': typeof MototaxistaIndexRoute
@@ -332,6 +339,7 @@ export interface FileRoutesByTo {
   '/mototaxista/planos': typeof MototaxistaPlanosRoute
   '/passageiro/carteira': typeof PassageiroCarteiraRoute
   '/passageiro/corridas': typeof PassageiroCorridasRoute
+  '/passageiro/home': typeof PassageiroHomeRoute
   '/passageiro/perfil': typeof PassageiroPerfilRoute
   '/cidade': typeof CidadeIndexRoute
   '/mototaxista': typeof MototaxistaIndexRoute
@@ -376,6 +384,7 @@ export interface FileRoutesById {
   '/mototaxista/planos': typeof MototaxistaPlanosRoute
   '/passageiro/carteira': typeof PassageiroCarteiraRoute
   '/passageiro/corridas': typeof PassageiroCorridasRoute
+  '/passageiro/home': typeof PassageiroHomeRoute
   '/passageiro/perfil': typeof PassageiroPerfilRoute
   '/cidade/': typeof CidadeIndexRoute
   '/mototaxista/': typeof MototaxistaIndexRoute
@@ -420,6 +429,7 @@ export interface FileRouteTypes {
     | '/mototaxista/planos'
     | '/passageiro/carteira'
     | '/passageiro/corridas'
+    | '/passageiro/home'
     | '/passageiro/perfil'
     | '/cidade/'
     | '/mototaxista/'
@@ -461,6 +471,7 @@ export interface FileRouteTypes {
     | '/mototaxista/planos'
     | '/passageiro/carteira'
     | '/passageiro/corridas'
+    | '/passageiro/home'
     | '/passageiro/perfil'
     | '/cidade'
     | '/mototaxista'
@@ -504,6 +515,7 @@ export interface FileRouteTypes {
     | '/mototaxista/planos'
     | '/passageiro/carteira'
     | '/passageiro/corridas'
+    | '/passageiro/home'
     | '/passageiro/perfil'
     | '/cidade/'
     | '/mototaxista/'
@@ -546,6 +558,7 @@ export interface RootRouteChildren {
   MototaxistaPlanosRoute: typeof MototaxistaPlanosRoute
   PassageiroCarteiraRoute: typeof PassageiroCarteiraRoute
   PassageiroCorridasRoute: typeof PassageiroCorridasRoute
+  PassageiroHomeRoute: typeof PassageiroHomeRoute
   PassageiroPerfilRoute: typeof PassageiroPerfilRoute
   MototaxistaIndexRoute: typeof MototaxistaIndexRoute
   PassageiroIndexRoute: typeof PassageiroIndexRoute
@@ -665,6 +678,13 @@ declare module '@tanstack/react-router' {
       path: '/passageiro/perfil'
       fullPath: '/passageiro/perfil'
       preLoaderRoute: typeof PassageiroPerfilRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/passageiro/home': {
+      id: '/passageiro/home'
+      path: '/passageiro/home'
+      fullPath: '/passageiro/home'
+      preLoaderRoute: typeof PassageiroHomeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/passageiro/corridas': {
@@ -915,6 +935,7 @@ const rootRouteChildren: RootRouteChildren = {
   MototaxistaPlanosRoute: MototaxistaPlanosRoute,
   PassageiroCarteiraRoute: PassageiroCarteiraRoute,
   PassageiroCorridasRoute: PassageiroCorridasRoute,
+  PassageiroHomeRoute: PassageiroHomeRoute,
   PassageiroPerfilRoute: PassageiroPerfilRoute,
   MototaxistaIndexRoute: MototaxistaIndexRoute,
   PassageiroIndexRoute: PassageiroIndexRoute,
