@@ -306,3 +306,16 @@ body { overflow-x: hidden; }
     animation: none !important;
   }
 }
+
+/* Ocultar elementos de edição do Lovable em produção/preview */
+[class*="lovable-edit"], 
+[id*="lovable-edit"], 
+[data-lovable-edit],
+button[title*="Lovable"],
+.lovable-toolbar,
+#lovable-toolbar {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
