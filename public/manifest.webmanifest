@@ -1,12 +1,12 @@
 {
-  "name": "InterGO",
-  "short_name": "InterGO",
-  "description": "Mototáxi rápido para a sua cidade",
+  "name": "Intergo Logística",
+  "short_name": "Intergo",
+  "description": "Logística e mobilidade urbana inteligente.",
   "start_url": "/splash",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#0F0F10",
+  "background_color": "#FFFFFF",
   "theme_color": "#3DB54A",
   "icons": [
     {

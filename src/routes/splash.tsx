@@ -8,8 +8,8 @@ import { BoraZeIntroAnimation } from "@/components/boraze-intro-animation";
 export const Route = createFileRoute("/splash")({
   head: () => ({
     meta: [
-      { title: "InterGO — Mototáxi rápido na sua cidade" },
-      { name: "description", content: "InterGO: peça mototáxi em minutos nas cidades do interior. Para passageiros e mototaxistas." },
+      { title: "Intergo Logística — Sua plataforma completa de logística e mobilidade urbana" },
+      { name: "description", content: "Intergo Logística: Mobilidade inteligente para servidores e cidadãos." },
     ],
   }),
   component: Splash,
@@ -55,13 +55,13 @@ function Splash() {
               to="/cadastro/passageiro"
               className="animate-apple-rise stagger-1 btn-hero w-full"
             >
-              Pedir mototáxi
+              Sou Servidor
             </Link>
             <Link
               to="/mototaxista/auth"
               className="animate-apple-rise stagger-2 btn-outline-neon w-full"
             >
-              Sou mototaxista
+              Sou Motorista
             </Link>
             {canInstall && (
               <button

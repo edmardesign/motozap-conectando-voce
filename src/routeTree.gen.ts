@@ -14,6 +14,7 @@ import { Route as SplashRouteImport } from './routes/splash'
 import { Route as PrivacidadeRouteImport } from './routes/privacidade'
 import { Route as MototaxiRouteImport } from './routes/mototaxi'
 import { Route as McpRouteImport } from './routes/mcp'
+import { Route as HubRouteImport } from './routes/hub'
 import { Route as CidadeRouteImport } from './routes/cidade'
 import { Route as AdministradorRouteImport } from './routes/administrador'
 import { Route as AdminRouteImport } from './routes/admin'
@@ -74,6 +75,11 @@ const MototaxiRoute = MototaxiRouteImport.update({
 const McpRoute = McpRouteImport.update({
   id: '/mcp',
   path: '/mcp',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HubRoute = HubRouteImport.update({
+  id: '/hub',
+  path: '/hub',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CidadeRoute = CidadeRouteImport.update({
@@ -265,6 +271,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRoute
   '/administrador': typeof AdministradorRoute
   '/cidade': typeof CidadeRouteWithChildren
+  '/hub': typeof HubRoute
   '/mcp': typeof McpRoute
   '/mototaxi': typeof MototaxiRoute
   '/privacidade': typeof PrivacidadeRoute
@@ -306,6 +313,7 @@ export interface FileRoutesByTo {
   '/adm': typeof AdmRouteWithChildren
   '/admin': typeof AdminRoute
   '/administrador': typeof AdministradorRoute
+  '/hub': typeof HubRoute
   '/mcp': typeof McpRoute
   '/mototaxi': typeof MototaxiRoute
   '/privacidade': typeof PrivacidadeRoute
@@ -350,6 +358,7 @@ export interface FileRoutesById {
   '/admin': typeof AdminRoute
   '/administrador': typeof AdministradorRoute
   '/cidade': typeof CidadeRouteWithChildren
+  '/hub': typeof HubRoute
   '/mcp': typeof McpRoute
   '/mototaxi': typeof MototaxiRoute
   '/privacidade': typeof PrivacidadeRoute
@@ -394,6 +403,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/administrador'
     | '/cidade'
+    | '/hub'
     | '/mcp'
     | '/mototaxi'
     | '/privacidade'
@@ -435,6 +445,7 @@ export interface FileRouteTypes {
     | '/adm'
     | '/admin'
     | '/administrador'
+    | '/hub'
     | '/mcp'
     | '/mototaxi'
     | '/privacidade'
@@ -478,6 +489,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/administrador'
     | '/cidade'
+    | '/hub'
     | '/mcp'
     | '/mototaxi'
     | '/privacidade'
@@ -522,6 +534,7 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRoute
   AdministradorRoute: typeof AdministradorRoute
   CidadeRoute: typeof CidadeRouteWithChildren
+  HubRoute: typeof HubRoute
   McpRoute: typeof McpRoute
   MototaxiRoute: typeof MototaxiRoute
   PrivacidadeRoute: typeof PrivacidadeRoute
@@ -588,6 +601,13 @@ declare module '@tanstack/react-router' {
       path: '/mcp'
       fullPath: '/mcp'
       preLoaderRoute: typeof McpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hub': {
+      id: '/hub'
+      path: '/hub'
+      fullPath: '/hub'
+      preLoaderRoute: typeof HubRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cidade': {
@@ -890,6 +910,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRoute,
   AdministradorRoute: AdministradorRoute,
   CidadeRoute: CidadeRouteWithChildren,
+  HubRoute: HubRoute,
   McpRoute: McpRoute,
   MototaxiRoute: MototaxiRoute,
   PrivacidadeRoute: PrivacidadeRoute,
