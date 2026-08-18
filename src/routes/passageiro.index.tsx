@@ -20,7 +20,7 @@ export const Route = createFileRoute("/passageiro/")({
   component: () => (
     <PublicLanding
       persona="passageiro"
-      title="SERVIDOR PÚBLICO"
+      title="SOU SERVIDOR"
       subtitle="Solicite transporte institucional em minutos"
       iconUrl={iconPax.url}
       accent="#3DB54A"

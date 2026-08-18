@@ -11,7 +11,7 @@ export const Route = createFileRoute("/auth/passageiro")({
   component: () => (
     <AuthForm
       role="passageiro"
-      title="Sou Passageiro"
+      title="Sou Servidor"
       redirectTo="/passageiro/home"
       formMode="login"
       signupRedirectTo="/cadastro/passageiro"
