@@ -36,7 +36,7 @@ import {
 import { EmojiIcon } from "@/components/emoji-icon";
 import logoIntergo from "@/assets/intergo-logo-white.png.asset.json";
 
-export const Route = createFileRoute("/passageiro/home")({
+export const Route = createFileRoute("/hub")({
   component: PassageiroHomePage,
   ssr: false,
 });

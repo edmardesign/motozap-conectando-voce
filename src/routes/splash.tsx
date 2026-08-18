@@ -8,8 +8,8 @@ import { BoraZeIntroAnimation } from "@/components/boraze-intro-animation";
 export const Route = createFileRoute("/splash")({
   head: () => ({
     meta: [
-      { title: "InterGO — Mototáxi rápido na sua cidade" },
-      { name: "description", content: "InterGO: peça mototáxi em minutos nas cidades do interior. Para passageiros e mototaxistas." },
+      { title: "Intergo Logística — Sua plataforma completa de logística e mobilidade urbana" },
+      { name: "description", content: "Intergo Logística: Mobilidade inteligente para servidores e cidadãos." },
     ],
   }),
   component: Splash,

@@ -14,6 +14,7 @@ import { Route as SplashRouteImport } from './routes/splash'
 import { Route as PrivacidadeRouteImport } from './routes/privacidade'
 import { Route as MototaxiRouteImport } from './routes/mototaxi'
 import { Route as McpRouteImport } from './routes/mcp'
+import { Route as HubRouteImport } from './routes/hub'
 import { Route as CidadeRouteImport } from './routes/cidade'
 import { Route as AdministradorRouteImport } from './routes/administrador'
 import { Route as AdminRouteImport } from './routes/admin'
@@ -24,7 +25,6 @@ import { Route as PassageiroIndexRouteImport } from './routes/passageiro.index'
 import { Route as MototaxistaIndexRouteImport } from './routes/mototaxista.index'
 import { Route as CidadeIndexRouteImport } from './routes/cidade.index'
 import { Route as PassageiroPerfilRouteImport } from './routes/passageiro.perfil'
-import { Route as PassageiroHomeRouteImport } from './routes/passageiro.home'
 import { Route as PassageiroCorridasRouteImport } from './routes/passageiro.corridas'
 import { Route as PassageiroCarteiraRouteImport } from './routes/passageiro.carteira'
 import { Route as MototaxistaPlanosRouteImport } from './routes/mototaxista.planos'
@@ -76,6 +76,11 @@ const McpRoute = McpRouteImport.update({
   path: '/mcp',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HubRoute = HubRouteImport.update({
+  id: '/hub',
+  path: '/hub',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CidadeRoute = CidadeRouteImport.update({
   id: '/cidade',
   path: '/cidade',
@@ -123,11 +128,6 @@ const CidadeIndexRoute = CidadeIndexRouteImport.update({
 const PassageiroPerfilRoute = PassageiroPerfilRouteImport.update({
   id: '/passageiro/perfil',
   path: '/passageiro/perfil',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PassageiroHomeRoute = PassageiroHomeRouteImport.update({
-  id: '/passageiro/home',
-  path: '/passageiro/home',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PassageiroCorridasRoute = PassageiroCorridasRouteImport.update({
@@ -265,6 +265,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRoute
   '/administrador': typeof AdministradorRoute
   '/cidade': typeof CidadeRouteWithChildren
+  '/hub': typeof HubRoute
   '/mcp': typeof McpRoute
   '/mototaxi': typeof MototaxiRoute
   '/privacidade': typeof PrivacidadeRoute
@@ -290,7 +291,6 @@ export interface FileRoutesByFullPath {
   '/mototaxista/planos': typeof MototaxistaPlanosRoute
   '/passageiro/carteira': typeof PassageiroCarteiraRoute
   '/passageiro/corridas': typeof PassageiroCorridasRoute
-  '/passageiro/home': typeof PassageiroHomeRoute
   '/passageiro/perfil': typeof PassageiroPerfilRoute
   '/cidade/': typeof CidadeIndexRoute
   '/mototaxista/': typeof MototaxistaIndexRoute
@@ -306,6 +306,7 @@ export interface FileRoutesByTo {
   '/adm': typeof AdmRouteWithChildren
   '/admin': typeof AdminRoute
   '/administrador': typeof AdministradorRoute
+  '/hub': typeof HubRoute
   '/mcp': typeof McpRoute
   '/mototaxi': typeof MototaxiRoute
   '/privacidade': typeof PrivacidadeRoute
@@ -331,7 +332,6 @@ export interface FileRoutesByTo {
   '/mototaxista/planos': typeof MototaxistaPlanosRoute
   '/passageiro/carteira': typeof PassageiroCarteiraRoute
   '/passageiro/corridas': typeof PassageiroCorridasRoute
-  '/passageiro/home': typeof PassageiroHomeRoute
   '/passageiro/perfil': typeof PassageiroPerfilRoute
   '/cidade': typeof CidadeIndexRoute
   '/mototaxista': typeof MototaxistaIndexRoute
@@ -350,6 +350,7 @@ export interface FileRoutesById {
   '/admin': typeof AdminRoute
   '/administrador': typeof AdministradorRoute
   '/cidade': typeof CidadeRouteWithChildren
+  '/hub': typeof HubRoute
   '/mcp': typeof McpRoute
   '/mototaxi': typeof MototaxiRoute
   '/privacidade': typeof PrivacidadeRoute
@@ -375,7 +376,6 @@ export interface FileRoutesById {
   '/mototaxista/planos': typeof MototaxistaPlanosRoute
   '/passageiro/carteira': typeof PassageiroCarteiraRoute
   '/passageiro/corridas': typeof PassageiroCorridasRoute
-  '/passageiro/home': typeof PassageiroHomeRoute
   '/passageiro/perfil': typeof PassageiroPerfilRoute
   '/cidade/': typeof CidadeIndexRoute
   '/mototaxista/': typeof MototaxistaIndexRoute
@@ -394,6 +394,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/administrador'
     | '/cidade'
+    | '/hub'
     | '/mcp'
     | '/mototaxi'
     | '/privacidade'
@@ -419,7 +420,6 @@ export interface FileRouteTypes {
     | '/mototaxista/planos'
     | '/passageiro/carteira'
     | '/passageiro/corridas'
-    | '/passageiro/home'
     | '/passageiro/perfil'
     | '/cidade/'
     | '/mototaxista/'
@@ -435,6 +435,7 @@ export interface FileRouteTypes {
     | '/adm'
     | '/admin'
     | '/administrador'
+    | '/hub'
     | '/mcp'
     | '/mototaxi'
     | '/privacidade'
@@ -460,7 +461,6 @@ export interface FileRouteTypes {
     | '/mototaxista/planos'
     | '/passageiro/carteira'
     | '/passageiro/corridas'
-    | '/passageiro/home'
     | '/passageiro/perfil'
     | '/cidade'
     | '/mototaxista'
@@ -478,6 +478,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/administrador'
     | '/cidade'
+    | '/hub'
     | '/mcp'
     | '/mototaxi'
     | '/privacidade'
@@ -503,7 +504,6 @@ export interface FileRouteTypes {
     | '/mototaxista/planos'
     | '/passageiro/carteira'
     | '/passageiro/corridas'
-    | '/passageiro/home'
     | '/passageiro/perfil'
     | '/cidade/'
     | '/mototaxista/'
@@ -522,6 +522,7 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRoute
   AdministradorRoute: typeof AdministradorRoute
   CidadeRoute: typeof CidadeRouteWithChildren
+  HubRoute: typeof HubRoute
   McpRoute: typeof McpRoute
   MototaxiRoute: typeof MototaxiRoute
   PrivacidadeRoute: typeof PrivacidadeRoute
@@ -545,7 +546,6 @@ export interface RootRouteChildren {
   MototaxistaPlanosRoute: typeof MototaxistaPlanosRoute
   PassageiroCarteiraRoute: typeof PassageiroCarteiraRoute
   PassageiroCorridasRoute: typeof PassageiroCorridasRoute
-  PassageiroHomeRoute: typeof PassageiroHomeRoute
   PassageiroPerfilRoute: typeof PassageiroPerfilRoute
   MototaxistaIndexRoute: typeof MototaxistaIndexRoute
   PassageiroIndexRoute: typeof PassageiroIndexRoute
@@ -588,6 +588,13 @@ declare module '@tanstack/react-router' {
       path: '/mcp'
       fullPath: '/mcp'
       preLoaderRoute: typeof McpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hub': {
+      id: '/hub'
+      path: '/hub'
+      fullPath: '/hub'
+      preLoaderRoute: typeof HubRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cidade': {
@@ -658,13 +665,6 @@ declare module '@tanstack/react-router' {
       path: '/passageiro/perfil'
       fullPath: '/passageiro/perfil'
       preLoaderRoute: typeof PassageiroPerfilRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/passageiro/home': {
-      id: '/passageiro/home'
-      path: '/passageiro/home'
-      fullPath: '/passageiro/home'
-      preLoaderRoute: typeof PassageiroHomeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/passageiro/corridas': {
@@ -890,6 +890,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRoute,
   AdministradorRoute: AdministradorRoute,
   CidadeRoute: CidadeRouteWithChildren,
+  HubRoute: HubRoute,
   McpRoute: McpRoute,
   MototaxiRoute: MototaxiRoute,
   PrivacidadeRoute: PrivacidadeRoute,
@@ -914,7 +915,6 @@ const rootRouteChildren: RootRouteChildren = {
   MototaxistaPlanosRoute: MototaxistaPlanosRoute,
   PassageiroCarteiraRoute: PassageiroCarteiraRoute,
   PassageiroCorridasRoute: PassageiroCorridasRoute,
-  PassageiroHomeRoute: PassageiroHomeRoute,
   PassageiroPerfilRoute: PassageiroPerfilRoute,
   MototaxistaIndexRoute: MototaxistaIndexRoute,
   PassageiroIndexRoute: PassageiroIndexRoute,
