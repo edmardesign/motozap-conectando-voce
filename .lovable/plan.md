@@ -1,38 +1,52 @@
-# Plano de Ação: Intergo Logística - Reorganização e Expansão
+# Plan: Implementação do Fluxo Completo de Solicitação (Motorista e Servidor)
 
-Vou transformar o projeto em um hub completo de logística institucional e mobilidade urbana, reorganizando a arquitetura atual para suportar os novos fluxos sem quebrar o que já existe.
+Implementação do sistema de transporte de ponta a ponta para a Intergo Logística, incluindo integração com Mapbox para geolocalização e rotas, e comunicação em tempo real via Supabase para rastreamento de motoristas.
 
-## 1. Identidade e SEO
-- **Rebranding Global:** Atualizar meta tags, `title` em `__root.tsx`, e textos institucionais para "Intergo Logística".
-- **Slogan:** Implementar "Sua plataforma completa de logística e mobilidade urbana".
-- **Splash Screen:** Refinar animação de abertura e labels no seletor inicial.
+## User Review Required
 
-## 2. Reorganização da Home (Hub de Serviços)
-- **Novo Layout Hub:** Criar `src/routes/hub.tsx` (ou refatorar a index) com dois blocos principais:
-    - **Logística Institucional:** Transporte de Servidores (renomear labels), Solicitação Institucional, Frotas/Relatórios.
-    - **Mobilidade Urbana:** Novos cards para Automóvel e Mototáxi (particular).
-- **Seletor de Perfil:** Implementar interface de entrada clara: "Sou Servidor", "Sou Passageiro Comum", "Sou Motorista".
+> [!IMPORTANT]
+> A integração com o Mapbox requer um Token de Acesso (VITE_MAPBOX_TOKEN). Implementarei uma interface para configuração caso o token não esteja presente.
 
-## 3. Módulo de Mobilidade Urbana (Particular)
-- **Fluxo do Cliente:**
-    - Mapa interativo (Leaflet) integrado à seleção de serviço.
-    - Fluxo de solicitação: Seleção de destino -> Estimativa -> Chamada -> Acompanhamento.
-    - Status da corrida: Procurando -> A caminho -> Em viagem -> Concluída.
-- **Fluxo do Motorista:**
-    - Cadastro unificado: Dados pessoais, CNH, Documentos do Veículo (Carro/Moto).
-    - Painel do Motorista: Gerenciamento de disponibilidade, aceitação de corridas e extrato de ganhos.
+- **Fluxo de Motorista:** O motorista terá um painel para ficar online e aceitar solicitações.
+- **Geolocalização:** O app pedirá permissão de localização para centralizar o mapa e calcular rotas.
 
-## 4. Navegação e UX
-- **Bottom Nav Unificada:** Home, Serviços, Minhas Viagens, Carteira, Perfil.
-- **Design System:** Consolidar paleta (Branco #FFFFFF / Verde #3DB54A) e padrões Apple (bordas arredondadas, spring animations).
-- **Responsividade:** Garantir experiência Mobile-first e compatibilidade Desktop (menu lateral).
+## Technical Details
 
-## 5. Qualidade e Segurança
-- **Segurança:** Revisar RLS nas tabelas e garantir que apenas usuários autorizados acessem o painel administrativo.
-- **Error Handling:** Implementar página 404 personalizada e amigável.
-- **Limpeza:** Remover rotas legadas e componentes órfãos.
+### Database Schema (Supabase)
+1.  **Tabela `drivers`**:
+    - `id` (uuid, fk profiles)
+    - `tipo_veiculo` (automovel | moto)
+    - `placa`, `modelo`
+    - `is_online` (boolean)
+    - `current_location` (geography point)
+2.  **Tabela `ride_requests`**:
+    - `id`, `passageiro_id`, `motorista_id`
+    - `tipo` (automovel | moto_taxi)
+    - `origem_lat`, `origem_lng`, `origem_endereco`
+    - `destino_lat`, `destino_lng`, `destino_endereco`
+    - `valor_estimado`, `distancia_km`
+    - `status` (pendente | aceito | chegou | em_andamento | finalizado | cancelado)
 
-## Detalhes Técnicos
-- **TanStack Router:** Organização de rotas em `/passageiro/*` (comum), `/servidor/*` (institucional) e `/motorista/*`.
-- **Supabase:** Extensão da tabela de perfis para incluir `tipo_usuario` e `veiculo_tipo`.
-- **Framer Motion:** Uso de `animate-apple-*` tokens para transições fluidas.
+### Frontend (React + Mapbox)
+- **Mapbox GL JS**: Renderização de mapa e rotas.
+- **Supabase Realtime**: Assinatura de mudanças na tabela `ride_requests` para atualização instantânea da UI.
+- **Framer Motion**: Animações Apple-like nos modais e transições.
+
+## Step-by-Step Implementation
+
+1.  **Infraestrutura Supabase**:
+    - Criar migração SQL com tabelas, RLS e PostGIS.
+    - Habilitar Realtime para as tabelas principais.
+2.  **Módulo de Mapas**:
+    - Criar componente `MapContainer` reutilizável com suporte a marcadores e rotas.
+    - Implementar utilitários de Geocoding.
+3.  **Fluxo do Servidor (Passageiro)**:
+    - Página de solicitação com busca de endereço e estimativa de preço.
+    - Tela de espera com rastreamento do motorista.
+4.  **Fluxo do Motorista**:
+    - Painel "Online/Offline" com watchPosition.
+    - Modal de recebimento de corrida com som de notificação.
+    - Controle de estados da corrida (Cheguei -> Iniciar -> Finalizar).
+5.  **Polimento**:
+    - Integração visual com a identidade INTERGO (Verde #3DB54A).
+    - Tratamento de erros de GPS e falta de motoristas.
