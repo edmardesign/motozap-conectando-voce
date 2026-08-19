@@ -46,6 +46,7 @@ import { Route as MotoristaHomeRouteImport } from './routes/motorista.home'
 import { Route as CadastroPassageiroRouteImport } from './routes/cadastro.passageiro'
 import { Route as AuthPassageiroRouteImport } from './routes/auth.passageiro'
 import { Route as AuthMototaxistaRouteImport } from './routes/auth.mototaxista'
+import { Route as AuthMotoristaRouteImport } from './routes/auth.motorista'
 import { Route as AppPassageiroRouteImport } from './routes/app.passageiro'
 import { Route as AppMototaxiRouteImport } from './routes/app.mototaxi'
 import { Route as AppAdministradorRouteImport } from './routes/app.administrador'
@@ -248,6 +249,11 @@ const AuthMototaxistaRoute = AuthMototaxistaRouteImport.update({
   path: '/auth/mototaxista',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthMotoristaRoute = AuthMotoristaRouteImport.update({
+  id: '/auth/motorista',
+  path: '/auth/motorista',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AppPassageiroRoute = AppPassageiroRouteImport.update({
   id: '/app/passageiro',
   path: '/app/passageiro',
@@ -336,6 +342,7 @@ export interface FileRoutesByFullPath {
   '/app/administrador': typeof AppAdministradorRoute
   '/app/mototaxi': typeof AppMototaxiRoute
   '/app/passageiro': typeof AppPassageiroRoute
+  '/auth/motorista': typeof AuthMotoristaRoute
   '/auth/mototaxista': typeof AuthMototaxistaRoute
   '/auth/passageiro': typeof AuthPassageiroRoute
   '/cadastro/passageiro': typeof CadastroPassageiroRoute
@@ -386,6 +393,7 @@ export interface FileRoutesByTo {
   '/app/administrador': typeof AppAdministradorRoute
   '/app/mototaxi': typeof AppMototaxiRoute
   '/app/passageiro': typeof AppPassageiroRoute
+  '/auth/motorista': typeof AuthMotoristaRoute
   '/auth/mototaxista': typeof AuthMototaxistaRoute
   '/auth/passageiro': typeof AuthPassageiroRoute
   '/cadastro/passageiro': typeof CadastroPassageiroRoute
@@ -439,6 +447,7 @@ export interface FileRoutesById {
   '/app/administrador': typeof AppAdministradorRoute
   '/app/mototaxi': typeof AppMototaxiRoute
   '/app/passageiro': typeof AppPassageiroRoute
+  '/auth/motorista': typeof AuthMotoristaRoute
   '/auth/mototaxista': typeof AuthMototaxistaRoute
   '/auth/passageiro': typeof AuthPassageiroRoute
   '/cadastro/passageiro': typeof CadastroPassageiroRoute
@@ -492,6 +501,7 @@ export interface FileRouteTypes {
     | '/app/administrador'
     | '/app/mototaxi'
     | '/app/passageiro'
+    | '/auth/motorista'
     | '/auth/mototaxista'
     | '/auth/passageiro'
     | '/cadastro/passageiro'
@@ -542,6 +552,7 @@ export interface FileRouteTypes {
     | '/app/administrador'
     | '/app/mototaxi'
     | '/app/passageiro'
+    | '/auth/motorista'
     | '/auth/mototaxista'
     | '/auth/passageiro'
     | '/cadastro/passageiro'
@@ -594,6 +605,7 @@ export interface FileRouteTypes {
     | '/app/administrador'
     | '/app/mototaxi'
     | '/app/passageiro'
+    | '/auth/motorista'
     | '/auth/mototaxista'
     | '/auth/passageiro'
     | '/cadastro/passageiro'
@@ -645,6 +657,7 @@ export interface RootRouteChildren {
   AppAdministradorRoute: typeof AppAdministradorRoute
   AppMototaxiRoute: typeof AppMototaxiRoute
   AppPassageiroRoute: typeof AppPassageiroRoute
+  AuthMotoristaRoute: typeof AuthMotoristaRoute
   AuthMototaxistaRoute: typeof AuthMototaxistaRoute
   AuthPassageiroRoute: typeof AuthPassageiroRoute
   CadastroPassageiroRoute: typeof CadastroPassageiroRoute
@@ -935,6 +948,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthMototaxistaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth/motorista': {
+      id: '/auth/motorista'
+      path: '/auth/motorista'
+      fullPath: '/auth/motorista'
+      preLoaderRoute: typeof AuthMotoristaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/app/passageiro': {
       id: '/app/passageiro'
       path: '/app/passageiro'
@@ -1086,6 +1106,7 @@ const rootRouteChildren: RootRouteChildren = {
   AppAdministradorRoute: AppAdministradorRoute,
   AppMototaxiRoute: AppMototaxiRoute,
   AppPassageiroRoute: AppPassageiroRoute,
+  AuthMotoristaRoute: AuthMotoristaRoute,
   AuthMototaxistaRoute: AuthMototaxistaRoute,
   AuthPassageiroRoute: AuthPassageiroRoute,
   CadastroPassageiroRoute: CadastroPassageiroRoute,

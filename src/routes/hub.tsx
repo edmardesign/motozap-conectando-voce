@@ -36,7 +36,15 @@ import {
 import { EmojiIcon } from "@/components/emoji-icon";
 import logoIntergo from "@/assets/intergo-logo-white.png.asset.json";
 
+import { z } from "zod";
+
+const hubSearchSchema = z.object({
+  tipo: z.enum(["automovel", "moto_taxi", "documentos", "exames", "medicamentos", "encomendas"]).optional(),
+  id_demanda: z.string().optional(),
+});
+
 export const Route = createFileRoute("/hub")({
+  validateSearch: (search) => hubSearchSchema.parse(search),
   component: PassageiroHomePage,
   ssr: false,
 });
@@ -189,6 +197,7 @@ async function reverseToAddress(lat: number, lng: number) {
 function PassageiroHomePage() {
   const { user, loading: authLoading } = useAuth();
   const navigate = useNavigate();
+  const search = Route.useSearch();
   const geo = useGeolocation();
 
   const [mounted, setMounted] = useState(false);
