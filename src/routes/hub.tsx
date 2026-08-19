@@ -200,6 +200,12 @@ function PassageiroHomePage() {
   const search = Route.useSearch();
   const geo = useGeolocation();
 
+  const [tipoDemanda, setTipoDemanda] = useState<TipoDemanda | null>(
+    (search.tipo && ["documentos", "exames", "medicamentos", "encomendas"].includes(search.tipo) 
+      ? search.tipo as TipoDemanda 
+      : null)
+  );
+
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
@@ -246,7 +252,6 @@ function PassageiroHomePage() {
 
   // Modo de solicitação: corrida normal ou "Pegue Ali" (favor/erranda)
   const [mode, setMode] = useState<"corrida" | "pegue_ali">("corrida");
-  const [tipoDemanda, setTipoDemanda] = useState<TipoDemanda | null>(null);
   const [observacao, setObservacao] = useState("");
   const [pegueDescricao, setPegueDescricao] = useState("");
   const [pegueFoto, setPegueFoto] = useState<File | null>(null);
