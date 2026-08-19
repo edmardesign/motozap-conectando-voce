@@ -26,7 +26,7 @@ function MotoristaHome() {
         .eq('user_id', user.id)
         .maybeSingle()
       
-      if (data) setOnline(data.is_online)
+      if (data) setOnline((data as any).is_online)
     }
     
     checkStatus()
@@ -43,7 +43,7 @@ function MotoristaHome() {
         .upsert({ 
           user_id: user.id, 
           is_online: newStatus,
-          updated_at: new SinaiDate().toISOString() 
+          updated_at: new Date().toISOString() 
         })
       
       if (error) throw error
