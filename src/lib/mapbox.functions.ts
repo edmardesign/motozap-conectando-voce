@@ -9,10 +9,9 @@ export const getMapboxToken = createServerFn({ method: "GET" })
   });
 
 export const updateMapboxToken = createServerFn({ method: "POST" })
-  .input(z.object({ token: z.string() }))
+  .validator((data: unknown) => z.object({ token: z.string() }).parse(data))
   .handler(async ({ data }) => {
     // In a real scenario, we would use secrets--set_secret via the tool, 
     // but here we just simulate or check permission.
-    // For now, let's just return success if the user is admin.
     return { success: true };
   });
