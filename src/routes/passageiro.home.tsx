@@ -2,8 +2,6 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { 
   Truck, 
-  Car, 
-  Bike, 
   Users, 
   FileBarChart, 
   MapPin, 
