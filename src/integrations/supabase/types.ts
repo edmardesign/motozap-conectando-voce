@@ -653,6 +653,39 @@ export type Database = {
         }
         Relationships: []
       }
+      drivers: {
+        Row: {
+          current_lat: number | null
+          current_lng: number | null
+          is_online: boolean | null
+          modelo: string | null
+          placa: string | null
+          tipo_veiculo: string | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          current_lat?: number | null
+          current_lng?: number | null
+          is_online?: boolean | null
+          modelo?: string | null
+          placa?: string | null
+          tipo_veiculo?: string | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          current_lat?: number | null
+          current_lng?: number | null
+          is_online?: boolean | null
+          modelo?: string | null
+          placa?: string | null
+          tipo_veiculo?: string | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       empresa_auth: {
         Row: {
           criado_em: string
@@ -2858,6 +2891,57 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      ride_requests: {
+        Row: {
+          created_at: string | null
+          destino_endereco: string | null
+          destino_lat: number
+          destino_lng: number
+          id: string
+          motorista_id: string | null
+          origem_endereco: string | null
+          origem_lat: number
+          origem_lng: number
+          passageiro_id: string
+          status: string | null
+          tipo: string
+          updated_at: string | null
+          valor_estimado: number | null
+        }
+        Insert: {
+          created_at?: string | null
+          destino_endereco?: string | null
+          destino_lat: number
+          destino_lng: number
+          id?: string
+          motorista_id?: string | null
+          origem_endereco?: string | null
+          origem_lat: number
+          origem_lng: number
+          passageiro_id: string
+          status?: string | null
+          tipo: string
+          updated_at?: string | null
+          valor_estimado?: number | null
+        }
+        Update: {
+          created_at?: string | null
+          destino_endereco?: string | null
+          destino_lat?: number
+          destino_lng?: number
+          id?: string
+          motorista_id?: string | null
+          origem_endereco?: string | null
+          origem_lat?: number
+          origem_lng?: number
+          passageiro_id?: string
+          status?: string | null
+          tipo?: string
+          updated_at?: string | null
+          valor_estimado?: number | null
+        }
+        Relationships: []
       }
       solicitacoes_saque: {
         Row: {
