@@ -91,7 +91,7 @@ function PassageiroCorridas() {
   }
 
   return (
-    <main className="min-h-screen bg-background text-foreground" style={{ paddingBottom: 80 }}>
+    <main className="min-h-screen bg-[#F5F5F7] text-[#111111]" style={{ paddingBottom: 80 }}>
       <header className="px-5 pt-6 pb-4 border-b border-border">
         <h1 className="text-xl font-bold">{isHistorico ? "Histórico" : "Solicitações"}</h1>
         <p className="text-sm text-muted-foreground mt-0.5">

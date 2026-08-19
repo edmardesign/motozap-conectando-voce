@@ -24,8 +24,12 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as PassageiroIndexRouteImport } from './routes/passageiro.index'
 import { Route as MototaxistaIndexRouteImport } from './routes/mototaxista.index'
 import { Route as CidadeIndexRouteImport } from './routes/cidade.index'
+import { Route as PassageiroTransporteServidoresRouteImport } from './routes/passageiro.transporte-servidores'
+import { Route as PassageiroSolicitacaoTransporteRouteImport } from './routes/passageiro.solicitacao-transporte'
+import { Route as PassageiroRelatoriosRouteImport } from './routes/passageiro.relatorios'
 import { Route as PassageiroPerfilRouteImport } from './routes/passageiro.perfil'
 import { Route as PassageiroHomeRouteImport } from './routes/passageiro.home'
+import { Route as PassageiroFrotaRouteImport } from './routes/passageiro.frota'
 import { Route as PassageiroCorridasRouteImport } from './routes/passageiro.corridas'
 import { Route as PassageiroCarteiraRouteImport } from './routes/passageiro.carteira'
 import { Route as MototaxistaPlanosRouteImport } from './routes/mototaxista.planos'
@@ -126,6 +130,23 @@ const CidadeIndexRoute = CidadeIndexRouteImport.update({
   path: '/',
   getParentRoute: () => CidadeRoute,
 } as any)
+const PassageiroTransporteServidoresRoute =
+  PassageiroTransporteServidoresRouteImport.update({
+    id: '/passageiro/transporte-servidores',
+    path: '/passageiro/transporte-servidores',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const PassageiroSolicitacaoTransporteRoute =
+  PassageiroSolicitacaoTransporteRouteImport.update({
+    id: '/passageiro/solicitacao-transporte',
+    path: '/passageiro/solicitacao-transporte',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const PassageiroRelatoriosRoute = PassageiroRelatoriosRouteImport.update({
+  id: '/passageiro/relatorios',
+  path: '/passageiro/relatorios',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PassageiroPerfilRoute = PassageiroPerfilRouteImport.update({
   id: '/passageiro/perfil',
   path: '/passageiro/perfil',
@@ -134,6 +155,11 @@ const PassageiroPerfilRoute = PassageiroPerfilRouteImport.update({
 const PassageiroHomeRoute = PassageiroHomeRouteImport.update({
   id: '/passageiro/home',
   path: '/passageiro/home',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PassageiroFrotaRoute = PassageiroFrotaRouteImport.update({
+  id: '/passageiro/frota',
+  path: '/passageiro/frota',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PassageiroCorridasRoute = PassageiroCorridasRouteImport.update({
@@ -297,8 +323,12 @@ export interface FileRoutesByFullPath {
   '/mototaxista/planos': typeof MototaxistaPlanosRoute
   '/passageiro/carteira': typeof PassageiroCarteiraRoute
   '/passageiro/corridas': typeof PassageiroCorridasRoute
+  '/passageiro/frota': typeof PassageiroFrotaRoute
   '/passageiro/home': typeof PassageiroHomeRoute
   '/passageiro/perfil': typeof PassageiroPerfilRoute
+  '/passageiro/relatorios': typeof PassageiroRelatoriosRoute
+  '/passageiro/solicitacao-transporte': typeof PassageiroSolicitacaoTransporteRoute
+  '/passageiro/transporte-servidores': typeof PassageiroTransporteServidoresRoute
   '/cidade/': typeof CidadeIndexRoute
   '/mototaxista/': typeof MototaxistaIndexRoute
   '/passageiro/': typeof PassageiroIndexRoute
@@ -339,8 +369,12 @@ export interface FileRoutesByTo {
   '/mototaxista/planos': typeof MototaxistaPlanosRoute
   '/passageiro/carteira': typeof PassageiroCarteiraRoute
   '/passageiro/corridas': typeof PassageiroCorridasRoute
+  '/passageiro/frota': typeof PassageiroFrotaRoute
   '/passageiro/home': typeof PassageiroHomeRoute
   '/passageiro/perfil': typeof PassageiroPerfilRoute
+  '/passageiro/relatorios': typeof PassageiroRelatoriosRoute
+  '/passageiro/solicitacao-transporte': typeof PassageiroSolicitacaoTransporteRoute
+  '/passageiro/transporte-servidores': typeof PassageiroTransporteServidoresRoute
   '/cidade': typeof CidadeIndexRoute
   '/mototaxista': typeof MototaxistaIndexRoute
   '/passageiro': typeof PassageiroIndexRoute
@@ -384,8 +418,12 @@ export interface FileRoutesById {
   '/mototaxista/planos': typeof MototaxistaPlanosRoute
   '/passageiro/carteira': typeof PassageiroCarteiraRoute
   '/passageiro/corridas': typeof PassageiroCorridasRoute
+  '/passageiro/frota': typeof PassageiroFrotaRoute
   '/passageiro/home': typeof PassageiroHomeRoute
   '/passageiro/perfil': typeof PassageiroPerfilRoute
+  '/passageiro/relatorios': typeof PassageiroRelatoriosRoute
+  '/passageiro/solicitacao-transporte': typeof PassageiroSolicitacaoTransporteRoute
+  '/passageiro/transporte-servidores': typeof PassageiroTransporteServidoresRoute
   '/cidade/': typeof CidadeIndexRoute
   '/mototaxista/': typeof MototaxistaIndexRoute
   '/passageiro/': typeof PassageiroIndexRoute
@@ -429,8 +467,12 @@ export interface FileRouteTypes {
     | '/mototaxista/planos'
     | '/passageiro/carteira'
     | '/passageiro/corridas'
+    | '/passageiro/frota'
     | '/passageiro/home'
     | '/passageiro/perfil'
+    | '/passageiro/relatorios'
+    | '/passageiro/solicitacao-transporte'
+    | '/passageiro/transporte-servidores'
     | '/cidade/'
     | '/mototaxista/'
     | '/passageiro/'
@@ -471,8 +513,12 @@ export interface FileRouteTypes {
     | '/mototaxista/planos'
     | '/passageiro/carteira'
     | '/passageiro/corridas'
+    | '/passageiro/frota'
     | '/passageiro/home'
     | '/passageiro/perfil'
+    | '/passageiro/relatorios'
+    | '/passageiro/solicitacao-transporte'
+    | '/passageiro/transporte-servidores'
     | '/cidade'
     | '/mototaxista'
     | '/passageiro'
@@ -515,8 +561,12 @@ export interface FileRouteTypes {
     | '/mototaxista/planos'
     | '/passageiro/carteira'
     | '/passageiro/corridas'
+    | '/passageiro/frota'
     | '/passageiro/home'
     | '/passageiro/perfil'
+    | '/passageiro/relatorios'
+    | '/passageiro/solicitacao-transporte'
+    | '/passageiro/transporte-servidores'
     | '/cidade/'
     | '/mototaxista/'
     | '/passageiro/'
@@ -558,8 +608,12 @@ export interface RootRouteChildren {
   MototaxistaPlanosRoute: typeof MototaxistaPlanosRoute
   PassageiroCarteiraRoute: typeof PassageiroCarteiraRoute
   PassageiroCorridasRoute: typeof PassageiroCorridasRoute
+  PassageiroFrotaRoute: typeof PassageiroFrotaRoute
   PassageiroHomeRoute: typeof PassageiroHomeRoute
   PassageiroPerfilRoute: typeof PassageiroPerfilRoute
+  PassageiroRelatoriosRoute: typeof PassageiroRelatoriosRoute
+  PassageiroSolicitacaoTransporteRoute: typeof PassageiroSolicitacaoTransporteRoute
+  PassageiroTransporteServidoresRoute: typeof PassageiroTransporteServidoresRoute
   MototaxistaIndexRoute: typeof MototaxistaIndexRoute
   PassageiroIndexRoute: typeof PassageiroIndexRoute
   DotlovableOauthConsentRoute: typeof DotlovableOauthConsentRoute
@@ -673,6 +727,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CidadeIndexRouteImport
       parentRoute: typeof CidadeRoute
     }
+    '/passageiro/transporte-servidores': {
+      id: '/passageiro/transporte-servidores'
+      path: '/passageiro/transporte-servidores'
+      fullPath: '/passageiro/transporte-servidores'
+      preLoaderRoute: typeof PassageiroTransporteServidoresRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/passageiro/solicitacao-transporte': {
+      id: '/passageiro/solicitacao-transporte'
+      path: '/passageiro/solicitacao-transporte'
+      fullPath: '/passageiro/solicitacao-transporte'
+      preLoaderRoute: typeof PassageiroSolicitacaoTransporteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/passageiro/relatorios': {
+      id: '/passageiro/relatorios'
+      path: '/passageiro/relatorios'
+      fullPath: '/passageiro/relatorios'
+      preLoaderRoute: typeof PassageiroRelatoriosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/passageiro/perfil': {
       id: '/passageiro/perfil'
       path: '/passageiro/perfil'
@@ -685,6 +760,13 @@ declare module '@tanstack/react-router' {
       path: '/passageiro/home'
       fullPath: '/passageiro/home'
       preLoaderRoute: typeof PassageiroHomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/passageiro/frota': {
+      id: '/passageiro/frota'
+      path: '/passageiro/frota'
+      fullPath: '/passageiro/frota'
+      preLoaderRoute: typeof PassageiroFrotaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/passageiro/corridas': {
@@ -935,8 +1017,12 @@ const rootRouteChildren: RootRouteChildren = {
   MototaxistaPlanosRoute: MototaxistaPlanosRoute,
   PassageiroCarteiraRoute: PassageiroCarteiraRoute,
   PassageiroCorridasRoute: PassageiroCorridasRoute,
+  PassageiroFrotaRoute: PassageiroFrotaRoute,
   PassageiroHomeRoute: PassageiroHomeRoute,
   PassageiroPerfilRoute: PassageiroPerfilRoute,
+  PassageiroRelatoriosRoute: PassageiroRelatoriosRoute,
+  PassageiroSolicitacaoTransporteRoute: PassageiroSolicitacaoTransporteRoute,
+  PassageiroTransporteServidoresRoute: PassageiroTransporteServidoresRoute,
   MototaxistaIndexRoute: MototaxistaIndexRoute,
   PassageiroIndexRoute: PassageiroIndexRoute,
   DotlovableOauthConsentRoute: DotlovableOauthConsentRoute,
