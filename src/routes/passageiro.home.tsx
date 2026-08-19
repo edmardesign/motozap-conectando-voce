@@ -62,17 +62,7 @@ export function IntergoHubPage() {
           <p className="text-[#6B6B6B]">O que vamos fazer hoje?</p>
         </div>
 
-        {/* Seletor de Perfil (Visual) */}
-        <div className="mb-8 flex gap-2 animate-apple-rise stagger-1">
-          <button className="flex-1 rounded-2xl bg-[#3DB54A] px-4 py-3 text-sm font-semibold text-white shadow-sm transition-transform active:scale-95">
-            Sou Servidor
-          </button>
-          <button className="flex-1 rounded-2xl bg-white px-4 py-3 text-sm font-semibold text-[#111111] shadow-sm border border-[#E8E8E8] transition-transform active:scale-95">
-            Sou Cidadão
-          </button>
-        </div>
-
-        {/* Bloco A: Logística Institucional */}
+        {/* Bloco: Logística Institucional */}
         <section className="mb-10 animate-apple-rise stagger-2">
           <div className="mb-4 flex items-center gap-2 px-1">
             <Building2 size={18} className="text-[#3DB54A]" />
@@ -82,65 +72,57 @@ export function IntergoHubPage() {
           <div className="grid gap-3">
             <HubCard 
               title="Transporte de Servidores"
-              description="Solicitar deslocamento oficial"
+              description="Solicitar deslocamento oficial (Carro ou Moto)"
               icon={Users}
               color="bg-[#3DB54A]"
-              onClick={() => navigate({ to: "/passageiro/home" })}
+              onClick={() => navigate({ to: "/passageiro/transporte-servidores" })}
             />
             <HubCard 
               title="Solicitação de Transporte"
               description="Logística de materiais e documentos"
               icon={Truck}
               color="bg-[#3DB54A]"
-              onClick={() => navigate({ to: "/passageiro/home" })}
+              onClick={() => navigate({ to: "/passageiro/solicitacao-transporte" })}
             />
             <div className="grid grid-cols-2 gap-3">
               <HubSmallCard 
                 title="Frota"
                 icon={ShieldCheck}
-                onClick={() => navigate({ to: "/passageiro/corridas", search: {} as any })}
+                onClick={() => navigate({ to: "/passageiro/frota" })}
               />
               <HubSmallCard 
                 title="Relatórios"
                 icon={FileBarChart}
-                onClick={() => navigate({ to: "/passageiro/corridas", search: { historico: "1" } as any })}
+                onClick={() => navigate({ to: "/passageiro/relatorios" })}
               />
             </div>
-          </div>
-        </section>
-
-        {/* Bloco B: Mobilidade Urbana */}
-        <section className="animate-apple-rise stagger-3">
-          <div className="mb-4 flex items-center gap-2 px-1">
-            <Smartphone size={18} className="text-[#111111]" />
-            <h2 className="text-sm font-bold uppercase tracking-wider text-[#6B6B6B]">Mobilidade Urbana</h2>
-          </div>
-
-          <div className="grid gap-3">
-            <HubCard 
-              title="Solicitar Automóvel"
-              description="Carro sob demanda estilo app"
-              icon={Car}
-              color="bg-[#111111]"
-              onClick={() => toast.info("Módulo de Automóvel em breve!")}
-            />
-            <HubCard 
-              title="Solicitar Mototáxi"
-              description="Moto sob demanda rápida"
-              icon={Bike}
-              color="bg-[#111111]"
-              onClick={() => navigate({ to: "/passageiro/home" })}
-            />
           </div>
         </section>
       </main>
 
       {/* Nav de navegação rápida mobile */}
       <nav className="fixed bottom-0 left-0 right-0 z-40 border-t border-[#E8E8E8] bg-white px-6 pb-safe-area pt-2 flex items-center justify-between shadow-[0_-1px_12px_rgba(0,0,0,0.05)]">
-        <NavButton icon={Smartphone} label="Início" active />
-        <NavButton icon={MapPin} label="Serviços" />
-        <NavButton icon={FileBarChart} label="Viagens" />
-        <NavButton icon={Users} label="Perfil" />
+        <NavButton 
+          icon={Smartphone} 
+          label="Início" 
+          active 
+          onClick={() => navigate({ to: "/passageiro/home" })} 
+        />
+        <NavButton 
+          icon={MapPin} 
+          label="Serviços" 
+          onClick={() => navigate({ to: "/passageiro/home" })} 
+        />
+        <NavButton 
+          icon={FileBarChart} 
+          label="Viagens" 
+          onClick={() => navigate({ to: "/passageiro/corridas", search: {} as any })} 
+        />
+        <NavButton 
+          icon={Users} 
+          label="Perfil" 
+          onClick={() => navigate({ to: "/passageiro/perfil" })} 
+        />
       </nav>
     </div>
   );
@@ -178,9 +160,12 @@ function HubSmallCard({ title, icon: Icon, onClick }: any) {
   );
 }
 
-function NavButton({ icon: Icon, label, active }: any) {
+function NavButton({ icon: Icon, label, active, onClick }: any) {
   return (
-    <button className={`flex flex-col items-center gap-1 py-2 ${active ? 'text-[#3DB54A]' : 'text-[#6B6B6B]'}`}>
+    <button 
+      onClick={onClick}
+      className={`flex flex-col items-center gap-1 py-2 ${active ? 'text-[#3DB54A]' : 'text-[#6B6B6B]'}`}
+    >
       <Icon size={22} />
       <span className="text-[10px] font-semibold uppercase tracking-wide">{label}</span>
     </button>
