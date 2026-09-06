@@ -55,6 +55,7 @@ import { Route as AdmNegadoRouteImport } from './routes/adm.negado'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
 import { Route as PassageiroMobilidadeIndexRouteImport } from './routes/passageiro.mobilidade.index'
+import { Route as PassageiroMobilidadeMotoRouteImport } from './routes/passageiro.mobilidade.moto'
 import { Route as PassageiroMobilidadeAutomovelRouteImport } from './routes/passageiro.mobilidade.automovel'
 import { Route as MotoristaCorridaIdRouteImport } from './routes/motorista.corrida.$id'
 import { Route as AdmGateAdmPrecosRouteImport } from './routes/_admGate.adm.precos'
@@ -299,6 +300,12 @@ const PassageiroMobilidadeIndexRoute =
     path: '/passageiro/mobilidade/',
     getParentRoute: () => rootRouteImport,
   } as any)
+const PassageiroMobilidadeMotoRoute =
+  PassageiroMobilidadeMotoRouteImport.update({
+    id: '/passageiro/mobilidade/moto',
+    path: '/passageiro/mobilidade/moto',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const PassageiroMobilidadeAutomovelRoute =
   PassageiroMobilidadeAutomovelRouteImport.update({
     id: '/passageiro/mobilidade/automovel',
@@ -389,6 +396,7 @@ export interface FileRoutesByFullPath {
   '/adm/precos': typeof AdmGateAdmPrecosRoute
   '/motorista/corrida/$id': typeof MotoristaCorridaIdRoute
   '/passageiro/mobilidade/automovel': typeof PassageiroMobilidadeAutomovelRoute
+  '/passageiro/mobilidade/moto': typeof PassageiroMobilidadeMotoRoute
   '/passageiro/mobilidade/': typeof PassageiroMobilidadeIndexRoute
 }
 export interface FileRoutesByTo {
@@ -442,6 +450,7 @@ export interface FileRoutesByTo {
   '/adm/precos': typeof AdmGateAdmPrecosRoute
   '/motorista/corrida/$id': typeof MotoristaCorridaIdRoute
   '/passageiro/mobilidade/automovel': typeof PassageiroMobilidadeAutomovelRoute
+  '/passageiro/mobilidade/moto': typeof PassageiroMobilidadeMotoRoute
   '/passageiro/mobilidade': typeof PassageiroMobilidadeIndexRoute
 }
 export interface FileRoutesById {
@@ -498,6 +507,7 @@ export interface FileRoutesById {
   '/_admGate/adm/precos': typeof AdmGateAdmPrecosRoute
   '/motorista/corrida/$id': typeof MotoristaCorridaIdRoute
   '/passageiro/mobilidade/automovel': typeof PassageiroMobilidadeAutomovelRoute
+  '/passageiro/mobilidade/moto': typeof PassageiroMobilidadeMotoRoute
   '/passageiro/mobilidade/': typeof PassageiroMobilidadeIndexRoute
 }
 export interface FileRouteTypes {
@@ -554,6 +564,7 @@ export interface FileRouteTypes {
     | '/adm/precos'
     | '/motorista/corrida/$id'
     | '/passageiro/mobilidade/automovel'
+    | '/passageiro/mobilidade/moto'
     | '/passageiro/mobilidade/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -607,6 +618,7 @@ export interface FileRouteTypes {
     | '/adm/precos'
     | '/motorista/corrida/$id'
     | '/passageiro/mobilidade/automovel'
+    | '/passageiro/mobilidade/moto'
     | '/passageiro/mobilidade'
   id:
     | '__root__'
@@ -662,6 +674,7 @@ export interface FileRouteTypes {
     | '/_admGate/adm/precos'
     | '/motorista/corrida/$id'
     | '/passageiro/mobilidade/automovel'
+    | '/passageiro/mobilidade/moto'
     | '/passageiro/mobilidade/'
   fileRoutesById: FileRoutesById
 }
@@ -712,6 +725,7 @@ export interface RootRouteChildren {
   Char91DotmcpChar93InvokeToolToolRoute: typeof Char91DotmcpChar93InvokeToolToolRoute
   MotoristaCorridaIdRoute: typeof MotoristaCorridaIdRoute
   PassageiroMobilidadeAutomovelRoute: typeof PassageiroMobilidadeAutomovelRoute
+  PassageiroMobilidadeMotoRoute: typeof PassageiroMobilidadeMotoRoute
   PassageiroMobilidadeIndexRoute: typeof PassageiroMobilidadeIndexRoute
 }
 
@@ -1039,6 +1053,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PassageiroMobilidadeIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/passageiro/mobilidade/moto': {
+      id: '/passageiro/mobilidade/moto'
+      path: '/passageiro/mobilidade/moto'
+      fullPath: '/passageiro/mobilidade/moto'
+      preLoaderRoute: typeof PassageiroMobilidadeMotoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/passageiro/mobilidade/automovel': {
       id: '/passageiro/mobilidade/automovel'
       path: '/passageiro/mobilidade/automovel'
@@ -1177,6 +1198,7 @@ const rootRouteChildren: RootRouteChildren = {
   Char91DotmcpChar93InvokeToolToolRoute: Char91DotmcpChar93InvokeToolToolRoute,
   MotoristaCorridaIdRoute: MotoristaCorridaIdRoute,
   PassageiroMobilidadeAutomovelRoute: PassageiroMobilidadeAutomovelRoute,
+  PassageiroMobilidadeMotoRoute: PassageiroMobilidadeMotoRoute,
   PassageiroMobilidadeIndexRoute: PassageiroMobilidadeIndexRoute,
 }
 export const routeTree = rootRouteImport
