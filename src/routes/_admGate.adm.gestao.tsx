@@ -217,6 +217,10 @@ function GestaoPage() {
         <a href="/adm/precos" className="whitespace-nowrap rounded-full px-3 py-1.5 text-sm bg-white/10 text-foreground/80 hover:bg-white/20">
           Preços e tarifas
         </a>
+        <a href="/adm/quotas" className="whitespace-nowrap rounded-full px-3 py-1.5 text-sm bg-white/10 text-foreground/80 hover:bg-white/20">
+          Cotas de mobilidade
+        </a>
+
       </nav>
 
       <section className="px-4 py-5 space-y-4 max-w-5xl mx-auto">

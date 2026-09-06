@@ -6,6 +6,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { PassageiroTabBar } from "@/components/passageiro-tab-bar";
 import { LogOut, User as UserIcon, Phone, MapPin, Cake } from "lucide-react";
 import { maskPhone } from "@/lib/phone";
+import { MobilidadeHistorico } from "@/components/mobilidade-historico";
 
 export const Route = createFileRoute("/passageiro/perfil")({
   component: PassageiroPerfil,
@@ -161,6 +162,7 @@ function PassageiroPerfil() {
           <LogOut size={16} />
           Sair da conta
         </button>
+        <MobilidadeHistorico />
       </section>
 
       <PassageiroTabBar />

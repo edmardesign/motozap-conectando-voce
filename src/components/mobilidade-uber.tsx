@@ -10,7 +10,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
 import { reverseGeocode, searchSuggestions, type NominatimResult } from "@/lib/geocoding";
 import { haversineKm } from "@/lib/haversine";
-import { formatBRL } from "@/lib/pricing";
 
 export type ModalidadeMobilidade = "automovel" | "moto_taxi";
 
@@ -37,9 +36,10 @@ type MotoristaInfo = {
   longitude: number | null;
 };
 
-const TARIFAS: Record<ModalidadeMobilidade, { base: number; porKm: number; label: string; confirmar: string }> = {
-  automovel: { base: 6, porKm: 2.5, label: "Automóvel", confirmar: "Confirmar Automóvel" },
-  moto_taxi: { base: 4, porKm: 1.5, label: "Moto Táxi", confirmar: "Confirmar Moto Táxi" },
+// Serviço público: sem tarifa. Apenas rótulos por modalidade.
+const TARIFAS: Record<ModalidadeMobilidade, { label: string; confirmar: string }> = {
+  automovel: { label: "Automóvel", confirmar: "Confirmar Automóvel" },
+  moto_taxi: { label: "Moto Táxi", confirmar: "Confirmar Moto Táxi" },
 };
 
 const pinIcon = (color: string) =>
@@ -129,14 +129,13 @@ export function MobilidadeUber({ modalidade }: Props) {
   }, [origemCoords, destinoCoords]);
 
   const tempoMin = distanciaKm == null ? null : Math.max(4, Math.round(distanciaKm * (modalidade === "moto_taxi" ? 2.2 : 3)));
-  const valor = distanciaKm == null ? null : Math.round((tarifa.base + distanciaKm * tarifa.porKm) * 100) / 100;
 
   async function confirmar() {
     if (!user) {
       toast.error("Entre na sua conta para solicitar.");
       return;
     }
-    if (!destinoCoords || valor == null) return;
+    if (!destinoCoords) return;
     setEnviando(true);
     try {
       const { data: profile } = await supabase
@@ -156,8 +155,9 @@ export function MobilidadeUber({ modalidade }: Props) {
           origem_lng: origemCoords?.lng ?? null,
           destino_lat: destinoCoords.lat,
           destino_lng: destinoCoords.lng,
-          valor_estimado: valor,
-          eh_gratuita: false,
+          // Serviço público: mobilidade urbana não é cobrada do servidor.
+          valor_estimado: 0,
+          eh_gratuita: true,
           pagamento_tipo: "dinheiro",
           status: "aguardando" as const,
           distancia_km: distanciaKm,
@@ -169,6 +169,11 @@ export function MobilidadeUber({ modalidade }: Props) {
         .single();
 
       if (error) {
+        if (error.message.includes("LIMITE_MOBILIDADE_ATINGIDO")) {
+          toast.error("Você atingiu o limite mensal de chamadas de mobilidade urbana.");
+          navigate({ to: "/passageiro/mobilidade" });
+          return;
+        }
         toast.error(error.message);
         return;
       }
@@ -178,6 +183,7 @@ export function MobilidadeUber({ modalidade }: Props) {
       setEnviando(false);
     }
   }
+
 
   // ---- Realtime da corrida ----
   useEffect(() => {
@@ -323,7 +329,7 @@ export function MobilidadeUber({ modalidade }: Props) {
               <span className={destino ? "font-semibold" : "text-[#6B6B6B]"}>{destino || "Para onde?"}</span>
             </button>
 
-            {destinoCoords && valor != null && (
+            {destinoCoords && distanciaKm != null && (
               <div className="rounded-2xl border border-[#E8E8E8] p-4">
                 <div className="flex items-center justify-between">
                   <div>
@@ -332,10 +338,11 @@ export function MobilidadeUber({ modalidade }: Props) {
                       {distanciaKm} km · aprox. {tempoMin} min
                     </p>
                   </div>
-                  <p className="text-lg font-bold text-[#3DB54A]">{formatBRL(valor)}</p>
+                  <p className="text-sm font-semibold text-[#3DB54A]">Serviço gratuito</p>
                 </div>
               </div>
             )}
+
 
             <button
               disabled={!destinoCoords || enviando}

@@ -56,6 +56,7 @@ import { Route as PassageiroMobilidadeIndexRouteImport } from './routes/passagei
 import { Route as PassageiroMobilidadeMotoRouteImport } from './routes/passageiro.mobilidade.moto'
 import { Route as PassageiroMobilidadeAutomovelRouteImport } from './routes/passageiro.mobilidade.automovel'
 import { Route as MotoristaCorridaIdRouteImport } from './routes/motorista.corrida.$id'
+import { Route as AdmGateAdmQuotasRouteImport } from './routes/_admGate.adm.quotas'
 import { Route as AdmGateAdmPrecosRouteImport } from './routes/_admGate.adm.precos'
 import { Route as AdmGateAdmPainelRouteImport } from './routes/_admGate.adm.painel'
 import { Route as AdmGateAdmGestaoRouteImport } from './routes/_admGate.adm.gestao'
@@ -303,6 +304,11 @@ const MotoristaCorridaIdRoute = MotoristaCorridaIdRouteImport.update({
   path: '/motorista/corrida/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdmGateAdmQuotasRoute = AdmGateAdmQuotasRouteImport.update({
+  id: '/adm/quotas',
+  path: '/adm/quotas',
+  getParentRoute: () => AdmGateRoute,
+} as any)
 const AdmGateAdmPrecosRoute = AdmGateAdmPrecosRouteImport.update({
   id: '/adm/precos',
   path: '/adm/precos',
@@ -378,6 +384,7 @@ export interface FileRoutesByFullPath {
   '/adm/gestao': typeof AdmGateAdmGestaoRoute
   '/adm/painel': typeof AdmGateAdmPainelRoute
   '/adm/precos': typeof AdmGateAdmPrecosRoute
+  '/adm/quotas': typeof AdmGateAdmQuotasRoute
   '/motorista/corrida/$id': typeof MotoristaCorridaIdRoute
   '/passageiro/mobilidade/automovel': typeof PassageiroMobilidadeAutomovelRoute
   '/passageiro/mobilidade/moto': typeof PassageiroMobilidadeMotoRoute
@@ -430,6 +437,7 @@ export interface FileRoutesByTo {
   '/adm/gestao': typeof AdmGateAdmGestaoRoute
   '/adm/painel': typeof AdmGateAdmPainelRoute
   '/adm/precos': typeof AdmGateAdmPrecosRoute
+  '/adm/quotas': typeof AdmGateAdmQuotasRoute
   '/motorista/corrida/$id': typeof MotoristaCorridaIdRoute
   '/passageiro/mobilidade/automovel': typeof PassageiroMobilidadeAutomovelRoute
   '/passageiro/mobilidade/moto': typeof PassageiroMobilidadeMotoRoute
@@ -485,6 +493,7 @@ export interface FileRoutesById {
   '/_admGate/adm/gestao': typeof AdmGateAdmGestaoRoute
   '/_admGate/adm/painel': typeof AdmGateAdmPainelRoute
   '/_admGate/adm/precos': typeof AdmGateAdmPrecosRoute
+  '/_admGate/adm/quotas': typeof AdmGateAdmQuotasRoute
   '/motorista/corrida/$id': typeof MotoristaCorridaIdRoute
   '/passageiro/mobilidade/automovel': typeof PassageiroMobilidadeAutomovelRoute
   '/passageiro/mobilidade/moto': typeof PassageiroMobilidadeMotoRoute
@@ -540,6 +549,7 @@ export interface FileRouteTypes {
     | '/adm/gestao'
     | '/adm/painel'
     | '/adm/precos'
+    | '/adm/quotas'
     | '/motorista/corrida/$id'
     | '/passageiro/mobilidade/automovel'
     | '/passageiro/mobilidade/moto'
@@ -592,6 +602,7 @@ export interface FileRouteTypes {
     | '/adm/gestao'
     | '/adm/painel'
     | '/adm/precos'
+    | '/adm/quotas'
     | '/motorista/corrida/$id'
     | '/passageiro/mobilidade/automovel'
     | '/passageiro/mobilidade/moto'
@@ -646,6 +657,7 @@ export interface FileRouteTypes {
     | '/_admGate/adm/gestao'
     | '/_admGate/adm/painel'
     | '/_admGate/adm/precos'
+    | '/_admGate/adm/quotas'
     | '/motorista/corrida/$id'
     | '/passageiro/mobilidade/automovel'
     | '/passageiro/mobilidade/moto'
@@ -1032,6 +1044,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MotoristaCorridaIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_admGate/adm/quotas': {
+      id: '/_admGate/adm/quotas'
+      path: '/adm/quotas'
+      fullPath: '/adm/quotas'
+      preLoaderRoute: typeof AdmGateAdmQuotasRouteImport
+      parentRoute: typeof AdmGateRoute
+    }
     '/_admGate/adm/precos': {
       id: '/_admGate/adm/precos'
       path: '/adm/precos'
@@ -1074,12 +1093,14 @@ interface AdmGateRouteChildren {
   AdmGateAdmGestaoRoute: typeof AdmGateAdmGestaoRoute
   AdmGateAdmPainelRoute: typeof AdmGateAdmPainelRoute
   AdmGateAdmPrecosRoute: typeof AdmGateAdmPrecosRoute
+  AdmGateAdmQuotasRoute: typeof AdmGateAdmQuotasRoute
 }
 
 const AdmGateRouteChildren: AdmGateRouteChildren = {
   AdmGateAdmGestaoRoute: AdmGateAdmGestaoRoute,
   AdmGateAdmPainelRoute: AdmGateAdmPainelRoute,
   AdmGateAdmPrecosRoute: AdmGateAdmPrecosRoute,
+  AdmGateAdmQuotasRoute: AdmGateAdmQuotasRoute,
 }
 
 const AdmGateRouteWithChildren =

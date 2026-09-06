@@ -2819,6 +2819,66 @@ export type Database = {
         }
         Relationships: []
       }
+      quota_grants: {
+        Row: {
+          amount: number
+          granted_at: string
+          granted_by: string
+          id: string
+          month: string
+          reason: string
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          granted_at?: string
+          granted_by: string
+          id?: string
+          month: string
+          reason?: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          granted_at?: string
+          granted_by?: string
+          id?: string
+          month?: string
+          reason?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      quota_requests: {
+        Row: {
+          created_at: string
+          id: string
+          month: string
+          reason: string
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          month?: string
+          reason?: string
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          month?: string
+          reason?: string
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       regras_preco_bairro: {
         Row: {
           ativo: boolean
@@ -3188,6 +3248,39 @@ export type Database = {
           },
         ]
       }
+      user_ride_quotas: {
+        Row: {
+          created_at: string
+          extra_granted: number
+          id: string
+          limit: number
+          month: string
+          updated_at: string
+          used: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          extra_granted?: number
+          id?: string
+          limit?: number
+          month: string
+          updated_at?: string
+          used?: number
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          extra_granted?: number
+          id?: string
+          limit?: number
+          month?: string
+          updated_at?: string
+          used?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
       valor_entrega_dia: {
         Row: {
           criado_em: string
@@ -3372,6 +3465,10 @@ export type Database = {
         Args: { _cidade_ids: string[]; _perfil_id: string }
         Returns: undefined
       }
+      admin_definir_limite_mobilidade: {
+        Args: { _limit: number }
+        Returns: number
+      }
       admin_definir_permissao: {
         Args: {
           _codigo: Database["public"]["Enums"]["permissao_admin_enum"]
@@ -3424,6 +3521,50 @@ export type Database = {
         Returns: undefined
       }
       admin_gerar_codigo_ativacao: { Args: { _user_id: string }; Returns: Json }
+      admin_liberar_cota_extra: {
+        Args: { _amount: number; _reason?: string; _user_id: string }
+        Returns: {
+          created_at: string
+          extra_granted: number
+          id: string
+          limit: number
+          month: string
+          updated_at: string
+          used: number
+          user_id: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "user_ride_quotas"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
+      admin_listar_corridas_mobilidade: {
+        Args: { _month?: string }
+        Returns: {
+          criada_em: string
+          destino: string
+          id: string
+          origem: string
+          passageiro: string
+          status: string
+          tipo: string
+        }[]
+      }
+      admin_listar_cotas: {
+        Args: { _busca?: string; _month?: string }
+        Returns: {
+          cidade: string
+          extra_granted: number
+          limite: number
+          month: string
+          nome: string
+          restantes: number
+          used: number
+          user_id: string
+        }[]
+      }
       admin_listar_embaixadores_escopo: {
         Args: never
         Returns: {
@@ -3705,6 +3846,37 @@ export type Database = {
       mercado_relatorio_acerto: {
         Args: { _ate: string; _desde: string; _loja_id: string }
         Returns: Json
+      }
+      mob_garantir_cota: {
+        Args: { _month?: string; _user_id: string }
+        Returns: {
+          created_at: string
+          extra_granted: number
+          id: string
+          limit: number
+          month: string
+          updated_at: string
+          used: number
+          user_id: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "user_ride_quotas"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
+      mob_limite_padrao: { Args: never; Returns: number }
+      mob_mes_atual: { Args: never; Returns: string }
+      mob_minha_cota: {
+        Args: never
+        Returns: {
+          extra_granted: number
+          limite: number
+          month: string
+          restantes: number
+          used: number
+        }[]
       }
       mototaxista_aceitar_pedido_food: {
         Args: { _pedido_id: string }
