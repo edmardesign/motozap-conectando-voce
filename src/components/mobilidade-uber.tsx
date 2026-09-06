@@ -95,6 +95,33 @@ export function MobilidadeUber({ modalidade }: Props) {
   const [motorista, setMotorista] = useState<MotoristaInfo | null>(null);
   const [enviando, setEnviando] = useState(false);
 
+  // ---- Município de exercício (restrição geográfica) ----
+  const carregarMunicipio = useServerFn(meuMunicipio);
+  const [mun, setMun] = useState<MeuMunicipio | null>(() =>
+    typeof window === "undefined" ? null : lerCache(),
+  );
+  const [gpsForaDoMunicipio, setGpsForaDoMunicipio] = useState(false);
+
+  useEffect(() => {
+    if (!user) return;
+    let cancel = false;
+    (async () => {
+      try {
+        const r = await carregarMunicipio();
+        if (cancel) return;
+        setMun(r);
+        gravarCache(r);
+      } catch {
+        /* mantém o cache local; o banco valida no envio */
+      }
+    })();
+    return () => {
+      cancel = true;
+    };
+  }, [user, carregarMunicipio]);
+
+  const anelMunicipio = useMemo(() => (mun ? poligonoParaLeaflet(mun.geojson) : []), [mun]);
+
   // ---- GPS: origem automática ----
   const detectarLocalizacao = useCallback(() => {
     if (typeof navigator === "undefined" || !navigator.geolocation) {
@@ -105,6 +132,14 @@ export function MobilidadeUber({ modalidade }: Props) {
     navigator.geolocation.getCurrentPosition(
       async (pos) => {
         const c = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+        if (!pontoPermitido(c.lat, c.lng, mun)) {
+          setGpsForaDoMunicipio(true);
+          setOrigemCoords(null);
+          setOrigem("");
+          setBuscandoGps(false);
+          return;
+        }
+        setGpsForaDoMunicipio(false);
         setOrigemCoords(c);
         const r = await reverseGeocode(c.lat, c.lng);
         setOrigem(r?.display_name ?? `${c.lat.toFixed(5)}, ${c.lng.toFixed(5)}`);
@@ -116,13 +151,13 @@ export function MobilidadeUber({ modalidade }: Props) {
       },
       { enableHighAccuracy: true, timeout: 12000 },
     );
-  }, []);
+  }, [mun]);
 
   useEffect(() => {
     detectarLocalizacao();
   }, [detectarLocalizacao]);
 
-  // ---- Autocomplete de destino ----
+  // ---- Autocomplete de destino (restrito ao município) ----
   const debounce = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => {
     if (debounce.current) clearTimeout(debounce.current);
@@ -132,14 +167,15 @@ export function MobilidadeUber({ modalidade }: Props) {
     }
     debounce.current = setTimeout(async () => {
       setBuscando(true);
-      const r = await searchSuggestions(destino, "", "");
-      setSugestoes(r);
+      const r = await searchSuggestions(destino, mun?.name ?? "", mun?.uf ?? "", viewboxDe(mun));
+      setSugestoes(r.filter((s) => pontoPermitido(Number(s.lat), Number(s.lon), mun)));
       setBuscando(false);
     }, 600);
     return () => {
       if (debounce.current) clearTimeout(debounce.current);
     };
-  }, [destino, destinoCoords]);
+  }, [destino, destinoCoords, mun]);
+
 
   const distanciaKm = useMemo(() => {
     if (!origemCoords || !destinoCoords) return null;
