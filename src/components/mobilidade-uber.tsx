@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { MapContainer, TileLayer, Marker, Polyline, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Polyline, Polygon, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import { ChevronLeft, Crosshair, Loader2, MapPin, Search, X, Phone, Star } from "lucide-react";
+import { ChevronLeft, Crosshair, Loader2, MapPin, Search, X, Phone, Star, AlertTriangle } from "lucide-react";
 import { useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
@@ -13,6 +13,20 @@ import { reverseGeocode, searchSuggestions, type NominatimResult } from "@/lib/g
 import { haversineKm } from "@/lib/haversine";
 import { AVISO_MOBILIDADE } from "@/components/aviso-mobilidade";
 import { cienciaMobilidadeHoje, registrarCienciaMobilidade } from "@/lib/mobilidade-auditoria.functions";
+import {
+  meuMunicipio,
+  listarMunicipios,
+  solicitarExcecao,
+  type MeuMunicipio,
+} from "@/lib/municipios.functions";
+import {
+  gravarCache,
+  lerCache,
+  poligonoParaLeaflet,
+  pontoPermitido,
+  viewboxDe,
+} from "@/lib/municipio-geo";
+
 
 
 export type ModalidadeMobilidade = "automovel" | "moto_taxi";
