@@ -3691,12 +3691,15 @@ export type Database = {
           _fim?: string
           _inicio?: string
           _limit?: number
+          _municipio_destino?: string
           _offset?: number
+          _somente_excecao?: boolean
           _status?: string
         }
         Returns: {
           aceita_em: string
           cargo: string
+          com_excecao: boolean
           criada_em: string
           destino: string
           destino_lat: number
@@ -3710,9 +3713,11 @@ export type Database = {
           lotacao: string
           modalidade: string
           motorista: string
+          municipio_destino: string
           origem: string
           origem_lat: number
           origem_lng: number
+          perto_fronteira: boolean
           servidor: string
           status: string
           total_registros: number
