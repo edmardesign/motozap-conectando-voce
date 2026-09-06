@@ -80,11 +80,14 @@ export async function searchSuggestions(
   query: string,
   cidade: string,
   estado: string,
+  /** viewbox "left,top,right,bottom" para restringir a busca ao município. */
+  viewbox?: string | null,
 ): Promise<NominatimResult[]> {
   if (query.trim().length < 2) return [];
   await throttle();
   const q = `${query}, ${cidade}, ${estado}`;
-  const url = `${NOMINATIM}/search?q=${encodeURIComponent(q)}&format=json&limit=5&countrycodes=br&addressdetails=1`;
+  const limite = viewbox ? `&viewbox=${encodeURIComponent(viewbox)}&bounded=1` : "";
+  const url = `${NOMINATIM}/search?q=${encodeURIComponent(q)}&format=json&limit=5&countrycodes=br&addressdetails=1${limite}`;
   try {
     const r = await fetch(url, { headers: DEFAULT_HEADERS });
     if (!r.ok) return [];
@@ -93,3 +96,4 @@ export async function searchSuggestions(
     return [];
   }
 }
+

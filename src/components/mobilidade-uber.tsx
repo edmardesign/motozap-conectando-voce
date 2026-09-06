@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { MapContainer, TileLayer, Marker, Polyline, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Polyline, Polygon, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import { ChevronLeft, Crosshair, Loader2, MapPin, Search, X, Phone, Star } from "lucide-react";
+import { ChevronLeft, Crosshair, Loader2, MapPin, Search, X, Phone, Star, AlertTriangle } from "lucide-react";
 import { useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
@@ -13,6 +13,20 @@ import { reverseGeocode, searchSuggestions, type NominatimResult } from "@/lib/g
 import { haversineKm } from "@/lib/haversine";
 import { AVISO_MOBILIDADE } from "@/components/aviso-mobilidade";
 import { cienciaMobilidadeHoje, registrarCienciaMobilidade } from "@/lib/mobilidade-auditoria.functions";
+import {
+  meuMunicipio,
+  listarMunicipios,
+  solicitarExcecao,
+  type MeuMunicipio,
+} from "@/lib/municipios.functions";
+import {
+  gravarCache,
+  lerCache,
+  poligonoParaLeaflet,
+  pontoPermitido,
+  viewboxDe,
+} from "@/lib/municipio-geo";
+
 
 
 export type ModalidadeMobilidade = "automovel" | "moto_taxi";
@@ -81,6 +95,33 @@ export function MobilidadeUber({ modalidade }: Props) {
   const [motorista, setMotorista] = useState<MotoristaInfo | null>(null);
   const [enviando, setEnviando] = useState(false);
 
+  // ---- Município de exercício (restrição geográfica) ----
+  const carregarMunicipio = useServerFn(meuMunicipio);
+  const [mun, setMun] = useState<MeuMunicipio | null>(() =>
+    typeof window === "undefined" ? null : lerCache(),
+  );
+  const [gpsForaDoMunicipio, setGpsForaDoMunicipio] = useState(false);
+
+  useEffect(() => {
+    if (!user) return;
+    let cancel = false;
+    (async () => {
+      try {
+        const r = await carregarMunicipio();
+        if (cancel) return;
+        setMun(r);
+        gravarCache(r);
+      } catch {
+        /* mantém o cache local; o banco valida no envio */
+      }
+    })();
+    return () => {
+      cancel = true;
+    };
+  }, [user, carregarMunicipio]);
+
+  const anelMunicipio = useMemo(() => (mun ? poligonoParaLeaflet(mun.geojson) : []), [mun]);
+
   // ---- GPS: origem automática ----
   const detectarLocalizacao = useCallback(() => {
     if (typeof navigator === "undefined" || !navigator.geolocation) {
@@ -91,6 +132,14 @@ export function MobilidadeUber({ modalidade }: Props) {
     navigator.geolocation.getCurrentPosition(
       async (pos) => {
         const c = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+        if (!pontoPermitido(c.lat, c.lng, mun)) {
+          setGpsForaDoMunicipio(true);
+          setOrigemCoords(null);
+          setOrigem("");
+          setBuscandoGps(false);
+          return;
+        }
+        setGpsForaDoMunicipio(false);
         setOrigemCoords(c);
         const r = await reverseGeocode(c.lat, c.lng);
         setOrigem(r?.display_name ?? `${c.lat.toFixed(5)}, ${c.lng.toFixed(5)}`);
@@ -102,13 +151,13 @@ export function MobilidadeUber({ modalidade }: Props) {
       },
       { enableHighAccuracy: true, timeout: 12000 },
     );
-  }, []);
+  }, [mun]);
 
   useEffect(() => {
     detectarLocalizacao();
   }, [detectarLocalizacao]);
 
-  // ---- Autocomplete de destino ----
+  // ---- Autocomplete de destino (restrito ao município) ----
   const debounce = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => {
     if (debounce.current) clearTimeout(debounce.current);
@@ -118,14 +167,15 @@ export function MobilidadeUber({ modalidade }: Props) {
     }
     debounce.current = setTimeout(async () => {
       setBuscando(true);
-      const r = await searchSuggestions(destino, "", "");
-      setSugestoes(r);
+      const r = await searchSuggestions(destino, mun?.name ?? "", mun?.uf ?? "", viewboxDe(mun));
+      setSugestoes(r.filter((s) => pontoPermitido(Number(s.lat), Number(s.lon), mun)));
       setBuscando(false);
     }, 600);
     return () => {
       if (debounce.current) clearTimeout(debounce.current);
     };
-  }, [destino, destinoCoords]);
+  }, [destino, destinoCoords, mun]);
+
 
   const distanciaKm = useMemo(() => {
     if (!origemCoords || !destinoCoords) return null;
@@ -158,18 +208,64 @@ export function MobilidadeUber({ modalidade }: Props) {
     };
   }, [user, verificarCiencia]);
 
+  const destinoPermitido = useMemo(
+    () => (destinoCoords ? pontoPermitido(destinoCoords.lat, destinoCoords.lng, mun) : true),
+    [destinoCoords, mun],
+  );
+
+  // ---- Autorização especial para deslocamento fora do município ----
+  const carregarMunicipios = useServerFn(listarMunicipios);
+  const pedirExcecao = useServerFn(solicitarExcecao);
+  const [modalExcecao, setModalExcecao] = useState(false);
+  const [municipios, setMunicipios] = useState<Array<{ id: string; name: string; uf: string }>>([]);
+  const [exMunicipio, setExMunicipio] = useState("");
+  const [exMotivo, setExMotivo] = useState("");
+  const [exData, setExData] = useState(() => new Date().toISOString().slice(0, 10));
+  const [enviandoExcecao, setEnviandoExcecao] = useState(false);
+
+  async function abrirExcecao() {
+    setModalExcecao(true);
+    if (municipios.length === 0) {
+      try {
+        const lista = await carregarMunicipios();
+        setMunicipios(lista.filter((m) => m.id !== mun?.id));
+      } catch {
+        toast.error("Não foi possível carregar a lista de municípios.");
+      }
+    }
+  }
+
+  async function enviarExcecao() {
+    setEnviandoExcecao(true);
+    try {
+      await pedirExcecao({ data: { municipio_id: exMunicipio, motivo: exMotivo, data: exData } });
+      toast.success("Pedido enviado para análise da administração.");
+      setModalExcecao(false);
+      setExMotivo("");
+    } catch (e: any) {
+      toast.error(e?.message ?? "Não foi possível enviar o pedido.");
+    } finally {
+      setEnviandoExcecao(false);
+    }
+  }
+
   async function confirmar() {
     if (!user) {
       toast.error("Entre na sua conta para solicitar.");
       return;
     }
     if (!destinoCoords) return;
+    if (!destinoPermitido) {
+      toast.error("Destino fora do município de exercício.");
+      return;
+    }
     if (precisaCiencia) {
       setModalCiencia(true);
       return;
     }
     await enviarSolicitacao();
   }
+
 
   async function aceitarCiencia() {
     if (!ciente) return;
