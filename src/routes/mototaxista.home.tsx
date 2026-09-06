@@ -37,7 +37,7 @@ type Corrida = {
   taxa_bora_ze_aplicada?: number | null;
   valor_total_passageiro?: number | null;
   // Pegue Ali
-  tipo?: "corrida" | "pegue_ali" | null;
+  tipo?: "corrida" | "pegue_ali" | "automovel" | "moto_taxi" | null;
   descricao?: string | null;
   foto_url?: string | null;
   pagamento_no_local?: boolean | null;
