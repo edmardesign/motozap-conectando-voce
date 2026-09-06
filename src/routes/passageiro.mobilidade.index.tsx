@@ -5,6 +5,8 @@ import { toast } from "sonner";
 import { Car, Bike, ChevronLeft, AlertTriangle, X } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 import { minhaCotaMobilidade, solicitarLiberacaoCota, type CotaMensal } from "@/lib/cotas.functions";
+import { AvisoMobilidadeBanner } from "@/components/aviso-mobilidade";
+
 
 export const Route = createFileRoute("/passageiro/mobilidade/")({
   head: () => ({
@@ -118,11 +120,14 @@ function MobilidadeEscolhaPage() {
           </div>
         )}
 
-        <p className="mb-6 text-[#6B6B6B] animate-apple-rise">
+        <p className="mb-4 text-[#6B6B6B] animate-apple-rise">
           Deslocamento de servidores — escolha a modalidade do seu transporte.
         </p>
 
+        <AvisoMobilidadeBanner />
+
         <div className="grid gap-4">
+
           <button
             aria-label="Solicitar automóvel"
             disabled={bloqueado}

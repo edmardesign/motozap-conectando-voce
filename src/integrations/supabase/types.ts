@@ -398,6 +398,7 @@ export type Database = {
       }
       corridas: {
         Row: {
+          aceita_em: string | null
           atualizado_em: string
           bairro_destino: string | null
           bairro_destino_id: string | null
@@ -412,15 +413,19 @@ export type Database = {
           destino_endereco: string
           destino_lat: number | null
           destino_lng: number | null
+          distancia_final_km: number | null
           distancia_km: number | null
+          duracao_min: number | null
           eh_gratuita: boolean
           em_nome_de: string | null
           estado: string | null
+          finalizada_em: string | null
           foto_pagamento_url: string | null
           foto_retirada_url: string | null
           foto_url: string | null
           gateway_transaction_id: string | null
           id: string
+          iniciada_em: string | null
           mototaxista_id: string | null
           ninguem_recebe_iniciado_em: string | null
           origem_endereco: string
@@ -443,6 +448,7 @@ export type Database = {
           valor_total_passageiro: number | null
         }
         Insert: {
+          aceita_em?: string | null
           atualizado_em?: string
           bairro_destino?: string | null
           bairro_destino_id?: string | null
@@ -457,15 +463,19 @@ export type Database = {
           destino_endereco: string
           destino_lat?: number | null
           destino_lng?: number | null
+          distancia_final_km?: number | null
           distancia_km?: number | null
+          duracao_min?: number | null
           eh_gratuita?: boolean
           em_nome_de?: string | null
           estado?: string | null
+          finalizada_em?: string | null
           foto_pagamento_url?: string | null
           foto_retirada_url?: string | null
           foto_url?: string | null
           gateway_transaction_id?: string | null
           id?: string
+          iniciada_em?: string | null
           mototaxista_id?: string | null
           ninguem_recebe_iniciado_em?: string | null
           origem_endereco: string
@@ -488,6 +498,7 @@ export type Database = {
           valor_total_passageiro?: number | null
         }
         Update: {
+          aceita_em?: string | null
           atualizado_em?: string
           bairro_destino?: string | null
           bairro_destino_id?: string | null
@@ -502,15 +513,19 @@ export type Database = {
           destino_endereco?: string
           destino_lat?: number | null
           destino_lng?: number | null
+          distancia_final_km?: number | null
           distancia_km?: number | null
+          duracao_min?: number | null
           eh_gratuita?: boolean
           em_nome_de?: string | null
           estado?: string | null
+          finalizada_em?: string | null
           foto_pagamento_url?: string | null
           foto_retirada_url?: string | null
           foto_url?: string | null
           gateway_transaction_id?: string | null
           id?: string
+          iniciada_em?: string | null
           mototaxista_id?: string | null
           ninguem_recebe_iniciado_em?: string | null
           origem_endereco?: string
@@ -2721,6 +2736,7 @@ export type Database = {
       profiles: {
         Row: {
           ativo: boolean
+          cargo: string | null
           cidade: string | null
           cidade_id: string | null
           criado_em: string
@@ -2733,6 +2749,7 @@ export type Database = {
           id: string
           latitude: number | null
           longitude: number | null
+          lotacao: string | null
           nome: string
           telefone: string
           termos_aceitos_em: string | null
@@ -2741,6 +2758,7 @@ export type Database = {
         }
         Insert: {
           ativo?: boolean
+          cargo?: string | null
           cidade?: string | null
           cidade_id?: string | null
           criado_em?: string
@@ -2753,6 +2771,7 @@ export type Database = {
           id: string
           latitude?: number | null
           longitude?: number | null
+          lotacao?: string | null
           nome: string
           telefone: string
           termos_aceitos_em?: string | null
@@ -2761,6 +2780,7 @@ export type Database = {
         }
         Update: {
           ativo?: boolean
+          cargo?: string | null
           cidade?: string | null
           cidade_id?: string | null
           criado_em?: string
@@ -2773,6 +2793,7 @@ export type Database = {
           id?: string
           latitude?: number | null
           longitude?: number | null
+          lotacao?: string | null
           nome?: string
           telefone?: string
           termos_aceitos_em?: string | null
@@ -2952,6 +2973,36 @@ export type Database = {
           },
         ]
       }
+      ride_acknowledgements: {
+        Row: {
+          acknowledged_at: string
+          created_at: string
+          id: string
+          ip_address: string | null
+          ride_request_id: string | null
+          user_agent: string | null
+          user_id: string
+        }
+        Insert: {
+          acknowledged_at?: string
+          created_at?: string
+          id?: string
+          ip_address?: string | null
+          ride_request_id?: string | null
+          user_agent?: string | null
+          user_id: string
+        }
+        Update: {
+          acknowledged_at?: string
+          created_at?: string
+          id?: string
+          ip_address?: string | null
+          ride_request_id?: string | null
+          user_agent?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       ride_requests: {
         Row: {
           created_at: string | null
@@ -3002,6 +3053,48 @@ export type Database = {
           valor_estimado?: number | null
         }
         Relationships: []
+      }
+      ride_route_points: {
+        Row: {
+          corrida_id: string
+          id: string
+          lat: number
+          lng: number
+          motorista_id: string | null
+          recorded_at: string
+        }
+        Insert: {
+          corrida_id: string
+          id?: string
+          lat: number
+          lng: number
+          motorista_id?: string | null
+          recorded_at?: string
+        }
+        Update: {
+          corrida_id?: string
+          id?: string
+          lat?: number
+          lng?: number
+          motorista_id?: string | null
+          recorded_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ride_route_points_corrida_id_fkey"
+            columns: ["corrida_id"]
+            isOneToOne: false
+            referencedRelation: "corridas"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ride_route_points_corrida_id_fkey"
+            columns: ["corrida_id"]
+            isOneToOne: false
+            referencedRelation: "corridas_broadcast"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       solicitacoes_saque: {
         Row: {
@@ -3415,6 +3508,47 @@ export type Database = {
       admin_ativar_por_codigo: {
         Args: { _codigo: string; _telefone: string }
         Returns: Json
+      }
+      admin_auditoria_mobilidade: {
+        Args: {
+          _busca?: string
+          _fim?: string
+          _inicio?: string
+          _limit?: number
+          _offset?: number
+          _status?: string
+        }
+        Returns: {
+          aceita_em: string
+          cargo: string
+          criada_em: string
+          destino: string
+          destino_lat: number
+          destino_lng: number
+          distancia_km: number
+          duracao_min: number
+          finalizada_em: string
+          fora_expediente: boolean
+          id: string
+          iniciada_em: string
+          lotacao: string
+          modalidade: string
+          motorista: string
+          origem: string
+          origem_lat: number
+          origem_lng: number
+          servidor: string
+          status: string
+          total_registros: number
+        }[]
+      }
+      admin_auditoria_rota: {
+        Args: { _corrida_id: string }
+        Returns: {
+          lat: number
+          lng: number
+          recorded_at: string
+        }[]
       }
       admin_bloquear_empresa: { Args: { _id: string }; Returns: undefined }
       admin_cidade_ativar: { Args: { _id: string }; Returns: undefined }
