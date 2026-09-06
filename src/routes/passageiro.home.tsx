@@ -60,7 +60,7 @@ export function IntergoHubPage() {
           <p className="text-[#6B6B6B]">O que vamos fazer hoje?</p>
         </div>
 
-        {/* Bloco: Logística Institucional */}
+        {/* Bloco: Serviços Institucionais */}
         <section className="mb-10 animate-apple-rise stagger-2">
           <div className="mb-4 flex items-center gap-2 px-1">
             <Building2 size={18} className="text-[#3DB54A]" />
