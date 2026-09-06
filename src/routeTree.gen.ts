@@ -54,6 +54,7 @@ import { Route as AdmSuspensoRouteImport } from './routes/adm.suspenso'
 import { Route as AdmNegadoRouteImport } from './routes/adm.negado'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
+import { Route as PassageiroMobilidadeIndexRouteImport } from './routes/passageiro.mobilidade.index'
 import { Route as MotoristaCorridaIdRouteImport } from './routes/motorista.corrida.$id'
 import { Route as AdmGateAdmPrecosRouteImport } from './routes/_admGate.adm.precos'
 import { Route as AdmGateAdmPainelRouteImport } from './routes/_admGate.adm.painel'
@@ -291,6 +292,12 @@ const Char91DotmcpChar93ListToolsRoute =
     path: '/.mcp/list-tools',
     getParentRoute: () => rootRouteImport,
   } as any)
+const PassageiroMobilidadeIndexRoute =
+  PassageiroMobilidadeIndexRouteImport.update({
+    id: '/passageiro/mobilidade/',
+    path: '/passageiro/mobilidade/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const MotoristaCorridaIdRoute = MotoristaCorridaIdRouteImport.update({
   id: '/motorista/corrida/$id',
   path: '/motorista/corrida/$id',
@@ -374,6 +381,7 @@ export interface FileRoutesByFullPath {
   '/adm/painel': typeof AdmGateAdmPainelRoute
   '/adm/precos': typeof AdmGateAdmPrecosRoute
   '/motorista/corrida/$id': typeof MotoristaCorridaIdRoute
+  '/passageiro/mobilidade/': typeof PassageiroMobilidadeIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -425,6 +433,7 @@ export interface FileRoutesByTo {
   '/adm/painel': typeof AdmGateAdmPainelRoute
   '/adm/precos': typeof AdmGateAdmPrecosRoute
   '/motorista/corrida/$id': typeof MotoristaCorridaIdRoute
+  '/passageiro/mobilidade': typeof PassageiroMobilidadeIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -479,6 +488,7 @@ export interface FileRoutesById {
   '/_admGate/adm/painel': typeof AdmGateAdmPainelRoute
   '/_admGate/adm/precos': typeof AdmGateAdmPrecosRoute
   '/motorista/corrida/$id': typeof MotoristaCorridaIdRoute
+  '/passageiro/mobilidade/': typeof PassageiroMobilidadeIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -533,6 +543,7 @@ export interface FileRouteTypes {
     | '/adm/painel'
     | '/adm/precos'
     | '/motorista/corrida/$id'
+    | '/passageiro/mobilidade/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -584,6 +595,7 @@ export interface FileRouteTypes {
     | '/adm/painel'
     | '/adm/precos'
     | '/motorista/corrida/$id'
+    | '/passageiro/mobilidade'
   id:
     | '__root__'
     | '/'
@@ -637,6 +649,7 @@ export interface FileRouteTypes {
     | '/_admGate/adm/painel'
     | '/_admGate/adm/precos'
     | '/motorista/corrida/$id'
+    | '/passageiro/mobilidade/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -685,6 +698,7 @@ export interface RootRouteChildren {
   DotlovableOauthConsentRoute: typeof DotlovableOauthConsentRoute
   Char91DotmcpChar93InvokeToolToolRoute: typeof Char91DotmcpChar93InvokeToolToolRoute
   MotoristaCorridaIdRoute: typeof MotoristaCorridaIdRoute
+  PassageiroMobilidadeIndexRoute: typeof PassageiroMobilidadeIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -1004,6 +1018,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Char91DotmcpChar93ListToolsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/passageiro/mobilidade/': {
+      id: '/passageiro/mobilidade/'
+      path: '/passageiro/mobilidade'
+      fullPath: '/passageiro/mobilidade/'
+      preLoaderRoute: typeof PassageiroMobilidadeIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/motorista/corrida/$id': {
       id: '/motorista/corrida/$id'
       path: '/motorista/corrida/$id'
@@ -1134,6 +1155,7 @@ const rootRouteChildren: RootRouteChildren = {
   DotlovableOauthConsentRoute: DotlovableOauthConsentRoute,
   Char91DotmcpChar93InvokeToolToolRoute: Char91DotmcpChar93InvokeToolToolRoute,
   MotoristaCorridaIdRoute: MotoristaCorridaIdRoute,
+  PassageiroMobilidadeIndexRoute: PassageiroMobilidadeIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
