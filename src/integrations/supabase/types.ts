@@ -2849,6 +2849,36 @@ export type Database = {
         }
         Relationships: []
       }
+      quota_requests: {
+        Row: {
+          created_at: string
+          id: string
+          month: string
+          reason: string
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          month?: string
+          reason?: string
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          month?: string
+          reason?: string
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       regras_preco_bairro: {
         Row: {
           ativo: boolean
