@@ -208,18 +208,64 @@ export function MobilidadeUber({ modalidade }: Props) {
     };
   }, [user, verificarCiencia]);
 
+  const destinoPermitido = useMemo(
+    () => (destinoCoords ? pontoPermitido(destinoCoords.lat, destinoCoords.lng, mun) : true),
+    [destinoCoords, mun],
+  );
+
+  // ---- Autorização especial para deslocamento fora do município ----
+  const carregarMunicipios = useServerFn(listarMunicipios);
+  const pedirExcecao = useServerFn(solicitarExcecao);
+  const [modalExcecao, setModalExcecao] = useState(false);
+  const [municipios, setMunicipios] = useState<Array<{ id: string; name: string; uf: string }>>([]);
+  const [exMunicipio, setExMunicipio] = useState("");
+  const [exMotivo, setExMotivo] = useState("");
+  const [exData, setExData] = useState(() => new Date().toISOString().slice(0, 10));
+  const [enviandoExcecao, setEnviandoExcecao] = useState(false);
+
+  async function abrirExcecao() {
+    setModalExcecao(true);
+    if (municipios.length === 0) {
+      try {
+        const lista = await carregarMunicipios();
+        setMunicipios(lista.filter((m) => m.id !== mun?.id));
+      } catch {
+        toast.error("Não foi possível carregar a lista de municípios.");
+      }
+    }
+  }
+
+  async function enviarExcecao() {
+    setEnviandoExcecao(true);
+    try {
+      await pedirExcecao({ data: { municipio_id: exMunicipio, motivo: exMotivo, data: exData } });
+      toast.success("Pedido enviado para análise da administração.");
+      setModalExcecao(false);
+      setExMotivo("");
+    } catch (e: any) {
+      toast.error(e?.message ?? "Não foi possível enviar o pedido.");
+    } finally {
+      setEnviandoExcecao(false);
+    }
+  }
+
   async function confirmar() {
     if (!user) {
       toast.error("Entre na sua conta para solicitar.");
       return;
     }
     if (!destinoCoords) return;
+    if (!destinoPermitido) {
+      toast.error("Destino fora do município de exercício.");
+      return;
+    }
     if (precisaCiencia) {
       setModalCiencia(true);
       return;
     }
     await enviarSolicitacao();
   }
+
 
   async function aceitarCiencia() {
     if (!ciente) return;
