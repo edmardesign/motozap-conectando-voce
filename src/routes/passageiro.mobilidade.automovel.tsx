@@ -1,0 +1,17 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { MobilidadeUber } from "@/components/mobilidade-uber";
+
+export const Route = createFileRoute("/passageiro/mobilidade/automovel")({
+  ssr: false,
+  head: () => ({
+    meta: [
+      { title: "Solicitar Automóvel — Intergo Logística" },
+      { name: "description", content: "Peça um carro sob demanda: origem automática, destino e estimativa de preço." },
+      { property: "og:title", content: "Solicitar Automóvel — Intergo Logística" },
+      { property: "og:description", content: "Peça um carro sob demanda: origem automática, destino e estimativa de preço." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
+    ],
+  }),
+  component: () => <MobilidadeUber modalidade="automovel" />,
+});
