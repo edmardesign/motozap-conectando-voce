@@ -10,7 +10,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
 import { reverseGeocode, searchSuggestions, type NominatimResult } from "@/lib/geocoding";
 import { haversineKm } from "@/lib/haversine";
-import { formatBRL } from "@/lib/pricing";
 
 export type ModalidadeMobilidade = "automovel" | "moto_taxi";
 
@@ -37,9 +36,10 @@ type MotoristaInfo = {
   longitude: number | null;
 };
 
-const TARIFAS: Record<ModalidadeMobilidade, { base: number; porKm: number; label: string; confirmar: string }> = {
-  automovel: { base: 6, porKm: 2.5, label: "Automóvel", confirmar: "Confirmar Automóvel" },
-  moto_taxi: { base: 4, porKm: 1.5, label: "Moto Táxi", confirmar: "Confirmar Moto Táxi" },
+// Serviço público: sem tarifa. Apenas rótulos por modalidade.
+const TARIFAS: Record<ModalidadeMobilidade, { label: string; confirmar: string }> = {
+  automovel: { label: "Automóvel", confirmar: "Confirmar Automóvel" },
+  moto_taxi: { label: "Moto Táxi", confirmar: "Confirmar Moto Táxi" },
 };
 
 const pinIcon = (color: string) =>
