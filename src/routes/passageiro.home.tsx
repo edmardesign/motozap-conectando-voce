@@ -64,20 +64,20 @@ export function IntergoHubPage() {
         <section className="mb-10 animate-apple-rise stagger-2">
           <div className="mb-4 flex items-center gap-2 px-1">
             <Building2 size={18} className="text-[#3DB54A]" />
-            <h2 className="text-sm font-bold uppercase tracking-wider text-[#6B6B6B]">Logística Institucional</h2>
+            <h2 className="text-sm font-bold uppercase tracking-wider text-[#6B6B6B]">Serviços Institucionais</h2>
           </div>
           
           <div className="grid gap-3">
             <HubCard 
-              title="Transporte de Servidores"
-              description="Solicitar deslocamento oficial (Carro ou Moto)"
+              title="Mobilidade Urbana"
+              description="Deslocamento de servidores — carro ou moto táxi"
               icon={Users}
               color="bg-[#3DB54A]"
-              onClick={() => navigate({ to: "/passageiro/transporte-servidores" })}
+              onClick={() => navigate({ to: "/passageiro/mobilidade" })}
             />
             <HubCard 
-              title="Solicitação de Transporte"
-              description="Logística de materiais e documentos"
+              title="Logística de Envios"
+              description="Documentos, exames, medicamentos e encomendas"
               icon={Truck}
               color="bg-[#3DB54A]"
               onClick={() => navigate({ to: "/passageiro/solicitacao-transporte" })}
