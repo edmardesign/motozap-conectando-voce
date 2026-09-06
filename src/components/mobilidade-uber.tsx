@@ -329,7 +329,7 @@ export function MobilidadeUber({ modalidade }: Props) {
               <span className={destino ? "font-semibold" : "text-[#6B6B6B]"}>{destino || "Para onde?"}</span>
             </button>
 
-            {destinoCoords && valor != null && (
+            {destinoCoords && distanciaKm != null && (
               <div className="rounded-2xl border border-[#E8E8E8] p-4">
                 <div className="flex items-center justify-between">
                   <div>
@@ -338,10 +338,11 @@ export function MobilidadeUber({ modalidade }: Props) {
                       {distanciaKm} km · aprox. {tempoMin} min
                     </p>
                   </div>
-                  <p className="text-lg font-bold text-[#3DB54A]">{formatBRL(valor)}</p>
+                  <p className="text-sm font-semibold text-[#3DB54A]">Serviço gratuito</p>
                 </div>
               </div>
             )}
+
 
             <button
               disabled={!destinoCoords || enviando}
