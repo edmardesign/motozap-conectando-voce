@@ -5,11 +5,15 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { ChevronLeft, Crosshair, Loader2, MapPin, Search, X, Phone, Star } from "lucide-react";
 import { useNavigate } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
 import { reverseGeocode, searchSuggestions, type NominatimResult } from "@/lib/geocoding";
 import { haversineKm } from "@/lib/haversine";
+import { AVISO_MOBILIDADE } from "@/components/aviso-mobilidade";
+import { cienciaMobilidadeHoje, registrarCienciaMobilidade } from "@/lib/mobilidade-auditoria.functions";
+
 
 export type ModalidadeMobilidade = "automovel" | "moto_taxi";
 
@@ -130,12 +134,60 @@ export function MobilidadeUber({ modalidade }: Props) {
 
   const tempoMin = distanciaKm == null ? null : Math.max(4, Math.round(distanciaKm * (modalidade === "moto_taxi" ? 2.2 : 3)));
 
+  // ---- Ciência do aviso institucional (1x por dia) ----
+  const verificarCiencia = useServerFn(cienciaMobilidadeHoje);
+  const registrarCiencia = useServerFn(registrarCienciaMobilidade);
+  const [precisaCiencia, setPrecisaCiencia] = useState(false);
+  const [modalCiencia, setModalCiencia] = useState(false);
+  const [ciente, setCiente] = useState(false);
+  const [salvandoCiencia, setSalvandoCiencia] = useState(false);
+
+  useEffect(() => {
+    if (!user) return;
+    let cancel = false;
+    (async () => {
+      try {
+        const r = await verificarCiencia();
+        if (!cancel) setPrecisaCiencia(!r.aceito);
+      } catch {
+        /* falha silenciosa: o aviso continua visível nas telas anteriores */
+      }
+    })();
+    return () => {
+      cancel = true;
+    };
+  }, [user, verificarCiencia]);
+
   async function confirmar() {
     if (!user) {
       toast.error("Entre na sua conta para solicitar.");
       return;
     }
     if (!destinoCoords) return;
+    if (precisaCiencia) {
+      setModalCiencia(true);
+      return;
+    }
+    await enviarSolicitacao();
+  }
+
+  async function aceitarCiencia() {
+    if (!ciente) return;
+    setSalvandoCiencia(true);
+    try {
+      await registrarCiencia({ data: {} });
+      setPrecisaCiencia(false);
+      setModalCiencia(false);
+      await enviarSolicitacao();
+    } catch {
+      toast.error("Não foi possível registrar sua confirmação agora.");
+    } finally {
+      setSalvandoCiencia(false);
+    }
+  }
+
+  async function enviarSolicitacao() {
+    if (!user || !destinoCoords) return;
     setEnviando(true);
     try {
       const { data: profile } = await supabase
@@ -183,6 +235,7 @@ export function MobilidadeUber({ modalidade }: Props) {
       setEnviando(false);
     }
   }
+
 
 
   // ---- Realtime da corrida ----
@@ -446,6 +499,44 @@ export function MobilidadeUber({ modalidade }: Props) {
           </div>,
           document.body,
         )}
+
+      {/* Ciência do uso institucional — exigida antes da 1ª corrida do dia */}
+      {modalCiencia && (
+        <div className="fixed inset-0 z-[3000] flex items-end justify-center bg-black/40 p-4 sm:items-center">
+          <div className="w-full max-w-md rounded-[24px] bg-white p-6">
+            <h2 className="text-lg font-bold">Uso da Mobilidade Urbana</h2>
+            <p className="mt-3 text-sm leading-relaxed text-[#6B6B6B]">{AVISO_MOBILIDADE}</p>
+            <label className="mt-4 flex items-start gap-3">
+              <input
+                type="checkbox"
+                checked={ciente}
+                onChange={(e) => setCiente(e.target.checked)}
+                className="mt-1 h-5 w-5 shrink-0 accent-[#3DB54A]"
+              />
+              <span className="text-sm">
+                Estou ciente e confirmo que a chamada tem finalidade estritamente profissional durante
+                meu horário de expediente
+              </span>
+            </label>
+            <div className="mt-5 flex gap-3">
+              <button
+                onClick={() => setModalCiencia(false)}
+                className="flex-1 rounded-2xl border border-[#E8E8E8] py-3 font-semibold"
+              >
+                Voltar
+              </button>
+              <button
+                disabled={!ciente || salvandoCiencia}
+                onClick={aceitarCiencia}
+                className="flex-1 rounded-2xl bg-[#3DB54A] py-3 font-bold text-white disabled:opacity-40"
+              >
+                {salvandoCiencia ? "Registrando…" : "Confirmar"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
+
   );
 }

@@ -15,6 +15,8 @@ import { useAuth } from "@/hooks/use-auth";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import wordmarkAsset from "@/assets/intergo-wordmark.png.asset.json";
+import { AvisoMobilidadeTexto } from "@/components/aviso-mobilidade";
+
 
 export const Route = createFileRoute("/passageiro/home")({
   component: IntergoHubPage,
@@ -75,6 +77,8 @@ export function IntergoHubPage() {
               color="bg-[#3DB54A]"
               onClick={() => navigate({ to: "/passageiro/mobilidade" })}
             />
+            <AvisoMobilidadeTexto className="-mt-1 mb-1" />
+
             <HubCard 
               title="Logística de Envios"
               description="Documentos, exames, medicamentos e encomendas"

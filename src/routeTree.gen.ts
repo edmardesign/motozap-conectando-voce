@@ -59,6 +59,7 @@ import { Route as MotoristaCorridaIdRouteImport } from './routes/motorista.corri
 import { Route as AdmGateAdmQuotasRouteImport } from './routes/_admGate.adm.quotas'
 import { Route as AdmGateAdmPrecosRouteImport } from './routes/_admGate.adm.precos'
 import { Route as AdmGateAdmPainelRouteImport } from './routes/_admGate.adm.painel'
+import { Route as AdmGateAdmMobilidadeAuditoriaRouteImport } from './routes/_admGate.adm.mobilidade-auditoria'
 import { Route as AdmGateAdmGestaoRouteImport } from './routes/_admGate.adm.gestao'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
 import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
@@ -319,6 +320,12 @@ const AdmGateAdmPainelRoute = AdmGateAdmPainelRouteImport.update({
   path: '/adm/painel',
   getParentRoute: () => AdmGateRoute,
 } as any)
+const AdmGateAdmMobilidadeAuditoriaRoute =
+  AdmGateAdmMobilidadeAuditoriaRouteImport.update({
+    id: '/adm/mobilidade-auditoria',
+    path: '/adm/mobilidade-auditoria',
+    getParentRoute: () => AdmGateRoute,
+  } as any)
 const AdmGateAdmGestaoRoute = AdmGateAdmGestaoRouteImport.update({
   id: '/adm/gestao',
   path: '/adm/gestao',
@@ -382,6 +389,7 @@ export interface FileRoutesByFullPath {
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/adm/gestao': typeof AdmGateAdmGestaoRoute
+  '/adm/mobilidade-auditoria': typeof AdmGateAdmMobilidadeAuditoriaRoute
   '/adm/painel': typeof AdmGateAdmPainelRoute
   '/adm/precos': typeof AdmGateAdmPrecosRoute
   '/adm/quotas': typeof AdmGateAdmQuotasRoute
@@ -435,6 +443,7 @@ export interface FileRoutesByTo {
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/adm/gestao': typeof AdmGateAdmGestaoRoute
+  '/adm/mobilidade-auditoria': typeof AdmGateAdmMobilidadeAuditoriaRoute
   '/adm/painel': typeof AdmGateAdmPainelRoute
   '/adm/precos': typeof AdmGateAdmPrecosRoute
   '/adm/quotas': typeof AdmGateAdmQuotasRoute
@@ -491,6 +500,7 @@ export interface FileRoutesById {
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/_admGate/adm/gestao': typeof AdmGateAdmGestaoRoute
+  '/_admGate/adm/mobilidade-auditoria': typeof AdmGateAdmMobilidadeAuditoriaRoute
   '/_admGate/adm/painel': typeof AdmGateAdmPainelRoute
   '/_admGate/adm/precos': typeof AdmGateAdmPrecosRoute
   '/_admGate/adm/quotas': typeof AdmGateAdmQuotasRoute
@@ -547,6 +557,7 @@ export interface FileRouteTypes {
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
     | '/adm/gestao'
+    | '/adm/mobilidade-auditoria'
     | '/adm/painel'
     | '/adm/precos'
     | '/adm/quotas'
@@ -600,6 +611,7 @@ export interface FileRouteTypes {
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
     | '/adm/gestao'
+    | '/adm/mobilidade-auditoria'
     | '/adm/painel'
     | '/adm/precos'
     | '/adm/quotas'
@@ -655,6 +667,7 @@ export interface FileRouteTypes {
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
     | '/_admGate/adm/gestao'
+    | '/_admGate/adm/mobilidade-auditoria'
     | '/_admGate/adm/painel'
     | '/_admGate/adm/precos'
     | '/_admGate/adm/quotas'
@@ -1065,6 +1078,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdmGateAdmPainelRouteImport
       parentRoute: typeof AdmGateRoute
     }
+    '/_admGate/adm/mobilidade-auditoria': {
+      id: '/_admGate/adm/mobilidade-auditoria'
+      path: '/adm/mobilidade-auditoria'
+      fullPath: '/adm/mobilidade-auditoria'
+      preLoaderRoute: typeof AdmGateAdmMobilidadeAuditoriaRouteImport
+      parentRoute: typeof AdmGateRoute
+    }
     '/_admGate/adm/gestao': {
       id: '/_admGate/adm/gestao'
       path: '/adm/gestao'
@@ -1091,6 +1111,7 @@ declare module '@tanstack/react-router' {
 
 interface AdmGateRouteChildren {
   AdmGateAdmGestaoRoute: typeof AdmGateAdmGestaoRoute
+  AdmGateAdmMobilidadeAuditoriaRoute: typeof AdmGateAdmMobilidadeAuditoriaRoute
   AdmGateAdmPainelRoute: typeof AdmGateAdmPainelRoute
   AdmGateAdmPrecosRoute: typeof AdmGateAdmPrecosRoute
   AdmGateAdmQuotasRoute: typeof AdmGateAdmQuotasRoute
@@ -1098,6 +1119,7 @@ interface AdmGateRouteChildren {
 
 const AdmGateRouteChildren: AdmGateRouteChildren = {
   AdmGateAdmGestaoRoute: AdmGateAdmGestaoRoute,
+  AdmGateAdmMobilidadeAuditoriaRoute: AdmGateAdmMobilidadeAuditoriaRoute,
   AdmGateAdmPainelRoute: AdmGateAdmPainelRoute,
   AdmGateAdmPrecosRoute: AdmGateAdmPrecosRoute,
   AdmGateAdmQuotasRoute: AdmGateAdmQuotasRoute,

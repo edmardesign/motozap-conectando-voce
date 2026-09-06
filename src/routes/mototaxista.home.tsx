@@ -12,6 +12,8 @@ import { IOSSwitch } from "@/components/ios-switch";
 import { TabBar } from "@/components/tab-bar";
 import { ChatCorrida, ChatFab } from "@/components/chat-corrida";
 import { EmojiIcon } from "@/components/emoji-icon";
+import { useRideTracking } from "@/hooks/use-ride-tracking";
+
 
 export const Route = createFileRoute("/mototaxista/home")({
   component: MototaxistaHome,
@@ -35,7 +37,7 @@ type Corrida = {
   taxa_bora_ze_aplicada?: number | null;
   valor_total_passageiro?: number | null;
   // Pegue Ali
-  tipo?: "corrida" | "pegue_ali" | null;
+  tipo?: "corrida" | "pegue_ali" | "automovel" | "moto_taxi" | null;
   descricao?: string | null;
   foto_url?: string | null;
   pagamento_no_local?: boolean | null;
@@ -275,13 +277,24 @@ function MototaxistaHome() {
       });
       const { data: c } = await supabase
         .from("corridas")
-        .select("id,status,passageiro_id,origem_endereco,destino_endereco,valor_estimado,valor_final,eh_gratuita,distancia_km,criado_em,valor_base_aplicado,taxa_bora_ze_aplicada,valor_total_passageiro")
+        .select("id,status,passageiro_id,tipo,origem_endereco,destino_endereco,valor_estimado,valor_final,eh_gratuita,distancia_km,criado_em,valor_base_aplicado,taxa_bora_ze_aplicada,valor_total_passageiro")
         .eq("mototaxista_id", user.id)
         .in("status", ["aceita", "em_andamento"])
         .maybeSingle();
       if (c) setAtual(c as Corrida);
     })();
   }, [user]);
+
+  // Auditoria: grava a rota percorrida nas corridas de Mobilidade Urbana.
+  useRideTracking({
+    corridaId: atual?.id ?? null,
+    motoristaId: user?.id ?? null,
+    ativo:
+      !!atual &&
+      atual.status === "em_andamento" &&
+      (atual.tipo === "automovel" || atual.tipo === "moto_taxi"),
+  });
+
 
   // Realtime: reflete bloqueio/reset de comissão feito por trigger ou admin
   useEffect(() => {
