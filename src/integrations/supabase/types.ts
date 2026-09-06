@@ -14,6 +14,51 @@ export type Database = {
   }
   public: {
     Tables: {
+      allowed_neighbor_cities: {
+        Row: {
+          added_at: string
+          added_by: string | null
+          created_at: string
+          id: string
+          neighbor_city_id: string
+          primary_city_id: string
+          updated_at: string
+        }
+        Insert: {
+          added_at?: string
+          added_by?: string | null
+          created_at?: string
+          id?: string
+          neighbor_city_id: string
+          primary_city_id: string
+          updated_at?: string
+        }
+        Update: {
+          added_at?: string
+          added_by?: string | null
+          created_at?: string
+          id?: string
+          neighbor_city_id?: string
+          primary_city_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "allowed_neighbor_cities_neighbor_city_id_fkey"
+            columns: ["neighbor_city_id"]
+            isOneToOne: false
+            referencedRelation: "municipalities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "allowed_neighbor_cities_primary_city_id_fkey"
+            columns: ["primary_city_id"]
+            isOneToOne: false
+            referencedRelation: "municipalities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       auditoria_administrativa: {
         Row: {
           acao: string
@@ -427,6 +472,8 @@ export type Database = {
           id: string
           iniciada_em: string | null
           mototaxista_id: string | null
+          municipio_destino_id: string | null
+          municipio_excecao_id: string | null
           ninguem_recebe_iniciado_em: string | null
           origem_endereco: string
           origem_lat: number | null
@@ -434,6 +481,7 @@ export type Database = {
           pagamento_no_local: boolean
           pagamento_tipo: Database["public"]["Enums"]["tipo_pagamento_corrida"]
           passageiro_id: string
+          perto_fronteira: boolean
           regra_tarifaria_id: string | null
           status: Database["public"]["Enums"]["status_corrida"]
           status_encomenda: string | null
@@ -477,6 +525,8 @@ export type Database = {
           id?: string
           iniciada_em?: string | null
           mototaxista_id?: string | null
+          municipio_destino_id?: string | null
+          municipio_excecao_id?: string | null
           ninguem_recebe_iniciado_em?: string | null
           origem_endereco: string
           origem_lat?: number | null
@@ -484,6 +534,7 @@ export type Database = {
           pagamento_no_local?: boolean
           pagamento_tipo?: Database["public"]["Enums"]["tipo_pagamento_corrida"]
           passageiro_id: string
+          perto_fronteira?: boolean
           regra_tarifaria_id?: string | null
           status?: Database["public"]["Enums"]["status_corrida"]
           status_encomenda?: string | null
@@ -527,6 +578,8 @@ export type Database = {
           id?: string
           iniciada_em?: string | null
           mototaxista_id?: string | null
+          municipio_destino_id?: string | null
+          municipio_excecao_id?: string | null
           ninguem_recebe_iniciado_em?: string | null
           origem_endereco?: string
           origem_lat?: number | null
@@ -534,6 +587,7 @@ export type Database = {
           pagamento_no_local?: boolean
           pagamento_tipo?: Database["public"]["Enums"]["tipo_pagamento_corrida"]
           passageiro_id?: string
+          perto_fronteira?: boolean
           regra_tarifaria_id?: string | null
           status?: Database["public"]["Enums"]["status_corrida"]
           status_encomenda?: string | null
@@ -581,6 +635,20 @@ export type Database = {
             columns: ["mototaxista_id"]
             isOneToOne: false
             referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "corridas_municipio_destino_id_fkey"
+            columns: ["municipio_destino_id"]
+            isOneToOne: false
+            referencedRelation: "municipalities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "corridas_municipio_excecao_id_fkey"
+            columns: ["municipio_excecao_id"]
+            isOneToOne: false
+            referencedRelation: "ride_exception_requests"
             referencedColumns: ["id"]
           },
           {
@@ -2531,6 +2599,48 @@ export type Database = {
           },
         ]
       }
+      municipalities: {
+        Row: {
+          bounding_box: Json | null
+          centroid_lat: number | null
+          centroid_lng: number | null
+          created_at: string
+          geojson: Json
+          geom: unknown
+          ibge_code: string
+          id: string
+          name: string
+          uf: string
+          updated_at: string
+        }
+        Insert: {
+          bounding_box?: Json | null
+          centroid_lat?: number | null
+          centroid_lng?: number | null
+          created_at?: string
+          geojson: Json
+          geom?: unknown
+          ibge_code: string
+          id?: string
+          name: string
+          uf: string
+          updated_at?: string
+        }
+        Update: {
+          bounding_box?: Json | null
+          centroid_lat?: number | null
+          centroid_lng?: number | null
+          created_at?: string
+          geojson?: Json
+          geom?: unknown
+          ibge_code?: string
+          id?: string
+          name?: string
+          uf?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       parceiros: {
         Row: {
           ativo: boolean
@@ -2750,6 +2860,7 @@ export type Database = {
           latitude: number | null
           longitude: number | null
           lotacao: string | null
+          municipality_id: string | null
           nome: string
           telefone: string
           termos_aceitos_em: string | null
@@ -2772,6 +2883,7 @@ export type Database = {
           latitude?: number | null
           longitude?: number | null
           lotacao?: string | null
+          municipality_id?: string | null
           nome: string
           telefone: string
           termos_aceitos_em?: string | null
@@ -2794,6 +2906,7 @@ export type Database = {
           latitude?: number | null
           longitude?: number | null
           lotacao?: string | null
+          municipality_id?: string | null
           nome?: string
           telefone?: string
           termos_aceitos_em?: string | null
@@ -2806,6 +2919,13 @@ export type Database = {
             columns: ["cidade_id"]
             isOneToOne: false
             referencedRelation: "cidades_configuradas"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "profiles_municipality_id_fkey"
+            columns: ["municipality_id"]
+            isOneToOne: false
+            referencedRelation: "municipalities"
             referencedColumns: ["id"]
           },
         ]
@@ -3002,6 +3122,62 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      ride_exception_requests: {
+        Row: {
+          consumed_at: string | null
+          created_at: string
+          id: string
+          notes: string | null
+          reason: string
+          requested_city_id: string
+          requested_date: string
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: string
+          token: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          consumed_at?: string | null
+          created_at?: string
+          id?: string
+          notes?: string | null
+          reason: string
+          requested_city_id: string
+          requested_date: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          token?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          consumed_at?: string | null
+          created_at?: string
+          id?: string
+          notes?: string | null
+          reason?: string
+          requested_city_id?: string
+          requested_date?: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          token?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ride_exception_requests_requested_city_id_fkey"
+            columns: ["requested_city_id"]
+            isOneToOne: false
+            referencedRelation: "municipalities"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       ride_requests: {
         Row: {
@@ -3603,6 +3779,10 @@ export type Database = {
         Args: { _limit: number }
         Returns: number
       }
+      admin_definir_municipio_servidor: {
+        Args: { _municipio: string; _user: string }
+        Returns: undefined
+      }
       admin_definir_permissao: {
         Args: {
           _codigo: Database["public"]["Enums"]["permissao_admin_enum"]
@@ -3644,6 +3824,28 @@ export type Database = {
           tipo_documento: string
           user_id: string
           versao: number
+        }[]
+      }
+      admin_excecao_decidir: {
+        Args: { _aprovar: boolean; _id: string; _notas?: string }
+        Returns: undefined
+      }
+      admin_excecoes_listar: {
+        Args: { _status?: string }
+        Returns: {
+          cargo: string
+          cidade: string
+          consumed_at: string
+          criada_em: string
+          id: string
+          lotacao: string
+          notes: string
+          reason: string
+          requested_date: string
+          reviewed_at: string
+          servidor: string
+          status: string
+          uf: string
         }[]
       }
       admin_food_definir_comissao: {
@@ -3739,6 +3941,10 @@ export type Database = {
       }
       admin_mercado_definir_status_loja: {
         Args: { _ativo: boolean; _loja_id: string; _pausado: boolean }
+        Returns: undefined
+      }
+      admin_municipio_vizinho: {
+        Args: { _neighbor: string; _primary: string; _remover?: boolean }
         Returns: undefined
       }
       admin_perfis_pendentes_ativacao: {
@@ -4249,6 +4455,36 @@ export type Database = {
           _tipo: string
         }
         Returns: Json
+      }
+      mun_ids_permitidos: {
+        Args: { _data: string; _user: string }
+        Returns: string[]
+      }
+      mun_meu_municipio: {
+        Args: never
+        Returns: {
+          bounding_box: Json
+          centroid_lat: number
+          centroid_lng: number
+          geojson: Json
+          ibge_code: string
+          id: string
+          name: string
+          uf: string
+          vizinhos: Json
+        }[]
+      }
+      mun_municipio_do_ponto: {
+        Args: { _ids: string[]; _lat: number; _lng: number }
+        Returns: string
+      }
+      mun_perto_da_fronteira: {
+        Args: { _lat: number; _lng: number; _municipio: string }
+        Returns: boolean
+      }
+      mun_ponto_permitido: {
+        Args: { _data: string; _lat: number; _lng: number; _user: string }
+        Returns: boolean
       }
       nivel_admin_atual: {
         Args: { _uid?: string }
