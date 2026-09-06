@@ -25,8 +25,6 @@ import { Route as PassageiroIndexRouteImport } from './routes/passageiro.index'
 import { Route as MototaxistaIndexRouteImport } from './routes/mototaxista.index'
 import { Route as CidadeIndexRouteImport } from './routes/cidade.index'
 import { Route as PassageiroTransporteServidoresRouteImport } from './routes/passageiro.transporte-servidores'
-import { Route as PassageiroSolicitarMotoTaxiRouteImport } from './routes/passageiro.solicitar-moto-taxi'
-import { Route as PassageiroSolicitarAutomovelRouteImport } from './routes/passageiro.solicitar-automovel'
 import { Route as PassageiroSolicitacaoTransporteRouteImport } from './routes/passageiro.solicitacao-transporte'
 import { Route as PassageiroRelatoriosRouteImport } from './routes/passageiro.relatorios'
 import { Route as PassageiroPerfilRouteImport } from './routes/passageiro.perfil'
@@ -142,18 +140,6 @@ const PassageiroTransporteServidoresRoute =
   PassageiroTransporteServidoresRouteImport.update({
     id: '/passageiro/transporte-servidores',
     path: '/passageiro/transporte-servidores',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const PassageiroSolicitarMotoTaxiRoute =
-  PassageiroSolicitarMotoTaxiRouteImport.update({
-    id: '/passageiro/solicitar-moto-taxi',
-    path: '/passageiro/solicitar-moto-taxi',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const PassageiroSolicitarAutomovelRoute =
-  PassageiroSolicitarAutomovelRouteImport.update({
-    id: '/passageiro/solicitar-automovel',
-    path: '/passageiro/solicitar-automovel',
     getParentRoute: () => rootRouteImport,
   } as any)
 const PassageiroSolicitacaoTransporteRoute =
@@ -383,8 +369,6 @@ export interface FileRoutesByFullPath {
   '/passageiro/perfil': typeof PassageiroPerfilRoute
   '/passageiro/relatorios': typeof PassageiroRelatoriosRoute
   '/passageiro/solicitacao-transporte': typeof PassageiroSolicitacaoTransporteRoute
-  '/passageiro/solicitar-automovel': typeof PassageiroSolicitarAutomovelRoute
-  '/passageiro/solicitar-moto-taxi': typeof PassageiroSolicitarMotoTaxiRoute
   '/passageiro/transporte-servidores': typeof PassageiroTransporteServidoresRoute
   '/cidade/': typeof CidadeIndexRoute
   '/mototaxista/': typeof MototaxistaIndexRoute
@@ -437,8 +421,6 @@ export interface FileRoutesByTo {
   '/passageiro/perfil': typeof PassageiroPerfilRoute
   '/passageiro/relatorios': typeof PassageiroRelatoriosRoute
   '/passageiro/solicitacao-transporte': typeof PassageiroSolicitacaoTransporteRoute
-  '/passageiro/solicitar-automovel': typeof PassageiroSolicitarAutomovelRoute
-  '/passageiro/solicitar-moto-taxi': typeof PassageiroSolicitarMotoTaxiRoute
   '/passageiro/transporte-servidores': typeof PassageiroTransporteServidoresRoute
   '/cidade': typeof CidadeIndexRoute
   '/mototaxista': typeof MototaxistaIndexRoute
@@ -494,8 +476,6 @@ export interface FileRoutesById {
   '/passageiro/perfil': typeof PassageiroPerfilRoute
   '/passageiro/relatorios': typeof PassageiroRelatoriosRoute
   '/passageiro/solicitacao-transporte': typeof PassageiroSolicitacaoTransporteRoute
-  '/passageiro/solicitar-automovel': typeof PassageiroSolicitarAutomovelRoute
-  '/passageiro/solicitar-moto-taxi': typeof PassageiroSolicitarMotoTaxiRoute
   '/passageiro/transporte-servidores': typeof PassageiroTransporteServidoresRoute
   '/cidade/': typeof CidadeIndexRoute
   '/mototaxista/': typeof MototaxistaIndexRoute
@@ -551,8 +531,6 @@ export interface FileRouteTypes {
     | '/passageiro/perfil'
     | '/passageiro/relatorios'
     | '/passageiro/solicitacao-transporte'
-    | '/passageiro/solicitar-automovel'
-    | '/passageiro/solicitar-moto-taxi'
     | '/passageiro/transporte-servidores'
     | '/cidade/'
     | '/mototaxista/'
@@ -605,8 +583,6 @@ export interface FileRouteTypes {
     | '/passageiro/perfil'
     | '/passageiro/relatorios'
     | '/passageiro/solicitacao-transporte'
-    | '/passageiro/solicitar-automovel'
-    | '/passageiro/solicitar-moto-taxi'
     | '/passageiro/transporte-servidores'
     | '/cidade'
     | '/mototaxista'
@@ -661,8 +637,6 @@ export interface FileRouteTypes {
     | '/passageiro/perfil'
     | '/passageiro/relatorios'
     | '/passageiro/solicitacao-transporte'
-    | '/passageiro/solicitar-automovel'
-    | '/passageiro/solicitar-moto-taxi'
     | '/passageiro/transporte-servidores'
     | '/cidade/'
     | '/mototaxista/'
@@ -716,8 +690,6 @@ export interface RootRouteChildren {
   PassageiroPerfilRoute: typeof PassageiroPerfilRoute
   PassageiroRelatoriosRoute: typeof PassageiroRelatoriosRoute
   PassageiroSolicitacaoTransporteRoute: typeof PassageiroSolicitacaoTransporteRoute
-  PassageiroSolicitarAutomovelRoute: typeof PassageiroSolicitarAutomovelRoute
-  PassageiroSolicitarMotoTaxiRoute: typeof PassageiroSolicitarMotoTaxiRoute
   PassageiroTransporteServidoresRoute: typeof PassageiroTransporteServidoresRoute
   MototaxistaIndexRoute: typeof MototaxistaIndexRoute
   PassageiroIndexRoute: typeof PassageiroIndexRoute
@@ -841,20 +813,6 @@ declare module '@tanstack/react-router' {
       path: '/passageiro/transporte-servidores'
       fullPath: '/passageiro/transporte-servidores'
       preLoaderRoute: typeof PassageiroTransporteServidoresRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/passageiro/solicitar-moto-taxi': {
-      id: '/passageiro/solicitar-moto-taxi'
-      path: '/passageiro/solicitar-moto-taxi'
-      fullPath: '/passageiro/solicitar-moto-taxi'
-      preLoaderRoute: typeof PassageiroSolicitarMotoTaxiRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/passageiro/solicitar-automovel': {
-      id: '/passageiro/solicitar-automovel'
-      path: '/passageiro/solicitar-automovel'
-      fullPath: '/passageiro/solicitar-automovel'
-      preLoaderRoute: typeof PassageiroSolicitarAutomovelRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/passageiro/solicitacao-transporte': {
@@ -1189,8 +1147,6 @@ const rootRouteChildren: RootRouteChildren = {
   PassageiroPerfilRoute: PassageiroPerfilRoute,
   PassageiroRelatoriosRoute: PassageiroRelatoriosRoute,
   PassageiroSolicitacaoTransporteRoute: PassageiroSolicitacaoTransporteRoute,
-  PassageiroSolicitarAutomovelRoute: PassageiroSolicitarAutomovelRoute,
-  PassageiroSolicitarMotoTaxiRoute: PassageiroSolicitarMotoTaxiRoute,
   PassageiroTransporteServidoresRoute: PassageiroTransporteServidoresRoute,
   MototaxistaIndexRoute: MototaxistaIndexRoute,
   PassageiroIndexRoute: PassageiroIndexRoute,
