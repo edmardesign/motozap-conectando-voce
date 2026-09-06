@@ -129,14 +129,13 @@ export function MobilidadeUber({ modalidade }: Props) {
   }, [origemCoords, destinoCoords]);
 
   const tempoMin = distanciaKm == null ? null : Math.max(4, Math.round(distanciaKm * (modalidade === "moto_taxi" ? 2.2 : 3)));
-  const valor = distanciaKm == null ? null : Math.round((tarifa.base + distanciaKm * tarifa.porKm) * 100) / 100;
 
   async function confirmar() {
     if (!user) {
       toast.error("Entre na sua conta para solicitar.");
       return;
     }
-    if (!destinoCoords || valor == null) return;
+    if (!destinoCoords) return;
     setEnviando(true);
     try {
       const { data: profile } = await supabase
@@ -156,8 +155,9 @@ export function MobilidadeUber({ modalidade }: Props) {
           origem_lng: origemCoords?.lng ?? null,
           destino_lat: destinoCoords.lat,
           destino_lng: destinoCoords.lng,
-          valor_estimado: valor,
-          eh_gratuita: false,
+          // Serviço público: mobilidade urbana não é cobrada do servidor.
+          valor_estimado: 0,
+          eh_gratuita: true,
           pagamento_tipo: "dinheiro",
           status: "aguardando" as const,
           distancia_km: distanciaKm,
@@ -169,6 +169,11 @@ export function MobilidadeUber({ modalidade }: Props) {
         .single();
 
       if (error) {
+        if (error.message.includes("LIMITE_MOBILIDADE_ATINGIDO")) {
+          toast.error("Você atingiu o limite mensal de chamadas de mobilidade urbana.");
+          navigate({ to: "/passageiro/mobilidade" });
+          return;
+        }
         toast.error(error.message);
         return;
       }
@@ -178,6 +183,7 @@ export function MobilidadeUber({ modalidade }: Props) {
       setEnviando(false);
     }
   }
+
 
   // ---- Realtime da corrida ----
   useEffect(() => {
