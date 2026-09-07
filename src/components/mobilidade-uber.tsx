@@ -548,7 +548,6 @@ export function MobilidadeUber({ modalidade }: Props) {
             </button>
           </div>
 
-          </div>
         ) : (
           <div className="mx-auto flex max-w-lg flex-col gap-4">
             {!motorista ? (
