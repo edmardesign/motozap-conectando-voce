@@ -5,6 +5,8 @@ import { toast } from "sonner";
 import { AlertTriangle } from "lucide-react";
 import { adminAuditoriaMobilidade, type LinhaAuditoria } from "@/lib/mobilidade-auditoria.functions";
 import { AuditoriaRotaModal } from "@/components/auditoria-rota-modal";
+import { listarMunicipios } from "@/lib/municipios.functions";
+
 
 export const Route = createFileRoute("/_admGate/adm/mobilidade-auditoria")({
   component: AuditoriaMobilidadePage,
