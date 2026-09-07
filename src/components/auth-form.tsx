@@ -83,6 +83,10 @@ export function AuthForm({ role, title, redirectTo, formMode = "both", signupRed
     if (isSignup) {
       if (nome.trim().length < 2) return toast.error("Informe seu nome completo");
       if (!loc.estado || !loc.cidade) return toast.error("Selecione estado e cidade");
+      if (role === "passageiro" && municipios.length > 0 && !municipioId) {
+        return toast.error("Selecione o município de exercício");
+      }
+
       if (requireConfigured && !cidadeOk) {
         return toast.error("Sua cidade ainda não está disponível para mototaxistas");
       }
