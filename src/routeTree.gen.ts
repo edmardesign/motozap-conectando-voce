@@ -59,6 +59,7 @@ import { Route as MotoristaCorridaIdRouteImport } from './routes/motorista.corri
 import { Route as AdmGateAdmQuotasRouteImport } from './routes/_admGate.adm.quotas'
 import { Route as AdmGateAdmPrecosRouteImport } from './routes/_admGate.adm.precos'
 import { Route as AdmGateAdmPainelRouteImport } from './routes/_admGate.adm.painel'
+import { Route as AdmGateAdmMunicipiosPermitidosRouteImport } from './routes/_admGate.adm.municipios-permitidos'
 import { Route as AdmGateAdmMobilidadeAuditoriaRouteImport } from './routes/_admGate.adm.mobilidade-auditoria'
 import { Route as AdmGateAdmGestaoRouteImport } from './routes/_admGate.adm.gestao'
 import { Route as AdmGateAdmExcecoesRouteImport } from './routes/_admGate.adm.excecoes'
@@ -321,6 +322,12 @@ const AdmGateAdmPainelRoute = AdmGateAdmPainelRouteImport.update({
   path: '/adm/painel',
   getParentRoute: () => AdmGateRoute,
 } as any)
+const AdmGateAdmMunicipiosPermitidosRoute =
+  AdmGateAdmMunicipiosPermitidosRouteImport.update({
+    id: '/adm/municipios-permitidos',
+    path: '/adm/municipios-permitidos',
+    getParentRoute: () => AdmGateRoute,
+  } as any)
 const AdmGateAdmMobilidadeAuditoriaRoute =
   AdmGateAdmMobilidadeAuditoriaRouteImport.update({
     id: '/adm/mobilidade-auditoria',
@@ -397,6 +404,7 @@ export interface FileRoutesByFullPath {
   '/adm/excecoes': typeof AdmGateAdmExcecoesRoute
   '/adm/gestao': typeof AdmGateAdmGestaoRoute
   '/adm/mobilidade-auditoria': typeof AdmGateAdmMobilidadeAuditoriaRoute
+  '/adm/municipios-permitidos': typeof AdmGateAdmMunicipiosPermitidosRoute
   '/adm/painel': typeof AdmGateAdmPainelRoute
   '/adm/precos': typeof AdmGateAdmPrecosRoute
   '/adm/quotas': typeof AdmGateAdmQuotasRoute
@@ -452,6 +460,7 @@ export interface FileRoutesByTo {
   '/adm/excecoes': typeof AdmGateAdmExcecoesRoute
   '/adm/gestao': typeof AdmGateAdmGestaoRoute
   '/adm/mobilidade-auditoria': typeof AdmGateAdmMobilidadeAuditoriaRoute
+  '/adm/municipios-permitidos': typeof AdmGateAdmMunicipiosPermitidosRoute
   '/adm/painel': typeof AdmGateAdmPainelRoute
   '/adm/precos': typeof AdmGateAdmPrecosRoute
   '/adm/quotas': typeof AdmGateAdmQuotasRoute
@@ -510,6 +519,7 @@ export interface FileRoutesById {
   '/_admGate/adm/excecoes': typeof AdmGateAdmExcecoesRoute
   '/_admGate/adm/gestao': typeof AdmGateAdmGestaoRoute
   '/_admGate/adm/mobilidade-auditoria': typeof AdmGateAdmMobilidadeAuditoriaRoute
+  '/_admGate/adm/municipios-permitidos': typeof AdmGateAdmMunicipiosPermitidosRoute
   '/_admGate/adm/painel': typeof AdmGateAdmPainelRoute
   '/_admGate/adm/precos': typeof AdmGateAdmPrecosRoute
   '/_admGate/adm/quotas': typeof AdmGateAdmQuotasRoute
@@ -568,6 +578,7 @@ export interface FileRouteTypes {
     | '/adm/excecoes'
     | '/adm/gestao'
     | '/adm/mobilidade-auditoria'
+    | '/adm/municipios-permitidos'
     | '/adm/painel'
     | '/adm/precos'
     | '/adm/quotas'
@@ -623,6 +634,7 @@ export interface FileRouteTypes {
     | '/adm/excecoes'
     | '/adm/gestao'
     | '/adm/mobilidade-auditoria'
+    | '/adm/municipios-permitidos'
     | '/adm/painel'
     | '/adm/precos'
     | '/adm/quotas'
@@ -680,6 +692,7 @@ export interface FileRouteTypes {
     | '/_admGate/adm/excecoes'
     | '/_admGate/adm/gestao'
     | '/_admGate/adm/mobilidade-auditoria'
+    | '/_admGate/adm/municipios-permitidos'
     | '/_admGate/adm/painel'
     | '/_admGate/adm/precos'
     | '/_admGate/adm/quotas'
@@ -1090,6 +1103,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdmGateAdmPainelRouteImport
       parentRoute: typeof AdmGateRoute
     }
+    '/_admGate/adm/municipios-permitidos': {
+      id: '/_admGate/adm/municipios-permitidos'
+      path: '/adm/municipios-permitidos'
+      fullPath: '/adm/municipios-permitidos'
+      preLoaderRoute: typeof AdmGateAdmMunicipiosPermitidosRouteImport
+      parentRoute: typeof AdmGateRoute
+    }
     '/_admGate/adm/mobilidade-auditoria': {
       id: '/_admGate/adm/mobilidade-auditoria'
       path: '/adm/mobilidade-auditoria'
@@ -1132,6 +1152,7 @@ interface AdmGateRouteChildren {
   AdmGateAdmExcecoesRoute: typeof AdmGateAdmExcecoesRoute
   AdmGateAdmGestaoRoute: typeof AdmGateAdmGestaoRoute
   AdmGateAdmMobilidadeAuditoriaRoute: typeof AdmGateAdmMobilidadeAuditoriaRoute
+  AdmGateAdmMunicipiosPermitidosRoute: typeof AdmGateAdmMunicipiosPermitidosRoute
   AdmGateAdmPainelRoute: typeof AdmGateAdmPainelRoute
   AdmGateAdmPrecosRoute: typeof AdmGateAdmPrecosRoute
   AdmGateAdmQuotasRoute: typeof AdmGateAdmQuotasRoute
@@ -1141,6 +1162,7 @@ const AdmGateRouteChildren: AdmGateRouteChildren = {
   AdmGateAdmExcecoesRoute: AdmGateAdmExcecoesRoute,
   AdmGateAdmGestaoRoute: AdmGateAdmGestaoRoute,
   AdmGateAdmMobilidadeAuditoriaRoute: AdmGateAdmMobilidadeAuditoriaRoute,
+  AdmGateAdmMunicipiosPermitidosRoute: AdmGateAdmMunicipiosPermitidosRoute,
   AdmGateAdmPainelRoute: AdmGateAdmPainelRoute,
   AdmGateAdmPrecosRoute: AdmGateAdmPrecosRoute,
   AdmGateAdmQuotasRoute: AdmGateAdmQuotasRoute,
