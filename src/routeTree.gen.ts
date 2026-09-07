@@ -61,6 +61,7 @@ import { Route as AdmGateAdmPrecosRouteImport } from './routes/_admGate.adm.prec
 import { Route as AdmGateAdmPainelRouteImport } from './routes/_admGate.adm.painel'
 import { Route as AdmGateAdmMobilidadeAuditoriaRouteImport } from './routes/_admGate.adm.mobilidade-auditoria'
 import { Route as AdmGateAdmGestaoRouteImport } from './routes/_admGate.adm.gestao'
+import { Route as AdmGateAdmExcecoesRouteImport } from './routes/_admGate.adm.excecoes'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
 import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
 
@@ -331,6 +332,11 @@ const AdmGateAdmGestaoRoute = AdmGateAdmGestaoRouteImport.update({
   path: '/adm/gestao',
   getParentRoute: () => AdmGateRoute,
 } as any)
+const AdmGateAdmExcecoesRoute = AdmGateAdmExcecoesRouteImport.update({
+  id: '/adm/excecoes',
+  path: '/adm/excecoes',
+  getParentRoute: () => AdmGateRoute,
+} as any)
 const Char91DotmcpChar93InvokeToolToolRoute =
   Char91DotmcpChar93InvokeToolToolRouteImport.update({
     id: '/.mcp/invoke-tool/$tool',
@@ -388,6 +394,7 @@ export interface FileRoutesByFullPath {
   '/passageiro/': typeof PassageiroIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/adm/excecoes': typeof AdmGateAdmExcecoesRoute
   '/adm/gestao': typeof AdmGateAdmGestaoRoute
   '/adm/mobilidade-auditoria': typeof AdmGateAdmMobilidadeAuditoriaRoute
   '/adm/painel': typeof AdmGateAdmPainelRoute
@@ -442,6 +449,7 @@ export interface FileRoutesByTo {
   '/passageiro': typeof PassageiroIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/adm/excecoes': typeof AdmGateAdmExcecoesRoute
   '/adm/gestao': typeof AdmGateAdmGestaoRoute
   '/adm/mobilidade-auditoria': typeof AdmGateAdmMobilidadeAuditoriaRoute
   '/adm/painel': typeof AdmGateAdmPainelRoute
@@ -499,6 +507,7 @@ export interface FileRoutesById {
   '/passageiro/': typeof PassageiroIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/_admGate/adm/excecoes': typeof AdmGateAdmExcecoesRoute
   '/_admGate/adm/gestao': typeof AdmGateAdmGestaoRoute
   '/_admGate/adm/mobilidade-auditoria': typeof AdmGateAdmMobilidadeAuditoriaRoute
   '/_admGate/adm/painel': typeof AdmGateAdmPainelRoute
@@ -556,6 +565,7 @@ export interface FileRouteTypes {
     | '/passageiro/'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
+    | '/adm/excecoes'
     | '/adm/gestao'
     | '/adm/mobilidade-auditoria'
     | '/adm/painel'
@@ -610,6 +620,7 @@ export interface FileRouteTypes {
     | '/passageiro'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
+    | '/adm/excecoes'
     | '/adm/gestao'
     | '/adm/mobilidade-auditoria'
     | '/adm/painel'
@@ -666,6 +677,7 @@ export interface FileRouteTypes {
     | '/passageiro/'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
+    | '/_admGate/adm/excecoes'
     | '/_admGate/adm/gestao'
     | '/_admGate/adm/mobilidade-auditoria'
     | '/_admGate/adm/painel'
@@ -1092,6 +1104,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdmGateAdmGestaoRouteImport
       parentRoute: typeof AdmGateRoute
     }
+    '/_admGate/adm/excecoes': {
+      id: '/_admGate/adm/excecoes'
+      path: '/adm/excecoes'
+      fullPath: '/adm/excecoes'
+      preLoaderRoute: typeof AdmGateAdmExcecoesRouteImport
+      parentRoute: typeof AdmGateRoute
+    }
     '/.mcp/invoke-tool/$tool': {
       id: '/.mcp/invoke-tool/$tool'
       path: '/.mcp/invoke-tool/$tool'
@@ -1110,6 +1129,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AdmGateRouteChildren {
+  AdmGateAdmExcecoesRoute: typeof AdmGateAdmExcecoesRoute
   AdmGateAdmGestaoRoute: typeof AdmGateAdmGestaoRoute
   AdmGateAdmMobilidadeAuditoriaRoute: typeof AdmGateAdmMobilidadeAuditoriaRoute
   AdmGateAdmPainelRoute: typeof AdmGateAdmPainelRoute
@@ -1118,6 +1138,7 @@ interface AdmGateRouteChildren {
 }
 
 const AdmGateRouteChildren: AdmGateRouteChildren = {
+  AdmGateAdmExcecoesRoute: AdmGateAdmExcecoesRoute,
   AdmGateAdmGestaoRoute: AdmGateAdmGestaoRoute,
   AdmGateAdmMobilidadeAuditoriaRoute: AdmGateAdmMobilidadeAuditoriaRoute,
   AdmGateAdmPainelRoute: AdmGateAdmPainelRoute,
