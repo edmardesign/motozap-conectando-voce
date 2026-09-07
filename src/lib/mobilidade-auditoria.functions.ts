@@ -25,8 +25,12 @@ export type LinhaAuditoria = {
   duracao_min: number | null;
   motorista: string | null;
   fora_expediente: boolean;
+  municipio_destino: string | null;
+  com_excecao: boolean;
+  perto_fronteira: boolean | null;
   total_registros: number;
 };
+
 
 function inicioDoDiaSaoPaulo(): string {
   const agora = new Date();
