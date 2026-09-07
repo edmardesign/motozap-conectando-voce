@@ -322,9 +322,19 @@ export function MobilidadeUber({ modalidade }: Props) {
           navigate({ to: "/passageiro/mobilidade" });
           return;
         }
+        if (error.message.includes("FORA_DO_MUNICIPIO_ORIGEM")) {
+          toast.error("O ponto de partida está fora do seu município de exercício.");
+          return;
+        }
+        if (error.message.includes("FORA_DO_MUNICIPIO_DESTINO")) {
+          toast.error("O destino está fora do seu município de exercício.");
+          void abrirExcecao();
+          return;
+        }
         toast.error(error.message);
         return;
       }
+
       setCorrida(data as Corrida);
       toast.success("Solicitação enviada! Procurando motorista…");
     } finally {
