@@ -128,6 +128,20 @@ function AuditoriaMobilidadePage() {
             <option value="concluida">Concluída</option>
             <option value="cancelada">Cancelada</option>
           </select>
+          <select value={municipioDestino} onChange={(e) => { setPagina(0); setMunicipioDestino(e.target.value); }}
+            className="rounded-xl bg-[#F5F5F7] px-3 py-2 text-sm outline-none sm:col-span-2">
+            <option value="">Todos os municípios de destino</option>
+            {municipios.map((m) => (
+              <option key={m.id} value={m.id}>{m.name} — {m.uf}</option>
+            ))}
+          </select>
+          <label className="flex items-center gap-2 rounded-xl bg-[#F5F5F7] px-3 py-2 text-sm sm:col-span-3">
+            <input type="checkbox" checked={somenteExcecao}
+              onChange={(e) => { setPagina(0); setSomenteExcecao(e.target.checked); }}
+              className="h-4 w-4 accent-[#3DB54A]" />
+            Somente corridas com autorização especial
+          </label>
+
         </div>
 
         <div className="mb-4 flex gap-3 print:hidden">
