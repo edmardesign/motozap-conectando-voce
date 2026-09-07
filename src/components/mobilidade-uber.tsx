@@ -679,7 +679,68 @@ export function MobilidadeUber({ modalidade }: Props) {
           </div>
         </div>
       )}
+
+      {/* Autorização especial para deslocamento intermunicipal */}
+      {modalExcecao && (
+        <div className="fixed inset-0 z-[3000] flex items-end justify-center bg-black/40 p-4 sm:items-center">
+          <div className="w-full max-w-md rounded-[24px] bg-white p-6">
+            <h2 className="text-lg font-bold">Deslocamento fora do município</h2>
+            <p className="mt-2 text-sm text-[#6B6B6B]">
+              O pedido é analisado pela administração e, se aprovado, vale para uma chamada na data informada.
+            </p>
+
+            <label className="mt-4 block text-sm font-semibold">Município de destino</label>
+            <select
+              value={exMunicipio}
+              onChange={(e) => setExMunicipio(e.target.value)}
+              className="mt-1 w-full rounded-2xl bg-[#F5F5F7] px-4 py-3 text-sm outline-none"
+            >
+              <option value="">Selecione…</option>
+              {municipios.map((m) => (
+                <option key={m.id} value={m.id}>
+                  {m.name} — {m.uf}
+                </option>
+              ))}
+            </select>
+
+            <label className="mt-4 block text-sm font-semibold">Data prevista</label>
+            <input
+              type="date"
+              value={exData}
+              onChange={(e) => setExData(e.target.value)}
+              className="mt-1 w-full rounded-2xl bg-[#F5F5F7] px-4 py-3 text-sm outline-none"
+            />
+
+            <label className="mt-4 block text-sm font-semibold">Motivo do deslocamento</label>
+            <textarea
+              value={exMotivo}
+              onChange={(e) => setExMotivo(e.target.value)}
+              rows={3}
+              maxLength={800}
+              placeholder="Descreva a finalidade profissional do deslocamento"
+              className="mt-1 w-full rounded-2xl bg-[#F5F5F7] px-4 py-3 text-sm outline-none"
+            />
+
+            <div className="mt-5 flex gap-3">
+              <button
+                onClick={() => setModalExcecao(false)}
+                className="flex-1 rounded-2xl border border-[#E8E8E8] py-3 font-semibold"
+              >
+                Voltar
+              </button>
+              <button
+                disabled={!exMunicipio || exMotivo.trim().length < 5 || !exData || enviandoExcecao}
+                onClick={enviarExcecao}
+                className="flex-1 rounded-2xl bg-[#3DB54A] py-3 font-bold text-white disabled:opacity-40"
+              >
+                {enviandoExcecao ? "Enviando…" : "Enviar pedido"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
+
 
   );
 }
