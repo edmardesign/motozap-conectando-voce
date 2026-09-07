@@ -42,8 +42,24 @@ export function AuthForm({ role, title, redirectTo, formMode = "both", signupRed
   const [loc, setLoc] = useState({ estado: "", cidade: "" });
   const [endereco, setEndereco] = useState<AddressValue>(emptyAddress);
   const [cidadeOk, setCidadeOk] = useState(false);
+  const [municipioId, setMunicipioId] = useState("");
+  const [municipios, setMunicipios] = useState<Array<{ id: string; name: string; uf: string }>>([]);
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
+
+  // Municípios habilitados pela prefeitura (leitura pública).
+  useEffect(() => {
+    if (role !== "passageiro") return;
+    let cancel = false;
+    (async () => {
+      const { data } = await supabase.from("municipalities").select("id,name,uf").order("name");
+      if (!cancel) setMunicipios((data ?? []) as Array<{ id: string; name: string; uf: string }>);
+    })();
+    return () => {
+      cancel = true;
+    };
+  }, [role]);
+
 
   const isSignup = mode === "signup";
   const requirePhoto = role === "mototaxista" && isSignup;
