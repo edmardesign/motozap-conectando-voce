@@ -23,22 +23,45 @@ function dt(v: string | null) {
 
 function AuditoriaMobilidadePage() {
   const listar = useServerFn(adminAuditoriaMobilidade);
+  const carregarMunicipios = useServerFn(listarMunicipios);
 
   const [inicio, setInicio] = useState("");
   const [fim, setFim] = useState("");
   const [busca, setBusca] = useState("");
   const [status, setStatus] = useState("");
+  const [somenteExcecao, setSomenteExcecao] = useState(false);
+  const [municipioDestino, setMunicipioDestino] = useState("");
+  const [municipios, setMunicipios] = useState<Array<{ id: string; name: string; uf: string }>>([]);
   const [pagina, setPagina] = useState(0);
   const [linhas, setLinhas] = useState<LinhaAuditoria[]>([]);
   const [total, setTotal] = useState(0);
   const [carregando, setCarregando] = useState(true);
   const [detalhe, setDetalhe] = useState<LinhaAuditoria | null>(null);
 
+  useEffect(() => {
+    (async () => {
+      try {
+        setMunicipios(await carregarMunicipios());
+      } catch {
+        /* filtro opcional */
+      }
+    })();
+  }, [carregarMunicipios]);
+
+  const filtros = {
+    inicio,
+    fim,
+    busca,
+    status,
+    somente_excecao: somenteExcecao,
+    municipio_destino: municipioDestino || null,
+  };
+
   const carregar = useCallback(async () => {
     setCarregando(true);
     try {
       const rows = await listar({
-        data: { inicio, fim, busca, status, limite: POR_PAGINA, offset: pagina * POR_PAGINA },
+        data: { ...filtros, limite: POR_PAGINA, offset: pagina * POR_PAGINA },
       });
       setLinhas(rows);
       setTotal(rows[0]?.total_registros ?? 0);
@@ -47,21 +70,23 @@ function AuditoriaMobilidadePage() {
     } finally {
       setCarregando(false);
     }
-  }, [listar, inicio, fim, busca, status, pagina]);
+  }, [listar, inicio, fim, busca, status, somenteExcecao, municipioDestino, pagina]);
 
   useEffect(() => {
     void carregar();
   }, [carregar]);
 
   async function exportarCSV() {
-    const rows = await listar({ data: { inicio, fim, busca, status, limite: 200, offset: 0 } });
+    const rows = await listar({ data: { ...filtros, limite: 200, offset: 0 } });
     const cab = [
       "Servidor", "Cargo", "Lotação", "Modalidade", "Situação", "Solicitada", "Aceita", "Início",
-      "Fim", "Origem", "Destino", "Distância (km)", "Duração (min)", "Motorista", "Fora do expediente",
+      "Fim", "Origem", "Destino", "Município destino", "Autorização especial", "Perto da fronteira",
+      "Distância (km)", "Duração (min)", "Motorista", "Fora do expediente",
     ];
     const corpo = rows.map((r) =>
       [r.servidor, r.cargo, r.lotacao, r.modalidade, r.status, dt(r.criada_em), dt(r.aceita_em),
-       dt(r.iniciada_em), dt(r.finalizada_em), r.origem, r.destino, r.distancia_km, r.duracao_min,
+       dt(r.iniciada_em), dt(r.finalizada_em), r.origem, r.destino, r.municipio_destino,
+       r.com_excecao ? "Sim" : "Não", r.perto_fronteira ? "Sim" : "Não", r.distancia_km, r.duracao_min,
        r.motorista, r.fora_expediente ? "Sim" : "Não"].map(csvEscape).join(";"),
     );
     const blob = new Blob(["\uFEFF" + [cab.map(csvEscape).join(";"), ...corpo].join("\n")], {
@@ -73,6 +98,7 @@ function AuditoriaMobilidadePage() {
     a.click();
     URL.revokeObjectURL(a.href);
   }
+
 
   const totalPaginas = Math.max(1, Math.ceil(total / POR_PAGINA));
 
