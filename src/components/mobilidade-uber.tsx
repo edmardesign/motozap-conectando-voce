@@ -422,7 +422,7 @@ export function MobilidadeUber({ modalidade }: Props) {
     setMotorista(null);
   }
 
-  const centro = origemCoords ?? { lat: -14.235, lng: -51.9253 };
+  const centro = origemCoords ?? (mun ? { lat: mun.centroid_lat, lng: mun.centroid_lng } : { lat: -14.235, lng: -51.9253 });
 
   return (
     <div className="fixed inset-0 flex flex-col bg-white font-sans text-[#111111]">
@@ -430,7 +430,7 @@ export function MobilidadeUber({ modalidade }: Props) {
       <div className="absolute inset-0">
         <MapContainer
           center={[centro.lat, centro.lng]}
-          zoom={origemCoords ? 15 : 4}
+          zoom={origemCoords ? 15 : mun ? 12 : 4}
           zoomControl={false}
           style={{ width: "100%", height: "100%" }}
         >
@@ -438,11 +438,18 @@ export function MobilidadeUber({ modalidade }: Props) {
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          <Recenter to={origemCoords} />
+          <Recenter to={origemCoords ?? (mun ? { lat: mun.centroid_lat, lng: mun.centroid_lng } : null)} zoom={origemCoords ? 15 : 12} />
+          {anelMunicipio.length > 0 && (
+            <Polygon
+              positions={anelMunicipio}
+              pathOptions={{ color: "#3DB54A", weight: 2, opacity: 0.5, fillOpacity: 0.04 }}
+            />
+          )}
           {origemCoords && <Marker position={[origemCoords.lat, origemCoords.lng]} icon={pinIcon("#2F80ED")} />}
           {destinoCoords && <Marker position={[destinoCoords.lat, destinoCoords.lng]} icon={pinIcon("#3DB54A")} />}
           {motoCoords && <Marker position={[motoCoords.lat, motoCoords.lng]} icon={pinIcon("#111111")} />}
           {origemCoords && destinoCoords && (
+
             <Polyline
               positions={[
                 [origemCoords.lat, origemCoords.lng],
