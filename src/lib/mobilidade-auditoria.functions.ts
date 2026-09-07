@@ -25,8 +25,12 @@ export type LinhaAuditoria = {
   duracao_min: number | null;
   motorista: string | null;
   fora_expediente: boolean;
+  municipio_destino: string | null;
+  com_excecao: boolean;
+  perto_fronteira: boolean | null;
   total_registros: number;
 };
+
 
 function inicioDoDiaSaoPaulo(): string {
   const agora = new Date();
@@ -84,6 +88,8 @@ export const adminAuditoriaMobilidade = createServerFn({ method: "GET" })
       status?: string | null;
       limite?: number;
       offset?: number;
+      somente_excecao?: boolean;
+      municipio_destino?: string | null;
     }) => d ?? {},
   )
   .handler(async ({ data, context }): Promise<LinhaAuditoria[]> => {
@@ -94,10 +100,13 @@ export const adminAuditoriaMobilidade = createServerFn({ method: "GET" })
       _status: data.status || null,
       _limit: data.limite ?? 50,
       _offset: data.offset ?? 0,
+      _somente_excecao: data.somente_excecao ?? false,
+      _municipio_destino: data.municipio_destino || null,
     });
     if (error) throw new Error(error.message);
     return (rows ?? []) as LinhaAuditoria[];
   });
+
 
 export const adminAuditoriaRota = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])

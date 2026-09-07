@@ -1,4 +1,4 @@
-import { useState, type ChangeEvent, type FormEvent } from "react";
+import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { Loader2, Upload } from "lucide-react";
@@ -42,8 +42,24 @@ export function AuthForm({ role, title, redirectTo, formMode = "both", signupRed
   const [loc, setLoc] = useState({ estado: "", cidade: "" });
   const [endereco, setEndereco] = useState<AddressValue>(emptyAddress);
   const [cidadeOk, setCidadeOk] = useState(false);
+  const [municipioId, setMunicipioId] = useState("");
+  const [municipios, setMunicipios] = useState<Array<{ id: string; name: string; uf: string }>>([]);
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
+
+  // Municípios habilitados pela prefeitura (leitura pública).
+  useEffect(() => {
+    if (role !== "passageiro") return;
+    let cancel = false;
+    (async () => {
+      const { data } = await supabase.from("municipalities").select("id,name,uf").order("name");
+      if (!cancel) setMunicipios((data ?? []) as Array<{ id: string; name: string; uf: string }>);
+    })();
+    return () => {
+      cancel = true;
+    };
+  }, [role]);
+
 
   const isSignup = mode === "signup";
   const requirePhoto = role === "mototaxista" && isSignup;
@@ -67,6 +83,10 @@ export function AuthForm({ role, title, redirectTo, formMode = "both", signupRed
     if (isSignup) {
       if (nome.trim().length < 2) return toast.error("Informe seu nome completo");
       if (!loc.estado || !loc.cidade) return toast.error("Selecione estado e cidade");
+      if (role === "passageiro" && municipios.length > 0 && !municipioId) {
+        return toast.error("Selecione o município de exercício");
+      }
+
       if (requireConfigured && !cidadeOk) {
         return toast.error("Sua cidade ainda não está disponível para mototaxistas");
       }
@@ -131,6 +151,17 @@ export function AuthForm({ role, title, redirectTo, formMode = "both", signupRed
           if (upErr) toast.error(`Falha ao enviar foto: ${upErr.message}`);
           else await supabase.from("profiles").update({ foto_url: path }).eq("id", userId);
         }
+
+        // Município de exercício: definido uma única vez, no cadastro.
+        if (role === "passageiro" && municipioId && userId) {
+          const { error: munErr } = await (supabase as any)
+            .from("profiles")
+            .update({ municipium_id: municipioId })
+            .eq("id", userId);
+          if (munErr) toast.error("Não foi possível registrar o município de exercício.");
+        }
+
+
 
         try {
           const key = role === "mototaxista" ? "boraze.moto.lastPhone" : "boraze.pax.lastPhone";
@@ -232,6 +263,28 @@ export function AuthForm({ role, title, redirectTo, formMode = "both", signupRed
                   maxLength={80}
                 />
               </label>
+
+              {role === "passageiro" && (
+                <label className="flex flex-col gap-1.5">
+                  <span className="text-sm font-medium">Município de exercício</span>
+                  <select
+                    className="input-mz"
+                    value={municipioId}
+                    onChange={(e) => setMunicipioId(e.target.value)}
+                  >
+                    <option value="">Selecione…</option>
+                    {municipios.map((m) => (
+                      <option key={m.id} value={m.id}>
+                        {m.name} — {m.uf}
+                      </option>
+                    ))}
+                  </select>
+                  <span className="text-xs text-muted-foreground">
+                    Depois do cadastro, só a administração pode alterar este município.
+                  </span>
+                </label>
+              )}
+
 
               {loc.estado && loc.cidade && (
                 <AddressFields

@@ -5,6 +5,8 @@ import { toast } from "sonner";
 import { AlertTriangle } from "lucide-react";
 import { adminAuditoriaMobilidade, type LinhaAuditoria } from "@/lib/mobilidade-auditoria.functions";
 import { AuditoriaRotaModal } from "@/components/auditoria-rota-modal";
+import { listarMunicipios } from "@/lib/municipios.functions";
+
 
 export const Route = createFileRoute("/_admGate/adm/mobilidade-auditoria")({
   component: AuditoriaMobilidadePage,
@@ -23,22 +25,45 @@ function dt(v: string | null) {
 
 function AuditoriaMobilidadePage() {
   const listar = useServerFn(adminAuditoriaMobilidade);
+  const carregarMunicipios = useServerFn(listarMunicipios);
 
   const [inicio, setInicio] = useState("");
   const [fim, setFim] = useState("");
   const [busca, setBusca] = useState("");
   const [status, setStatus] = useState("");
+  const [somenteExcecao, setSomenteExcecao] = useState(false);
+  const [municipioDestino, setMunicipioDestino] = useState("");
+  const [municipios, setMunicipios] = useState<Array<{ id: string; name: string; uf: string }>>([]);
   const [pagina, setPagina] = useState(0);
   const [linhas, setLinhas] = useState<LinhaAuditoria[]>([]);
   const [total, setTotal] = useState(0);
   const [carregando, setCarregando] = useState(true);
   const [detalhe, setDetalhe] = useState<LinhaAuditoria | null>(null);
 
+  useEffect(() => {
+    (async () => {
+      try {
+        setMunicipios(await carregarMunicipios());
+      } catch {
+        /* filtro opcional */
+      }
+    })();
+  }, [carregarMunicipios]);
+
+  const filtros = {
+    inicio,
+    fim,
+    busca,
+    status,
+    somente_excecao: somenteExcecao,
+    municipio_destino: municipioDestino || null,
+  };
+
   const carregar = useCallback(async () => {
     setCarregando(true);
     try {
       const rows = await listar({
-        data: { inicio, fim, busca, status, limite: POR_PAGINA, offset: pagina * POR_PAGINA },
+        data: { ...filtros, limite: POR_PAGINA, offset: pagina * POR_PAGINA },
       });
       setLinhas(rows);
       setTotal(rows[0]?.total_registros ?? 0);
@@ -47,21 +72,23 @@ function AuditoriaMobilidadePage() {
     } finally {
       setCarregando(false);
     }
-  }, [listar, inicio, fim, busca, status, pagina]);
+  }, [listar, inicio, fim, busca, status, somenteExcecao, municipioDestino, pagina]);
 
   useEffect(() => {
     void carregar();
   }, [carregar]);
 
   async function exportarCSV() {
-    const rows = await listar({ data: { inicio, fim, busca, status, limite: 200, offset: 0 } });
+    const rows = await listar({ data: { ...filtros, limite: 200, offset: 0 } });
     const cab = [
       "Servidor", "Cargo", "Lotação", "Modalidade", "Situação", "Solicitada", "Aceita", "Início",
-      "Fim", "Origem", "Destino", "Distância (km)", "Duração (min)", "Motorista", "Fora do expediente",
+      "Fim", "Origem", "Destino", "Município destino", "Autorização especial", "Perto da fronteira",
+      "Distância (km)", "Duração (min)", "Motorista", "Fora do expediente",
     ];
     const corpo = rows.map((r) =>
       [r.servidor, r.cargo, r.lotacao, r.modalidade, r.status, dt(r.criada_em), dt(r.aceita_em),
-       dt(r.iniciada_em), dt(r.finalizada_em), r.origem, r.destino, r.distancia_km, r.duracao_min,
+       dt(r.iniciada_em), dt(r.finalizada_em), r.origem, r.destino, r.municipio_destino,
+       r.com_excecao ? "Sim" : "Não", r.perto_fronteira ? "Sim" : "Não", r.distancia_km, r.duracao_min,
        r.motorista, r.fora_expediente ? "Sim" : "Não"].map(csvEscape).join(";"),
     );
     const blob = new Blob(["\uFEFF" + [cab.map(csvEscape).join(";"), ...corpo].join("\n")], {
@@ -73,6 +100,7 @@ function AuditoriaMobilidadePage() {
     a.click();
     URL.revokeObjectURL(a.href);
   }
+
 
   const totalPaginas = Math.max(1, Math.ceil(total / POR_PAGINA));
 
@@ -100,6 +128,20 @@ function AuditoriaMobilidadePage() {
             <option value="concluida">Concluída</option>
             <option value="cancelada">Cancelada</option>
           </select>
+          <select value={municipioDestino} onChange={(e) => { setPagina(0); setMunicipioDestino(e.target.value); }}
+            className="rounded-xl bg-[#F5F5F7] px-3 py-2 text-sm outline-none sm:col-span-2">
+            <option value="">Todos os municípios de destino</option>
+            {municipios.map((m) => (
+              <option key={m.id} value={m.id}>{m.name} — {m.uf}</option>
+            ))}
+          </select>
+          <label className="flex items-center gap-2 rounded-xl bg-[#F5F5F7] px-3 py-2 text-sm sm:col-span-3">
+            <input type="checkbox" checked={somenteExcecao}
+              onChange={(e) => { setPagina(0); setSomenteExcecao(e.target.checked); }}
+              className="h-4 w-4 accent-[#3DB54A]" />
+            Somente corridas com autorização especial
+          </label>
+
         </div>
 
         <div className="mb-4 flex gap-3 print:hidden">
@@ -147,7 +189,23 @@ function AuditoriaMobilidadePage() {
                   <td className="p-3 text-xs text-[#6B6B6B]">
                     <span className="line-clamp-1">{l.origem ?? "—"}</span>
                     <span className="line-clamp-1">→ {l.destino ?? "—"}</span>
+                    {l.municipio_destino && (
+                      <span className="line-clamp-1 text-[11px]">Município: {l.municipio_destino}</span>
+                    )}
+                    <span className="mt-1 flex flex-wrap gap-1">
+                      {l.com_excecao && (
+                        <span className="rounded-full bg-[#E8F5E9] px-2 py-0.5 text-[11px] font-semibold text-[#1B5E20]">
+                          Autorização especial
+                        </span>
+                      )}
+                      {l.perto_fronteira && (
+                        <span className="flex items-center gap-1 rounded-full bg-[#FFF8E1] px-2 py-0.5 text-[11px] font-semibold text-[#7A5B00]">
+                          <AlertTriangle size={12} /> Próximo à fronteira
+                        </span>
+                      )}
+                    </span>
                   </td>
+
                   <td className="p-3">{l.status}</td>
                   <td className="p-3 print:hidden">
                     <button onClick={() => setDetalhe(l)} className="rounded-lg bg-[#F5F5F7] px-3 py-1 text-xs font-semibold">

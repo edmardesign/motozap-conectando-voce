@@ -223,6 +223,13 @@ function GestaoPage() {
         <a href="/adm/mobilidade-auditoria" className="whitespace-nowrap rounded-full px-3 py-1.5 text-sm bg-white/10 text-foreground/80 hover:bg-white/20">
           Auditoria de mobilidade
         </a>
+        <a href="/adm/excecoes" className="whitespace-nowrap rounded-full px-3 py-1.5 text-sm bg-white/10 text-foreground/80 hover:bg-white/20">
+          Autorizações de deslocamento
+        </a>
+        <a href="/adm/municipios-permitidos" className="whitespace-nowrap rounded-full px-3 py-1.5 text-sm bg-white/10 text-foreground/80 hover:bg-white/20">
+          Municípios permitidos
+        </a>
+
 
 
       </nav>
