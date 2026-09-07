@@ -482,10 +482,26 @@ export function MobilidadeUber({ modalidade }: Props) {
       <div className="absolute inset-x-0 bottom-0 z-[1000] rounded-t-[24px] bg-white p-5 shadow-[0_-8px_30px_rgba(0,0,0,0.12)]">
         {!corrida ? (
           <div className="mx-auto flex max-w-lg flex-col gap-4">
+            {mun && (
+              <p className="text-xs font-semibold uppercase tracking-wide text-[#3DB54A]">
+                Você está em {mun.name} — {mun.uf}
+              </p>
+            )}
+
             <div className="flex items-center gap-2 text-sm text-[#6B6B6B]">
               <MapPin size={16} className="text-[#2F80ED]" />
               <span className="line-clamp-1">{buscandoGps ? "Detectando sua localização…" : origem || "Defina o ponto de partida"}</span>
             </div>
+
+            {gpsForaDoMunicipio && (
+              <div className="flex items-start gap-2 rounded-2xl bg-[#FFF7E6] p-3 text-xs text-[#7A5B00]">
+                <AlertTriangle size={16} className="mt-0.5 shrink-0" />
+                <span>
+                  Sua localização atual está fora de {mun?.name ?? "seu município de exercício"}. Escolha um ponto
+                  de partida dentro do município.
+                </span>
+              </div>
+            )}
 
             <button
               onClick={() => setPainelDestino(true)}
@@ -495,7 +511,14 @@ export function MobilidadeUber({ modalidade }: Props) {
               <span className={destino ? "font-semibold" : "text-[#6B6B6B]"}>{destino || "Para onde?"}</span>
             </button>
 
-            {destinoCoords && distanciaKm != null && (
+            {destinoCoords && !destinoPermitido && (
+              <div className="flex items-start gap-2 rounded-2xl bg-[#FFF7E6] p-3 text-xs text-[#7A5B00]">
+                <AlertTriangle size={16} className="mt-0.5 shrink-0" />
+                <span>Este destino está fora de {mun?.name ?? "seu município de exercício"}.</span>
+              </div>
+            )}
+
+            {destinoCoords && destinoPermitido && distanciaKm != null && (
               <div className="rounded-2xl border border-[#E8E8E8] p-4">
                 <div className="flex items-center justify-between">
                   <div>
@@ -509,14 +532,22 @@ export function MobilidadeUber({ modalidade }: Props) {
               </div>
             )}
 
-
             <button
-              disabled={!destinoCoords || enviando}
+              disabled={!destinoCoords || !destinoPermitido || enviando}
               onClick={confirmar}
               className="w-full rounded-2xl bg-[#3DB54A] py-4 font-bold text-white disabled:opacity-40"
             >
               {enviando ? "Enviando…" : tarifa.confirmar}
             </button>
+
+            <button
+              onClick={abrirExcecao}
+              className="w-full rounded-2xl border border-[#E8E8E8] py-3 text-sm font-semibold text-[#4A4A4A]"
+            >
+              Solicitar autorização para deslocamento fora do município
+            </button>
+          </div>
+
           </div>
         ) : (
           <div className="mx-auto flex max-w-lg flex-col gap-4">
