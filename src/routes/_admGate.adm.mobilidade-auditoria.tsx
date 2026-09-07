@@ -189,7 +189,23 @@ function AuditoriaMobilidadePage() {
                   <td className="p-3 text-xs text-[#6B6B6B]">
                     <span className="line-clamp-1">{l.origem ?? "—"}</span>
                     <span className="line-clamp-1">→ {l.destino ?? "—"}</span>
+                    {l.municipio_destino && (
+                      <span className="line-clamp-1 text-[11px]">Município: {l.municipio_destino}</span>
+                    )}
+                    <span className="mt-1 flex flex-wrap gap-1">
+                      {l.com_excecao && (
+                        <span className="rounded-full bg-[#E8F5E9] px-2 py-0.5 text-[11px] font-semibold text-[#1B5E20]">
+                          Autorização especial
+                        </span>
+                      )}
+                      {l.perto_fronteira && (
+                        <span className="flex items-center gap-1 rounded-full bg-[#FFF8E1] px-2 py-0.5 text-[11px] font-semibold text-[#7A5B00]">
+                          <AlertTriangle size={12} /> Próximo à fronteira
+                        </span>
+                      )}
+                    </span>
                   </td>
+
                   <td className="p-3">{l.status}</td>
                   <td className="p-3 print:hidden">
                     <button onClick={() => setDetalhe(l)} className="rounded-lg bg-[#F5F5F7] px-3 py-1 text-xs font-semibold">
