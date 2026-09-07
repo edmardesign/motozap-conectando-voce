@@ -152,6 +152,17 @@ export function AuthForm({ role, title, redirectTo, formMode = "both", signupRed
           else await supabase.from("profiles").update({ foto_url: path }).eq("id", userId);
         }
 
+        // Município de exercício: definido uma única vez, no cadastro.
+        if (role === "passageiro" && municipioId && userId) {
+          const { error: munErr } = await (supabase as any)
+            .from("profiles")
+            .update({ municipium_id: municipioId })
+            .eq("id", userId);
+          if (munErr) toast.error("Não foi possível registrar o município de exercício.");
+        }
+
+
+
         try {
           const key = role === "mototaxista" ? "boraze.moto.lastPhone" : "boraze.pax.lastPhone";
           localStorage.setItem(key, onlyDigits(telefone));
