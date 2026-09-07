@@ -233,6 +233,28 @@ export function AuthForm({ role, title, redirectTo, formMode = "both", signupRed
                 />
               </label>
 
+              {role === "passageiro" && (
+                <label className="flex flex-col gap-1.5">
+                  <span className="text-sm font-medium">Município de exercício</span>
+                  <select
+                    className="input-mz"
+                    value={municipioId}
+                    onChange={(e) => setMunicipioId(e.target.value)}
+                  >
+                    <option value="">Selecione…</option>
+                    {municipios.map((m) => (
+                      <option key={m.id} value={m.id}>
+                        {m.name} — {m.uf}
+                      </option>
+                    ))}
+                  </select>
+                  <span className="text-xs text-muted-foreground">
+                    Depois do cadastro, só a administração pode alterar este município.
+                  </span>
+                </label>
+              )}
+
+
               {loc.estado && loc.cidade && (
                 <AddressFields
                   value={endereco}
