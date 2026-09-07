@@ -439,16 +439,28 @@ body { overflow-x: hidden; }
 @utility card-mz {
   background-color: var(--color-card);
   color: var(--color-foreground);
-  border: 1px solid var(--color-border);
-  border-radius: 20px;
-  backdrop-filter: saturate(180%) blur(20px);
-  box-shadow: var(--shadow-raised);
+  border: none;
+  border-radius: 18px;
+  box-shadow: var(--shadow-sm);
+  padding: 1rem 1.25rem;
 }
 
 @utility input-mz {
-  border-radius: 14px;
-  padding: 0.85rem 1rem;
-  background-color: #FFFFFF;
+  border-radius: 12px;
+  min-height: 44px;
+  padding: 0 1rem;
+  background-color: var(--fill-quaternary);
+  color: var(--color-foreground);
+  border: none;
+  outline: none;
+  font-family: var(--font-sans);
+  font-size: 17px;
+  letter-spacing: -0.019em;
+  transition: box-shadow 0.15s ease;
+  &:focus {
+    box-shadow: 0 0 0 2px var(--color-ring);
+  }
+}
   color: var(--color-foreground);
   border: 1px solid var(--color-border);
   outline: none;
