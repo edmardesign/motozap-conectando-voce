@@ -11,6 +11,7 @@ import { useEffect, type ReactNode } from "react";
 
 import { supabase } from "@/integrations/supabase/client";
 import { useSubdomainGuard } from "@/hooks/use-subdomain-guard";
+import { IntergoSplash } from "@/components/intergo-splash";
 
 import appCss from "../styles.css?url";
 
@@ -160,8 +161,8 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+      <IntergoSplash />
       <Outlet />
-      
     </QueryClientProvider>
   );
 }
