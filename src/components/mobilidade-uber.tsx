@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import { MapContainer, TileLayer, Marker, Polyline, Polygon, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import { useNavigate } from "@tanstack/react-router";
 import { Crosshair, Loader2, MapPin, Search, X, Phone, Star, AlertTriangle } from "lucide-react";
 import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
@@ -80,6 +81,7 @@ function Recenter({ to, zoom = 15 }: { to: Coords | null; zoom?: number }) {
 }
 
 export function MobilidadeUber({ modalidade, agendamento }: Props) {
+  const navigate = useNavigate();
   const { user } = useAuth();
   const tarifa = TARIFAS[modalidade];
   const agendado = agendamento?.agendar === "1" && agendamento.data && agendamento.hora;
