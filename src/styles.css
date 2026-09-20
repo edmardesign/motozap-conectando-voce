@@ -160,6 +160,8 @@ body { overflow-x: hidden; }
   --muted-foreground: rgba(60,60,67,0.6);
   --accent: #007AFF;
   --accent-foreground: #FFFFFF;
+  --institutional: #13314F;
+  --institutional-foreground: #FFFFFF;
   --destructive: #FF3B30;
   --destructive-foreground: #FFFFFF;
 
