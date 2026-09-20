@@ -83,7 +83,7 @@ export function AuthForm({ role, title, redirectTo, formMode = "both", signupRed
     if (isSignup) {
       if (nome.trim().length < 2) return toast.error("Informe seu nome completo");
       if (!loc.estado || !loc.cidade) return toast.error("Selecione estado e cidade");
-      if (role === "passageiro" && municipios.length > 0 && !municipioId) {
+      if (role === "passageiro" && !municipioId) {
         return toast.error("Selecione o município de exercício");
       }
 
@@ -156,7 +156,7 @@ export function AuthForm({ role, title, redirectTo, formMode = "both", signupRed
         if (role === "passageiro" && municipioId && userId) {
           const { error: munErr } = await (supabase as any)
             .from("profiles")
-            .update({ municipium_id: municipioId })
+            .update({ municipality_id: municipioId })
             .eq("id", userId);
           if (munErr) toast.error("Não foi possível registrar o município de exercício.");
         }
