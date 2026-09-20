@@ -1,4 +1,4 @@
-import { useNavigate, useRouterState } from "@tanstack/react-router";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { Home, LayoutGrid, Route as RouteIcon, User } from "lucide-react";
 
 type TabId = "home" | "servicos" | "viagens" | "perfil";
@@ -19,7 +19,6 @@ const TABS: Tab[] = [
 ];
 
 export function PassageiroTabBar() {
-  const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   return (
@@ -31,10 +30,11 @@ export function PassageiroTabBar() {
         const isActive = pathname === t.to || pathname.startsWith(t.to + "/");
         const Icon = t.Icon;
         return (
-          <button
+          <Link
             key={t.id}
-            type="button"
-            onClick={() => navigate({ to: t.to, search: (t.search ?? {}) as any })}
+            to={t.to}
+            search={(t.search ?? {}) as never}
+            aria-label={t.label}
             className="flex h-16 flex-1 items-center justify-center transition-colors"
           >
             <span
@@ -45,7 +45,7 @@ export function PassageiroTabBar() {
               <Icon size={24} strokeWidth={1.8} aria-hidden />
               <span className="max-w-full truncate px-1 text-[10px] font-medium">{t.label}</span>
             </span>
-          </button>
+          </Link>
         );
       })}
     </nav>

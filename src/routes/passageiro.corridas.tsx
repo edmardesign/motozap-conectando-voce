@@ -100,7 +100,6 @@ function PassageiroCorridas() {
             ? "Solicitações concluídas e canceladas"
             : "Transportes institucionais em andamento"}
         </p>
-        </p>
       </div>
 
       <section className="mx-auto max-w-lg px-5">

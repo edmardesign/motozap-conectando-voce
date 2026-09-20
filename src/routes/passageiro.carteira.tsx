@@ -6,9 +6,20 @@ import { useAuth } from "@/hooks/use-auth";
 import { formatBRL } from "@/lib/pricing";
 import { PassageiroTabBar } from "@/components/passageiro-tab-bar";
 import { EmojiIcon } from "@/components/emoji-icon";
+import { PassageiroHeader } from "@/components/passageiro-header";
 
 export const Route = createFileRoute("/passageiro/carteira")({
   component: PassageiroCarteira,
+  head: () => ({
+    meta: [
+      { title: "Carteira — Intergo Logística" },
+      { name: "description", content: "Consulte a carteira e o extrato da sua conta." },
+      { property: "og:title", content: "Carteira — Intergo Logística" },
+      { property: "og:description", content: "Consulte a carteira e o extrato da sua conta." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
+    ],
+  }),
 });
 
 type Carteira = { saldo_disponivel: number; saldo_pendente: number };
@@ -90,25 +101,25 @@ function PassageiroCarteira() {
   if (!carteiraAtiva) {
     return (
       <main
-        className="min-h-screen bg-background text-foreground px-6 py-10 flex flex-col items-center justify-center gap-4 text-center"
-        style={{ paddingBottom: 80 }}
+        className="min-h-screen bg-grouped px-6 pb-24 text-foreground"
       >
-        <div className="text-5xl"><EmojiIcon e="💳" /></div>
-        <h1 className="text-xl font-bold">Carteira em breve</h1>
-        <p className="text-sm text-muted-foreground max-w-xs">
-          A carteira digital ainda não foi liberada. Por enquanto pague suas corridas direto com o mototaxista.
-        </p>
-        <Link to="/passageiro/home" className="btn-cta">Voltar</Link>
+        <PassageiroHeader backTo="/passageiro/home" title="Carteira" />
+        <div className="mx-auto flex max-w-lg flex-col items-center justify-center gap-4 py-20 text-center">
+          <div className="text-5xl"><EmojiIcon e="💳" /></div>
+          <h1 className="text-xl font-bold">Carteira em breve</h1>
+          <p className="max-w-xs text-sm text-muted-foreground">
+            A carteira digital ainda não foi liberada. Por enquanto pague suas corridas direto com o mototaxista.
+          </p>
+          <Link to="/passageiro/home" className="btn-cta">Voltar</Link>
+        </div>
         <PassageiroTabBar />
       </main>
     );
   }
 
   return (
-    <main className="min-h-screen bg-background text-foreground" style={{ paddingBottom: 80 }}>
-      <header className="px-5 pt-6 pb-4">
-        <h1 className="text-xl font-bold">Minha Carteira</h1>
-      </header>
+    <main className="min-h-screen bg-grouped pb-24 text-foreground">
+      <PassageiroHeader backTo="/passageiro/home" title="Minha Carteira" />
 
       <section className="px-5 grid grid-cols-2 gap-3">
         <div className="card-mz p-4">
