@@ -3,8 +3,8 @@ import { createPortal } from "react-dom";
 import { MapContainer, TileLayer, Marker, Polyline, Polygon, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import { ChevronLeft, Crosshair, Loader2, MapPin, Search, X, Phone, Star, AlertTriangle } from "lucide-react";
 import { useNavigate } from "@tanstack/react-router";
+import { CalendarClock, Crosshair, Loader2, MapPin, Search, X, Phone, Star, AlertTriangle } from "lucide-react";
 import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -13,6 +13,8 @@ import { reverseGeocode, searchSuggestions, type NominatimResult } from "@/lib/g
 import { haversineKm } from "@/lib/haversine";
 import { AVISO_MOBILIDADE } from "@/components/aviso-mobilidade";
 import { OrigemDestinoPanel, IconesOpcao } from "@/components/origem-destino-panel";
+import { PassageiroHeader } from "@/components/passageiro-header";
+import { PassageiroTabBar } from "@/components/passageiro-tab-bar";
 import { cienciaMobilidadeHoje, registrarCienciaMobilidade } from "@/lib/mobilidade-auditoria.functions";
 import {
   meuMunicipio,
@@ -34,6 +36,7 @@ export type ModalidadeMobilidade = "automovel" | "moto_taxi";
 
 interface Props {
   modalidade: ModalidadeMobilidade;
+  agendamento?: { agendar?: boolean; data?: string; hora?: string };
 }
 
 type Coords = { lat: number; lng: number };
@@ -77,10 +80,14 @@ function Recenter({ to, zoom = 15 }: { to: Coords | null; zoom?: number }) {
   return null;
 }
 
-export function MobilidadeUber({ modalidade }: Props) {
+export function MobilidadeUber({ modalidade, agendamento }: Props) {
   const navigate = useNavigate();
   const { user } = useAuth();
   const tarifa = TARIFAS[modalidade];
+  const agendado = Boolean(agendamento?.data && agendamento?.hora);
+  const scheduledAt = agendado
+    ? `${new Date(`${agendamento!.data}T12:00:00`).toLocaleDateString("pt-BR")} às ${agendamento!.hora}`
+    : undefined;
 
   const [origemCoords, setOrigemCoords] = useState<Coords | null>(null);
   const [origem, setOrigem] = useState("");
@@ -462,31 +469,33 @@ export function MobilidadeUber({ modalidade }: Props) {
         </MapContainer>
       </div>
 
-      {/* Voltar */}
-      <button
-        aria-label="Voltar"
-        onClick={() => navigate({ to: "/passageiro/mobilidade" })}
-        className="absolute left-4 top-4 z-[1000] flex h-11 w-11 items-center justify-center rounded-full bg-white shadow-lg"
-      >
-        <ChevronLeft size={22} />
-      </button>
+      <div className="absolute inset-x-0 top-0 z-[1000]">
+        <PassageiroHeader backTo="/passageiro/mobilidade" title={tarifa.label} />
+      </div>
 
       <button
         aria-label="Centralizar na minha localização"
         onClick={detectarLocalizacao}
-        className="absolute right-4 top-4 z-[1000] flex h-11 w-11 items-center justify-center rounded-full bg-white shadow-lg"
+        className="absolute right-4 top-[4.25rem] z-[1000] flex h-11 w-11 items-center justify-center rounded-full bg-card text-foreground shadow-lg"
       >
         {buscandoGps ? <Loader2 size={20} className="animate-spin" /> : <Crosshair size={20} />}
       </button>
 
       {/* Painel inferior */}
-      <div className="absolute inset-x-0 bottom-0 z-[1000] rounded-t-[24px] bg-white p-5 shadow-[0_-8px_30px_rgba(0,0,0,0.12)]">
+      <div className="absolute inset-x-0 bottom-16 z-[1000] rounded-t-3xl bg-card p-5 text-foreground shadow-[0_-8px_30px_rgba(0,0,0,0.12)]">
         {!corrida ? (
           <div className="mx-auto flex max-w-lg flex-col gap-4">
             {mun && (
               <p className="text-xs font-semibold uppercase tracking-wide text-[#3DB54A]">
                 Você está em {mun.name} — {mun.uf}
               </p>
+            )}
+
+            {scheduledAt && (
+              <div className="flex items-center gap-2 rounded-full bg-fill-tertiary px-3 py-2 text-sm font-medium">
+                <CalendarClock size={16} className="text-primary" />
+                <span>Partir mais tarde · {scheduledAt}</span>
+              </div>
             )}
 
             <div className="flex items-center gap-2 text-sm text-[#6B6B6B]">
@@ -594,6 +603,7 @@ export function MobilidadeUber({ modalidade }: Props) {
           </div>
         )}
       </div>
+      <PassageiroTabBar />
 
       {/* Painel de destino */}
       {painelDestino &&
@@ -602,7 +612,8 @@ export function MobilidadeUber({ modalidade }: Props) {
           <div className="fixed inset-0 z-[2000] overflow-y-auto bg-background">
             <OrigemDestinoPanel
               titulo="Para onde vamos?"
-              pillLabel="Agora"
+              pillLabel={agendado ? "Partir mais tarde" : "Agora"}
+              scheduledAt={scheduledAt}
               onVoltar={() => setPainelDestino(false)}
               origem={origem}
               origemPlaceholder="Ponto de partida"

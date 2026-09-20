@@ -2,10 +2,12 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useCallback, useEffect, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
-import { Car, Bike, ChevronLeft, AlertTriangle, X } from "lucide-react";
+import { Car, Bike, AlertTriangle, X } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 import { minhaCotaMobilidade, solicitarLiberacaoCota, type CotaMensal } from "@/lib/cotas.functions";
 import { AvisoMobilidadeBanner } from "@/components/aviso-mobilidade";
+import { PassageiroHeader } from "@/components/passageiro-header";
+import { PassageiroTabBar } from "@/components/passageiro-tab-bar";
 
 
 export const Route = createFileRoute("/passageiro/mobilidade/")({
@@ -60,7 +62,12 @@ function MobilidadeEscolhaPage() {
         setModalLimite(true);
         return;
       }
-      navigate({ to: destino });
+      const search = { agendar: undefined, data: undefined, hora: undefined };
+      if (destino === "/passageiro/mobilidade/automovel") {
+        navigate({ to: destino, search });
+      } else {
+        navigate({ to: destino, search });
+      }
     },
     [bloqueado, navigate],
   );
@@ -80,26 +87,15 @@ function MobilidadeEscolhaPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F5F5F7] font-sans text-[#111111]">
-      <header className="sticky top-0 z-50 w-full border-b border-[#E8E8E8] bg-white/80 backdrop-blur-md">
-        <div className="mx-auto flex h-16 max-w-lg items-center px-6">
-          <button
-            aria-label="Voltar"
-            onClick={() => navigate({ to: "/passageiro/home" })}
-            className="mr-4 flex h-10 w-10 items-center justify-center rounded-full bg-[#F5F5F7] text-[#6B6B6B]"
-          >
-            <ChevronLeft size={20} />
-          </button>
-          <h1 className="text-lg font-bold">Mobilidade Urbana</h1>
-        </div>
-      </header>
+    <div className="min-h-screen bg-grouped pb-24 font-sans text-foreground">
+      <PassageiroHeader backTo="/passageiro/home" title="Mobilidade Urbana" />
 
       <main className="mx-auto max-w-lg p-6 pt-6">
         {cota && total != null && (
-          <div className="mb-4 rounded-2xl bg-white p-4 shadow-sm animate-apple-rise">
-            <p className="text-sm text-[#6B6B6B]">Chamadas disponíveis este mês</p>
+          <div className="mb-4 rounded-3xl bg-card p-4 shadow-sm animate-apple-rise">
+            <p className="text-sm text-muted-foreground">Chamadas disponíveis este mês</p>
             <p className="text-2xl font-bold">
-              {restantes} <span className="text-base font-semibold text-[#6B6B6B]">de {total}</span>
+              {restantes} <span className="text-base font-semibold text-muted-foreground">de {total}</span>
             </p>
           </div>
         )}
@@ -120,7 +116,7 @@ function MobilidadeEscolhaPage() {
           </div>
         )}
 
-        <p className="mb-4 text-[#6B6B6B] animate-apple-rise">
+        <p className="mb-4 text-muted-foreground animate-apple-rise">
           Deslocamento de servidores — escolha a modalidade do seu transporte.
         </p>
 
@@ -132,14 +128,14 @@ function MobilidadeEscolhaPage() {
             aria-label="Solicitar automóvel"
             disabled={bloqueado}
             onClick={() => abrir("/passageiro/mobilidade/automovel")}
-            className="group flex w-full items-center gap-4 rounded-[24px] bg-white p-6 text-left shadow-sm transition-all hover:shadow-md active:scale-[0.98] disabled:opacity-50 animate-apple-rise stagger-1"
+            className="group flex w-full items-center gap-4 rounded-3xl bg-card p-6 text-left shadow-sm transition-all hover:shadow-md active:scale-[0.98] disabled:opacity-50 animate-apple-rise stagger-1"
           >
-            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#3DB54A] text-white">
+            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-primary text-primary-foreground">
               <Car size={28} />
             </div>
             <div className="flex-1">
               <h2 className="text-lg font-bold">Solicitar Automóvel</h2>
-              <p className="text-sm text-[#6B6B6B]">Carro sob demanda para deslocamentos institucionais.</p>
+              <p className="text-sm text-muted-foreground">Carro sob demanda para deslocamentos institucionais.</p>
             </div>
           </button>
 
@@ -147,14 +143,14 @@ function MobilidadeEscolhaPage() {
             aria-label="Solicitar moto táxi"
             disabled={bloqueado}
             onClick={() => abrir("/passageiro/mobilidade/moto")}
-            className="group flex w-full items-center gap-4 rounded-[24px] bg-white p-6 text-left shadow-sm transition-all hover:shadow-md active:scale-[0.98] disabled:opacity-50 animate-apple-rise stagger-2"
+            className="group flex w-full items-center gap-4 rounded-3xl bg-card p-6 text-left shadow-sm transition-all hover:shadow-md active:scale-[0.98] disabled:opacity-50 animate-apple-rise stagger-2"
           >
-            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#3DB54A] text-white">
+            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-primary text-primary-foreground">
               <Bike size={28} />
             </div>
             <div className="flex-1">
               <h2 className="text-lg font-bold">Solicitar Moto Táxi</h2>
-              <p className="text-sm text-[#6B6B6B]">Deslocamento rápido para pequenos percursos urbanos.</p>
+              <p className="text-sm text-muted-foreground">Deslocamento rápido para pequenos percursos urbanos.</p>
             </div>
           </button>
         </div>
@@ -203,6 +199,7 @@ function MobilidadeEscolhaPage() {
           </div>
         </div>
       )}
+      <PassageiroTabBar />
     </div>
   );
 }

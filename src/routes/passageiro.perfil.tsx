@@ -7,11 +7,19 @@ import { PassageiroTabBar } from "@/components/passageiro-tab-bar";
 import { LogOut, User as UserIcon, Phone, MapPin, Cake } from "lucide-react";
 import { maskPhone } from "@/lib/phone";
 import { MobilidadeHistorico } from "@/components/mobilidade-historico";
+import { PassageiroHeader } from "@/components/passageiro-header";
 
 export const Route = createFileRoute("/passageiro/perfil")({
   component: PassageiroPerfil,
   head: () => ({
-    meta: [{ title: "Meu perfil — InterGO" }],
+    meta: [
+      { title: "Meu perfil — Intergo Logística" },
+      { name: "description", content: "Consulte seus dados e histórico de mobilidade institucional." },
+      { property: "og:title", content: "Meu perfil — Intergo Logística" },
+      { property: "og:description", content: "Consulte seus dados e histórico de mobilidade institucional." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
+    ],
   }),
 });
 
@@ -104,12 +112,10 @@ function PassageiroPerfil() {
   }
 
   return (
-    <main className="min-h-screen bg-[#F5F5F7] text-[#111111]" style={{ paddingBottom: 80 }}>
-      <header className="px-5 pt-6 pb-4">
-        <h1 className="text-xl font-bold">Meu perfil</h1>
-      </header>
+    <main className="min-h-screen bg-grouped pb-24 text-foreground">
+      <PassageiroHeader title="Meu perfil" name={nome} />
 
-      <section className="px-5 space-y-3">
+      <section className="mx-auto max-w-lg space-y-3 px-5 pt-5">
         <Field icon={<UserIcon size={16} />} label="Nome">
           <input
             value={nome}
@@ -157,7 +163,7 @@ function PassageiroPerfil() {
 
         <button
           onClick={handleSair}
-          className="w-full mt-4 flex items-center justify-center gap-2 py-3 rounded-lg font-semibold border border-red-500/40 text-red-400 hover:bg-red-500/10 transition"
+          className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl border border-destructive/40 py-3 font-semibold text-destructive transition hover:bg-destructive/10"
         >
           <LogOut size={16} />
           Sair da conta

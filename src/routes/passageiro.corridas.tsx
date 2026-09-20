@@ -6,6 +6,7 @@ import { formatBRL } from "@/lib/pricing";
 import { PassageiroTabBar } from "@/components/passageiro-tab-bar";
 import { MapPin, Navigation } from "lucide-react";
 import { EmojiIcon } from "@/components/emoji-icon";
+import { PassageiroHeader } from "@/components/passageiro-header";
 
 export const Route = createFileRoute("/passageiro/corridas")({
   component: PassageiroCorridas,
@@ -91,17 +92,17 @@ function PassageiroCorridas() {
   }
 
   return (
-    <main className="min-h-screen bg-[#F5F5F7] text-[#111111]" style={{ paddingBottom: 80 }}>
-      <header className="px-5 pt-6 pb-4 border-b border-border">
-        <h1 className="text-xl font-bold">{isHistorico ? "Histórico" : "Solicitações"}</h1>
-        <p className="text-sm text-muted-foreground mt-0.5">
+    <main className="min-h-screen bg-grouped pb-24 text-foreground">
+      <PassageiroHeader title={isHistorico ? "Histórico" : "Viagens"} />
+      <div className="mx-auto max-w-lg px-5 pt-5">
+        <p className="text-sm text-muted-foreground">
           {isHistorico
             ? "Solicitações concluídas e canceladas"
             : "Transportes institucionais em andamento"}
         </p>
-      </header>
+      </div>
 
-      <section className="px-5">
+      <section className="mx-auto max-w-lg px-5">
         {lista.length === 0 ? (
           <div className="flex flex-col items-center justify-center text-center py-16 gap-3">
             <div className="text-6xl"><EmojiIcon e="📦" /></div>

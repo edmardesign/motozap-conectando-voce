@@ -15,6 +15,7 @@ export interface OrigemDestinoPanelProps {
   pillLabel: string;
   onVoltar: () => void;
   onPill?: () => void;
+  scheduledAt?: string;
   origem: string;
   origemPlaceholder?: string;
   onOrigemChange?: (v: string) => void;
@@ -40,6 +41,7 @@ export function OrigemDestinoPanel({
   pillLabel,
   onVoltar,
   onPill,
+  scheduledAt,
   origem,
   origemPlaceholder = "Ponto de partida",
   onOrigemChange,
@@ -76,6 +78,9 @@ export function OrigemDestinoPanel({
           {pillLabel}
           <ChevronDown size={16} strokeWidth={1.8} />
         </button>
+        {scheduledAt && (
+          <p className="mt-2 text-xs font-medium text-primary">Agendado para {scheduledAt}</p>
+        )}
 
         {/* Card único com origem e destino conectados */}
         <div className="mt-4 rounded-2xl bg-fill-tertiary p-4">

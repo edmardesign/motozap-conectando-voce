@@ -32,6 +32,7 @@ import { Route as PassageiroHomeRouteImport } from './routes/passageiro.home'
 import { Route as PassageiroFrotaRouteImport } from './routes/passageiro.frota'
 import { Route as PassageiroCorridasRouteImport } from './routes/passageiro.corridas'
 import { Route as PassageiroCarteiraRouteImport } from './routes/passageiro.carteira'
+import { Route as PassageiroAgendarRouteImport } from './routes/passageiro.agendar'
 import { Route as MototaxistaPlanosRouteImport } from './routes/mototaxista.planos'
 import { Route as MototaxistaPagamentoRouteImport } from './routes/mototaxista.pagamento'
 import { Route as MototaxistaHomeRouteImport } from './routes/mototaxista.home'
@@ -180,6 +181,11 @@ const PassageiroCorridasRoute = PassageiroCorridasRouteImport.update({
 const PassageiroCarteiraRoute = PassageiroCarteiraRouteImport.update({
   id: '/passageiro/carteira',
   path: '/passageiro/carteira',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PassageiroAgendarRoute = PassageiroAgendarRouteImport.update({
+  id: '/passageiro/agendar',
+  path: '/passageiro/agendar',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MototaxistaPlanosRoute = MototaxistaPlanosRouteImport.update({
@@ -388,6 +394,7 @@ export interface FileRoutesByFullPath {
   '/mototaxista/home': typeof MototaxistaHomeRoute
   '/mototaxista/pagamento': typeof MototaxistaPagamentoRoute
   '/mototaxista/planos': typeof MototaxistaPlanosRoute
+  '/passageiro/agendar': typeof PassageiroAgendarRoute
   '/passageiro/carteira': typeof PassageiroCarteiraRoute
   '/passageiro/corridas': typeof PassageiroCorridasRoute
   '/passageiro/frota': typeof PassageiroFrotaRoute
@@ -444,6 +451,7 @@ export interface FileRoutesByTo {
   '/mototaxista/home': typeof MototaxistaHomeRoute
   '/mototaxista/pagamento': typeof MototaxistaPagamentoRoute
   '/mototaxista/planos': typeof MototaxistaPlanosRoute
+  '/passageiro/agendar': typeof PassageiroAgendarRoute
   '/passageiro/carteira': typeof PassageiroCarteiraRoute
   '/passageiro/corridas': typeof PassageiroCorridasRoute
   '/passageiro/frota': typeof PassageiroFrotaRoute
@@ -503,6 +511,7 @@ export interface FileRoutesById {
   '/mototaxista/home': typeof MototaxistaHomeRoute
   '/mototaxista/pagamento': typeof MototaxistaPagamentoRoute
   '/mototaxista/planos': typeof MototaxistaPlanosRoute
+  '/passageiro/agendar': typeof PassageiroAgendarRoute
   '/passageiro/carteira': typeof PassageiroCarteiraRoute
   '/passageiro/corridas': typeof PassageiroCorridasRoute
   '/passageiro/frota': typeof PassageiroFrotaRoute
@@ -562,6 +571,7 @@ export interface FileRouteTypes {
     | '/mototaxista/home'
     | '/mototaxista/pagamento'
     | '/mototaxista/planos'
+    | '/passageiro/agendar'
     | '/passageiro/carteira'
     | '/passageiro/corridas'
     | '/passageiro/frota'
@@ -618,6 +628,7 @@ export interface FileRouteTypes {
     | '/mototaxista/home'
     | '/mototaxista/pagamento'
     | '/mototaxista/planos'
+    | '/passageiro/agendar'
     | '/passageiro/carteira'
     | '/passageiro/corridas'
     | '/passageiro/frota'
@@ -676,6 +687,7 @@ export interface FileRouteTypes {
     | '/mototaxista/home'
     | '/mototaxista/pagamento'
     | '/mototaxista/planos'
+    | '/passageiro/agendar'
     | '/passageiro/carteira'
     | '/passageiro/corridas'
     | '/passageiro/frota'
@@ -733,6 +745,7 @@ export interface RootRouteChildren {
   MototaxistaHomeRoute: typeof MototaxistaHomeRoute
   MototaxistaPagamentoRoute: typeof MototaxistaPagamentoRoute
   MototaxistaPlanosRoute: typeof MototaxistaPlanosRoute
+  PassageiroAgendarRoute: typeof PassageiroAgendarRoute
   PassageiroCarteiraRoute: typeof PassageiroCarteiraRoute
   PassageiroCorridasRoute: typeof PassageiroCorridasRoute
   PassageiroFrotaRoute: typeof PassageiroFrotaRoute
@@ -912,6 +925,13 @@ declare module '@tanstack/react-router' {
       path: '/passageiro/carteira'
       fullPath: '/passageiro/carteira'
       preLoaderRoute: typeof PassageiroCarteiraRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/passageiro/agendar': {
+      id: '/passageiro/agendar'
+      path: '/passageiro/agendar'
+      fullPath: '/passageiro/agendar'
+      preLoaderRoute: typeof PassageiroAgendarRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/mototaxista/planos': {
@@ -1226,6 +1246,7 @@ const rootRouteChildren: RootRouteChildren = {
   MototaxistaHomeRoute: MototaxistaHomeRoute,
   MototaxistaPagamentoRoute: MototaxistaPagamentoRoute,
   MototaxistaPlanosRoute: MototaxistaPlanosRoute,
+  PassageiroAgendarRoute: PassageiroAgendarRoute,
   PassageiroCarteiraRoute: PassageiroCarteiraRoute,
   PassageiroCorridasRoute: PassageiroCorridasRoute,
   PassageiroFrotaRoute: PassageiroFrotaRoute,

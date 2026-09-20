@@ -7,7 +7,7 @@ export const AVISO_MOBILIDADE =
 /** Versão discreta, usada logo abaixo do card de Mobilidade Urbana na home. */
 export function AvisoMobilidadeTexto({ className = "" }: { className?: string }) {
   return (
-    <p className={`px-1 text-left text-xs leading-relaxed text-[#6B6B6B] ${className}`}>
+    <p className={`px-1 text-left text-xs leading-relaxed text-muted-foreground ${className}`}>
       {AVISO_MOBILIDADE}
     </p>
   );
