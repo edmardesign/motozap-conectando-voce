@@ -86,7 +86,7 @@ export function MobilidadeUber({ modalidade, agendamento }: Props) {
   const tarifa = TARIFAS[modalidade];
   const agendado = Boolean(agendamento?.data && agendamento?.hora);
   const scheduledAt = agendado
-    ? `${new Date(`${agendamento.data}T12:00:00`).toLocaleDateString("pt-BR")} às ${agendamento.hora}`
+    ? `${new Date(`${agendamento!.data}T12:00:00`).toLocaleDateString("pt-BR")} às ${agendamento!.hora}`
     : undefined;
 
   const [origemCoords, setOrigemCoords] = useState<Coords | null>(null);
