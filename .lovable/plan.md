@@ -1,39 +1,39 @@
-# Plano: Refatoração do Fluxo de Transporte Institucional (Hub Centralizado)
+# Plano: Correções visuais do fluxo Passageiro
 
-Ajuste do roteamento para reutilizar a tela de mapa existente (`/hub`) e implementação da área do prestador (motorista) com rastreamento em tempo real.
+## Objetivo
+Uniformizar todas as telas acessíveis pela navegação inferior no padrão visual já aplicado à home, corrigir a hierarquia da home e adicionar a experiência visual de agendamento, sem alterar regras, dados ou operações existentes.
 
-## User Review Required
+## Implementação
 
-> [!IMPORTANT]
-> A tela `/hub` será adaptada para aceitar o parâmetro `tipo` (automovel ou moto_taxi), permitindo a reutilização da lógica de mapa e geocoding já existente.
+1. **Cabeçalho único do passageiro**
+   - Criar um cabeçalho compartilhado com o wordmark canônico da home e avatar do servidor.
+   - Aplicar em home, escolha de mobilidade, mapas de automóvel/moto, logística, perfil, viagens e demais telas ligadas à navegação inferior.
+   - Preservar ações de voltar quando necessárias, sem trocar destinos existentes.
 
-- **Fluxo do Servidor:** Cards em `/passageiro/transporte-servidores` agora levam ao `/hub` com o parâmetro correto.
-- **Área do Motorista:** Nova área `/motorista` com login, painel online/offline e gestão de corridas.
+2. **Home reorganizada**
+   - Manter cabeçalho, busca e abas no topo.
+   - Dar maior espaço visual aos quatro atalhos circulares.
+   - Inserir chips horizontais de destinos frequentes logo após os atalhos.
+   - Substituir o cartão grande de cota por uma faixa compacta de 48px, usando tokens semânticos verdes, ícone, saldo e link de histórico.
+   - Manter o texto legal integral no rodapé, apenas reduzindo sua presença visual.
 
-## Technical Details
+3. **Agendamento**
+   - Fazer “Mais tarde” abrir uma folha inferior com três opções: Automóvel, Moto Táxi e Envio.
+   - Criar `/passageiro/agendar` como alternativa direta com as mesmas opções.
+   - Ao selecionar uma opção, mostrar seletor de data e hora e abrir o fluxo escolhido em estado visual agendado.
+   - Transportar apenas parâmetros de apresentação entre telas; não criar ou alterar gravações, RPCs ou regras no backend.
 
-### Roteamento e Parâmetros
-- **Passageiro:** `/hub?tipo=automovel` ou `/hub?tipo=moto_taxi`.
-- **Motorista:** `/motorista/home`, `/motorista/corrida/:id`, `/auth/motorista`.
+4. **Padronização das telas**
+   - Escolha de mobilidade: cabeçalho comum, cartões grandes arredondados, faixa de cota e aviso existentes.
+   - Automóvel/Moto: preservar mapa e toda lógica; sobrepor cabeçalho comum e adaptar painel, chips e pill de horário ao modo imediato/agendado.
+   - Logística: trocar somente o cabeçalho/logo e consolidar cartões, chips e superfícies com os tokens atuais; preservar integralmente os passos e regras existentes.
+   - Perfil, viagens e telas auxiliares: aplicar cabeçalho, fundo, largura, cartões e navegação inferior compartilhados.
 
-### Banco de Dados (Supabase)
-- **Tabela `drivers`**: Rastreamento de localização e status online.
-- **Tabela `ride_requests`**: Registro de solicitações com status e vinculação motorista/passageiro.
-- **Realtime**: Habilitado em ambas para sincronização de posição e status da corrida.
+5. **Validação**
+   - Verificar rotas principais em viewport móvel e desktop.
+   - Confirmar abertura/fechamento da folha, escolha de data/hora, navegação e preservação do mapa e formulários.
+   - Confirmar ausência de erros no navegador e metadados completos nas rotas alteradas/criadas.
 
-## Step-by-Step Implementation
-
-1.  **Ajuste do Hub (`/hub`)**:
-    - Adicionar `validateSearch` para aceitar `tipo` e `id_demanda`.
-    - Adaptar a lógica de estimativa e ícones com base no tipo de veículo.
-2.  **Roteamento Institucional**:
-    - Atualizar `/passageiro/transporte-servidores` para navegar para `/hub`.
-3.  **Área do Motorista**:
-    - Implementar `/auth/motorista` (login).
-    - Criar `/motorista/home` com watchPosition e canal realtime de solicitações.
-    - Criar `/motorista/corrida/:id` para o fluxo de execução da viagem.
-4.  **Integração Realtime**:
-    - Lado passageiro: Monitorar status da `ride_request` e posição do motorista em `drivers`.
-    - Lado motorista: Tocar som e abrir modal ao receber `ride_request` compatível.
-5.  **Segurança e RLS**:
-    - Aplicar políticas para que motoristas vejam apenas pedidos pendentes compatíveis.
+## Limites
+- Nenhuma alteração em tabelas, cadastros, RPCs, auditoria, cotas, restrição geográfica ou lógica de solicitação.
+- Nenhuma mudança na paleta, tipografia ou conteúdo do aviso legal.
