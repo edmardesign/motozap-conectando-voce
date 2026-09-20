@@ -1,20 +1,27 @@
 import { useEffect, useState } from "react";
-import { IntergoLogoMotion } from "./intergo-logo-motion";
+import wordmarkAsset from "@/assets/intergo-wordmark.png.asset.json";
 
 /** Exibida a cada abertura do app (uma vez por carregamento de página). */
 let jaExibidaNestaSessaoDePagina = false;
 
-export function IntergoSplash({ duracaoMs = 1700 }: { duracaoMs?: number }) {
+/**
+ * Splash minimalista: fundo preto sólido + wordmark centralizado com fade-in de 300ms.
+ * Sem qualquer outra animação.
+ */
+export function IntergoSplash({ duracaoMs = 1200 }: { duracaoMs?: number }) {
   const [visivel, setVisivel] = useState(false);
+  const [entrou, setEntrou] = useState(false);
   const [saindo, setSaindo] = useState(false);
 
   useEffect(() => {
     if (jaExibidaNestaSessaoDePagina) return;
     jaExibidaNestaSessaoDePagina = true;
     setVisivel(true);
+    const tEntrada = window.requestAnimationFrame(() => setEntrou(true));
     const tFade = window.setTimeout(() => setSaindo(true), duracaoMs);
-    const tFim = window.setTimeout(() => setVisivel(false), duracaoMs + 380);
+    const tFim = window.setTimeout(() => setVisivel(false), duracaoMs + 320);
     return () => {
+      window.cancelAnimationFrame(tEntrada);
       window.clearTimeout(tFade);
       window.clearTimeout(tFim);
     };
@@ -25,14 +32,24 @@ export function IntergoSplash({ duracaoMs = 1700 }: { duracaoMs?: number }) {
   return (
     <div
       aria-hidden
-      className="fixed inset-0 z-[9999] grid place-items-center bg-background"
+      className="fixed inset-0 z-[9999] grid place-items-center"
       style={{
+        background: "#000000",
         opacity: saindo ? 0 : 1,
-        transition: "opacity 360ms var(--ease-apple-out)",
+        transition: "opacity 300ms linear",
         pointerEvents: saindo ? "none" : "auto",
       }}
     >
-      <IntergoLogoMotion size={210} />
+      <img
+        src={wordmarkAsset.url}
+        alt=""
+        className="h-9 w-auto"
+        style={{
+          opacity: entrou ? 1 : 0,
+          transition: "opacity 300ms linear",
+          filter: "brightness(0) invert(1)",
+        }}
+      />
     </div>
   );
 }
