@@ -4,7 +4,7 @@ import { MobilidadeUber } from "@/components/mobilidade-uber";
 export const Route = createFileRoute("/passageiro/mobilidade/moto")({
   ssr: false,
   validateSearch: (search: Record<string, unknown>) => ({
-    agendar: search.agendar === "1" ? "1" : undefined,
+    agendar: search.agendar === "1" || search.agendar === 1 ? "1" : undefined,
     data: typeof search.data === "string" ? search.data : undefined,
     hora: typeof search.hora === "string" ? search.hora : undefined,
   }),

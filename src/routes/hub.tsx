@@ -42,7 +42,7 @@ import { z } from "zod";
 const hubSearchSchema = z.object({
   tipo: z.enum(["automovel", "moto_taxi", "documentos", "exames", "medicamentos", "encomendas"]).optional(),
   id_demanda: z.string().optional(),
-  agendar: z.literal("1").optional(),
+  agendar: z.union([z.literal("1"), z.literal(1)]).transform(() => "1" as const).optional(),
   data: z.string().optional(),
   hora: z.string().optional(),
 });
