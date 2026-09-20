@@ -60,8 +60,8 @@ export function IntergoHubPage() {
 
   const total = cota ? cota.limite + cota.extra_granted : null;
   const atalhos = [
-    { label: "Automóvel", Icon: Car, onClick: () => navigate({ to: "/passageiro/mobilidade/automovel" }) },
-    { label: "Moto Táxi", Icon: Bike, onClick: () => navigate({ to: "/passageiro/mobilidade/moto" }) },
+    { label: "Automóvel", Icon: Car, onClick: () => navigate({ to: "/passageiro/mobilidade/automovel", search: {} }) },
+    { label: "Moto Táxi", Icon: Bike, onClick: () => navigate({ to: "/passageiro/mobilidade/moto", search: {} }) },
     { label: "Enviar Documento", Icon: FileText, onClick: () => navigate({ to: "/hub" }) },
     { label: "Exame", Icon: Stethoscope, onClick: () => navigate({ to: "/hub" }) },
   ];
