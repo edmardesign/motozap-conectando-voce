@@ -36,7 +36,7 @@ export type ModalidadeMobilidade = "automovel" | "moto_taxi";
 
 interface Props {
   modalidade: ModalidadeMobilidade;
-  agendamento?: { agendar?: string; data?: string; hora?: string };
+  agendamento?: { agendar?: boolean; data?: string; hora?: string };
 }
 
 type Coords = { lat: number; lng: number };
@@ -84,7 +84,7 @@ export function MobilidadeUber({ modalidade, agendamento }: Props) {
   const navigate = useNavigate();
   const { user } = useAuth();
   const tarifa = TARIFAS[modalidade];
-  const agendado = agendamento?.agendar === "1" && agendamento.data && agendamento.hora;
+  const agendado = agendamento?.agendar === true && agendamento.data && agendamento.hora;
   const scheduledAt = agendado
     ? `${new Date(`${agendamento.data}T12:00:00`).toLocaleDateString("pt-BR")} às ${agendamento.hora}`
     : undefined;

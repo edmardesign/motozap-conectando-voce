@@ -27,14 +27,14 @@ export function AgendamentoSheet({ open = true, onClose, embedded = false }: Age
   function continuar() {
     if (!tipo || !data || !hora) return;
     if (tipo === "automovel") {
-      navigate({ to: "/passageiro/mobilidade/automovel", search: { agendar: "1", data, hora } });
+      navigate({ to: "/passageiro/mobilidade/automovel", search: { agendar: true, data, hora } });
       return;
     }
     if (tipo === "moto") {
-      navigate({ to: "/passageiro/mobilidade/moto", search: { agendar: "1", data, hora } });
+      navigate({ to: "/passageiro/mobilidade/moto", search: { agendar: true, data, hora } });
       return;
     }
-    navigate({ to: "/hub", search: { agendar: "1", data, hora } });
+    navigate({ to: "/hub", search: { agendar: true, data, hora } });
   }
 
   const content = (

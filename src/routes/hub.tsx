@@ -42,7 +42,7 @@ import { z } from "zod";
 const hubSearchSchema = z.object({
   tipo: z.enum(["automovel", "moto_taxi", "documentos", "exames", "medicamentos", "encomendas"]).optional(),
   id_demanda: z.string().optional(),
-  agendar: z.union([z.literal("1"), z.literal(1)]).transform(() => "1" as const).optional(),
+  agendar: z.preprocess((value) => value === true || value === 1 || value === "1" || value === "true", z.boolean()).optional(),
   data: z.string().optional(),
   hora: z.string().optional(),
 });
@@ -1339,7 +1339,7 @@ function PassageiroHomePage() {
               pegueSubmitting={pegueSubmitting}
               onPegueSubmit={callPegueAli}
               saudacao={headerName}
-              scheduledAt={search.agendar === "1" && search.data && search.hora ? `${new Date(`${search.data}T12:00:00`).toLocaleDateString("pt-BR")} às ${search.hora}` : undefined}
+              scheduledAt={search.agendar && search.data && search.hora ? `${new Date(`${search.data}T12:00:00`).toLocaleDateString("pt-BR")} às ${search.hora}` : undefined}
               tipo={tipoDemanda}
               setTipo={setTipoDemanda}
               observacao={observacao}
