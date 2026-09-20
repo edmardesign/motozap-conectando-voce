@@ -12,6 +12,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { reverseGeocode, searchSuggestions, type NominatimResult } from "@/lib/geocoding";
 import { haversineKm } from "@/lib/haversine";
 import { AVISO_MOBILIDADE } from "@/components/aviso-mobilidade";
+import { OrigemDestinoPanel, IconesOpcao } from "@/components/origem-destino-panel";
 import { cienciaMobilidadeHoje, registrarCienciaMobilidade } from "@/lib/mobilidade-auditoria.functions";
 import {
   meuMunicipio,
