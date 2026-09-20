@@ -44,6 +44,8 @@ body { overflow-x: hidden; }
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+  --color-institutional: var(--institutional);
+  --color-institutional-foreground: var(--institutional-foreground);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
