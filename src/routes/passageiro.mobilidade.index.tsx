@@ -62,7 +62,12 @@ function MobilidadeEscolhaPage() {
         setModalLimite(true);
         return;
       }
-      navigate({ to: destino, search: {} });
+      const search = { agendar: undefined, data: undefined, hora: undefined };
+      if (destino === "/passageiro/mobilidade/automovel") {
+        navigate({ to: destino, search });
+      } else {
+        navigate({ to: destino, search });
+      }
     },
     [bloqueado, navigate],
   );

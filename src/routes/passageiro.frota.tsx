@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { ShieldCheck } from "lucide-react";
 import { PassageiroHeader } from "@/components/passageiro-header";
 import { PassageiroTabBar } from "@/components/passageiro-tab-bar";
@@ -17,8 +17,6 @@ export const Route = createFileRoute("/passageiro/frota")({
 });
 
 function FrotaPage() {
-  const navigate = useNavigate();
-
   return (
     <div className="min-h-screen bg-grouped pb-24 font-sans text-foreground">
       <PassageiroHeader backTo="/passageiro/home" title="Frota" />
