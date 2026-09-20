@@ -4,7 +4,7 @@ import { MapContainer, TileLayer, Marker, Polyline, Polygon, useMap } from "reac
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { useNavigate } from "@tanstack/react-router";
-import { Crosshair, Loader2, MapPin, Search, X, Phone, Star, AlertTriangle } from "lucide-react";
+import { CalendarClock, Crosshair, Loader2, MapPin, Search, X, Phone, Star, AlertTriangle } from "lucide-react";
 import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -489,6 +489,13 @@ export function MobilidadeUber({ modalidade, agendamento }: Props) {
               <p className="text-xs font-semibold uppercase tracking-wide text-[#3DB54A]">
                 Você está em {mun.name} — {mun.uf}
               </p>
+            )}
+
+            {scheduledAt && (
+              <div className="flex items-center gap-2 rounded-full bg-fill-tertiary px-3 py-2 text-sm font-medium">
+                <CalendarClock size={16} className="text-primary" />
+                <span>Partir mais tarde · {scheduledAt}</span>
+              </div>
             )}
 
             <div className="flex items-center gap-2 text-sm text-[#6B6B6B]">
