@@ -598,30 +598,47 @@ export function MobilidadeUber({ modalidade }: Props) {
       {painelDestino &&
         typeof document !== "undefined" &&
         createPortal(
-          <div className="fixed inset-0 z-[2000] flex flex-col bg-white p-5 font-sans text-[#111111]">
-            <div className="mx-auto flex w-full max-w-lg flex-col gap-4">
-              <div className="flex items-center gap-3">
-                <button
-                  aria-label="Fechar busca de destino"
-                  onClick={() => setPainelDestino(false)}
-                  className="flex h-10 w-10 items-center justify-center rounded-full bg-[#F5F5F7]"
-                >
-                  <X size={18} />
-                </button>
-                <h2 className="text-lg font-bold">Para onde?</h2>
-              </div>
-              <input
-                autoFocus
-                value={destino}
-                onChange={(e) => {
-                  setDestino(e.target.value);
-                  setDestinoCoords(null);
-                }}
-                placeholder="Digite o endereço de destino"
-                className="w-full rounded-2xl bg-[#F5F5F7] px-4 py-4 outline-none"
-              />
-              {buscando && <p className="text-sm text-[#6B6B6B]">Buscando endereços…</p>}
-              <div className="flex flex-col divide-y divide-[#F0F0F0]">
+          <div className="fixed inset-0 z-[2000] overflow-y-auto bg-background">
+            <OrigemDestinoPanel
+              titulo="Para onde vamos?"
+              pillLabel="Agora"
+              onVoltar={() => setPainelDestino(false)}
+              origem={origem}
+              origemPlaceholder="Ponto de partida"
+              onOrigemChange={setOrigem}
+              destino={destino}
+              destinoPlaceholder="Para onde?"
+              autoFocusDestino
+              onDestinoChange={(v) => {
+                setDestino(v);
+                setDestinoCoords(null);
+              }}
+              opcoes={[
+                {
+                  id: "salvos",
+                  label: "Locais salvos",
+                  Icon: IconesOpcao.Star,
+                  onClick: () => setPainelDestino(false),
+                },
+                {
+                  id: "mapa",
+                  label: "Defina a localização no mapa",
+                  Icon: IconesOpcao.MapPin,
+                  onClick: () => setPainelDestino(false),
+                },
+                {
+                  id: "municipios",
+                  label: "Municípios autorizados",
+                  Icon: IconesOpcao.Landmark,
+                  onClick: () => {
+                    setPainelDestino(false);
+                    setModalExcecao(true);
+                  },
+                },
+              ]}
+            >
+              {buscando && <p className="mt-2 text-sm text-muted-foreground">Buscando endereços…</p>}
+              <div className="flex flex-col divide-y divide-border/50 pb-8">
                 {sugestoes.map((s) => (
                   <button
                     key={`${s.lat}-${s.lon}`}
@@ -633,12 +650,12 @@ export function MobilidadeUber({ modalidade }: Props) {
                     }}
                     className="flex items-start gap-3 py-3 text-left"
                   >
-                    <MapPin size={18} className="mt-0.5 shrink-0 text-[#3DB54A]" />
+                    <MapPin size={18} className="mt-0.5 shrink-0 text-primary" />
                     <span className="text-sm">{s.display_name}</span>
                   </button>
                 ))}
               </div>
-            </div>
+            </OrigemDestinoPanel>
           </div>,
           document.body,
         )}
