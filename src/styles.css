@@ -239,6 +239,8 @@ body { overflow-x: hidden; }
   --border: rgba(84,84,88,0.65);
   --input: rgba(120,120,128,0.24);
   --ring: #30D158;
+  --institutional: #16283C;
+  --institutional-foreground: #FFFFFF;
 
   --label-secondary: rgba(235,235,245,0.60);
   --label-tertiary: rgba(235,235,245,0.30);
