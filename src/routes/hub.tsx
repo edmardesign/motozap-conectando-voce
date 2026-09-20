@@ -51,6 +51,16 @@ export const Route = createFileRoute("/hub")({
   validateSearch: (search) => hubSearchSchema.parse(search),
   component: PassageiroHomePage,
   ssr: false,
+  head: () => ({
+    meta: [
+      { title: "Logística de Envios — Intergo Logística" },
+      { name: "description", content: "Solicite coleta e entrega de documentos, exames, medicamentos e encomendas." },
+      { property: "og:title", content: "Logística de Envios — Intergo Logística" },
+      { property: "og:description", content: "Solicite coleta e entrega de documentos, exames, medicamentos e encomendas." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
+    ],
+  }),
 });
 
 // ===== Types =====

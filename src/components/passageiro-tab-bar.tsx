@@ -6,8 +6,7 @@ type TabId = "home" | "servicos" | "viagens" | "perfil";
 type Tab = {
   id: TabId;
   label: string;
-  to: string;
-  search?: Record<string, string>;
+  to: "/passageiro/home" | "/passageiro/mobilidade" | "/passageiro/corridas" | "/passageiro/perfil";
   Icon: typeof Home;
 };
 
@@ -33,7 +32,6 @@ export function PassageiroTabBar() {
           <Link
             key={t.id}
             to={t.to}
-            search={(t.search ?? {}) as never}
             aria-label={t.label}
             className="flex h-16 flex-1 items-center justify-center transition-colors"
           >

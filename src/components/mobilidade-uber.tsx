@@ -4,7 +4,6 @@ import { MapContainer, TileLayer, Marker, Polyline, Polygon, useMap } from "reac
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { Crosshair, Loader2, MapPin, Search, X, Phone, Star, AlertTriangle } from "lucide-react";
-import { useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -14,6 +13,7 @@ import { haversineKm } from "@/lib/haversine";
 import { AVISO_MOBILIDADE } from "@/components/aviso-mobilidade";
 import { OrigemDestinoPanel, IconesOpcao } from "@/components/origem-destino-panel";
 import { PassageiroHeader } from "@/components/passageiro-header";
+import { PassageiroTabBar } from "@/components/passageiro-tab-bar";
 import { cienciaMobilidadeHoje, registrarCienciaMobilidade } from "@/lib/mobilidade-auditoria.functions";
 import {
   meuMunicipio,
@@ -80,7 +80,6 @@ function Recenter({ to, zoom = 15 }: { to: Coords | null; zoom?: number }) {
 }
 
 export function MobilidadeUber({ modalidade, agendamento }: Props) {
-  const navigate = useNavigate();
   const { user } = useAuth();
   const tarifa = TARIFAS[modalidade];
   const agendado = agendamento?.agendar === "1" && agendamento.data && agendamento.hora;
@@ -481,7 +480,7 @@ export function MobilidadeUber({ modalidade, agendamento }: Props) {
       </button>
 
       {/* Painel inferior */}
-      <div className="absolute inset-x-0 bottom-0 z-[1000] rounded-t-[24px] bg-white p-5 shadow-[0_-8px_30px_rgba(0,0,0,0.12)]">
+      <div className="absolute inset-x-0 bottom-16 z-[1000] rounded-t-3xl bg-card p-5 text-foreground shadow-[0_-8px_30px_rgba(0,0,0,0.12)]">
         {!corrida ? (
           <div className="mx-auto flex max-w-lg flex-col gap-4">
             {mun && (
@@ -595,6 +594,7 @@ export function MobilidadeUber({ modalidade, agendamento }: Props) {
           </div>
         )}
       </div>
+      <PassageiroTabBar />
 
       {/* Painel de destino */}
       {painelDestino &&
