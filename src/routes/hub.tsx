@@ -35,13 +35,16 @@ import {
   type NominatimResult,
 } from "@/lib/geocoding";
 import { EmojiIcon } from "@/components/emoji-icon";
-import logoIntergo from "@/assets/intergo-logo-white.png.asset.json";
+import { PassageiroHeader } from "@/components/passageiro-header";
 
 import { z } from "zod";
 
 const hubSearchSchema = z.object({
   tipo: z.enum(["automovel", "moto_taxi", "documentos", "exames", "medicamentos", "encomendas"]).optional(),
   id_demanda: z.string().optional(),
+  agendar: z.literal("1").optional(),
+  data: z.string().optional(),
+  hora: z.string().optional(),
 });
 
 export const Route = createFileRoute("/hub")({
@@ -1102,34 +1105,7 @@ function PassageiroHomePage() {
       className="h-[100dvh] w-full flex flex-col overflow-hidden"
       style={{ background: c.bg, color: c.text, fontFamily: "Inter, sans-serif", paddingBottom: 64 }}
     >
-      {/* HEADER */}
-      <header
-        className="flex items-center justify-between px-4 py-3 z-30 shrink-0 gap-3 border-b"
-        style={{ background: c.headerBg, color: c.text, borderBottomColor: c.divider }}
-      >
-        <img
-          src={logoIntergo.url}
-          alt="InterGO"
-          className="h-8 w-auto shrink-0"
-          style={{ objectFit: "contain", filter: "brightness(0)" }}
-        />
-        <div className="min-w-0 flex-1">
-          <div className="font-semibold truncate text-sm sm:text-base" style={{ letterSpacing: "-0.02em" }}>
-            {headerName}
-          </div>
-          <div className="text-[11px] sm:text-xs truncate" style={{ color: c.textMuted }}>
-            {profile?.cidade ? `Logística institucional • ${profile.cidade}` : "Logística institucional"}
-          </div>
-        </div>
-        <button
-          onClick={() => navigate({ to: "/passageiro/perfil" })}
-          aria-label="Perfil do servidor"
-          className="h-9 w-9 rounded-full flex items-center justify-center text-xs font-semibold shrink-0"
-          style={{ background: c.cardBg, color: c.text, border: `1px solid ${c.divider}` }}
-        >
-          {headerName.slice(0, 2).toUpperCase()}
-        </button>
-      </header>
+      <PassageiroHeader backTo="/passageiro/home" title="Logística" name={headerName} className="shrink-0" />
 
       {/* MAPA (60%) */}
       <section className="relative" style={{ height: "60%", minHeight: 240 }}>
@@ -1353,6 +1329,7 @@ function PassageiroHomePage() {
               pegueSubmitting={pegueSubmitting}
               onPegueSubmit={callPegueAli}
               saudacao={headerName}
+              scheduledAt={search.agendar === "1" && search.data && search.hora ? `${new Date(`${search.data}T12:00:00`).toLocaleDateString("pt-BR")} às ${search.hora}` : undefined}
               tipo={tipoDemanda}
               setTipo={setTipoDemanda}
               observacao={observacao}
@@ -1568,6 +1545,7 @@ function SetupPanel(props: {
   pegueSubmitting: boolean;
   onPegueSubmit: () => void;
   saudacao: string;
+  scheduledAt?: string;
   tipo: TipoDemanda | null;
   setTipo: (t: TipoDemanda) => void;
   observacao: string;
@@ -1621,8 +1599,9 @@ function SetupPanel(props: {
         className="flex items-center gap-1.5 rounded-full px-3.5 py-2 text-[13px] font-medium"
         style={{ background: c.cardBg, color: c.text, border: `1px solid ${c.divider}` }}
       >
-        <Clock size={15} /> Partir <ChevronDown size={15} />
+        <Clock size={15} /> {props.scheduledAt ? "Partir mais tarde" : "Partir"} <ChevronDown size={15} />
       </button>
+      {props.scheduledAt && <p className="text-xs font-medium text-primary">Agendado para {props.scheduledAt}</p>}
 
 
       <div className="text-xs font-semibold px-1 pt-1" style={{ color: c.text }}>

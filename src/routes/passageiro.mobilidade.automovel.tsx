@@ -3,6 +3,11 @@ import { MobilidadeUber } from "@/components/mobilidade-uber";
 
 export const Route = createFileRoute("/passageiro/mobilidade/automovel")({
   ssr: false,
+  validateSearch: (search: Record<string, unknown>) => ({
+    agendar: search.agendar === "1" ? "1" : undefined,
+    data: typeof search.data === "string" ? search.data : undefined,
+    hora: typeof search.hora === "string" ? search.hora : undefined,
+  }),
   head: () => ({
     meta: [
       { title: "Solicitar Automóvel — Intergo Logística" },
@@ -13,5 +18,10 @@ export const Route = createFileRoute("/passageiro/mobilidade/automovel")({
       { name: "twitter:card", content: "summary" },
     ],
   }),
-  component: () => <MobilidadeUber modalidade="automovel" />,
+  component: AutomovelPage,
 });
+
+function AutomovelPage() {
+  const search = Route.useSearch();
+  return <MobilidadeUber modalidade="automovel" agendamento={search} />;
+}
