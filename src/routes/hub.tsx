@@ -2106,8 +2106,36 @@ function SetupPanel(props: {
         </label>
       </div>
 
-
-
+      {/* Tipo de material — passo posterior, só após o destino estar definido */}
+      {props.destino.trim() && (
+        <div className="space-y-2">
+          <div className="text-xs font-semibold px-1" style={{ color: c.text }}>
+            O que será enviado?
+          </div>
+          <div className="grid grid-cols-2 gap-2">
+            {TIPOS_DEMANDA.map((t) => {
+              const active = props.tipo === t.id;
+              const Icon = t.Icon;
+              return (
+                <button
+                  key={t.id}
+                  type="button"
+                  onClick={() => props.setTipo(t.id)}
+                  className="rounded-2xl px-3 py-3.5 flex items-center gap-2.5 text-left transition active:scale-[0.98]"
+                  style={{
+                    background: active ? "rgba(61,181,74,0.08)" : c.cardBg,
+                    border: `1px solid ${active ? c.btn : c.divider}`,
+                    color: c.text,
+                  }}
+                >
+                  <Icon size={18} style={{ color: active ? c.btn : c.textMuted }} />
+                  <span className="text-sm font-medium">{t.label}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       {/* Observação */}
       <label className="block">
